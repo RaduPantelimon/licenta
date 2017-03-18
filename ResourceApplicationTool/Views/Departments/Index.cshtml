@@ -1,0 +1,70 @@
+﻿@model IEnumerable<ResourceApplicationTool.Models.Department>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaxSize)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeptDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MonthlyExpenses)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.File.FileNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.File1.FileNumber)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaxSize)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeptDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MonthlyExpenses)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.File.FileNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.File1.FileNumber)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.DepartmentID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.DepartmentID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.DepartmentID })
+        </td>
+    </tr>
+}
+
+</table>

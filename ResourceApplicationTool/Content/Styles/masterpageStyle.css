@@ -1,0 +1,70 @@
+﻿body {
+    padding-top:0px;
+}
+.pageLogo 
+{
+    max-width:1800px;
+    margin: 0 auto;
+    height:500px;
+    position:absolute;
+    left: 0;
+    right:0;
+    width: 100%;
+    z-index:-1;
+    opacity: 0.75;
+    filter: alpha(opacity=75);
+    background-position: 50% 0px;
+}
+.primary-pageLogo{
+    background: url(../Pictures/masterpagepic.jpg) no-repeat fixed;
+     top:0px;
+}
+.secondary-pageLogo 
+{
+    background: url(../Pictures/privatepyle.jpg) no-repeat fixed;
+    top:900px;
+}
+.header{
+    position:fixed;
+    width:100%;
+    opacity:0.8;
+    top:0;
+    background: #404b52;
+    height:80px;
+    z-index: 1000;
+}
+.secondary-header{
+    width:100%;
+    height:25px;
+    /*Burgundy*/
+    background-color: #aa0020;
+    padding-top: 5px;
+}
+.main-container{
+    padding: 100px 0px 0px 0px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.secondary-header-text{
+    color: white;
+    padding: 15px 0px 0px 10px;
+    font-size: 14px;
+}
+.main-header{
+    height:55px;
+}
+.main-header .navbar-header,.main-header .navbar-links-container,
+.main-header .navbar-links-container li, .main-header .navbar-links-container a{
+    height:55px;
+}
+
+
+.wip-div{
+    
+    height:500px;
+    width:300px;
+    background-color:aquamarine;
+    padding: 40px;
+    border:1px black solid;
+}

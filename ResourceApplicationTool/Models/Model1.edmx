@@ -1,0 +1,887 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RATV3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Contacts">
+          <Key>
+            <PropertyRef Name="ContactID" />
+          </Key>
+          <Property Name="ContactID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ContactName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="13" />
+          <Property Name="FaxNumber" Type="varchar" MaxLength="13" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="PhysicalAddress" Type="varchar" MaxLength="75" />
+        </EntityType>
+        <EntityType Name="Departments">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MaxSize" Type="int" Nullable="false" />
+          <Property Name="DeptDescription" Type="varchar(max)" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="MonthlyExpenses" Type="money" Nullable="false" />
+          <Property Name="BannerImageID" Type="uniqueidentifier" />
+          <Property Name="MainImageID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="Educations">
+          <Key>
+            <PropertyRef Name="EducationID" />
+          </Key>
+          <Property Name="EducationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+          <Property Name="Degree" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="Duration" Type="int" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleID" Type="int" />
+          <Property Name="Account" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ManagerID" Type="int" />
+          <Property Name="DepartmentID" Type="int" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleInitial" Type="char" MaxLength="1" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CNP" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Salary" Type="money" Nullable="false" />
+          <Property Name="PriorSalary" Type="money" Nullable="false" />
+          <Property Name="LastRaise" Type="money" StoreGeneratedPattern="Computed" />
+          <Property Name="HireDate" Type="date" Nullable="false" />
+          <Property Name="TerminationDate" Type="date" />
+          <Property Name="Administrator" Type="varchar" MaxLength="50" />
+          <Property Name="ProfileImageID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="Files">
+          <Key>
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Name="FileID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FileNumber" Type="varchar" MaxLength="50" />
+          <Property Name="FileDescription" Type="varchar" MaxLength="50" />
+          <Property Name="ItemImage" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Projects">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+          </Key>
+          <Property Name="ProjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+          <Property Name="Duration" Type="int" StoreGeneratedPattern="Computed" />
+          <Property Name="ContractNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PJDescription" Type="varchar(max)" Nullable="false" />
+          <Property Name="Budget" Type="money" Nullable="false" />
+          <Property Name="DepartmentID" Type="int" />
+          <Property Name="ContactID" Type="int" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="JobDescription" Type="varchar(max)" />
+          <Property Name="AverageSalary" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sprints">
+          <Key>
+            <PropertyRef Name="SprintID" />
+          </Key>
+          <Property Name="SprintID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectID" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+          <Property Name="Duration" Type="int" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Tasks">
+          <Key>
+            <PropertyRef Name="TaskID" />
+          </Key>
+          <Property Name="TaskID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SprintID" Type="int" />
+          <Property Name="EmployeeID" Type="int" />
+          <Property Name="RoleID" Type="int" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="Duration" Type="int" StoreGeneratedPattern="Computed" />
+          <Property Name="TaskDescription" Type="varchar(max)" Nullable="false" />
+          <Property Name="Difficulty" Type="int" Nullable="false" />
+          <Property Name="Estimation" Type="int" />
+        </EntityType>
+        <Association Name="FK_BannerID">
+          <End Role="Files" Type="Self.Files" Multiplicity="0..1" />
+          <End Role="Departments" Type="Self.Departments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Files">
+              <PropertyRef Name="FileID" />
+            </Principal>
+            <Dependent Role="Departments">
+              <PropertyRef Name="BannerImageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactID">
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Projects" Type="Self.Projects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contacts">
+              <PropertyRef Name="ContactID" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="ContactID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentID">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="0..1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentIDProject">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="0..1" />
+          <End Role="Projects" Type="Self.Projects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeID">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Educations" Type="Self.Educations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Educations">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeIDTasks">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MainImageID">
+          <End Role="Files" Type="Self.Files" Multiplicity="0..1" />
+          <End Role="Departments" Type="Self.Departments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Files">
+              <PropertyRef Name="FileID" />
+            </Principal>
+            <Dependent Role="Departments">
+              <PropertyRef Name="MainImageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ManagerID">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="Employees1" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Employees1">
+              <PropertyRef Name="ManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProfileImageID">
+          <End Role="Files" Type="Self.Files" Multiplicity="0..1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Files">
+              <PropertyRef Name="FileID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="ProfileImageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectID">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Sprints" Type="Self.Sprints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="Sprints">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleID">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleIDTasks">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SprintID">
+          <End Role="Sprints" Type="Self.Sprints" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sprints">
+              <PropertyRef Name="SprintID" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="SprintID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RATV3ModelStoreContainer">
+          <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Educations" EntityType="Self.Educations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Files" EntityType="Self.Files" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sprints" EntityType="Self.Sprints" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BannerID" Association="Self.FK_BannerID">
+            <End Role="Files" EntitySet="Files" />
+            <End Role="Departments" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactID" Association="Self.FK_ContactID">
+            <End Role="Contacts" EntitySet="Contacts" />
+            <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentID" Association="Self.FK_DepartmentID">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentIDProject" Association="Self.FK_DepartmentIDProject">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeID" Association="Self.FK_EmployeeID">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Educations" EntitySet="Educations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeIDTasks" Association="Self.FK_EmployeeIDTasks">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MainImageID" Association="Self.FK_MainImageID">
+            <End Role="Files" EntitySet="Files" />
+            <End Role="Departments" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ManagerID" Association="Self.FK_ManagerID">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Employees1" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProfileImageID" Association="Self.fk_ProfileImageID">
+            <End Role="Files" EntitySet="Files" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectID" Association="Self.FK_ProjectID">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Sprints" EntitySet="Sprints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleID" Association="Self.FK_RoleID">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleIDTasks" Association="Self.FK_RoleIDTasks">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SprintID" Association="Self.FK_SprintID">
+            <End Role="Sprints" EntitySet="Sprints" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RATV3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="ContactID" />
+          </Key>
+          <Property Name="ContactID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ContactName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="FaxNumber" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PhysicalAddress" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Projects1" Relationship="RATV3Model.FK_ContactID1" FromRole="Contact" ToRole="Project" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MaxSize" Type="Int32" Nullable="false" />
+          <Property Name="DeptDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="MonthlyExpenses" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="BannerImageID" Type="Guid" />
+          <Property Name="MainImageID" Type="Guid" />
+          <NavigationProperty Name="File" Relationship="Self.FK_BannerID" FromRole="Departments" ToRole="Files" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_DepartmentID" FromRole="Departments" ToRole="Employees" />
+          <NavigationProperty Name="Projects" Relationship="Self.FK_DepartmentIDProject" FromRole="Departments" ToRole="Projects" />
+          <NavigationProperty Name="File1" Relationship="Self.FK_MainImageID" FromRole="Departments" ToRole="Files" />
+        </EntityType>
+        <EntityType Name="Education">
+          <Key>
+            <PropertyRef Name="EducationID" />
+          </Key>
+          <Property Name="EducationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Degree" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="Duration" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_EmployeeID" FromRole="Educations" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleID" Type="Int32" />
+          <Property Name="Account" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ManagerID" Type="Int32" />
+          <Property Name="DepartmentID" Type="Int32" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MiddleInitial" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CNP" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="PriorSalary" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="LastRaise" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="HireDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TerminationDate" Type="DateTime" Precision="0" />
+          <Property Name="Administrator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Department" Relationship="Self.FK_DepartmentID" FromRole="Employees" ToRole="Departments" />
+          <NavigationProperty Name="Educations" Relationship="Self.FK_EmployeeID" FromRole="Employees" ToRole="Educations" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK_EmployeeIDTasks" FromRole="Employees" ToRole="Tasks" />
+          <NavigationProperty Name="Employees1" Relationship="Self.FK_ManagerID" FromRole="Employees" ToRole="Employees1" />
+          <NavigationProperty Name="Employee1" Relationship="Self.FK_ManagerID" FromRole="Employees1" ToRole="Employees" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_RoleID" FromRole="Employees" ToRole="Roles" />
+          <Property Name="ProfileImageID" Type="Guid" />
+          <NavigationProperty Name="File" Relationship="RATV3Model.fk_ProfileImageID" FromRole="Employee" ToRole="File" />
+        </EntityType>
+        <EntityType Name="File">
+          <Key>
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Name="FileID" Type="Guid" Nullable="false" />
+          <Property Name="FileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FileDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ItemImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Departments" Relationship="Self.FK_BannerID" FromRole="Files" ToRole="Departments" />
+          <NavigationProperty Name="Departments1" Relationship="Self.FK_MainImageID" FromRole="Files" ToRole="Departments" />
+          <NavigationProperty Name="Employees" Relationship="RATV3Model.fk_ProfileImageID" FromRole="File" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+          </Key>
+          <Property Name="ProjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Duration" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="ContractNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PJDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Budget" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="DepartmentID" Type="Int32" />
+          <NavigationProperty Name="Department" Relationship="Self.FK_DepartmentIDProject" FromRole="Projects" ToRole="Departments" />
+          <NavigationProperty Name="Sprints" Relationship="Self.FK_ProjectID" FromRole="Projects" ToRole="Sprints" />
+          <Property Name="ContactID1" Type="Int32" />
+          <NavigationProperty Name="Contact1" Relationship="RATV3Model.FK_ContactID1" FromRole="Project" ToRole="Contact" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="JobDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AverageSalary" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_RoleID" FromRole="Roles" ToRole="Employees" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK_RoleIDTasks" FromRole="Roles" ToRole="Tasks" />
+        </EntityType>
+        <EntityType Name="Sprint">
+          <Key>
+            <PropertyRef Name="SprintID" />
+          </Key>
+          <Property Name="SprintID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectID" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Duration" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Project" Relationship="Self.FK_ProjectID" FromRole="Sprints" ToRole="Projects" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK_SprintID" FromRole="Sprints" ToRole="Tasks" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="TaskID" />
+          </Key>
+          <Property Name="TaskID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SprintID" Type="Int32" />
+          <Property Name="EmployeeID" Type="Int32" />
+          <Property Name="RoleID" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="Duration" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="TaskDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Difficulty" Type="Int32" Nullable="false" />
+          <Property Name="Estimation" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_EmployeeIDTasks" FromRole="Tasks" ToRole="Employees" />
+          <NavigationProperty Name="Role" Relationship="RATV3Model.FK_RoleIDTasks" FromRole="Tasks" ToRole="Roles" />
+          <NavigationProperty Name="Sprint" Relationship="RATV3Model.FK_SprintID" FromRole="Tasks" ToRole="Sprints" />
+        </EntityType>
+        <Association Name="FK_BannerID">
+          <End Role="Files" Type="Self.File" Multiplicity="0..1" />
+          <End Role="Departments" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Files">
+              <PropertyRef Name="FileID" />
+            </Principal>
+            <Dependent Role="Departments">
+              <PropertyRef Name="BannerImageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentID">
+          <End Role="Departments" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Employees" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentIDProject">
+          <End Role="Departments" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Projects" Type="Self.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MainImageID">
+          <End Role="Files" Type="Self.File" Multiplicity="0..1" />
+          <End Role="Departments" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Files">
+              <PropertyRef Name="FileID" />
+            </Principal>
+            <Dependent Role="Departments">
+              <PropertyRef Name="MainImageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeID">
+          <End Role="Employees" Type="Self.Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Educations" Type="Self.Education" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Educations">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeIDTasks">
+          <End Role="Employees" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Tasks" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ManagerID">
+          <End Role="Employees" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Employees1" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Employees1">
+              <PropertyRef Name="ManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleID">
+          <End Role="Roles" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Employees" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectID">
+          <End Role="Projects" Type="Self.Project" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Sprints" Type="Self.Sprint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="Sprints">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleIDTasks">
+          <End Role="Roles" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Tasks" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SprintID">
+          <End Role="Sprints" Type="Self.Sprint" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tasks" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sprints">
+              <PropertyRef Name="SprintID" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="SprintID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RATV3Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Contacts" EntityType="Self.Contact" />
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="Educations" EntityType="Self.Education" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Files" EntityType="Self.File" />
+          <EntitySet Name="Projects" EntityType="Self.Project" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Sprints" EntityType="Self.Sprint" />
+          <EntitySet Name="Tasks" EntityType="Self.Task" />
+          <AssociationSet Name="FK_BannerID" Association="Self.FK_BannerID">
+            <End Role="Files" EntitySet="Files" />
+            <End Role="Departments" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentID" Association="Self.FK_DepartmentID">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentIDProject" Association="Self.FK_DepartmentIDProject">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MainImageID" Association="Self.FK_MainImageID">
+            <End Role="Files" EntitySet="Files" />
+            <End Role="Departments" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeID" Association="Self.FK_EmployeeID">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Educations" EntitySet="Educations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeIDTasks" Association="Self.FK_EmployeeIDTasks">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ManagerID" Association="Self.FK_ManagerID">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Employees1" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleID" Association="Self.FK_RoleID">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectID" Association="Self.FK_ProjectID">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Sprints" EntitySet="Sprints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleIDTasks" Association="Self.FK_RoleIDTasks">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SprintID" Association="Self.FK_SprintID">
+            <End Role="Sprints" EntitySet="Sprints" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProfileImageID" Association="RATV3Model.fk_ProfileImageID">
+            <End Role="File" EntitySet="Files" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactID1" Association="RATV3Model.FK_ContactID1">
+            <End Role="Contact" EntitySet="Contacts" />
+            <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="fk_ProfileImageID">
+          <End Type="RATV3Model.File" Role="File" Multiplicity="0..1" />
+          <End Type="RATV3Model.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="FileID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="ProfileImageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactID1">
+          <End Type="RATV3Model.Contact" Role="Contact" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="RATV3Model.Project" Role="Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="ContactID" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="ContactID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RATV3ModelStoreContainer" CdmEntityContainer="RATV3Entities">
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="RATV3Model.Contact">
+              <MappingFragment StoreEntitySet="Contacts">
+                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="FaxNumber" ColumnName="FaxNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhysicalAddress" ColumnName="PhysicalAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="RATV3Model.Department">
+              <MappingFragment StoreEntitySet="Departments">
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="MaxSize" ColumnName="MaxSize" />
+                <ScalarProperty Name="DeptDescription" ColumnName="DeptDescription" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="MonthlyExpenses" ColumnName="MonthlyExpenses" />
+                <ScalarProperty Name="BannerImageID" ColumnName="BannerImageID" />
+                <ScalarProperty Name="MainImageID" ColumnName="MainImageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Educations">
+            <EntityTypeMapping TypeName="RATV3Model.Education">
+              <MappingFragment StoreEntitySet="Educations">
+                <ScalarProperty Name="EducationID" ColumnName="EducationID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Degree" ColumnName="Degree" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="RATV3Model.Employee">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="ProfileImageID" ColumnName="ProfileImageID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleInitial" ColumnName="MiddleInitial" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="CNP" ColumnName="CNP" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="PriorSalary" ColumnName="PriorSalary" />
+                <ScalarProperty Name="LastRaise" ColumnName="LastRaise" />
+                <ScalarProperty Name="HireDate" ColumnName="HireDate" />
+                <ScalarProperty Name="TerminationDate" ColumnName="TerminationDate" />
+                <ScalarProperty Name="Administrator" ColumnName="Administrator" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Files">
+            <EntityTypeMapping TypeName="RATV3Model.File">
+              <MappingFragment StoreEntitySet="Files">
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
+                <ScalarProperty Name="FileNumber" ColumnName="FileNumber" />
+                <ScalarProperty Name="FileDescription" ColumnName="FileDescription" />
+                <ScalarProperty Name="ItemImage" ColumnName="ItemImage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="RATV3Model.Project">
+              <MappingFragment StoreEntitySet="Projects">
+                <ScalarProperty Name="ContactID1" ColumnName="ContactID" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="ContractNumber" ColumnName="ContractNumber" />
+                <ScalarProperty Name="PJDescription" ColumnName="PJDescription" />
+                <ScalarProperty Name="Budget" ColumnName="Budget" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="RATV3Model.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
+                <ScalarProperty Name="AverageSalary" ColumnName="AverageSalary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sprints">
+            <EntityTypeMapping TypeName="RATV3Model.Sprint">
+              <MappingFragment StoreEntitySet="Sprints">
+                <ScalarProperty Name="SprintID" ColumnName="SprintID" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tasks">
+            <EntityTypeMapping TypeName="RATV3Model.Task">
+              <MappingFragment StoreEntitySet="Tasks">
+                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+                <ScalarProperty Name="SprintID" ColumnName="SprintID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="TaskDescription" ColumnName="TaskDescription" />
+                <ScalarProperty Name="Difficulty" ColumnName="Difficulty" />
+                <ScalarProperty Name="Estimation" ColumnName="Estimation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

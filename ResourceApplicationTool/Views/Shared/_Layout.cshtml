@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/slickcss")
+    @Scripts.Render("~/bundles/modernizr")
+    
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/slick")
+    @RenderSection("scripts", required: false)
+    
+    @if (ViewBag.hrefVal!= null &&ViewBag.showBaseHref != null && ViewBag.showBaseHref==true)
+    {
+        <base href="@ViewBag.hrefVal">
+    }
+
+</head>
+<body>
+    <div>
+       
+        <div class="header">
+            <div class="secondary-header">
+                <span class="secondary-header-text">Proiect Licenta</span>
+            </div>
+            <div class="main-header container">
+                <div class="navbar-header">
+                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse navbar-links-container">
+                    <ul class="nav navbar-nav navbar-links-list">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </div>
+        <div class="main-container">
+            @RenderBody()
+
+        </div>
+        <!--<hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>-->
+
+</body>
+</html>

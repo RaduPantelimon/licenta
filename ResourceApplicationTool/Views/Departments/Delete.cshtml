@@ -1,0 +1,81 @@
+﻿@model ResourceApplicationTool.Models.Department
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Department</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxSize)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaxSize)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeptDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeptDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MonthlyExpenses)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MonthlyExpenses)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.File.FileNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.File.FileNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.File1.FileNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.File1.FileNumber)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

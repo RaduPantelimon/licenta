@@ -1,0 +1,123 @@
+﻿.tasksTable {
+    table-layout:fixed;
+    margin-top:40px;
+}
+.tasksTable td{
+    border:solid 1px black;
+  
+}
+
+.tasksTable td, 
+.tasksTable th {
+  width: 4rem;
+  height: 45px;
+  border: 1px solid #ccc;
+  text-align: center;
+
+}
+.tasksTable td, 
+.tasksTable th {
+    min-width:130px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.tasksTable td:first-child, 
+.tasksTable th:first-child {
+    min-width:160px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.tasksTable th {
+  background: lightblue;
+  border-color: white;
+}
+
+#templatesContainer{
+    background-color: #eeeeee;
+    margin:10px;
+
+}
+
+
+#templatesContainer .taskTemplate-holder{
+    padding:20px;
+}
+#templatesContainer .taskTemplate-holder:nth-child(odd) {
+    background: #ffffff;
+}
+
+#templatesContainer .taskTemplate-holder:nth-child(even) {
+    background: #eeeeee;
+}
+
+
+
+#templatesContainer .taskTemplate,
+#tasksContainer .taskTemplate{
+
+    height: 45px;
+    width: 130px;
+    font: 14px sans-seriff;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.5;
+    border: 1px solid black;
+    background-color: lightcoral;
+    display: flex;
+}
+#tasksContainer .task-droppable{
+
+    height: 29px;
+    width: 98px;
+}
+#templatesContainer .taskTemplate{
+    border: 1px solid black;
+    background-color: lightcoral;
+    position: relative;
+    z-index: 4;
+}
+
+#tasksContainer .task-Title{
+     display:inline-block;
+}
+#tasksContainer .focused-task{
+     background-color:red;
+     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+#tasksContainer .focused-task span{
+     color:white;
+}
+/*
+    to stop text selection on resize:
+     -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+*/
+
+ .resize-handle {
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+    height:10px;
+    width:10px;
+
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+}
+
+ .delete-handle{
+    height:12px;
+    width:12px;
+    margin-left: 3px;
+ }

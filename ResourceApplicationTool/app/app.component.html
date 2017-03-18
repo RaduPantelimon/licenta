@@ -1,0 +1,26 @@
+﻿<div class='main-component col-md-12 col-lg-12 col-sm-12 col-xs-12 row'>
+        <div id="sprintsmenu" [ngClass]="{'add-SprintNav': createSprintEnabled}">
+                <ul>
+                    <li *ngFor='let sprint of sprints' [ngClass]="{'active': sprint.selected && !createSprintEnabled}">
+                        <a [routerLink]="['/tasks',sprint.SprintID]"
+                           (click)="onChangeSprint(sprint,$event)">
+                            {{sprint.StartDate | date:'yyyy.MM.dd'}} - {{sprint.EndDate| date:'yyyy.MM.dd'}}
+                        </a>
+                    </li>
+
+                    <li  class='add-Sprint' [ngClass]="{'active': createSprintEnabled}">
+                        <a [routerLink]="['/addsprint']"
+                           (click)="onChangeToSprintCreation($event)">
+                           Add Sprint
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        <div>
+            <!-- Tasks component list -->
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+    <div>
+
+</div>

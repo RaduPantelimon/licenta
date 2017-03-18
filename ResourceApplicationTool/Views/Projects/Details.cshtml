@@ -1,0 +1,111 @@
+﻿@model ResourceApplicationTool.Models.Project
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--Angular Initialization-->
+<link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<!-- Polyfill(s) for older browsers -->
+<script src="/node_modules/core-js/client/shim.min.js"></script>
+
+<script src="/node_modules/zone.js/dist/zone.js"></script>
+<script src="/node_modules/reflect-metadata/Reflect.js"></script>
+<script src="/node_modules/systemjs/dist/system.src.js"></script>
+<!-- Configure SystemJS -->
+<script src="/systemjs.config.js"></script>
+<script>
+    var projectID ="@Model.ProjectID";
+</script>
+<script>
+    //angular entry point
+      System.import('app').catch(function(err){ console.error(err); });
+</script>
+<h2>Details</h2>
+
+<div>
+    <h4>Project</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Duration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Duration)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContractNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContractNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PJDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PJDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Budget)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Budget)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contact1.ContactName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contact1.ContactName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Department.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department.Title)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ProjectID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+
+<pm-app></pm-app>
