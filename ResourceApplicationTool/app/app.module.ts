@@ -15,6 +15,8 @@ import { SprintsService } from './projects/sprints.service';
 import { EmployeesService } from './projects/employees.service';
 import { TasksService } from './projects/tasks.service';
 
+import { SprintFilterPipe } from './projects/sprint-filter.pipe';
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -33,7 +35,8 @@ import { TasksService } from './projects/tasks.service';
     declarations: [
         AppComponent,
         TasksListComponent,
-        SprintAddComponent
+        SprintAddComponent,
+        SprintFilterPipe
     ],
 
   bootstrap: [AppComponent],

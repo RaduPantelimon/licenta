@@ -413,6 +413,7 @@
     <TypeScriptCompile Include="app\main.ts" />
     <TypeScriptCompile Include="app\projects\employees.service.ts" />
     <TypeScriptCompile Include="app\projects\sprint-add.component.ts" />
+    <TypeScriptCompile Include="app\projects\sprint-filter.pipe.ts" />
     <TypeScriptCompile Include="app\projects\sprints.service.ts" />
     <TypeScriptCompile Include="app\projects\tasks-list.component.ts" />
     <TypeScriptCompile Include="app\projects\tasks.service.ts" />

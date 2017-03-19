@@ -21,7 +21,7 @@ namespace ResourceApplicationTool.Controllers
         // GET: Sprints for project
         public HttpResponseMessage GetSprints(int id)
         {
-            var result = db.Sprints.Where(x => x.ProjectID == id);
+            var result = db.Sprints.Where(x => x.ProjectID == id).OrderBy( x => x.StartDate);
             var jsonResponseText = JsonConvert.SerializeObject(result);
             var response = Request.CreateResponse(HttpStatusCode.OK);
             response.Content = new StringContent(jsonResponseText, Encoding.UTF8, "application/json");
@@ -134,7 +134,7 @@ namespace ResourceApplicationTool.Controllers
                     //(StartA <= EndB) and (EndA >= StartB)
 
                     int existingSprintsNo = db.Sprints.Where(
-                        x => (x.StartDate <= newSprint.EndDate && x.EndDate >= newSprint.StartDate)).Count();
+                        x => (x.StartDate <= newSprint.EndDate && x.EndDate >= newSprint.StartDate) && (x.ProjectID == newSprint.ProjectID)).Count();
 
                     db.Sprints.Add(newSprint);
                     db.SaveChanges();

@@ -62,6 +62,23 @@ export class SprintAddComponent implements OnInit {
             this.errorMessage = ex.toString();
         }
     }
+    saveSprint(event: MouseEvent) {
+        let selectedWeek = this.weeks.filter(s => s.selected)[0];
+        let pjID = window["projectID"];
+        if (pjID && selectedWeek) {
+            let sprint: any = {};
+            sprint.StartDate = selectedWeek.days[0].date.format("YYYY-MM-DD");
+            sprint.EndDate = selectedWeek.days[6].date.format("YYYY-MM-DD");
+            sprint.ProjectID = pjID;
+            this._sprintService.addSprint(sprint).subscribe(responseSprint => {
+
+                this._sprintService.registerNewlyCreateSprint(responseSprint);
+                console.log(responseSprint);
+            },
+                error => this.errorMessage = <any>error
+            );
+        }
+    }
     addMonth(event: MouseEvent) {
         //going to the next month
         let monthIndex = this.getMonthIndex(this.selectedMonth);

@@ -22,6 +22,7 @@ var sprint_add_component_1 = require('./projects/sprint-add.component');
 var sprints_service_1 = require('./projects/sprints.service');
 var employees_service_1 = require('./projects/employees.service');
 var tasks_service_1 = require('./projects/tasks.service');
+var sprint_filter_pipe_1 = require('./projects/sprint-filter.pipe');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -44,7 +45,8 @@ var AppModule = (function () {
             declarations: [
                 app_component_1.AppComponent,
                 tasks_list_component_1.TasksListComponent,
-                sprint_add_component_1.SprintAddComponent
+                sprint_add_component_1.SprintAddComponent,
+                sprint_filter_pipe_1.SprintFilterPipe
             ],
             bootstrap: [app_component_1.AppComponent],
             providers: [

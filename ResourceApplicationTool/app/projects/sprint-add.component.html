@@ -10,7 +10,7 @@
         <select id="month-selector"  [(ngModel)]='selectedMonth' (ngModelChange)="changeMonth($event)">
             <option *ngFor="let month of months">{{month}}</option>
         </select>
-        <button [disabled]="sprintAlreadyExists" class="btn btn-default">Create Sprint</button>
+        <button (click)="saveSprint($event)" [disabled]="sprintAlreadyExists" class="btn btn-default">Create Sprint</button>
 
 
     </div>

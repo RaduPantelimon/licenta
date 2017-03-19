@@ -44,6 +44,21 @@ var SprintAddComponent = (function () {
             this.errorMessage = ex.toString();
         }
     };
+    SprintAddComponent.prototype.saveSprint = function (event) {
+        var _this = this;
+        var selectedWeek = this.weeks.filter(function (s) { return s.selected; })[0];
+        var pjID = window["projectID"];
+        if (pjID && selectedWeek) {
+            var sprint = {};
+            sprint.StartDate = selectedWeek.days[0].date.format("YYYY-MM-DD");
+            sprint.EndDate = selectedWeek.days[6].date.format("YYYY-MM-DD");
+            sprint.ProjectID = pjID;
+            this._sprintService.addSprint(sprint).subscribe(function (responseSprint) {
+                _this._sprintService.registerNewlyCreateSprint(responseSprint);
+                console.log(responseSprint);
+            }, function (error) { return _this.errorMessage = error; });
+        }
+    };
     SprintAddComponent.prototype.addMonth = function (event) {
         //going to the next month
         var monthIndex = this.getMonthIndex(this.selectedMonth);

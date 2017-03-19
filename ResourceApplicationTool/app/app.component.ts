@@ -5,6 +5,8 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { SprintsService } from './projects/sprints.service';
 import { EmployeesService } from './projects/employees.service';
 
+import * as moment from 'moment/moment';
+
 @Component({
     selector: 'pm-app',
     moduleId: module.id,
@@ -17,7 +19,8 @@ export class AppComponent implements OnInit{
 
     //page initialization
     createSprintEnabled: boolean;
-
+    sprintMonths: any[] = [];
+    selectedMonth: any;
     //employees: any[] = [];
     sprints: any[] = [];
     errorMessage: string;
@@ -36,20 +39,13 @@ export class AppComponent implements OnInit{
 
             if (id && !isNaN(parseInt(id)))
             {
-                console.log('Test');
                 let currentComponent = this;
 
                 //getting the sprint id from the url
                 let urlComponents: string[] = location.href.split("/");
                 let spid: number = parseInt(urlComponents[urlComponents.length - 1]);
 
-                //console.log(this._route.snapshot.params['id']);
-
-                this._route.params.subscribe((params: Params) => {
-                    let userId = params['id'];
-                    console.log(userId);
-                });
-
+                //initializing the Sprints Page
                 this._sprintService.getSprints(id).subscribe(function (sprints: any[]) {
 
                     if (location.href.indexOf("addsprint") != -1)
@@ -63,6 +59,7 @@ export class AppComponent implements OnInit{
                         if ((spid && spid == val.SprintID) || ((!spid || isNaN(spid) || location.href.indexOf("task") == -1) && index == 0))
                         {
                             val.selected = true;
+                            currentComponent.selectedMonth = moment(val.StartDate).format("YYYY MMMM");
                         }
                         else {
                             val.selected = false;
@@ -70,8 +67,41 @@ export class AppComponent implements OnInit{
                         return val;
 
                     });
+                    currentComponent.setMonths();
                 },
                     error => this.errorMessage = <any>error);
+
+                //waiting for newly added sprints
+                this._sprintService.newSprints.subscribe(newSprint => {
+                    //reObtaining the Sprints from the DataBase
+                    let indices = 0;
+
+                    this._sprintService.getSprints(id).subscribe(sprints => {
+
+                        this.sprints = sprints.map(function (val, index) {
+
+                            if ((newSprint.SprintID == val.SprintID)) {
+                                val.selected = true;
+                                currentComponent.selectedMonth = moment(val.StartDate).format("YYYY MMMM");
+                            }
+                            else {
+                                val.selected = false;
+                            }
+                            return val;
+
+                        });
+                        currentComponent.setMonths();
+                    }, error => this.errorMessage = <any>error);
+
+                    if (newSprint.SprintID)
+                    {
+                        //navigating to our sprint
+                        this._router.navigate(['/tasks', newSprint.SprintID]);
+                        this.createSprintEnabled = false;
+                    }
+                    
+                    
+                }, error => this.errorMessage = <any>error);
             }
         }
         catch (ex)
@@ -101,4 +131,57 @@ export class AppComponent implements OnInit{
         this.createSprintEnabled = true;
     }
 
+    changeMonth(event: MouseEvent): void {
+
+        //auto navigating to the first sprint of the week
+        let foundElement: boolean = false;
+        let newSprint: any;
+        if (this.sprints && this.sprints.length > 0) {
+            for (let i = 0; i < this.sprints.length; i++)
+            {
+                let currentSprint = this.sprints[i];
+                currentSprint.selected = false;
+                if ((this.selectedMonth == moment(currentSprint.StartDate).format("YYYY MMMM") ||
+                    this.selectedMonth == moment(currentSprint.EndDate).format("YYYY MMMM")) && !foundElement ){
+
+                    foundElement = true;
+                    currentSprint.selected = true;
+                    newSprint = currentSprint;
+                }
+            }
+            this._router.navigate(['/tasks', newSprint.SprintID]);
+        }
+    }
+
+    private setMonths() {
+        if (this.sprints && this.sprints.length > 0)
+        {
+            //reinitializing the array
+            this.sprintMonths.length = 0;
+            for (let i = 0; i < this.sprints.length; i++)
+            {
+                let sprintStartDate = moment(this.sprints[i].StartDate);
+                let sprintEndDate = moment(this.sprints[i].EndDate)
+                let startSprint = this.sprintMonths.filter(s => s.displayDate == sprintStartDate.format("YYYY MMMM"))[0];
+                let endSprint = this.sprintMonths.filter(s => s.displayDate == sprintEndDate.format("YYYY MMMM"))[0];
+
+                //adding these values to the array
+                if (!startSprint)
+                {
+                    let month: any = {};
+                    month.date = moment(sprintStartDate.format("YYYY-MM") + "-01", "YYYY-MM-DD");
+                    month.displayDate = sprintStartDate.format("YYYY MMMM");
+                    this.sprintMonths.push(month);
+                }
+                if ((sprintStartDate.format("YYYY MM") != sprintEndDate.format("YYYY MM")) && !endSprint)
+                {
+                    let month: any = {};
+                    month.date = moment(sprintEndDate.format("YYYY-MM") + "-01", "YYYY-MM-DD");
+                    month.displayDate = sprintEndDate.format("YYYY MMMM");
+                    this.sprintMonths.push(month);
+                }
+            }
+            //this.selectedMonth = this.sprintMonths[0].displayDate;
+        }
+    }
 }

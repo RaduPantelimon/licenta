@@ -12,18 +12,38 @@ var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var Observable_1 = require('rxjs/Observable');
 require('rxjs/add/operator/map');
+var Subject_1 = require('rxjs/Subject');
 var SprintsService = (function () {
     function SprintsService(_http) {
         this._http = _http;
         this._sprintsUrl = '/api/restapi/GetSprints/';
+        this._createSprintUrl = '/api/restapi/SaveSprint';
         this._obsvInitialized = false;
+        this.addedSprints = new Subject_1.Subject();
+        this.newSprints = this.addedSprints.asObservable();
     }
+    // Service message commands
+    SprintsService.prototype.registerNewlyCreateSprint = function (sprint) {
+        this.addedSprints.next(sprint);
+    };
     SprintsService.prototype.getSprints = function (projectID) {
         return this._http.get(this._sprintsUrl + projectID.toString()).map(function (response) { return response.json(); });
+    };
+    //add new sprint
+    SprintsService.prototype.addSprint = function (sprint) {
+        var _this = this;
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this._http.post(this._createSprintUrl, sprint, options)
+            .map(function (response) { return _this.extractData(response); });
     };
     SprintsService.prototype.handleError = function (error) {
         console.log(error);
         return Observable_1.Observable.throw(error.json().error || 'Server error');
+    };
+    SprintsService.prototype.extractData = function (res) {
+        var body = res.json();
+        return body || {};
     };
     SprintsService = __decorate([
         core_1.Injectable(), 
