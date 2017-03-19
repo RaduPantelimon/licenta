@@ -120,6 +120,42 @@ namespace ResourceApplicationTool.Controllers
             
         }
 
+        [System.Web.Http.AcceptVerbs("POST")]
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage SaveSprint([FromBody] Sprint newSprint)
+        {
+            string jsonResponseText = "";
+            try
+            {
+                
+                if (ModelState.IsValid)
+                {
+                    //checking if there are any other sprints created on the same interval
+                    //(StartA <= EndB) and (EndA >= StartB)
+
+                    int existingSprintsNo = db.Sprints.Where(
+                        x => (x.StartDate <= newSprint.EndDate && x.EndDate >= newSprint.StartDate)).Count();
+
+                    db.Sprints.Add(newSprint);
+                    db.SaveChanges();
+                    jsonResponseText = JsonConvert.SerializeObject(newSprint);
+                }
+                var response = Request.CreateResponse(HttpStatusCode.OK);
+                response.Content = new StringContent(jsonResponseText, Encoding.UTF8, "application/json");
+                return response;
+            }
+            catch (Exception ex)
+            {
+                jsonResponseText = "{\"status\":0,\"error\":\"Error trying to create the new task\",\"message\":\"" + ex.Message + "\"}";
+                var response = Request.CreateResponse(HttpStatusCode.InternalServerError);
+                response.Content = new StringContent(jsonResponseText, Encoding.UTF8, "application/json");
+                return response;
+            }
+
+        }
+
+
+
         //deletes a task
         [System.Web.Http.AcceptVerbs("DELETE")]
         [System.Web.Http.HttpDelete]
