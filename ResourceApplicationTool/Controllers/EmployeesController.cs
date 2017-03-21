@@ -72,14 +72,25 @@ namespace ResourceApplicationTool.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = db.Employees.Find(id);
+            Employee employee = db.Employees.Include(e => e.Role).SingleOrDefault(x => x.EmployeeID == id);
+
             if (employee == null)
             {
                 return HttpNotFound();
             }
+            if(employee.Role != null && employee.Role.Name != null)
+            {
+                ViewBag.RoleName = employee.Role.Name;
+            }
+            else
+            {
+                ViewBag.RoleName = "";
+            }
+
             ViewBag.DepartmentID = new SelectList(db.Departments, "DepartmentID", "Title", employee.DepartmentID);
             ViewBag.ManagerID = new SelectList(db.Employees, "EmployeeID", "Account", employee.ManagerID);
             ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "Name", employee.RoleID);
+            
             return View(employee);
         }
 
@@ -110,6 +121,7 @@ namespace ResourceApplicationTool.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Employee employee = db.Employees.Find(id);
+
             if (employee == null)
             {
                 return HttpNotFound();

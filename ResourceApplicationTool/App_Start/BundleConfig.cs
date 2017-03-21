@@ -30,6 +30,7 @@ namespace ResourceApplicationTool
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
+                      "~/Content/commonStyle.css",
                       "~/Content/Styles/masterpageStyle.css"));
 
             bundles.Add(new StyleBundle("~/Content/slickcss").Include(
