@@ -15,7 +15,7 @@
 <hr class="sec-hr" />
 
 <div class="main-form-container">
-    @using (Html.BeginForm())
+    @using ((Html.BeginForm("Edit", "Employees", null, FormMethod.Post, new { enctype = "multipart/form-data" })))
     {
         @Html.AntiForgeryToken()
 
@@ -25,10 +25,10 @@
             @Html.HiddenFor(model => model.EmployeeID)
 
             <div class="form-group">
-                <img class="profile-picture" src="~/Content/Pictures/default-profile-picture.png" >
+                <img class="profile-picture" src="~/@ViewBag.ImgID" >
                 <div class="profile-header">
                     <h4 class="sec-title-large sec-title"> @Model.FirstName @Model.LastName </h4>
-                    <h5 class="sec-title-small sec-title"> @ViewBag.RoleName </h5>
+                    <h5 class="sec-title-small sec-title sec-title-italic"> @ViewBag.RoleName </h5>
 
                     <label for="uploadProfilePicture"  class="btn btn-default"> Upload Profile Picture 
                         <input type="file" id="uploadProfilePicture" name="uploadProfilePicture" class="picture-input" />
@@ -131,14 +131,14 @@
                 <div class="form-group subsection">
                     @Html.LabelFor(model => model.ManagerID, "Manager", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.DropDownList("ManagerID", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.DropDownList("ManagerID", null, htmlAttributes: new { @class = "form-control", @id= "managers-input" })
                         @Html.ValidationMessageFor(model => model.ManagerID, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group subsection">
-                    @Html.LabelFor(model => model.DepartmentID, "Department", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.DepartmentID, "Department", htmlAttributes: new { @class = "control-label col-md-2"})
                     <div class="col-md-10">
-                        @Html.DropDownList("DepartmentID", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.DropDownList("DepartmentID", null, htmlAttributes: new { @class = "form-control", @id="departments-input" })
                         @Html.ValidationMessageFor(model => model.DepartmentID, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -197,7 +197,10 @@
                 <div class="form-group subsection">
                     @Html.LabelFor(model => model.HireDate, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.HireDate, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.TextBoxFor(model => model.HireDate,  new { @Value = Model.HireDate.ToString("MM/dd/yyyy"),
+                                                                           @class = "form-control",
+                                                                           @id = "hireDate-input" ,
+                                                                           @placeholder = "MM/DD/YYY" } )
                         @Html.ValidationMessageFor(model => model.HireDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -205,7 +208,11 @@
                 <div class="form-group subsection">
                     @Html.LabelFor(model => model.TerminationDate, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.TerminationDate, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.TextBoxFor(model => model.TerminationDate, new { @Value = Model.TerminationDate.HasValue ? Model.TerminationDate.Value.ToString("MM/dd/yyyy"):"",
+                                                                               @class = "form-control",
+                                                                               @id = "terminationDate-input",
+                                                                               @placeholder = "MM/DD/YYY"
+                                                                           })
                         @Html.ValidationMessageFor(model => model.TerminationDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -236,6 +243,12 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap-datepicker");
+    @Styles.Render("~/Content/bootstrap-datepickercss");
 }
+<script>
+    var departments = @Html.Raw(Json.Encode(ViewBag.Departments));
+</script>
+
 <script src="~/Scripts/employees/employees_edit.js">
 </script>

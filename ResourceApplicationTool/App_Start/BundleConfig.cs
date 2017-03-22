@@ -22,6 +22,9 @@ namespace ResourceApplicationTool
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap-datepicker").Include(
+                      "~/Scripts/bootstrap-datepicker.min.js"));
+
 
             bundles.Add(new ScriptBundle("~/bundles/slick").Include(
           "~/Scripts/jquery-migrate-1.2.1.js",
@@ -36,6 +39,9 @@ namespace ResourceApplicationTool
             bundles.Add(new StyleBundle("~/Content/slickcss").Include(
                       "~/Scripts/slick/slick/slick.css",
                       "~/Scripts/slick/slick/slick-theme.css"));
+
+            bundles.Add(new StyleBundle("~/Content/bootstrap-datepickercss").Include(
+                      "~/Content/bootstrap-datepicker3.css"));
         }
     }
 }

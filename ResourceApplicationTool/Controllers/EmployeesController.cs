@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ResourceApplicationTool.Models;
+using ResourceApplicationTool.Models.SecondaryModels;
+using ResourceApplicationTool.Utils;
 
 namespace ResourceApplicationTool.Controllers
 {
@@ -87,6 +89,25 @@ namespace ResourceApplicationTool.Controllers
                 ViewBag.RoleName = "";
             }
 
+            //getting the picture ready
+            if(employee.File != null)
+            {
+                ViewBag.ImgID = Const.PicturePaths.ImgControllerRoot + employee.File.FileNumber;
+            }
+            else
+            {
+                ViewBag.ImgID = Const.PicturePaths.ProfilePictureUrl;
+            }
+
+            //preparing the departments and managers lists
+            List<SerializableDepartment> departments = db.Departments.ToList().Select(x => new SerializableDepartment(x.Title, x.DepartmentID)).ToList();
+            foreach (SerializableDepartment dept in departments)
+            {
+                dept.Manangers = db.Employees.Where(x => x.DepartmentID == dept.DepartmentID && x.Administrator == Const.PermissionLevels.Manager).ToList().
+                    Select(x => new SerializableEmployee(x.FirstName, x.LastName, x.Account, x.EmployeeID)).ToList();
+
+            }
+            ViewBag.Departments = departments;
             ViewBag.DepartmentID = new SelectList(db.Departments, "DepartmentID", "Title", employee.DepartmentID);
             ViewBag.ManagerID = new SelectList(db.Employees, "EmployeeID", "Account", employee.ManagerID);
             ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "Name", employee.RoleID);
@@ -99,10 +120,18 @@ namespace ResourceApplicationTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EmployeeID,RoleID,Account,Password,ManagerID,DepartmentID,FirstName,MiddleInitial,LastName,Title,CNP,Email,PhoneNumber,Salary,PriorSalary,LastRaise,HireDate,TerminationDate,Administrator")] Employee employee)
+        public ActionResult Edit(
+            [Bind(Include = "EmployeeID,RoleID,Account,Password,ManagerID,DepartmentID,FirstName,MiddleInitial,LastName,Title,CNP,Email,PhoneNumber,Salary,PriorSalary,LastRaise,HireDate,TerminationDate,Administrator")] Employee employee,
+            HttpPostedFileBase uploadProfilePicture)
         {
             if (ModelState.IsValid)
             {
+                if (uploadProfilePicture != null && uploadProfilePicture.ContentLength > 0)
+                {
+                    Guid? avatarGuid = Common.CreateImage(uploadProfilePicture);
+                    //if file was stored successfully     
+                    employee.ProfileImageID = avatarGuid;
+                }
                 db.Entry(employee).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
