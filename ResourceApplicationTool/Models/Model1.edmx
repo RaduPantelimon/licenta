@@ -99,6 +99,32 @@
           <Property Name="JobDescription" Type="varchar(max)" />
           <Property Name="AverageSalary" Type="money" Nullable="false" />
         </EntityType>
+        <EntityType Name="SkillCategories">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SkillLevels">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="SkillID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="SkillID" Type="int" Nullable="false" />
+          <Property Name="Level" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Skills">
+          <Key>
+            <PropertyRef Name="SkillID" />
+          </Key>
+          <Property Name="SkillID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="CategoryID" Type="int" />
+        </EntityType>
         <EntityType Name="Sprints">
           <Key>
             <PropertyRef Name="SprintID" />
@@ -133,6 +159,20 @@
             </Principal>
             <Dependent Role="Departments">
               <PropertyRef Name="BannerImageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CategoryID">
+          <End Role="SkillCategories" Type="Self.SkillCategories" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Skills" Type="Self.Skills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SkillCategories">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Skills">
+              <PropertyRef Name="CategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -171,6 +211,18 @@
             </Principal>
             <Dependent Role="Projects">
               <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee1ID">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="SkillLevels" Type="Self.SkillLevels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="SkillLevels">
+              <PropertyRef Name="EmployeeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -274,6 +326,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SkillID">
+          <End Role="Skills" Type="Self.Skills" Multiplicity="1" />
+          <End Role="SkillLevels" Type="Self.SkillLevels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skills">
+              <PropertyRef Name="SkillID" />
+            </Principal>
+            <Dependent Role="SkillLevels">
+              <PropertyRef Name="SkillID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SprintID">
           <End Role="Sprints" Type="Self.Sprints" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -296,11 +360,18 @@
           <EntitySet Name="Files" EntityType="Self.Files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SkillCategories" EntityType="Self.SkillCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SkillLevels" EntityType="Self.SkillLevels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Skills" EntityType="Self.Skills" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sprints" EntityType="Self.Sprints" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_BannerID" Association="Self.FK_BannerID">
             <End Role="Files" EntitySet="Files" />
             <End Role="Departments" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategoryID" Association="Self.FK_CategoryID">
+            <End Role="SkillCategories" EntitySet="SkillCategories" />
+            <End Role="Skills" EntitySet="Skills" />
           </AssociationSet>
           <AssociationSet Name="FK_ContactID" Association="Self.FK_ContactID">
             <End Role="Contacts" EntitySet="Contacts" />
@@ -313,6 +384,10 @@
           <AssociationSet Name="FK_DepartmentIDProject" Association="Self.FK_DepartmentIDProject">
             <End Role="Departments" EntitySet="Departments" />
             <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee1ID" Association="Self.FK_Employee1ID">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="SkillLevels" EntitySet="SkillLevels" />
           </AssociationSet>
           <AssociationSet Name="FK_EmployeeID" Association="Self.FK_EmployeeID">
             <End Role="Employees" EntitySet="Employees" />
@@ -345,6 +420,10 @@
           <AssociationSet Name="FK_RoleIDTasks" Association="Self.FK_RoleIDTasks">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SkillID" Association="Self.FK_SkillID">
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="SkillLevels" EntitySet="SkillLevels" />
           </AssociationSet>
           <AssociationSet Name="FK_SprintID" Association="Self.FK_SprintID">
             <End Role="Sprints" EntitySet="Sprints" />
@@ -428,6 +507,7 @@
           <NavigationProperty Name="Role" Relationship="Self.FK_RoleID" FromRole="Employees" ToRole="Roles" />
           <Property Name="ProfileImageID" Type="Guid" />
           <NavigationProperty Name="File" Relationship="RATV3Model.fk_ProfileImageID" FromRole="Employee" ToRole="File" />
+          <NavigationProperty Name="SkillLevels" Relationship="RATV3Model.FK_Employee1ID" FromRole="Employee" ToRole="SkillLevel" />
         </EntityType>
         <EntityType Name="File">
           <Key>
@@ -700,6 +780,21 @@
             <End Role="Contact" EntitySet="Contacts" />
             <End Role="Project" EntitySet="Projects" />
           </AssociationSet>
+          <EntitySet Name="SkillCategories" EntityType="RATV3Model.SkillCategory" />
+          <EntitySet Name="SkillLevels" EntityType="RATV3Model.SkillLevel" />
+          <EntitySet Name="Skills" EntityType="RATV3Model.Skill" />
+          <AssociationSet Name="FK_Employee1ID" Association="RATV3Model.FK_Employee1ID">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="SkillLevel" EntitySet="SkillLevels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategoryID" Association="RATV3Model.FK_CategoryID">
+            <End Role="SkillCategory" EntitySet="SkillCategories" />
+            <End Role="Skill" EntitySet="Skills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SkillID" Association="RATV3Model.FK_SkillID">
+            <End Role="Skill" EntitySet="Skills" />
+            <End Role="SkillLevel" EntitySet="SkillLevels" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="fk_ProfileImageID">
           <End Type="RATV3Model.File" Role="File" Multiplicity="0..1" />
@@ -724,6 +819,75 @@
             </Principal>
             <Dependent Role="Project">
               <PropertyRef Name="ContactID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SkillCategory">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Skills" Relationship="RATV3Model.FK_CategoryID" FromRole="SkillCategory" ToRole="Skill" />
+        </EntityType>
+        <EntityType Name="SkillLevel">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="SkillID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="SkillID" Type="Int32" Nullable="false" />
+          <Property Name="Level" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="RATV3Model.FK_Employee1ID" FromRole="SkillLevel" ToRole="Employee" />
+          <NavigationProperty Name="Skill" Relationship="RATV3Model.FK_SkillID" FromRole="SkillLevel" ToRole="Skill" />
+        </EntityType>
+        <EntityType Name="Skill">
+          <Key>
+            <PropertyRef Name="SkillID" />
+          </Key>
+          <Property Name="SkillID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryID" Type="Int32" />
+          <NavigationProperty Name="SkillCategory" Relationship="RATV3Model.FK_CategoryID" FromRole="Skill" ToRole="SkillCategory" />
+          <NavigationProperty Name="SkillLevels" Relationship="RATV3Model.FK_SkillID" FromRole="Skill" ToRole="SkillLevel" />
+        </EntityType>
+        <Association Name="FK_Employee1ID">
+          <End Type="RATV3Model.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="RATV3Model.SkillLevel" Role="SkillLevel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="SkillLevel">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CategoryID">
+          <End Type="RATV3Model.SkillCategory" Role="SkillCategory" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="RATV3Model.Skill" Role="Skill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SkillCategory">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Skill">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SkillID">
+          <End Type="RATV3Model.Skill" Role="Skill" Multiplicity="1" />
+          <End Type="RATV3Model.SkillLevel" Role="SkillLevel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skill">
+              <PropertyRef Name="SkillID" />
+            </Principal>
+            <Dependent Role="SkillLevel">
+              <PropertyRef Name="SkillID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -858,6 +1022,34 @@
                 <ScalarProperty Name="TaskDescription" ColumnName="TaskDescription" />
                 <ScalarProperty Name="Difficulty" ColumnName="Difficulty" />
                 <ScalarProperty Name="Estimation" ColumnName="Estimation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SkillCategories">
+            <EntityTypeMapping TypeName="RATV3Model.SkillCategory">
+              <MappingFragment StoreEntitySet="SkillCategories">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SkillLevels">
+            <EntityTypeMapping TypeName="RATV3Model.SkillLevel">
+              <MappingFragment StoreEntitySet="SkillLevels">
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="SkillID" ColumnName="SkillID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Skills">
+            <EntityTypeMapping TypeName="RATV3Model.Skill">
+              <MappingFragment StoreEntitySet="Skills">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="SkillID" ColumnName="SkillID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

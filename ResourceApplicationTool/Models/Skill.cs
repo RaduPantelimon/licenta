@@ -11,26 +11,22 @@ namespace ResourceApplicationTool.Models
 {
     using System;
     using System.Collections.Generic;
-    using Newtonsoft.Json;
-
-    public partial class Sprint
+    
+    public partial class Skill
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Sprint()
+        public Skill()
         {
-            this.Tasks = new HashSet<Task>();
+            this.SkillLevels = new HashSet<SkillLevel>();
         }
     
-        public int SprintID { get; set; }
-        public int ProjectID { get; set; }
-        public System.DateTime StartDate { get; set; }
-        public System.DateTime EndDate { get; set; }
-        public Nullable<int> Duration { get; set; }
-
-        [JsonIgnore]
-        public virtual Project Project { get; set; }
-        [JsonIgnore]
+        public int SkillID { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public Nullable<int> CategoryID { get; set; }
+    
+        public virtual SkillCategory SkillCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Task> Tasks { get; set; }
+        public virtual ICollection<SkillLevel> SkillLevels { get; set; }
     }
 }

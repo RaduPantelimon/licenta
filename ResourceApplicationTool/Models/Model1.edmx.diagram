@@ -4,16 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d2cfaf9297ef4083889b08df155f2a3d" Name="Diagram1">
+      <Diagram DiagramId="d2cfaf9297ef4083889b08df155f2a3d" Name="Diagram1" ZoomLevel="77">
         <EntityTypeShape EntityType="RATV3Model.Contact" Width="1.5" PointX="2.25" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="RATV3Model.Department" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="RATV3Model.Education" Width="1.5" PointX="10.375" PointY="9.375" IsExpanded="true" />
         <EntityTypeShape EntityType="RATV3Model.Employee" Width="1.5" PointX="5.375" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="RATV3Model.File" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="RATV3Model.Project" Width="1.5" PointX="8.25" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RATV3Model.Project" Width="1.5" PointX="9" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="RATV3Model.Role" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="RATV3Model.Sprint" Width="1.5" PointX="10.125" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="RATV3Model.Task" Width="1.5" PointX="12.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RATV3Model.Sprint" Width="1.5" PointX="13.5" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RATV3Model.Task" Width="1.5" PointX="16.375" PointY="5.125" IsExpanded="true" />
         <AssociationConnector Association="RATV3Model.FK_BannerID" ManuallyRouted="false" />
         <AssociationConnector Association="RATV3Model.FK_DepartmentID" ManuallyRouted="false" />
         <AssociationConnector Association="RATV3Model.FK_DepartmentIDProject" ManuallyRouted="false" />
@@ -27,6 +27,12 @@
         <AssociationConnector Association="RATV3Model.FK_SprintID" ManuallyRouted="false" />
         <AssociationConnector Association="RATV3Model.fk_ProfileImageID" />
         <AssociationConnector Association="RATV3Model.FK_ContactID1" />
+        <EntityTypeShape EntityType="RATV3Model.SkillCategory" Width="1.5" PointX="11" PointY="0.5" />
+        <EntityTypeShape EntityType="RATV3Model.SkillLevel" Width="1.5" PointX="11" PointY="2.5" />
+        <EntityTypeShape EntityType="RATV3Model.Skill" Width="1.5" PointX="8.625" PointY="1.25" />
+        <AssociationConnector Association="RATV3Model.FK_Employee1ID" />
+        <AssociationConnector Association="RATV3Model.FK_CategoryID" />
+        <AssociationConnector Association="RATV3Model.FK_SkillID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

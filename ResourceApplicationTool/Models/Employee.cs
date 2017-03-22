@@ -12,7 +12,6 @@ namespace ResourceApplicationTool.Models
     using System;
     using System.Collections.Generic;
     using Newtonsoft.Json;
-
     public partial class Employee
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,25 +20,34 @@ namespace ResourceApplicationTool.Models
             this.Educations = new HashSet<Education>();
             this.Tasks = new HashSet<Task>();
             this.Employees1 = new HashSet<Employee>();
+            this.SkillLevels = new HashSet<SkillLevel>();
         }
     
         public int EmployeeID { get; set; }
         public Nullable<int> RoleID { get; set; }
         public string Account { get; set; }
+        [JsonIgnore]
         public string Password { get; set; }
+        [JsonIgnore]
         public Nullable<int> ManagerID { get; set; }
+        [JsonIgnore]
         public Nullable<int> DepartmentID { get; set; }
         public string FirstName { get; set; }
         public string MiddleInitial { get; set; }
         public string LastName { get; set; }
         public string Title { get; set; }
+        [JsonIgnore]
         public string CNP { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
+        [JsonIgnore]
         public decimal Salary { get; set; }
+        [JsonIgnore]
         public decimal PriorSalary { get; set; }
+        [JsonIgnore]
         public Nullable<decimal> LastRaise { get; set; }
         public System.DateTime HireDate { get; set; }
+        [JsonIgnore]
         public Nullable<System.DateTime> TerminationDate { get; set; }
         public string Administrator { get; set; }
         public Nullable<System.Guid> ProfileImageID { get; set; }
@@ -60,5 +68,8 @@ namespace ResourceApplicationTool.Models
         public virtual Role Role { get; set; }
         [JsonIgnore]
         public virtual File File { get; set; }
+        [JsonIgnore]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SkillLevel> SkillLevels { get; set; }
     }
 }
