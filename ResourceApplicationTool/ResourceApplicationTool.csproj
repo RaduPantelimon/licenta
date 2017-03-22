@@ -312,6 +312,7 @@
     <Content Include="package.json" />
     <Content Include="readme.md" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\common.js" />
     <Content Include="Scripts\employees\employees_edit.js" />
     <Content Include="Scripts\home\home.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

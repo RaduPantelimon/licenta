@@ -15,3 +15,17 @@
     padding: 80px 0px 0px 20px;
     float: left;
 }
+
+.user-profile-picture {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    float:left;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	-webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	-moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+}

@@ -11,6 +11,9 @@ function initializePage() {
     InitializeDepartments();
     InitializeDatePickers('#hireDate-input');
     InitializeDatePickers('#terminationDate-input');
+
+    //initialize profile image
+    displayLoadedImage($("#uploadProfilePicture"), $("#main-profile-picture-div"));
 }
 
 

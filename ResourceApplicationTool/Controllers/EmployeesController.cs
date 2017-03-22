@@ -92,7 +92,10 @@ namespace ResourceApplicationTool.Controllers
             //getting the picture ready
             if(employee.File != null)
             {
+                string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+                Request.ApplicationPath.TrimEnd('/') + "/";
                 ViewBag.ImgID = Const.PicturePaths.ImgControllerRoot + employee.File.FileNumber;
+                ViewBag.ImgIDSec = baseUrl + Const.PicturePaths.ImgControllerRoot + employee.File.FileNumber;
             }
             else
             {

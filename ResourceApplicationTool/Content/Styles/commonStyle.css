@@ -94,3 +94,7 @@ a.main_expand_collapse
 input[type="file"].picture-input{
     display:none;
 }
+
+.expandable-content{
+    margin: 20px;
+}
