@@ -51,13 +51,16 @@
 
 .tvd-sub-header
 {
-	margin-right:10px;
-    transition:0.2s;
-    margin-bottom:10px;
+    transition:0.2s;   
+    border-radius:20px;
+    /*border-radius: 20px 20px 0px 0px;*/
+    background-color:#428bca;
+    padding: 10px 5px;
 }
 
 .tvd-sub-header .sec-title{
     padding: 5px;
+    color: white;
 }
 .tvd-sub-header:hover .sec-title{
     background-color: #ff7f7f;
@@ -83,9 +86,9 @@ a.main_expand_collapse
 }
 .main_expandable{
     border: 1px solid lightgray;
-    padding: 20px;
+    /*padding: 20px;*/
     border-radius: 20px;
-    margin: 5px;
+    margin: 15px 5px;
 }
 .settings-logo{
     background:url(../Pictures/settings_background_img.png) no-repeat right fixed;

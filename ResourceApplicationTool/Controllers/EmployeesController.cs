@@ -153,6 +153,12 @@ namespace ResourceApplicationTool.Controllers
                     db.Entry(employee).Property(X => X.ProfileImageID).IsModified = false;
                 }
 
+                //saving the changes done to the skills
+                foreach(SkillLevel skLvl in employee.SkillLevelsList)
+                {
+                    db.Entry(skLvl).State = EntityState.Modified;
+                }
+
                 db.Entry(employee).Property(X => X.Password).IsModified = false;
                 db.SaveChanges();
                 return RedirectToAction("Index");

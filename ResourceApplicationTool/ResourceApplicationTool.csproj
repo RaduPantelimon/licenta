@@ -179,7 +179,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\dddController.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -278,9 +277,11 @@
     <Content Include="Content\Pictures\albert-camus.jpg" />
     <Content Include="Content\Pictures\arrows.png" />
     <Content Include="Content\Pictures\collapse-sign.png" />
+    <Content Include="Content\Pictures\collapse-small.png" />
     <Content Include="Content\Pictures\cross-512.png" />
     <Content Include="Content\Pictures\default-profile-picture.png" />
     <Content Include="Content\Pictures\expand-sign.png" />
+    <Content Include="Content\Pictures\expand-small.png" />
     <Content Include="Content\Pictures\joined.png" />
     <Content Include="Content\Pictures\mask.png" />
     <Content Include="Content\Pictures\masterpagepic.jpg" />
@@ -312,6 +313,10 @@
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
+    <Content Include="Scripts\bootstrap-sliders\bootstrap-slider.js" />
+    <Content Include="Scripts\bootstrap-sliders\bootstrap-slider.min.js" />
+    <Content Include="Scripts\bootstrap-sliders\css\bootstrap-slider.css" />
+    <Content Include="Scripts\bootstrap-sliders\css\bootstrap-slider.min.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\Model1.edmx">
