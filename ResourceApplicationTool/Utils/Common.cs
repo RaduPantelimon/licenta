@@ -35,5 +35,35 @@ namespace ResourceApplicationTool.Utils
             }
             return null;
         }
+
+        public static void CreateSkillTemplates(Employee emp)
+        {
+            try
+            {
+
+                List<Skill> skills = db.Skills.ToList();
+
+                foreach(Skill skill in skills)
+                {
+                        SkillLevel sk = db.SkillLevels.Where(x => x.SkillID == skill.SkillID && x.EmployeeID == emp.EmployeeID).FirstOrDefault();
+                        if(sk == null)
+                        {
+                            sk = new SkillLevel();
+                            sk.Level = 0;
+                            sk.SkillID = skill.SkillID;
+                            sk.EmployeeID = emp.EmployeeID;
+                        
+                            db.SkillLevels.Add(sk);
+                        
+                        }
+                }
+                db.SaveChanges();
+
+            }
+            catch(Exception ex)
+            {
+                //error handling
+            }
+        }
     }
 }

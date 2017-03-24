@@ -1,4 +1,6 @@
-﻿@model ResourceApplicationTool.Models.Employee
+﻿@using ResourceApplicationTool.Models;
+
+@model ResourceApplicationTool.Models.Employee
 
 @{
     ViewBag.Title = "Edit";
@@ -228,8 +230,57 @@
                     </div>
                 </div>
             </div>
+            <div class="main_expandable">
+                <div class="tvd-sub-header" style="height: 28px;">
+                    <table>
+                        <tr>
+                            <td>
+                                <a class="main_expand_collapse">
+                                    <img class="expandimg" src="~/Content/Pictures/expand-sign.png" title="expand" height="18" width="18" align="absbottom" style="display: none;">
+                                    <img class="collapseimg" src="~/Content/Pictures/collapse-sign.png" title="collapse" height="18" width="18" align="absbottom" style="display: inline;">
+                                </a>
+                            </td>
+                            <td>
+                                <h1 class="sec-title-large sec-title" data-scrollname="Projects" style="display: inline; bottom: 0px;">
+                                    Skills
+                                </h1>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="form-group subsection row">
+                    @foreach(SkillCategory skillCat in ViewBag.SkillCategories)
+                    {
+                        <div class="skill-category  col-ld-6 col-md-6 col-sm-6 col-xs-6">
+                            <h5>@skillCat.Title</h5>
+                            <div class="skill-category-container">
+                                @for (var i = 0; i < Model.SkillLevels.Count; i++)
+                                {
 
-                
+                                    if (Model.SkillLevelsList[i].Skill.CategoryID == skillCat.CategoryID)
+                                    {
+                                        <div class="employee-skill row">
+                                            @*Html.HiddenFor(m => Model.SkillLevelsList[i].SkillID)
+                                            @Html.HiddenFor(m => Model.SkillLevelsList[i].EmployeeID)
+                                            @Html.TextBoxFor(m => Model.SkillLevelsList[i].Level)*@
+
+                                            @Html.Label(Model.SkillLevelsList[i].Skill.Title, htmlAttributes: new { @class = "control-label col-ld-6 col-md-6 col-sm-6 col-xs-6" })
+                                            <div class="col-ld-6 col-md-6 col-md-6 col-sm-6 col-xs-6">
+                                                @Html.TextBoxFor(m => Model.SkillLevelsList[i].Level, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.HiddenFor(m => Model.SkillLevelsList[i].SkillID)
+                                                @Html.HiddenFor(m => Model.SkillLevelsList[i].EmployeeID)
+                                                @Html.ValidationMessageFor(model => model.Salary, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    }
+
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
 
                 <div class="form-group">
                     <div class="col-md-10">
@@ -237,8 +288,20 @@
                     </div>
                 </div>
             </div>
+
+
     }
+
+
 </div>
+
+@*@Html.EditorFor(model => model.SkillLevels)*@
+@*@foreach (SkillLevel sklvl in Model.SkillLevels)
+{
+    @Html.EditorFor(m => sklvl)
+}*@
+@*Html.EditorFor(model => model.SkillLevelsList)*@
+
 
 <div>
     @Html.ActionLink("Back to List", "Index")

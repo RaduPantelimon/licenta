@@ -89,17 +89,22 @@ namespace ResourceApplicationTool.Controllers
                 ViewBag.RoleName = "";
             }
 
+            Common.CreateSkillTemplates(employee);
+
+            string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+            Request.ApplicationPath.TrimEnd('/') + "/";
+            
             //getting the picture ready
-            if(employee.File != null)
+            if (employee.File != null)
             {
-                string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
-                Request.ApplicationPath.TrimEnd('/') + "/";
+
                 ViewBag.ImgID = Const.PicturePaths.ImgControllerRoot + employee.File.FileNumber;
                 ViewBag.ImgIDSec = baseUrl + Const.PicturePaths.ImgControllerRoot + employee.File.FileNumber;
             }
             else
             {
                 ViewBag.ImgID = Const.PicturePaths.ProfilePictureUrl;
+                ViewBag.ImgIDSec = baseUrl + Const.PicturePaths.ProfilePictureUrl;
             }
 
             //preparing the departments and managers lists
@@ -110,7 +115,10 @@ namespace ResourceApplicationTool.Controllers
                     Select(x => new SerializableEmployee(x.FirstName, x.LastName, x.Account, x.EmployeeID)).ToList();
 
             }
+
+            employee.SkillLevelsList = employee.SkillLevels.ToList();
             ViewBag.Departments = departments;
+            ViewBag.SkillCategories = db.SkillCategories.OrderByDescending(x => x.Skills.Count).ToList();
             ViewBag.DepartmentID = new SelectList(db.Departments, "DepartmentID", "Title", employee.DepartmentID);
             ViewBag.ManagerID = new SelectList(db.Employees, "EmployeeID", "Account", employee.ManagerID);
             ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "Name", employee.RoleID);
@@ -124,24 +132,35 @@ namespace ResourceApplicationTool.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(
-            [Bind(Include = "EmployeeID,RoleID,Account,Password,ManagerID,DepartmentID,FirstName,MiddleInitial,LastName,Title,CNP,Email,PhoneNumber,Salary,PriorSalary,LastRaise,HireDate,TerminationDate,Administrator")] Employee employee,
+            [Bind(Include = "EmployeeID,RoleID,Account,Password,ManagerID,DepartmentID,FirstName,MiddleInitial,LastName,Title,CNP,Email,PhoneNumber,Salary,PriorSalary,LastRaise,HireDate,TerminationDate,Administrator,SkillLevelsList")] Employee employee,
+            //Employee employee,
+            //SkillLevel[] SkillLevelsList,
+            //SkillLevelCollectionPostModel sklvlpostModel,
             HttpPostedFileBase uploadProfilePicture)
         {
             if (ModelState.IsValid)
             {
+
+                db.Entry(employee).State = EntityState.Modified;
                 if (uploadProfilePicture != null && uploadProfilePicture.ContentLength > 0)
                 {
                     Guid? avatarGuid = Common.CreateImage(uploadProfilePicture);
                     //if file was stored successfully     
                     employee.ProfileImageID = avatarGuid;
                 }
-                db.Entry(employee).State = EntityState.Modified;
+                else
+                {
+                    db.Entry(employee).Property(X => X.ProfileImageID).IsModified = false;
+                }
+
+                db.Entry(employee).Property(X => X.Password).IsModified = false;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.DepartmentID = new SelectList(db.Departments, "DepartmentID", "Title", employee.DepartmentID);
             ViewBag.ManagerID = new SelectList(db.Employees, "EmployeeID", "Account", employee.ManagerID);
             ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "Name", employee.RoleID);
+
             return View(employee);
         }
 
