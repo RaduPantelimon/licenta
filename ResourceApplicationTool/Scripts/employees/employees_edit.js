@@ -1,4 +1,6 @@
 ﻿$(window).ready(initializePage);
+
+
 function initializePage() {
 
     //deploying the expand collapse functionality
@@ -25,7 +27,15 @@ function initializePage() {
 
     //initialize profile image
     displayLoadedImage($("#uploadProfilePicture"), $("#main-profile-picture-div"));
+
+    //initialize CreateItemPopup
+    LoadModalView('#add-education', '#dialog-modal', '#modal-body-content');
 }
+
+function OpenDialog() {
+    $('#dialog-modal').dialog('open');
+}
+
 
 //expand collapse behaviour for the secondary sections
 function SecondaryExpandCollapse(link, action) {

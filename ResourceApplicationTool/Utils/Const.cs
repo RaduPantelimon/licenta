@@ -21,6 +21,11 @@ namespace ResourceApplicationTool.Utils
             public static readonly string ProfilePictureUrl = "Content/Pictures/default-profile-picture.png";
         }
 
+        public partial class QueryStringParams
+        {
+            public static readonly string isModal = "isModal";
+        }
+
         public static readonly string[] SkillLevels = {"None","Theory", "Practice", "Proficient","Expert", "Guru"};
         public static readonly List<SelectListItem> Permissions = new List<SelectListItem>{
                     new SelectListItem{ Text="Employee", Value = "Employee" },

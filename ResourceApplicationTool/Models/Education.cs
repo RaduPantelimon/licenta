@@ -11,10 +11,14 @@ namespace ResourceApplicationTool.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
+
     public partial class Education
     {
         public int EducationID { get; set; }
+
+        [Required]
         public string Title { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }

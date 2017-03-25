@@ -35,6 +35,10 @@ namespace ResourceApplicationTool
           "~/Scripts/jquery-migrate-1.2.1.js",
           "~/Scripts/slick/slick/slick.min.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jquery-uijs").Include(
+          "~/Scripts/jquery-ui/jquery-ui.js"));
+
+            //css bundles
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
@@ -51,6 +55,11 @@ namespace ResourceApplicationTool
 
             bundles.Add(new StyleBundle("~/Content/bootstrap-datepickercss").Include(
                       "~/Content/bootstrap-datepicker3.css"));
+
+            bundles.Add(new StyleBundle("~/Content/jquery-uicss").Include(
+          "~/Scripts/jquery-ui/css/jquery-ui.min.css",
+          "~/Scripts/jquery-ui/css/jquery-ui.structure.css",
+          "~/Scripts/jquery-ui/css/jquery-ui.theme.css"));
         }
     }
 }

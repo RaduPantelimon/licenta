@@ -186,6 +186,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DepartmentsController.cs" />
+    <Compile Include="Controllers\EducationsController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImagesController.cs" />
@@ -336,6 +337,16 @@
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-migrate-1.2.1.js" />
+    <Content Include="Scripts\jquery-ui\css\images\ui-icons_444444_256x240.png" />
+    <Content Include="Scripts\jquery-ui\css\images\ui-icons_555555_256x240.png" />
+    <Content Include="Scripts\jquery-ui\css\images\ui-icons_777620_256x240.png" />
+    <Content Include="Scripts\jquery-ui\css\images\ui-icons_777777_256x240.png" />
+    <Content Include="Scripts\jquery-ui\css\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Scripts\jquery-ui\css\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Scripts\jquery-ui\css\jquery-ui.min.css" />
+    <Content Include="Scripts\jquery-ui\css\jquery-ui.structure.css" />
+    <Content Include="Scripts\jquery-ui\css\jquery-ui.theme.css" />
+    <Content Include="Scripts\jquery-ui\jquery-ui.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -423,6 +434,12 @@
     <Content Include="Views\Projects\Edit.cshtml" />
     <Content Include="Views\Projects\Index.cshtml" />
     <Content Include="Views\Employees\EditorTemplates\SkillLevel.cshtml" />
+    <Content Include="Views\Shared\_LayoutPopup.cshtml" />
+    <Content Include="Views\Educations\Create.cshtml" />
+    <Content Include="Views\Educations\Delete.cshtml" />
+    <Content Include="Views\Educations\Details.cshtml" />
+    <Content Include="Views\Educations\Edit.cshtml" />
+    <Content Include="Views\Educations\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

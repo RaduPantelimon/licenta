@@ -93,3 +93,29 @@ table.skill-category-table{
 .slider-selection.skill-level5{
     background:red;
 }
+
+
+/* MODAL STYLE*/
+#dialog-modal{
+    width: 50%;
+    left: 50%;
+    margin-left: -25%;
+    height:500px;
+    top:300px;
+    overflow-y: auto;
+    border-radius:20px;
+}
+
+.modal-header{
+    background-color:#428bca;
+    color:white;
+}
+.modal-body,
+.modal-footer{
+    background-color:white;
+}
+.modal-footer{
+    margin-top: 0px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}

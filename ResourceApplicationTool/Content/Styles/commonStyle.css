@@ -101,3 +101,15 @@ input[type="file"].picture-input{
 .expandable-content{
     margin: 20px;
 }
+.form-group.subsection{
+    margin:0px;
+    padding:5px 15px;
+}
+/*.form-group.subsection:nth-child(4n+1),
+.form-group.subsection:nth-child(4n){
+    background-color:#eeeeee;
+}
+.form-group.subsection:nth-child(4n+3),
+.form-group.subsection:nth-child(4n+2){
+    background-color:#bbbbbb;
+}*/
