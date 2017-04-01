@@ -281,6 +281,9 @@
     <Content Include="Content\Pictures\collapse-small.png" />
     <Content Include="Content\Pictures\cross-512.png" />
     <Content Include="Content\Pictures\default-profile-picture.png" />
+    <Content Include="Content\Pictures\delete-icon.png" />
+    <Content Include="Content\Pictures\edit-icon.png" />
+    <Content Include="Content\Pictures\edit-image.png" />
     <Content Include="Content\Pictures\expand-sign.png" />
     <Content Include="Content\Pictures\expand-small.png" />
     <Content Include="Content\Pictures\joined.png" />
@@ -331,6 +334,7 @@
     <Content Include="readme.md" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\common.js" />
+    <Content Include="Scripts\employees\employees_common.js" />
     <Content Include="Scripts\employees\employees_edit.js" />
     <Content Include="Scripts\home\home.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

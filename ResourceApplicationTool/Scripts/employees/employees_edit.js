@@ -30,6 +30,10 @@ function initializePage() {
 
     //initialize CreateItemPopup
     LoadModalView('#add-education', '#dialog-modal', '#modal-body-content');
+    IntializeDialogModal();
+
+    //initialize educations
+    InitializeEducations($("#educations-table"), EmployeeID);
 }
 
 function OpenDialog() {
@@ -145,17 +149,13 @@ function InitializeDepartments(){
     $("#departments-input").trigger("change");
 }
 
-//behaviour used to initialize the hiredate pickers
-function InitializeDatePickers(selector)
-{
-    var container = $("#main-form-container > form").length > 0 ? $('"#main-form-container > form').parent() : "body";
-    var options = {
-        format: 'mm/dd/yyyy',
-        container: container,
-        todayHighlight: true,
-        autoclose: true,
-    };
 
-    var date_input = $(selector);
-    date_input.datepicker(options);
+function IntializeDialogModal() {
+    $('#dialog-modal').on('show.bs.modal', function (e) {
+        setTimeout(function () {
+            InitializeDatePickers('#startDate-input');
+            InitializeDatePickers('#endDate-input');
+        }, 300);
+    });
+
 }

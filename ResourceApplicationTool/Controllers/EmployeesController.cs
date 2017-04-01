@@ -74,7 +74,7 @@ namespace ResourceApplicationTool.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = db.Employees.Include(e => e.Role).SingleOrDefault(x => x.EmployeeID == id);
+            Employee employee = db.Employees.Include(e => e.Role).Include(e => e.Educations).SingleOrDefault(x => x.EmployeeID == id);
 
             if (employee == null)
             {

@@ -113,3 +113,7 @@ input[type="file"].picture-input{
 .form-group.subsection:nth-child(4n+2){
     background-color:#bbbbbb;
 }*/
+
+.button-holder.form-group{
+    margin: 0px auto;
+}

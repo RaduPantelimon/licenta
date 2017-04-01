@@ -45,7 +45,7 @@ namespace ResourceApplicationTool.Controllers
 
             return response;
         }
-
+        #region SprintAndTaskActions definition  
         // GET: Template Tasks
         public HttpResponseMessage GetTemplateTasks()
         {
@@ -61,8 +61,7 @@ namespace ResourceApplicationTool.Controllers
 
             return response;
         }
-
-
+   
         //GET: Sprint Tasks
         public HttpResponseMessage GetSprintTasks(int id)
         {
@@ -185,6 +184,28 @@ namespace ResourceApplicationTool.Controllers
             }
 
         }
+        #endregion
+
+        #region Educations definition
+
+        public HttpResponseMessage GetEducations(int id)
+        {
+            string jsonResponseText = "";
+            Employee employee = db.Employees.Include(x => x.Educations).Where(x => x.EmployeeID == id).FirstOrDefault();
+            if (employee != null)
+            {
+                List<Education> educations = employee.Educations.ToList();
+                if (educations != null)
+                {
+                    jsonResponseText = JsonConvert.SerializeObject(educations);
+                }
+            }
+            var response = Request.CreateResponse(HttpStatusCode.OK);
+            response.Content = new StringContent(jsonResponseText, Encoding.UTF8, "application/json");
+            return response;
+        }
+
+        #endregion
 
     }
 }

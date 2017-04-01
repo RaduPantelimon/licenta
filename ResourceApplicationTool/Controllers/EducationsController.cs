@@ -46,13 +46,26 @@ namespace ResourceApplicationTool.Controllers
             //trying to find out if our page is a modal window or not
             bool isModal = false;
             string isModalString = Request.QueryString[Const.QueryStringParams.isModal]!=null? Request.QueryString[Const.QueryStringParams.isModal].ToString():"";
+            string employeeID = Request.QueryString[Const.QueryStringParams.employeeID] != null ? Request.QueryString[Const.QueryStringParams.employeeID].ToString() : "";
             //string 
             if (!String.IsNullOrEmpty(isModalString) && isModalString =="1")
             {
                 isModal = true;
             }
-            ViewBag.EmployeeID = new SelectList(db.Employees, "EmployeeID", "Account");
+            
             ViewBag.IsModal = isModal;
+            int emppIntID;
+            if(!String.IsNullOrEmpty(employeeID) && int.TryParse(employeeID, out emppIntID))
+            {
+                ViewBag.empID = employeeID;
+                ViewBag.EmployeeID = new SelectList(db.Employees, "EmployeeID", "Account", emppIntID);
+            }
+            else
+            {
+                ViewBag.EmployeeID = new SelectList(db.Employees, "EmployeeID", "Account");
+                ViewBag.empID = "";
+            }
+            
             return PartialView();
         }
 
@@ -75,36 +88,22 @@ namespace ResourceApplicationTool.Controllers
             //return "Freak out";
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateEducation([Bind(Include = "EducationID,Title,StartDate,EndDate,Degree,EmployeeID,Duration")] Education education)
-        {
-            string jsonResponseText = "";
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    db.Educations.Add(education);
-                    db.SaveChanges();
-                    jsonResponseText = JsonConvert.SerializeObject(education);
-                    return Json(education);
-                }
-
-                //var response = Request.CreateResponse(HttpStatusCode.OK);
-                //response.Content = new StringContent(jsonResponseText, Encoding.UTF8, "application/json");
-                //return response;
-                return Json(new { status = "0", statusMessage = "Model stat was not valid" });
-            }
-            catch(Exception ex)
-            {
-                return Json(new { status = "0", statusMessage = ex.InnerException.Message });
-            }
-
-        }
+       
 
         // GET: Educations/Edit/5
         public ActionResult Edit(int? id)
         {
+            //trying to find out if our page is a modal window or not
+            bool isModal = false;
+            string isModalString = Request.QueryString[Const.QueryStringParams.isModal] != null ? Request.QueryString[Const.QueryStringParams.isModal].ToString() : "";
+            //string 
+            if (!String.IsNullOrEmpty(isModalString) && isModalString == "1")
+            {
+                isModal = true;
+            }
+            ViewBag.IsModal = isModal;
+
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -123,11 +122,13 @@ namespace ResourceApplicationTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EducationID,Title,StartDate,EndDate,Degree,EmployeeID,Duration")] Education education)
+        public ActionResult Edit([Bind(Include = "EducationID,Title,StartDate,EndDate,Degree")] Education education)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(education).State = EntityState.Modified;
+                db.Entry(education).Property(x => x.EmployeeID).IsModified = false;
+                db.Entry(education).Property(x => x.Duration).IsModified = false;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -138,6 +139,17 @@ namespace ResourceApplicationTool.Controllers
         // GET: Educations/Delete/5
         public ActionResult Delete(int? id)
         {
+            //trying to find out if our page is a modal window or not
+            bool isModal = false;
+            string isModalString = Request.QueryString[Const.QueryStringParams.isModal] != null ? Request.QueryString[Const.QueryStringParams.isModal].ToString() : "";
+            //string 
+            if (!String.IsNullOrEmpty(isModalString) && isModalString == "1")
+            {
+                isModal = true;
+            }
+            ViewBag.IsModal = isModal;
+
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -169,5 +181,95 @@ namespace ResourceApplicationTool.Controllers
             }
             base.Dispose(disposing);
         }
+
+        #region RestApiActions 
+        //create a new education
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateEducation([Bind(Include = "EducationID,Title,StartDate,EndDate,Degree,EmployeeID")] Education education)
+        {
+            string jsonResponseText = "";
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    db.Educations.Add(education);
+                    db.SaveChanges();
+                    jsonResponseText = JsonConvert.SerializeObject(education);
+                    return Json(education);
+                }
+
+                //var response = Request.CreateResponse(HttpStatusCode.OK);
+                //response.Content = new StringContent(jsonResponseText, Encoding.UTF8, "application/json");
+                //return response;
+                return Json(new { status = "0", statusMessage = "Model stat was not valid" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = "0", statusMessage = ex.InnerException.Message });
+            }
+
+        }
+        // POST: Educations/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteEducation(int id)
+        {
+            try
+            {
+                Education education = db.Educations.Find(id);
+                db.Educations.Remove(education);
+                db.SaveChanges();
+                return Json(new { status = "1", statusMessage = "The item was successfully deleted." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = "0", statusMessage = ex.InnerException.Message });
+            }
+        }
+        // POST: Educations/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditEducation([Bind(Include = "EducationID,Title,StartDate,EndDate,Degree,EmployeeID")] Education education)
+        {
+            string jsonResponseText = "";
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    db.Entry(education).State = EntityState.Modified;
+                    db.Entry(education).Property(x => x.EmployeeID).IsModified = false;
+                    db.Entry(education).Property(x => x.Duration).IsModified = false;
+                    db.SaveChanges();
+                    jsonResponseText = JsonConvert.SerializeObject(education);
+                    return Json(education);
+                }
+                
+                return Json(new { status = "0", statusMessage = "Model stat was not valid" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = "0", statusMessage = ex.InnerException.Message });
+            }
+        }
+        //expecting the employee id
+        public HttpResponseMessage GetEducationsForEmployee(int id, HttpRequestMessage request)
+        {
+            string jsonResponseText = "";
+            Employee employee = db.Employees.Include(x => x.Educations).Where(x => x.EmployeeID == id).FirstOrDefault();
+            if (employee != null)
+            {
+                List<Education> educations = employee.Educations.ToList();
+                if (educations != null)
+                {
+                    jsonResponseText = JsonConvert.SerializeObject(educations);
+                }
+            }
+            var response = request.CreateResponse(HttpStatusCode.OK);
+            response.Content = new StringContent(jsonResponseText, Encoding.UTF8, "application/json");
+            return response;
+        }
+
+        #endregion
     }
 }

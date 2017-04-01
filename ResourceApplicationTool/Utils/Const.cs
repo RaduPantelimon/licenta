@@ -24,6 +24,7 @@ namespace ResourceApplicationTool.Utils
         public partial class QueryStringParams
         {
             public static readonly string isModal = "isModal";
+            public static readonly string employeeID = "employeeID";
         }
 
         public static readonly string[] SkillLevels = {"None","Theory", "Practice", "Proficient","Expert", "Guru"};

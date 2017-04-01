@@ -4,14 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
+    @*Styles.Render("~/Content/css")
     @Styles.Render("~/Content/slickcss")
     @Scripts.Render("~/bundles/modernizr")
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/slick")
-    @Scripts.Render("~/bundles/common")
+    @Scripts.Render("~/bundles/common")*@
     @RenderSection("scripts", required: false)
 
     @if (ViewBag.hrefVal != null && ViewBag.showBaseHref != null && ViewBag.showBaseHref == true)
@@ -21,7 +21,7 @@
 
 </head>
 <body>
-    <div class="main-container">
+    <div class="main-container" style="padding-top:0px;">
         @RenderBody()
     </div>
 </body>
