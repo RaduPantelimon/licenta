@@ -40,6 +40,8 @@
     overflow: hidden;
     top: 0;
     left: 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 .small_sweepimage {
@@ -68,7 +70,10 @@
     opacity: 1;
     z-index: 5;
 }
-
+.third-effect{
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+}
 .third-effect a.info {
     position: relative;
     top: 50%;
@@ -304,4 +309,12 @@ img.banner-icon {
     overflow-y:auto;
     margin:10px;
     height:70px;
+}
+
+.secondary-dept-field{
+    height:30px;
+}
+
+.carousel-item{
+    margin-top:20px;
 }

@@ -285,6 +285,7 @@
     <Content Include="Content\Pictures\departments-picture.png" />
     <Content Include="Content\Pictures\edit-icon.png" />
     <Content Include="Content\Pictures\edit-image.png" />
+    <Content Include="Content\Pictures\employees-banner-icon.png" />
     <Content Include="Content\Pictures\expand-sign.png" />
     <Content Include="Content\Pictures\expand-small.png" />
     <Content Include="Content\Pictures\imghover.png" />
@@ -345,6 +346,7 @@
     <Content Include="Scripts\departments\departments-common.js" />
     <Content Include="Scripts\departments\departments-display.js" />
     <Content Include="Scripts\departments\departments-index.js" />
+    <Content Include="Scripts\employees\employees-index.js" />
     <Content Include="Scripts\employees\employees_common.js" />
     <Content Include="Scripts\employees\employees_edit.js" />
     <Content Include="Scripts\home\home.js" />

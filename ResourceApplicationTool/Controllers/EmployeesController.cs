@@ -19,7 +19,10 @@ namespace ResourceApplicationTool.Controllers
         // GET: Employees
         public ActionResult Index()
         {
-            var employees = db.Employees.Include(e => e.Department).Include(e => e.Employee1).Include(e => e.Role);
+            var employees = db.Employees.Include(e => e.Department).Include(e => e.Employee1).Include(e => e.Role).OrderBy(e => e.DepartmentID);
+            List<Department> departmentsForEmployees = db.Departments.ToList();
+
+            ViewBag.departments = departmentsForEmployees;
             return View(employees.ToList());
         }
 

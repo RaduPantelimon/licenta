@@ -112,15 +112,25 @@ else
 </div>
 
 <p>
-    @Html.ActionLink("Back to List", "Index")
+    <button type="button"
+            class="btn btn-default btn-inverse"
+            id="cancel"
+            onclick="window.history.back()">
+        <i class="icon-remove icon-large"></i>
+        Cancel
+    </button>
 </p>
 
 <h2 class="sec-title-large sec-title carousel-header"> Employees in this department </h2>
+@if (Model.Employees == null || Model.Employees.Count == 0)
+{
+    <h3 class="sec-title-large sec-title carousel-header carousel-empty-header">This department currently has no employees</h3>
+}
 <div class="row">
     <div class="carousel-depts">
         @foreach (Employee emp in Model.Employees)
         {
-      <!--<div class="wip-div" ></div>-->
+     
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 department-item">
 
                 <figure class="view third-effect">

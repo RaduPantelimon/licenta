@@ -13,6 +13,12 @@
     background-position: 50% 0px;
     border: 1px solid lightgray;
 }
+.main-items-container{
+    margin-top:50px;
+}
+.slick-section{
+    margin-top:100px
+}
 .sec-title {
     margin-bottom: 5px;
     transition:0.2s;
@@ -153,6 +159,10 @@ input[type="file"].picture-input{
     padding: 30px 10px;
     text-align:center;
 }
+.carousel-header.carousel-empty-header{
+    font-weight: bold;
+    font-size:20px;
+}
 div.secondary-dept-field.full-row-field{
     display:block;
     clear:both;
@@ -171,4 +181,19 @@ div.secondary-dept-field.full-row-field{
 div.stat-sec.stat-sec-bottom
 {
     padding-bottom: 5px;
+}
+
+.filter-title,
+.filter-select{
+    float:left;
+}
+
+.filter-title{
+    margin-right: 10px;
+}
+
+.filter-select{
+    margin-top: 10px;
+    font-size: 18px;
+    color: #555555;
 }
