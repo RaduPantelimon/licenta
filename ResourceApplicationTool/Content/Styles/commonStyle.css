@@ -117,3 +117,58 @@ input[type="file"].picture-input{
 .button-holder.form-group{
     margin: 0px auto;
 }
+
+.profile-picture{
+    width: 200px;
+    height: 200px;
+    margin: 0px 0px 0px 150px;
+    border: 1px solid lightgray;
+    border-radius: 100px;
+    float:left;
+
+}
+.profile-header{
+    padding: 80px 0px 0px 20px;
+    float: left;
+}
+
+
+.field-name{
+    display: inline-block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.full-row{
+    padding-top:10px;
+}
+
+.carousel-header{
+    font-size: 24px;
+    line-height: 24px;
+    font-family: OpenSans-lighter;
+    margin-bottom: 0;
+    color: #434a54;
+    margin-left:auto;
+    margin-right:auto;
+    padding: 30px 10px;
+    text-align:center;
+}
+div.secondary-dept-field.full-row-field{
+    display:block;
+    clear:both;
+    width:100%;
+    margin:10px 2px;
+    float:none;
+}
+
+div.stat-sec.stat-sec-bottom,
+div.stat-sec.stat-sec-bottom .department-secondary-label,
+div.secondary-dept-field.full-row-field{
+    /*We need this in order to allow the slick item to display its bottom margin*/
+    float:none;
+
+}
+div.stat-sec.stat-sec-bottom
+{
+    padding-bottom: 5px;
+}

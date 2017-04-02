@@ -100,3 +100,61 @@ function InitializeDatePickers(selector) {
     var date_input = $(selector);
     date_input.datepicker(/*options*/);
 }
+
+//expand collapse behaviour for the main sections
+function MainExpandCollapse(link, action) {
+    var subsection = $(link).closest(".main_expandable");
+    var expand = true;
+    var collapse = false;
+    var img = subsection.find("a.main_expand_collapse img:visible");
+    if (action == 'auto') {
+        if (img.hasClass("expandimg")) {
+            expand = true;
+            collapse = false;
+        }
+        else {
+            expand = false;
+            collapse = true;
+        }
+    }
+    if (action == 'expand') {
+        expand = true;
+        collapse = false;
+    }
+    if (action == 'collapse') {
+        expand = false;
+        collapse = true;
+    }
+    if (expand) {
+        // expanding
+        subsection.children(":not(.tvd-sub-header)").show();
+        subsection.find("a.main_expand_collapse img.expandimg").hide();
+        subsection.find("a.main_expand_collapse img.collapseimg").show();
+
+    }
+    else {
+        // collapsing
+        subsection.children(":not(.tvd-sub-header)").hide();
+        subsection.find("a.main_expand_collapse img.expandimg").show();
+        subsection.find("a.main_expand_collapse img.collapseimg").hide();
+
+    }
+
+}
+
+
+function InitializeCarousel(carouselContainer) {
+    $(carouselContainer).slick({
+        dots: false,
+        infinite: true,
+        speed: 300,
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        responsive: [
+          { breakpoint: 1225, settings: { slidesToShow: 3, slidesToScroll: 3, infinite: true, dots: true } },
+          { breakpoint: 1000, settings: { slidesToShow: 2, slidesToScroll: 2 } },
+          { breakpoint: 650, settings: { slidesToShow: 1, slidesToScroll: 1 } }
+        ],
+
+    });
+}

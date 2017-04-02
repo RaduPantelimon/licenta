@@ -1,70 +1,87 @@
 ﻿@model IEnumerable<ResourceApplicationTool.Models.Department>
+@using ResourceApplicationTool.Models;
+@using ResourceApplicationTool.Utils;
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+
+<link href="~/Content/Styles/Department/departmentsCommonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/commonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/slickStyle.css" rel="stylesheet" /> 
+<link href="~/Content/Styles/Department/departmentsIndexStyle.css" rel="stylesheet" />
+
+
+<div class="mainHeaderLogo departments-logo" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"></div>
+
+<div class="departments-container">
+    
+    <div class="text-info">
+        <h2 class="sec-title-huge sec-title departments-title">Departments</h2> 
+        @Html.ActionLink("Create New", "Create",null, new { @class = "btn-primary add-new-button" })
+    </div>
+    <hr class="sec-hr title-hr" />
+ 
+    <div class="departments-section row">
+    @foreach (Department dept in Model)
+    {
+
+            <!--<div class="wip-div" ></div>-->
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 department-item">
+
+            <figure class="view third-effect">
+                <div class="joined"></div>
+                @if (dept.MainImageID.HasValue)
+                {
+                    <div class="small_sweepimage" style="background-image:url('@(ViewBag.baseUrl + Const.PicturePaths.ImgControllerRoot + dept.File1.FileNumber )');"></div>
+                }
+                else
+                {
+                    <div class="small_sweepimage" style="background-image:url('../Content/Pictures/masterpagepic.jpg');"></div>
+                }
+                
+                <div class="mask clickable-mask" onclick="redirectToUrl('/Departments/Details/@dept.DepartmentID')" >
+                    <a href="" class="info">Read More</a>
+                </div>
+
+                <div class="mask">
+                    <a href="/Departments/Details/@dept.DepartmentID" class="info">Read More</a>
+                </div>
+
+            </figure>
+            <div class="mask-background-parent">
+                <div class="mask-background">
+                    <div class="mask-front">
+                        <div class="stat sec-sweep-title ">
+                            <div class="stat-sec sweep-stat">
+                                <h2 class="limited-container dept-title">@dept.Title</h2>
+                            </div>
+                            <div class="sweep_stat_right">
+                                <div class="stat-sec banner-stat-right">
+                                    <div class="secondary-dept-field">
+                                        <img class="banner-icon department-secondary-label department-banner-icon" src="../Content/Pictures/projects-icon.png" alt="" height="28" width="28">
+                                        <p class="banner-bold-value department-secondary-label"> @dept.MaxSize </p>
+                                    </div>
+                                    <div class="secondary-dept-field">
+                                        <img class="banner-icon department-secondary-label department-banner-icon" src="../Content/Pictures/users-icon.png" alt="" height="28" width="28">
+                                        <p class="banner-bold-value department-secondary-label"> @dept.MaxSize</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sec-dept-detail">
+                            @dept.DeptDescription
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+</div>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MaxSize)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DeptDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MonthlyExpenses)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.File.FileNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.File1.FileNumber)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaxSize)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeptDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MonthlyExpenses)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.File.FileNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.File1.FileNumber)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.DepartmentID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.DepartmentID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.DepartmentID })
-        </td>
-    </tr>
-}
-
-</table>

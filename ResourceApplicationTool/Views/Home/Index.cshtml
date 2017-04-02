@@ -26,13 +26,12 @@
                 <figure class="view third-effect">
                     <div class="joined"></div>
                     <div class="small_sweepimage" style="background-image:url('../Content/Pictures/masterpagepic.jpg');"></div>
-                    <!--<img class="small_sweepimage show-480p" src="{{ PictureUrl }}{{ImageUrl}}" alt="banner">-->
-                    <div class="mask clickable-mask" onclick="redirectToUrl('/{{#isGiveaway}}Giveaway{{/isGiveaway}}{{^isGiveaway}}CashGrab{{/isGiveaway}}/{{Id}}')">
+                    <div class="mask clickable-mask" onclick="redirectToUrl('/Departments/Details/@dept.DepartmentID')">
                         <a href="" class="info">Read More</a>
                     </div>
 
                     <div class="mask">
-                        <a href="/AdCard/{{Id}}" class="info">Read More</a>
+                        <a href="/Departments/Details/@dept.DepartmentID" class="info">Read More</a>
                     </div>
 
                 </figure>
@@ -60,34 +59,6 @@
                         </div>
                     </div>
                 </div>
-                    <!--<div class="stat-sec sweep-stat">
-                        <h2 class="limited-container">Test Title</h2>
-                    </div>
-                    <div class="content-stat-sec stat-sec sweep-stat">
-                        <p class="limited-container">Test lalalala</p>
-                    </div>
-                    <div class="sweep_stat_right">
-                        <div class="stat-sec banner-stat-right">
-                            <img class="banner-icon" src="/images/timeclock.png" alt="" height="28" width="28">
-                            <p class="banner-bold-value">00:00:00:00</p>
-
-                            <img class="banner-icon" src="/images/diamond.png" alt="" height="28" width="28">
-                            <p class="banner-bold-value"> lalalaal</p>
-                        </div>
-                        <div class="joinnow banner-stat-right sweep-last-element">
-                            <a class="banner-join-a" href="">
-                                Join Again
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="stat-sec sweep-stat">
-                        <h2 class="">Test Title</h2>
-                    </div>
-                    <div class="stat-sec sweep-stat">
-                        <p>Test lalalala</p>
-                    </div>-->
-
             </div>
         }
     </div>

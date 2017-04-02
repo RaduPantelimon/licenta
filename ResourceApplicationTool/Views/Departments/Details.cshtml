@@ -1,80 +1,184 @@
 ﻿@model ResourceApplicationTool.Models.Department
+@using ResourceApplicationTool.Models;
+@using ResourceApplicationTool.Utils;
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/Content/Styles/Department/departmentsCommonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/commonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/slickStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/Department/departmentsDisplayStyle.css" rel="stylesheet" />
 
-<h2>Details</h2>
-
+@if (Model.BannerImageID.HasValue)
+{
+    <div class="mainHeaderLogo departments-logo" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"
+         style="background-image: url('@(ViewBag.baseUrl + Const.PicturePaths.ImgControllerRoot + Model.File.FileNumber)');"></div>
+}
+else
+{
+    <div class="mainHeaderLogo departments-logo" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"></div>
+}
 <div>
-    <h4>Department</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MaxSize)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MaxSize)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DeptDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DeptDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MonthlyExpenses)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MonthlyExpenses)
-        </dd>
-        
-      
-        @if (Model.BannerImageID.HasValue)
-        {
-            <dt>
-                Banner 
-            </dt>
-            <dd>
-                <img src="~/Images/@Model.File.FileNumber" alt="avatar" />
-            </dd>
-        }
+    <div class="form-group profile-header-container">
         @if (Model.MainImageID.HasValue)
         {
-            <dt>
-               Picture
-            </dt>
-            <dd>
-                <img src="~/Images/@Model.File1.FileNumber" alt="avatar" />
-            </dd>
+            <div id="main-profile-picture-div" class="department-main-picture" style="background-image: url('@(ViewBag.baseUrl + Const.PicturePaths.ImgControllerRoot + Model.File1.FileNumber)');"></div>
+        }
+        else
+        {
+            <div id="main-profile-picture-div" class="department-main-picture" style="background-image: url('/Content/Pictures/masterpagepic.jpg');"></div>
         }
 
+        <div class="profile-header">
+            <h4 class="sec-title-large sec-title"> @Model.Title</h4>
+            @Html.ActionLink("Edit", "Edit", new { @id = Model.DepartmentID }, new { @class = "btn-primary edit-department-button", @id = Model.DepartmentID })
+            @Html.ActionLink("Delete", "Delete", new { @id = Model.DepartmentID }, new { @class = "btn-danger edit-department-button", @id = Model.DepartmentID })
 
-    </dl>
+
+            <!--<label for="uploadProfilePicture" class="btn btn-default">
+                Upload Profile Picture
+                <input type="file" id="uploadProfilePicture" name="uploadProfilePicture" class="picture-input" />
+            </label>-->
+        </div>
+    </div>
 </div>
+<div class="main-form-container">
+    <div class="main_expandable">
+        <div class="tvd-sub-header">
+            <table>
+                <tr>
+                    <td>
+                        <a class="main_expand_collapse">
+                            <img class="expandimg" src="~/Content/Pictures/expand-sign.png" title="expand" height="18" width="18" align="absbottom" style="display: none;">
+                            <img class="collapseimg" src="~/Content/Pictures/collapse-sign.png" title="collapse" height="18" width="18" align="absbottom" style="display: inline;">
+                        </a>
+                    </td>
+                    <td>
+                        <h1 class="sec-title-large sec-title" data-scrollname="Projects" style="display: inline; bottom: 0px;">
+                            Organizational Information
+                        </h1>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="row expandable-content">
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.Title)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @Html.DisplayFor(model => model.Title)
+                </div>
+            </div>
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3">
+                    @Html.DisplayNameFor(model => model.MaxSize)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @Html.DisplayFor(model => model.MaxSize)
+                </div>
+            </div>
+
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @String.Format("{0:MM/dd/yyyy}", Model.StartDate)
+                </div>
+            </div>
+
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.MonthlyExpenses)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @Html.DisplayFor(model => model.MonthlyExpenses)
+                </div>
+            </div>
+
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name full-row col-md-12 col-sm-12">
+                    Department Description
+                </div>
+                <div class="col-md-12 col-sm-12 full-row">
+                    @Html.DisplayFor(model => model.DeptDescription)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.DepartmentID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+<h2 class="sec-title-large sec-title carousel-header"> Employees in this department </h2>
+<div class="row">
+    <div class="carousel-depts">
+        @foreach (Employee emp in Model.Employees)
+        {
+      <!--<div class="wip-div" ></div>-->
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 department-item">
+
+                <figure class="view third-effect">
+                    @if (emp.ProfileImageID.HasValue)
+                    {
+                        <div class="small_sweepimage" style="background-image:url('@(ViewBag.baseUrl + Const.PicturePaths.ImgControllerRoot + emp.File.FileNumber )');"></div>
+                    }
+                    else
+                    {
+                        <div class="small_sweepimage" style="background-image:url('../../Content/Pictures/default-profile-picture.png');"></div>
+                    }
+
+                    <div class="mask clickable-mask" onclick="redirectToUrl('/Departments/Details/@emp.EmployeeID')">
+                        <a href="" class="info">Read More</a>
+                    </div>
+
+                    <div class="mask">
+                        <a href="/Employees/Details/@emp.EmployeeID" class="info">Read More</a>
+                    </div>
+
+                </figure>
+                <div class="mask-background-parent">
+                    <div class="mask-background">
+                        <div class="mask-front">
+                            <div class="stat sec-sweep-title ">
+                                <div class="stat-sec sweep-stat">
+                                    <h2 class="limited-container dept-title">@emp.FirstName @emp.LastName</h2>
+                                </div>
+                                <div class="sweep_stat_right">
+                                    <div class="stat-sec banner-stat-right">
+                                        <div class="secondary-dept-field">
+                                            @if (emp.Role != null && !String.IsNullOrEmpty(emp.Role.Name))
+                                            {
+                                                <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/role-icon.png" alt="" height="28" width="28">
+                                                <p class="banner-bold-value department-secondary-label"> @((emp.Role != null && !String.IsNullOrEmpty(emp.Role.Name)) ? emp.Role.Name : "Not selected") </p>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="stat-sec stat-sec-bottom banner-stat-right">
+                                <div class="secondary-dept-field full-row-field">
+                                    <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/phone-icon.png" alt="" height="28" width="28">
+                                    <p class="banner-bold-value department-secondary-label"> @emp.PhoneNumber </p>
+                                </div>
+                                <div class="secondary-dept-field full-row-field">
+                                    <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/mail-icon.png" alt="" height="28" width="28">
+                                    <p class="banner-bold-value department-secondary-label"> @emp.Email </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script src="~/Scripts/common.js"></script>
+<script src="~/Scripts/departments/departments-common.js"></script>
+<script src="~/Scripts/departments/departments-display.js"></script>

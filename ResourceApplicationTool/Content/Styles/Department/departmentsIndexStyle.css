@@ -1,0 +1,11 @@
+﻿body {
+    background-color:#eeeeee;
+}
+div.mainHeaderLogo.departments-logo{
+    /*background-color: white;*/
+    background-color:#eeeeee;
+
+}
+hr.title-hr{
+    border-top: 1px solid lightgray;
+}

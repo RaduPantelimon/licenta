@@ -17,7 +17,10 @@ namespace ResourceApplicationTool.Controllers
         // GET: Departments
         public ActionResult Index()
         {
+            string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+            Request.ApplicationPath.TrimEnd('/') + "/";
             var departments = db.Departments.Include(d => d.File).Include(d => d.File1);
+            ViewBag.baseUrl = baseUrl;
             return View(departments.ToList());
         }
 
@@ -38,11 +41,17 @@ namespace ResourceApplicationTool.Controllers
                 department.File1 = db.Files.Where(x => x.FileID == department.BannerImageID.Value).FirstOrDefault();
             }*/
             department.MonthlyExpenses = 1;
+
             if (department == null)
             {
                 return HttpNotFound();
             }
             //department.File = db.Files.ToList().First();
+          
+            string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+            Request.ApplicationPath.TrimEnd('/') + "/";
+            ViewBag.baseUrl = baseUrl;
+
             return View(department);
         }
 

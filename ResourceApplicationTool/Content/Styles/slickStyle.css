@@ -88,9 +88,17 @@
 	background-color: rgba(0,0,0,0.5);
     /*border: 112px solid rgba(0,0,0,0.5);*/
 }
+.third-effect:hover a.info {
+    opacity: 1;
+    -moz-transition-delay: 0.2s;
+    -webkit-transition-delay: 0.2s;
+    -o-transition-delay: 0.2s;
+    -ms-transition-delay: 0.2s;
+    transition-delay: 0.2s;
+}
 
 .view a.info {
-    background: url(../images/imghover.png) center no-repeat;
+    background: url(../Pictures/imghover.png) center no-repeat;
     display: inline-block;
     text-decoration: none;
     padding: 0;
