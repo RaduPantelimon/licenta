@@ -351,6 +351,7 @@
     <Content Include="Scripts\employees\employees_common.js" />
     <Content Include="Scripts\employees\employees_details.js" />
     <Content Include="Scripts\employees\employees_edit.js" />
+    <Content Include="Scripts\employees\employees_new.js" />
     <Content Include="Scripts\home\home.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

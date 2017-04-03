@@ -74,6 +74,26 @@ namespace ResourceApplicationTool.Controllers
         // GET: Employees/Create
         public ActionResult Create()
         {
+
+            //initially the user will have the default profile picture
+            string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+            Request.ApplicationPath.TrimEnd('/') + "/";
+            ViewBag.ImgID = Const.PicturePaths.ProfilePictureUrl;
+            ViewBag.ImgIDSec = baseUrl + Const.PicturePaths.ProfilePictureUrl;
+
+            //no roleName yet 
+            ViewBag.RoleName = "";
+
+            //preparing the departments
+            List<SerializableDepartment> departments = db.Departments.ToList().Select(x => new SerializableDepartment(x.Title, x.DepartmentID)).ToList();
+            foreach (SerializableDepartment dept in departments)
+            {
+                dept.Manangers = db.Employees.Where(x => x.DepartmentID == dept.DepartmentID && x.Administrator == Const.PermissionLevels.Manager).ToList().
+                    Select(x => new SerializableEmployee(x.FirstName, x.LastName, x.Account, x.EmployeeID)).ToList();
+
+            }
+            ViewBag.Departments = departments;
+
             ViewBag.DepartmentID = new SelectList(db.Departments, "DepartmentID", "Title");
             ViewBag.ManagerID = new SelectList(db.Employees, "EmployeeID", "Account");
             ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "Name");
@@ -85,14 +105,29 @@ namespace ResourceApplicationTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EmployeeID,RoleID,Account,Password,ManagerID,DepartmentID,FirstName,MiddleInitial,LastName,Title,CNP,Email,PhoneNumber,Salary,PriorSalary,LastRaise,HireDate,TerminationDate,Administrator")] Employee employee)
+        public ActionResult Create([Bind(Include = "EmployeeID,RoleID,Account,Password,ManagerID,DepartmentID,FirstName,MiddleInitial,LastName,Title,CNP,Email,PhoneNumber,Salary,PriorSalary,LastRaise,HireDate,TerminationDate,Administrator")] Employee employee,
+             HttpPostedFileBase uploadProfilePicture)
         {
             if (ModelState.IsValid)
             {
+                //saving the profile picture
+                if (uploadProfilePicture != null && uploadProfilePicture.ContentLength > 0)
+                {
+                    Guid? avatarGuid = Common.CreateImage(uploadProfilePicture);
+                    //if file was stored successfully     
+                    employee.ProfileImageID = avatarGuid;
+                }
+                else
+                {
+                    employee.ProfileImageID = null;
+                }
+
                 db.Employees.Add(employee);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+
 
             ViewBag.DepartmentID = new SelectList(db.Departments, "DepartmentID", "Title", employee.DepartmentID);
             ViewBag.ManagerID = new SelectList(db.Employees, "EmployeeID", "Account", employee.ManagerID);
