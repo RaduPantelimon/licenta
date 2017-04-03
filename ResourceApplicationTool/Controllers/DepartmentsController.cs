@@ -32,14 +32,6 @@ namespace ResourceApplicationTool.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Department department = db.Departments.Find(id);
-            /*if(department.MainImageID.HasValue)
-            {
-                department.File = db.Files.Where(x => x.FileID == department.MainImageID.Value).FirstOrDefault();
-            }
-            if (department.BannerImageID.HasValue)
-            {
-                department.File1 = db.Files.Where(x => x.FileID == department.BannerImageID.Value).FirstOrDefault();
-            }*/
             department.MonthlyExpenses = 1;
 
             if (department == null)

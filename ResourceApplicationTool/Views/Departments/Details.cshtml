@@ -32,15 +32,10 @@ else
         }
 
         <div class="profile-header">
-            <h4 class="sec-title-large sec-title"> @Model.Title</h4>
-            @Html.ActionLink("Edit", "Edit", new { @id = Model.DepartmentID }, new { @class = "btn-primary edit-department-button", @id = Model.DepartmentID })
-            @Html.ActionLink("Delete", "Delete", new { @id = Model.DepartmentID }, new { @class = "btn-danger edit-department-button", @id = Model.DepartmentID })
-
-
-            <!--<label for="uploadProfilePicture" class="btn btn-default">
-                Upload Profile Picture
-                <input type="file" id="uploadProfilePicture" name="uploadProfilePicture" class="picture-input" />
-            </label>-->
+            
+                <h4 class="sec-title-large sec-title"> @Model.Title</h4>
+                @Html.ActionLink("Edit", "Edit", new { @id = Model.DepartmentID }, new { @class = "btn-primary edit-department-button", @id = Model.DepartmentID })
+                @Html.ActionLink("Delete", "Delete", new { @id = Model.DepartmentID }, new { @class = "btn-danger edit-department-button", @id = Model.DepartmentID })
         </div>
     </div>
 </div>

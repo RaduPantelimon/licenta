@@ -295,6 +295,7 @@
     <Content Include="Content\Pictures\masterpagepic.jpg" />
     <Content Include="Content\Pictures\phone-icon.png" />
     <Content Include="Content\Pictures\privatepyle.jpg" />
+    <Content Include="Content\Pictures\projects-banner-icon.png" />
     <Content Include="Content\Pictures\projects-icon.png" />
     <Content Include="Content\Pictures\role-icon.png" />
     <Content Include="Content\Pictures\sartre.jpg" />
@@ -310,6 +311,8 @@
     <Content Include="Content\Styles\Employee\employeesDetailsStyle.css" />
     <Content Include="Content\Styles\Employee\employeesEditStyle.css" />
     <Content Include="Content\Styles\masterpageStyle.css" />
+    <Content Include="Content\Styles\Projects\projectsCommonStyle.css" />
+    <Content Include="Content\Styles\Projects\projectsDetailsStyle.css" />
     <Content Include="Content\Styles\slickStyle.css" />
     <Content Include="Content\Styles\style.css" />
     <Content Include="favicon.ico" />
@@ -372,6 +375,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\projects\projects_common.js" />
+    <Content Include="Scripts\projects\projects_details.js" />
+    <Content Include="Scripts\projects\projects_index.js" />
+    <Content Include="Scripts\projects\projects_new.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\slick\index.html" />

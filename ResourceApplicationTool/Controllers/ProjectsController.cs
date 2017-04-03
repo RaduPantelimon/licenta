@@ -37,6 +37,12 @@ namespace ResourceApplicationTool.Controllers
             //making sure that the masterpage will render the <base href> elem for our angular module
             ViewBag.showBaseHref = true;
             ViewBag.hrefVal = "/Projects/Details/" + id;
+
+            //determining the base url
+            string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+            Request.ApplicationPath.TrimEnd('/') + "/";
+            ViewBag.baseUrl = baseUrl;
+
             return View(project);
         }
 

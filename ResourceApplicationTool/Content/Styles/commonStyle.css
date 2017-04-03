@@ -17,6 +17,11 @@ div.mainHeaderLogo.logo-details,
 div.mainHeaderLogo.employees-logo.logo-details{
     height: 200px;
 }
+.main-form-container.no-avatar{
+    margin-top:225px;
+    margin-bottom:150px;
+}
+
 .main-items-container{
     margin-top:50px;
 }
@@ -214,4 +219,15 @@ a.edit-department-button{
     border: 1px solid rgb(204, 204, 204);
     text-decoration:none;
     vertical-align:middle;
+}
+
+
+h2.page-buttons-title {
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 0px;
+}
+
+hr.title-hr{
+    border-top: 1px solid lightgray;
 }
