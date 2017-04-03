@@ -34,10 +34,40 @@ namespace ResourceApplicationTool.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Employee employee = db.Employees.Find(id);
+
+            if (employee.Role != null && employee.Role.Name != null)
+            {
+                ViewBag.RoleName = employee.Role.Name;
+            }
+            else
+            {
+                ViewBag.RoleName = "";
+            }
+
+            Common.CreateSkillTemplates(employee);
+
+            string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+            Request.ApplicationPath.TrimEnd('/') + "/";
+
+            //getting the picture ready
+            if (employee.File != null)
+            {
+
+                ViewBag.ImgID = Const.PicturePaths.ImgControllerRoot + employee.File.FileNumber;
+                ViewBag.ImgIDSec = baseUrl + Const.PicturePaths.ImgControllerRoot + employee.File.FileNumber;
+            }
+            else
+            {
+                ViewBag.ImgID = Const.PicturePaths.ProfilePictureUrl;
+                ViewBag.ImgIDSec = baseUrl + Const.PicturePaths.ProfilePictureUrl;
+            }
             if (employee == null)
             {
                 return HttpNotFound();
             }
+
+            employee.SkillLevelsList = employee.SkillLevels.ToList();
+            ViewBag.SkillCategories = db.SkillCategories.OrderByDescending(x => x.Skills.Count).ToList();
             return View(employee);
         }
 

@@ -13,13 +13,24 @@ function imageIsLoaded(e,img) {
     $(img).css("background-image", "url(" + e.target.result + ")");
 };
 
-function InitializeSliders(sliderInput) {
+function DisableSliders(sliderSelector){
+    $(sliderSelector).slider('disable');
+}
+
+function InitializeSliders(sliderInput,disabled) {
     $(sliderInput).slider();
     $(sliderInput).on("change", changeSlider);
 
     //triggering the initialization for these items
     $(sliderInput).change();
+
+    if(disabled == true)
+    {
+        $(sliderInput).slider('disable');
+    }
+    
 }
+
 
 function changeSlider(sliderValue){
 
@@ -36,6 +47,8 @@ function changeSlider(sliderValue){
     skillDescriptionsParent.children().removeClass("skill-level-active");
     skillDescriptionsParent.children(".skill-level" + value).addClass("skill-level-active");
     skillDescriptionsParent.children(".skill-level" + value).removeClass("skill-level-hidden");
+
+    //
 }
 
 //used in order to initialize and use pop-up pages

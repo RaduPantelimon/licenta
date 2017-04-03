@@ -1,163 +1,387 @@
 ﻿@model ResourceApplicationTool.Models.Employee
+@using ResourceApplicationTool.Models;
+@using ResourceApplicationTool.Utils;
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script>
+    var EmployeeID = "@Model.EmployeeID";
+</script>
 
-<h2>Details</h2>
+<link href="~/Content/Styles/Employee/employeesCommonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/Employee/employeesDetailsStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/commonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/slickStyle.css" rel="stylesheet" /> 
 
-<div>
-    <h4>Employee</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Account)
-        </dt>
+<div class="mainHeaderLogo employees-logo logo-details" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"></div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Account)
-        </dd>
+<h2 class="sec-title-huge sec-title">Employee profile</h2>
+<hr class="sec-hr" />
+<div class="main-form-container">
+    <div class="form-group main-form-group">
+        <!--<img id="main-profile-picture" class="profile-picture" src="~/@**@ViewBag.ImgID" >-->
+        <div id="main-profile-picture-div" class="user-profile-picture" style="background-image: url('@ViewBag.ImgIDSec');"></div>
+        <div class="profile-header">
+            <h4 class="sec-title-large sec-title"> @Model.FirstName @Model.LastName </h4>
+            <h5 class="sec-title-small sec-title sec-title-italic"> @ViewBag.RoleName </h5>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
+            <!--<label for="uploadProfilePicture" class="btn btn-default">
+                Upload Profile Picture
+                <input type="file" id="uploadProfilePicture" name="uploadProfilePicture" class="picture-input" />
+            </label>-->
+            @Html.ActionLink("Edit", "Edit", new { @id = Model.EmployeeID }, new { @class = "btn-primary edit-department-button", @id = Model.DepartmentID })
+            @Html.ActionLink("Delete", "Delete", new { @id = Model.EmployeeID }, new { @class = "btn-danger edit-department-button", @id = Model.DepartmentID })
+        </div>
+    </div>
+    <div class="main_expandable">
+        <div class="tvd-sub-header">
+            <table>
+                <tr>
+                    <td>
+                        <a class="main_expand_collapse">
+                            <img class="expandimg" src="~/Content/Pictures/expand-sign.png" title="expand" height="18" width="18" align="absbottom" style="display: none;">
+                            <img class="collapseimg" src="~/Content/Pictures/collapse-sign.png" title="collapse" height="18" width="18" align="absbottom" style="display: inline;">
+                        </a>
+                    </td>
+                    <td>
+                        <h1 class="sec-title-large sec-title" data-scrollname="Projects" style="display: inline; bottom: 0px;">
+                            General Information
+                        </h1>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="row expandable-content">
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.Account)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @Html.DisplayFor(model => model.Account)
+                </div>
+            </div>
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @Html.DisplayFor(model => model.FirstName)
+                </div>
+            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.MiddleInitial)
+                </div>
+                <div class="col-md-9 col-sm-9 control-label">
+                    @Html.DisplayFor(model => model.MiddleInitial)
+                </div>
+            </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.LastName)
+                </div>
+                <div class="col-md-9 col-sm-9 control-label">
+                    @Html.DisplayFor(model => model.LastName)
+                </div>
+            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.Title)
+                </div>
+                <div class="col-md-9 col-sm-9 control-label">
+                    @Html.DisplayFor(model => model.Title)
+                </div>
+            </div>
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.CNP)
+                </div>
+                <div class="col-md-9 col-sm-9 control-label">
+                    @Html.DisplayFor(model => model.CNP)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main_expandable">
+        <div class="tvd-sub-header">
+            <table>
+                <tr>
+                    <td>
+                        <a class="main_expand_collapse">
+                            <img class="expandimg" src="~/Content/Pictures/expand-sign.png" title="expand" height="18" width="18" align="absbottom" style="display: none;">
+                            <img class="collapseimg" src="~/Content/Pictures/collapse-sign.png" title="collapse" height="18" width="18" align="absbottom" style="display: inline;">
+                        </a>
+                    </td>
+                    <td>
+                        <h1 class="sec-title-large sec-title" data-scrollname="Projects" style="display: inline; bottom: 0px;">
+                            Organizational Information
+                        </h1>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="row expandable-content">
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.Role)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @((Model.Role != null && !String.IsNullOrEmpty(Model.Role.Name)) ? Model.Role.Name : "")
+                </div>
+            </div>
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.Salary)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @Html.DisplayFor(model => model.Salary)
+                </div>
+            </div>
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.ManagerID)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @if (Model.Employee1 != null)
+                    {
+                        @Html.ActionLink(Model.Employee1.FirstName + " " + Model.Employee1.LastName, "Details", new { @id = Model.ManagerID })
+                    }
+                    
+                </div>
+            </div>
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.DepartmentID)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @if (Model.Department != null)
+                    {
+                        @Html.ActionLink(Model.Department.Title, "Details","Departments", new { @id = Model.DepartmentID },null)
+                    }
+                </div>
+            </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.MiddleInitial)
-        </dt>
+        </div>
+    </div>
+    <div class="main_expandable">
+        <div class="tvd-sub-header">
+            <table>
+                <tr>
+                    <td>
+                        <a class="main_expand_collapse">
+                            <img class="expandimg" src="~/Content/Pictures/expand-sign.png" title="expand" height="18" width="18" align="absbottom" style="display: none;">
+                            <img class="collapseimg" src="~/Content/Pictures/collapse-sign.png" title="collapse" height="18" width="18" align="absbottom" style="display: inline;">
+                        </a>
+                    </td>
+                    <td>
+                        <h1 class="sec-title-large sec-title" data-scrollname="Projects" style="display: inline; bottom: 0px;">
+                            Contact Information and Other
+                        </h1>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="row expandable-content">
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.Email)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @Html.DisplayFor(model => model.Email)
+                </div>
+            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.MiddleInitial)
-        </dd>
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @Html.DisplayFor(model => model.PhoneNumber)
+                </div>
+            </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.HireDate)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @String.Format("{0:MM/dd/yyyy}", Model.HireDate)
+                </div>
+            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.TerminationDate)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @String.Format("{0:MM/dd/yyyy}", Model.TerminationDate)
+                </div>
+            </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.Administrator)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @Html.DisplayFor(model => model.Administrator)
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+    <div class="main_expandable">
+        <div class="tvd-sub-header">
+            <table>
+                <tr>
+                    <td>
+                        <a class="main_expand_collapse">
+                            <img class="expandimg" src="~/Content/Pictures/expand-sign.png" title="expand" height="18" width="18" align="absbottom" style="display: none;">
+                            <img class="collapseimg" src="~/Content/Pictures/collapse-sign.png" title="collapse" height="18" width="18" align="absbottom" style="display: inline;">
+                        </a>
+                    </td>
+                    <td>
+                        <h1 class="sec-title-large sec-title" data-scrollname="Projects" style="display: inline; bottom: 0px;">
+                            Skills
+                        </h1>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="form-group subsection row">
+            @foreach (SkillCategory skillCat in ViewBag.SkillCategories)
+            {
+                <div class="skill-category secondary_expandable">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CNP)
-        </dt>
+                    <table class="skill-category-table">
+                        <tr>
+                            <td>
+                                <a class="secondary_expand_collapse">
+                                    <img class="expandimg" src="~/Content/Pictures/expand-small.png" title="expand" height="12" width="12" align="absbottom" style="display: none;">
+                                    <img class="collapseimg" src="~/Content/Pictures/collapse-small.png" title="collapse" height="12" width="12" align="absbottom" style="display: inline;">
+                                </a>
+                            </td>
+                            <td>
+                                <h5 class="skill-category-title">@skillCat.Title</h5>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="skill-category-container row">
+                        @for (var i = 0; i < Model.SkillLevels.Count; i++)
+                        {
 
-        <dd>
-            @Html.DisplayFor(model => model.CNP)
-        </dd>
+                            if (Model.SkillLevelsList[i].Skill.CategoryID == skillCat.CategoryID)
+                            {
+                                <div class="employee-skill col-ld-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="control-label skill-label col-ld-6 col-md-6 col-sm-6 col-xs-6">
+                                        <span class="skill-title">@Model.SkillLevelsList[i].Skill.Title</span>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+                                    </div>
+                                    <div class="col-ld-6 col-md-6 col-md-6 col-sm-6 col-xs-12">
+                                        @Html.TextBoxFor(m => Model.SkillLevelsList[i].Level,
+                                                                new Dictionary<string, object> { { "class", "form-control skill-slider-input" },
+                                                                                                    { "data-slider-min", "0" },
+                                                                                                    { "data-slider-max", "5" },
+                                                                                                    { "data-slider-step ", "1" },
+                                                                                                    { "data-slider-value", @Model.SkillLevelsList[i].Level },
+                                                                                                    {"data-slider-tooltip","hide" }
+                                                                }
+                                                )
+                                        <span class="skill-level-description">
+                                            @for (int j = 0; j < Const.SkillLevels.Length; j++)
+                                            {
+                                                if (Model.SkillLevelsList[i].Level == j)
+                                                {
+                                                    <span class="@("skill-level-active skill-level" + j)">@Const.SkillLevels[j]</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="@("skill-level-hidden skill-level" + j)">@Const.SkillLevels[j]</span>
+                                                }
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+                                            }
+                                        </span>
+                                        @Html.HiddenFor(m => Model.SkillLevelsList[i].SkillID)
+                                        @Html.HiddenFor(m => Model.SkillLevelsList[i].EmployeeID)
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Salary)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Salary)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PriorSalary)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PriorSalary)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastRaise)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastRaise)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HireDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HireDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TerminationDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TerminationDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Administrator)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Administrator)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Department.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Department.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Employee1.Account)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Employee1.Account)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Role.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Role.Name)
-        </dd>
-
-    </dl>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="main_expandable">
+        <div class="tvd-sub-header">
+            <table>
+                <tr>
+                    <td>
+                        <a class="main_expand_collapse">
+                            <img class="expandimg" src="~/Content/Pictures/expand-sign.png" title="expand" height="18" width="18" align="absbottom" style="display: none;">
+                            <img class="collapseimg" src="~/Content/Pictures/collapse-sign.png" title="collapse" height="18" width="18" align="absbottom" style="display: inline;">
+                        </a>
+                    </td>
+                    <td>
+                        <h1 class="sec-title-large sec-title" data-scrollname="Projects" style="display: inline; bottom: 0px;">
+                            Educations
+                        </h1>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="row expandable-content">
+            <table id="educations-table" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Degree</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- This will be populated in the client side-->
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.EmployeeID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+    <div class="button-holder form-group">
+        <div class="col-md-10">
+            <button type="button"
+                    class="btn btn-default btn-inverse"
+                    id="cancel"
+                    onclick="window.history.back()">
+                <i class="icon-remove icon-large"></i>
+                Cancel
+            </button>
+        </div>
+    </div>
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap-datepicker");
+    @Scripts.Render("~/Content/bootstrap-sliderjs");
+    @*@Scripts.Render("~/bundles/jquery-uijs");*@
+
+
+    @Styles.Render("~/Content/bootstrap-datepickercss");
+    @Styles.Render("~/Content/bootstrap-slidercss");
+    @Styles.Render("~/Content/jquery-uicss");
+}
+<script>
+    var departments = @Html.Raw(Json.Encode(ViewBag.Departments));
+</script>
+
+<script src="~/Scripts/employees/employees_common.js"></script>
+<script src="~/Scripts/employees/employees_details.js"></script>

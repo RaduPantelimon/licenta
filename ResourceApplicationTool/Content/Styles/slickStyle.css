@@ -318,3 +318,21 @@ img.banner-icon {
 .carousel-item{
     margin-top:20px;
 }
+
+@media (max-width: 992px) {
+    /* Solving dpacing issues for slick items*/
+    .carousel-item > figure,
+    .carousel-item > div.mask-background-parent{
+        margin-left:auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Solving dpacing issues for slick items*/
+    .carousel-item > figure,
+    .carousel-item > div.mask-background-parent{
+        margin-left:auto;
+        margin-right: auto;
+    }
+}

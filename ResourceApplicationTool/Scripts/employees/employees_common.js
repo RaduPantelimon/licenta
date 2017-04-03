@@ -7,9 +7,15 @@
     }
 }
 
+function InitializeEducationsDisplay(educationsTable, empId) {
 
+    //checking if the id is valid 
+    if (empId) {
+        getEducationsForCurrentEmployee(educationsTable, empId,true);
+    }
+}
 
-function getEducationsForCurrentEmployee(educationsTable, empId)
+function getEducationsForCurrentEmployee(educationsTable, empId,disableEdit)
 {
     //adding loading gif
     var tableBody = $(educationsTable).find("tbody");
@@ -35,18 +41,22 @@ function getEducationsForCurrentEmployee(educationsTable, empId)
                         row += "<td>" + (startDate ? (startDate.getMonth() + 1) + "/" + startDate.getUTCDate() + "/" + startDate.getFullYear() : "") + "</td>";
                         row += "<td>" + (endDate ? (endDate.getMonth() + 1) + "/" + endDate.getUTCDate() + "/" + endDate.getFullYear() : "") + "</td>";
                         row += "<td>" + (data[i]["Degree"] ? data[i]["Degree"] : "") + "</td>";
-                        row += "<td>" +
-                        "<button class='options-button edit-button'" +
-                        " data-url='/Educations/Edit/" + (data[i]["EducationID"] ? data[i]["EducationID"] : "") + "?isModal=1'" +
-                        " type='button' " +
-                        " educationId='" + (data[i]["EducationID"] ? data[i]["EducationID"] : "") + "' ></button>" +
+                        if (!disableEdit || disableEdit != true)
+                        {
+                            row += "<td>" +
+                           "<button class='options-button edit-button'" +
+                           " data-url='/Educations/Edit/" + (data[i]["EducationID"] ? data[i]["EducationID"] : "") + "?isModal=1'" +
+                           " type='button' " +
+                           " educationId='" + (data[i]["EducationID"] ? data[i]["EducationID"] : "") + "' ></button>" +
 
-                        "<button class='options-button delete-button' " +
-                        " data-url='/Educations/Delete/" + (data[i]["EducationID"] ? data[i]["EducationID"] : "") + "?isModal=1'" +
-                        " type='button' " +
-                        " educationId='" + (data[i]["EducationID"] ? data[i]["EducationID"] : "") + "' ></button>" +
-                        "</td>";
-                        row += "</tr>";
+                           "<button class='options-button delete-button' " +
+                           " data-url='/Educations/Delete/" + (data[i]["EducationID"] ? data[i]["EducationID"] : "") + "?isModal=1'" +
+                           " type='button' " +
+                           " educationId='" + (data[i]["EducationID"] ? data[i]["EducationID"] : "") + "' ></button>" +
+                           "</td>";
+                                row += "</tr>";
+                        }
+                       
 
                         tableBody.append(row);
                     }
@@ -183,4 +193,45 @@ function DepartmentFilterSelection()
     else {
         $(".carousel-item").fadeIn(400);
     }
+}
+
+//expand collapse behaviour for the secondary sections
+function SecondaryExpandCollapse(link, action) {
+    var subsection = $(link).closest(".secondary_expandable");
+    var expand = true;
+    var collapse = false;
+    var img = subsection.find("a.secondary_expand_collapse img:visible");
+    if (action == 'auto') {
+        if (img.hasClass("expandimg")) {
+            expand = true;
+            collapse = false;
+        }
+        else {
+            expand = false;
+            collapse = true;
+        }
+    }
+    if (action == 'expand') {
+        expand = true;
+        collapse = false;
+    }
+    if (action == 'collapse') {
+        expand = false;
+        collapse = true;
+    }
+    if (expand) {
+        // expanding
+        subsection.children(".skill-category-container").show();
+        subsection.find("a.secondary_expand_collapse img.expandimg").hide();
+        subsection.find("a.secondary_expand_collapse img.collapseimg").show();
+
+    }
+    else {
+        // collapsing
+        subsection.children(".skill-category-container").hide();
+        subsection.find("a.secondary_expand_collapse img.expandimg").show();
+        subsection.find("a.secondary_expand_collapse img.collapseimg").hide();
+
+    }
+
 }

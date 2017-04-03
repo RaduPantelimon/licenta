@@ -307,6 +307,7 @@
     <Content Include="Content\Styles\Department\departmentsDisplayStyle.css" />
     <Content Include="Content\Styles\Department\departmentsIndexStyle.css" />
     <Content Include="Content\Styles\Employee\employeesCommonStyle.css" />
+    <Content Include="Content\Styles\Employee\employeesDetailsStyle.css" />
     <Content Include="Content\Styles\Employee\employeesEditStyle.css" />
     <Content Include="Content\Styles\masterpageStyle.css" />
     <Content Include="Content\Styles\slickStyle.css" />
@@ -348,6 +349,7 @@
     <Content Include="Scripts\departments\departments-index.js" />
     <Content Include="Scripts\employees\employees-index.js" />
     <Content Include="Scripts\employees\employees_common.js" />
+    <Content Include="Scripts\employees\employees_details.js" />
     <Content Include="Scripts\employees\employees_edit.js" />
     <Content Include="Scripts\home\home.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
