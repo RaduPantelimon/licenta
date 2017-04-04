@@ -7,7 +7,10 @@ import { RouterModule } from '@angular/router';
 import { DragAndDropModule } from 'angular-draggable-droppable';
 import { ResizableModule } from 'angular2-resizable';
 
-import { AppComponent }  from './app.component';
+//import { ShContextMenuModule } from 'ng2-right-click-menu';
+//import { ShContextMenuModule } from '/node_modules/ng2-right-click-menu/src/sh-context-menu.module.js';
+
+import { AppComponent } from './app.component';
 import { TasksListComponent } from './projects/tasks-list.component';
 import { SprintAddComponent } from './projects/sprint-add.component';
 
@@ -20,6 +23,7 @@ import { SprintFilterPipe } from './projects/sprint-filter.pipe';
 @NgModule({
     imports: [
         BrowserModule,
+        //ShContextMenuModule,
         HttpModule,
         FormsModule,
         CommonModule,
@@ -30,7 +34,8 @@ import { SprintFilterPipe } from './projects/sprint-filter.pipe';
             { path: '', component: TasksListComponent },
             { path: '**', redirectTo: 'tasks', pathMatch: 'full' }]),
         DragAndDropModule.forRoot(),
-        ResizableModule
+        ResizableModule,
+        
     ],
     declarations: [
         AppComponent,
@@ -39,11 +44,11 @@ import { SprintFilterPipe } from './projects/sprint-filter.pipe';
         SprintFilterPipe
     ],
 
-  bootstrap: [AppComponent],
-  providers: [
-      EmployeesService,
-      SprintsService,
-      TasksService
-  ]
+    bootstrap: [AppComponent],
+    providers: [
+        EmployeesService,
+        SprintsService,
+        TasksService
+    ]
 })
 export class AppModule { }

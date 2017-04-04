@@ -266,9 +266,12 @@
     <Content Include="app\app.component.css" />
     <Content Include="app\app.component.html" />
     <Content Include="app\assets\images\logo.jpg" />
+    <Content Include="app\context-menu\angular2-contextmenu.js" />
     <Content Include="app\home\welcome.component.html" />
     <Content Include="app\projects\sprint-add.component.css" />
     <Content Include="app\projects\sprint-add.component.html" />
+    <Content Include="app\projects\tasks-edit.component.css" />
+    <Content Include="app\projects\tasks-edit.component.html" />
     <Content Include="app\projects\tasks-list.component.css" />
     <Content Include="app\projects\tasks-list.component.html" />
     <Content Include="Content\bootstrap-datepicker3.css" />
@@ -493,6 +496,7 @@
     <TypeScriptCompile Include="app\projects\sprint-add.component.ts" />
     <TypeScriptCompile Include="app\projects\sprint-filter.pipe.ts" />
     <TypeScriptCompile Include="app\projects\sprints.service.ts" />
+    <TypeScriptCompile Include="app\projects\tasks-edit.component.ts" />
     <TypeScriptCompile Include="app\projects\tasks-list.component.ts" />
     <TypeScriptCompile Include="app\projects\tasks.service.ts" />
   </ItemGroup>

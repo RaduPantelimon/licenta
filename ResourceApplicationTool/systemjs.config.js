@@ -24,6 +24,8 @@
       '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
       'moment': '/node_modules/moment',
 
+      //right click module
+      'ng2-right-click-menu':'npm:ng2-right-click-menu/src/sh-context-menu.module.js',
       //drag drop bundle 
       'angular-draggable-droppable': 'npm:angular-draggable-droppable/dist/umd/angular-draggable-droppable.js',
       //resizable bundle
@@ -46,6 +48,8 @@
           tyoe: 'cjs',
           defaultExtension: 'js'
       },
+      'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
+      'angular2-modal': { defaultExtension: 'js', main: 'bundles/angular2-modal.umd' }
     }
   });
 })(this);

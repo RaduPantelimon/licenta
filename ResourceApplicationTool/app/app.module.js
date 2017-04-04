@@ -16,6 +16,8 @@ var http_1 = require('@angular/http');
 var router_1 = require('@angular/router');
 var angular_draggable_droppable_1 = require('angular-draggable-droppable');
 var angular2_resizable_1 = require('angular2-resizable');
+//import { ShContextMenuModule } from 'ng2-right-click-menu';
+//import { ShContextMenuModule } from '/node_modules/ng2-right-click-menu/src/sh-context-menu.module.js';
 var app_component_1 = require('./app.component');
 var tasks_list_component_1 = require('./projects/tasks-list.component');
 var sprint_add_component_1 = require('./projects/sprint-add.component');
@@ -30,6 +32,7 @@ var AppModule = (function () {
         core_1.NgModule({
             imports: [
                 platform_browser_1.BrowserModule,
+                //ShContextMenuModule,
                 http_1.HttpModule,
                 forms_1.FormsModule,
                 common_1.CommonModule,
@@ -40,7 +43,7 @@ var AppModule = (function () {
                     { path: '', component: tasks_list_component_1.TasksListComponent },
                     { path: '**', redirectTo: 'tasks', pathMatch: 'full' }]),
                 angular_draggable_droppable_1.DragAndDropModule.forRoot(),
-                angular2_resizable_1.ResizableModule
+                angular2_resizable_1.ResizableModule,
             ],
             declarations: [
                 app_component_1.AppComponent,

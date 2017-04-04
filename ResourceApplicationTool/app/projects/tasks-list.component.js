@@ -28,6 +28,21 @@ var TasksListComponent = (function () {
         this.sprints = [];
         this.days = [];
         this.dayDescriptions = [];
+        //used by the dropdown
+        this.menuOptions = [
+            {
+                html: function () { return 'Edit'; },
+                click: function (item, $event) {
+                    console.log("Edit");
+                },
+            },
+            {
+                html: function () { return 'Delete'; },
+                click: function (item, $event) {
+                    console.log("Delete");
+                }
+            },
+        ];
         this.draggingCorner = false;
     }
     TasksListComponent.prototype.ngOnInit = function () {
@@ -264,9 +279,10 @@ var TasksListComponent = (function () {
             styleUrls: ['tasks-list.component.css'],
             encapsulation: core_1.ViewEncapsulation.None
         }), 
-        __metadata('design:paramtypes', [employees_service_1.EmployeesService, sprints_service_1.SprintsService, tasks_service_1.TasksService, router_1.ActivatedRoute, router_1.Router])
+        __metadata('design:paramtypes', [employees_service_1.EmployeesService, sprints_service_1.SprintsService, tasks_service_1.TasksService, (typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object])
     ], TasksListComponent);
     return TasksListComponent;
+    var _a, _b;
 }());
 exports.TasksListComponent = TasksListComponent;
 //# sourceMappingURL=tasks-list.component.js.map

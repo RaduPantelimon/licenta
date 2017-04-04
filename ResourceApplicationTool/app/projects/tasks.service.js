@@ -52,9 +52,10 @@ var TasksService = (function () {
     };
     TasksService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
     ], TasksService);
     return TasksService;
+    var _a;
 }());
 exports.TasksService = TasksService;
 //# sourceMappingURL=tasks.service.js.map

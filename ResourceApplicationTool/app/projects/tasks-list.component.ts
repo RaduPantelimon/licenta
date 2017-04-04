@@ -1,5 +1,7 @@
 ﻿import { Component, OnInit, ViewEncapsulation, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+/*import { ContextMenuComponent } from 'angular2-contextmenu/src/contextMenu.component';
+import { ContextMenuService } from 'angular2-contextmenu/src/contextMenu.service';*/
 
 import { ResizeEvent } from 'angular2-resizable';
 
@@ -29,6 +31,24 @@ export class TasksListComponent implements OnInit {
     dayDescriptions: any[] = [];
     _sub: any;
 
+    //used by the dropdown
+    public menuOptions = [
+        {
+            html: () => 'Edit',
+            click: (item:any, $event:any) => {
+                console.log("Edit");
+            },
+        },
+        {
+            html: (): string => 'Delete',
+            click: (item:any, $event:any): void => {
+                console.log("Delete");
+            }
+        },
+       
+    ];
+
+
     //page state Info
     sprintsLoaded: boolean;
     employeesLoaded: boolean;
@@ -45,7 +65,9 @@ export class TasksListComponent implements OnInit {
         private _sprintService: SprintsService,
         private _tasksService: TasksService,
         private _route: ActivatedRoute,
-        private _router: Router)
+        private _router: Router,
+        //private contextMenuService: ContextMenuService
+    )
     {
 
     }
@@ -54,7 +76,7 @@ export class TasksListComponent implements OnInit {
         {
             //we subscribe to the changes in order to update the input when the parameters change
             let id = window["projectID"];
-            this._sub = this._route.params.subscribe(params => {
+            this._sub = this._route.params.subscribe((params:any) => {
 
                 this.days.length = 0;
                 if (id && !isNaN(parseInt(id)))

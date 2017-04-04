@@ -48,10 +48,16 @@
                                  [resizeEdges]="{bottom: true, right: true, top: true, left: true}"   
                             class="taskTemplate focused-task">
 
+
+                                <img id="edit-image"
+                                     src="/Content/Pictures/edit-icon.png"
+                                     class="edit-handle"
+                                     (click)="onDelete($event,day,day.task.TaskID)">
+
                                 <span class="task-Title" (click)="onLoseFocus($event,day)" >{{day.task.TaskDescription}}</span>
                                 
                                 <img id="delete-image"
-                                     src="/Content/Pictures/cross-512.png"
+                                     src="/Content/Pictures/delete-icon.png"
                                      class="delete-handle"
                                      (click)="onDelete($event,day,day.task.TaskID)">
 
@@ -72,6 +78,9 @@
                 </tr>
             <tbody>
         </table>
+    </div>
+
+    <div class="context-menu-holder">
     </div>
 </div>
 
