@@ -231,6 +231,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\PartialModels\Employee.cs" />
+    <Compile Include="Models\PartialModels\Project.cs" />
     <Compile Include="Models\Project.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -280,14 +281,17 @@
     <Content Include="Content\Pictures\ajax-loader.gif" />
     <Content Include="Content\Pictures\albert-camus.jpg" />
     <Content Include="Content\Pictures\arrows.png" />
+    <Content Include="Content\Pictures\calendar-icon.png" />
     <Content Include="Content\Pictures\collapse-sign.png" />
     <Content Include="Content\Pictures\collapse-small.png" />
     <Content Include="Content\Pictures\cross-512.png" />
     <Content Include="Content\Pictures\default-profile-picture.png" />
     <Content Include="Content\Pictures\delete-icon.png" />
+    <Content Include="Content\Pictures\department-icon.png" />
     <Content Include="Content\Pictures\departments-picture.png" />
     <Content Include="Content\Pictures\edit-icon.png" />
     <Content Include="Content\Pictures\edit-image.png" />
+    <Content Include="Content\Pictures\effort-icon.png" />
     <Content Include="Content\Pictures\employees-banner-icon.png" />
     <Content Include="Content\Pictures\expand-sign.png" />
     <Content Include="Content\Pictures\expand-small.png" />
@@ -300,6 +304,7 @@
     <Content Include="Content\Pictures\privatepyle.jpg" />
     <Content Include="Content\Pictures\projects-banner-icon.png" />
     <Content Include="Content\Pictures\projects-icon.png" />
+    <Content Include="Content\Pictures\resizable-handler.gif" />
     <Content Include="Content\Pictures\role-icon.png" />
     <Content Include="Content\Pictures\sartre.jpg" />
     <Content Include="Content\Pictures\settings_background.png" />
@@ -317,6 +322,7 @@
     <Content Include="Content\Styles\ng2-nouislider.min.css" />
     <Content Include="Content\Styles\Projects\projectsCommonStyle.css" />
     <Content Include="Content\Styles\Projects\projectsDetailsStyle.css" />
+    <Content Include="Content\Styles\Projects\projectsIndexStyle.css" />
     <Content Include="Content\Styles\slickStyle.css" />
     <Content Include="Content\Styles\style.css" />
     <Content Include="favicon.ico" />

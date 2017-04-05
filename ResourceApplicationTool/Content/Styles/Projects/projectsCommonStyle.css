@@ -11,7 +11,7 @@ div.mainHeaderLogo.projects-logo.logo-details{
     height: 350px;
 }
 .main-form-container{
-    margin-top:50px;
+    margin-top:150px;
 }
 
 hr.title-hr{
@@ -25,4 +25,34 @@ div.text-info{
 
 div.angular-component{
     margin-bottom:100px;
+}
+
+h2.projects-title{
+    display:inline-block;
+    vertical-align:middle;
+    margin-top: 0px;
+
+}
+
+.project-main-picture {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    float:left;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	-webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	-moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+}
+
+.main-form-container.no-avatar.projects-container {
+    margin-top: 125px;
+    margin-bottom: 150px;
+}
+
+.main-form-header{
+    margin-top: 100px;
 }

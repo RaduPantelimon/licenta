@@ -17,7 +17,26 @@ namespace ResourceApplicationTool.Controllers
         // GET: Projects
         public ActionResult Index()
         {
-            var projects = db.Projects.Include(p => p.Contact1).Include(p => p.Department);
+            var projects = db.Projects.Include(p => p.Contact1).Include(p => p.Department).Include(p => p.Sprints);
+
+            //calculating the total hours effort, per project
+            List<Sprint> sprints = db.Sprints.ToList();
+            List<Task> tasks = db.Tasks.ToList();
+
+            foreach(Project pj in projects)
+            {
+                List<int> currentSprintsIDs = sprints.Where(x => x.ProjectID == pj.ProjectID).Select(x => x.SprintID).ToList();
+                List<Task> currentTasks = tasks.Where(x => x.SprintID.HasValue && currentSprintsIDs.Contains(x.SprintID.Value)).ToList();
+                int sum = 0;
+                foreach (Task t in currentTasks)
+                {
+                    if(t.Estimation.HasValue) sum += t.Estimation.Value;
+                }
+                pj.ManHoursEffort = sum;
+            }
+
+            List<Department> departmentsForProjects = db.Departments.ToList();
+            ViewBag.departments = departmentsForProjects;
             return View(projects.ToList());
         }
 

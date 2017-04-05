@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<ResourceApplicationTool.Models.Project>
+@using ResourceApplicationTool.Models;
+@using ResourceApplicationTool.Utils;
 
 @{
     ViewBag.Title = "Index";
@@ -6,84 +8,128 @@
 }
 
 
+<link href="~/Content/Styles/Projects/projectsCommonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/commonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/slickStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/Projects/projectsIndexStyle.css" rel="stylesheet" />
 
 
+<div class="mainHeaderLogo projects-logo logo-details" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"></div>
 
 
-<h2>Index</h2>
+<div class="main-items-container">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Duration)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ContractNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PJDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Budget)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Contact1.ContactName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Department.Title)
-        </th>
-        <th></th>
-    </tr>
+    <div class="text-info">
+        <h2 class="sec-title-huge sec-title projects-title">Projects</h2>
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn-primary add-new-button" })
+    </div>
+    <hr class="sec-hr title-hr" />
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Duration)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ContractNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PJDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Budget)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Contact1.ContactName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Department.Title)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProjectID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProjectID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ProjectID })
-        </td>
-    </tr>
-}
+    <div class="slick-filter">
+        <h2 class="sec-title-medium sec-title filter-title">Department:</h2>
+        <select class="form-control filter-select">
+            <option value="0">Please select a department</option>
+            @foreach (Department dept in ViewBag.departments)
+            {
+                <option value="@dept.DepartmentID">@dept.Title</option>
+            }
+        </select>
+    </div>
 
-</table>
+    <div class="slick-section row">
+        @foreach (Project proj in Model)
+        {
 
+            <!--<div class="wip-div" ></div>-->
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 department-item carousel-item carousel-item-nopicture ">
+                <div class="mask-background-parent">
+                    <div class="mask-background">
+                       
+                            <div class="mask-front">
+                                <div class="stat sec-sweep-title">
+                                    
+                                    <div class="stat-sec sweep-stat slick-main-header">
+                                        <h2 class="limited-container">@proj.Title</h2>
+                                    </div>
+                                    <figure class="view third-effect">
+                                        <div>
+                                            <div class="stat-row">
+                                                <div class="secondary-pj-field container-padding">
+                                                    <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/calendar-icon.png" alt="" height="28" width="28">
+                                                    <p class="project-secondary-label"></p>
+                                                </div>
+                                                <div class="secondary-pj-field  container-value">
+                                                    <p class="project-secondary-label">
+                                                        <span class="field-name">Start:</span> 
+                                                        @String.Format("{0:MM/dd/yyyy}", proj.StartDate)
+                                                    </p>
+                                                </div>
+                                                <div class="secondary-pj-field ">
+                                                     <p class="project-secondary-label">
+                                                        <span class="field-name">End:</span> 
+                                                        @String.Format("{0:MM/dd/yyyy}", proj.EndDate)
+                                                     </p>
+                                                </div>
+                                            </div>
+                                            <div class="stat-row">
+                                                <div class="secondary-pj-field container-padding">
+                                                    <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/effort-icon.png" alt="" height="28" width="28">
+                                                    <p class="project-secondary-label"></p>
+                                                </div>
+                                                <div class="secondary-pj-field">
+                                                    <p class="project-secondary-label">
+                                                        <span class="field-name">Effort in man days:</span>
+                                                       @proj.ManDaysEffort
+                                                    </p>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="stat-row">
+                                                <div class="secondary-pj-field container-padding">
+                                                    <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/department-icon.png" alt="" height="28" width="28">
+                                                    <p class="project-secondary-label"></p>
+                                                </div>
+                                                <div class="secondary-pj-field">
+                                                    <p class="project-secondary-label">
+                                                        <span class="field-name dept-information-container"    departmentId="@proj.Department.DepartmentID" >Department:</span>
+                                                        <!--<a href="/Departments/Details/@proj.DepartmentID">-->
+                                                            @((proj.Department!=null && !String.IsNullOrEmpty(proj.Department.Title))? proj.Department.Title:"")
+                                                        <!--</a>-->
+                                                    </p>
+                                                </div>
 
+                                            </div>
+                                        </div>
+                                        <div class="stat-row sec-pj-detail-label">
+                                            <div>
+                                                <p class="project-secondary-label ">
+                                                    <span class="field-name">Project Details</span>
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                        <div class="sec-pj-detail">
+                                            @proj.PJDescription
+                                        </div>
+                                        <div class="mask clickable-mask" onclick="redirectToUrl('/Projects/Details/@proj.ProjectID')">
+                                            <a href="" class="info">Read More</a>
+                                        </div>
+
+                                        <div class="mask">
+                                            <a href="/Projects/Details/@proj.ProjectID" class="info">Read More</a>
+                                        </div>
+
+                                    </figure>
+                                    <div class="bottom-footer">
+                                    </div>
+                                </div> 
+                            </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script src="~/Scripts/projects/projects_common.js"></script>
+<script src="~/Scripts/projects/projects_index.js"></script>

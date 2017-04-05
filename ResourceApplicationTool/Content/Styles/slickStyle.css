@@ -288,10 +288,12 @@ img.banner-icon {
     margin-right:2px;
 } 
 
-.secondary-dept-field{
+.secondary-dept-field,
+.secondary-pj-field{
     float:left;
 }
-.secondary-dept-field:first-child{
+.secondary-dept-field:first-child,
+/*.secondary-pj-field:first-child*/{
     margin-right: 15px;
 }
 .mask-background{
@@ -311,7 +313,8 @@ img.banner-icon {
     height:70px;
 }
 
-.secondary-dept-field{
+.secondary-dept-field
+/*.secondary-pj-field*/{
     height:30px;
 }
 
@@ -322,7 +325,8 @@ img.banner-icon {
 @media (max-width: 992px) {
     /* Solving dpacing issues for slick items*/
     .carousel-item > figure,
-    .carousel-item > div.mask-background-parent{
+    .carousel-item > div.mask-background-parent,
+    .carousel-item-nopicture .mask-background{
         margin-left:auto;
         margin-right: auto;
     }
@@ -331,8 +335,92 @@ img.banner-icon {
 @media (max-width: 768px) {
     /* Solving dpacing issues for slick items*/
     .carousel-item > figure,
-    .carousel-item > div.mask-background-parent{
+    .carousel-item > div.mask-background-parent,
+    .carousel-item-nopicture .mask-background{
         margin-left:auto;
         margin-right: auto;
     }
+}
+
+.container-value{
+    margin-right:5px;
+    padding-right:5px;
+    border-right: 2px solid #e5e5e5;
+
+}
+.container-padding{
+    margin-right:5px;
+}
+.stat-row{
+    padding:10px 5px;
+    height: 25px;
+}
+.project-secondary-label{
+    margin:0px
+}
+.sec-pj-detail {
+    overflow-y: hidden;
+    margin: 20px;
+    height: 80px;
+}
+
+.sec-pj-detail-label{
+    padding:15px 5px;
+    font-size:16px;
+}
+
+.carousel-item-nopicture .stat-sec.sweep-stat.slick-main-header{
+    transition: 0.2s;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    color:white;
+    /* border-radius: 20px 20px 0px 0px; */
+    background-color: #428bca;
+    padding: 10px 5px;
+    width: 100%;
+    border-right:none;
+}
+.carousel-item-nopicture .stat{
+    background-color: transparent;
+}
+.carousel-item-nopicture .view{
+    width:100%;
+}
+.carousel-item-nopicture .stat,
+.carousel-item-nopicture .mask-background-parent,
+.carousel-item-nopicture .mask-background{
+    padding-top:0px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.carousel-item-nopicture .third-effect,
+.carousel-item-nopicture .mask{
+    border-radius:0px;
+}
+
+.carousel-item-nopicture img.banner-icon{
+    margin:0px;
+}
+
+.carousel-item-nopicture .slick-main-header .limited-container{
+    margin:5px;
+
+}
+.field-name {
+    display: inline-block;
+    font-weight: bold;
+}
+
+.carousel-item-nopicture .sec-pj-detail{
+    text-align:left
+}
+
+.carousel-item-nopicture .bottom-footer{
+    /*height: 20px;*/
+    background: white;
+    margin-bottom: 4px;
+}
+.carousel-item-nopicture figure{
+    background-color: white;
+    padding-top:10px;
 }

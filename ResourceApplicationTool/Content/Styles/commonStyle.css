@@ -12,10 +12,11 @@
     filter: alpha(opacity=75);
     background-position: 50% 0px;
     border: 1px solid lightgray;
+    top: 0;
 }
 div.mainHeaderLogo.logo-details,
 div.mainHeaderLogo.employees-logo.logo-details{
-    height: 200px;
+    height: 300px;
 }
 .main-form-container.no-avatar{
     margin-top:225px;
@@ -64,6 +65,9 @@ div.mainHeaderLogo.employees-logo.logo-details{
 
 }
 
+.right-align-not-xs{
+    text-align:right;
+}
 .tvd-sub-header
 {
     transition:0.2s;   
@@ -230,4 +234,10 @@ h2.page-buttons-title {
 
 hr.title-hr{
     border-top: 1px solid lightgray;
+}
+
+@media (max-width: 768px) {
+    .right-align-not-xs {
+        text-align:left;
+    }
 }
