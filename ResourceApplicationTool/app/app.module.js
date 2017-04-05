@@ -18,6 +18,9 @@ var angular_draggable_droppable_1 = require('angular-draggable-droppable');
 var angular2_resizable_1 = require('angular2-resizable');
 //import { ShContextMenuModule } from 'ng2-right-click-menu';
 //import { ShContextMenuModule } from '/node_modules/ng2-right-click-menu/src/sh-context-menu.module.js';
+var ng2_slider_component_1 = require("ng2-slider-component/ng2-slider.component");
+var slideable_directive_1 = require('ng2-slideable-directive/slideable.directive');
+var ng2_styled_directive_1 = require('ng2-styled-directive/ng2-styled.directive');
 var app_component_1 = require('./app.component');
 var tasks_list_component_1 = require('./projects/tasks-list.component');
 var sprint_add_component_1 = require('./projects/sprint-add.component');
@@ -25,6 +28,7 @@ var sprints_service_1 = require('./projects/sprints.service');
 var employees_service_1 = require('./projects/employees.service');
 var tasks_service_1 = require('./projects/tasks.service');
 var sprint_filter_pipe_1 = require('./projects/sprint-filter.pipe');
+var ng2_nouislider_1 = require('ng2-nouislider');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -44,9 +48,13 @@ var AppModule = (function () {
                     { path: '**', redirectTo: 'tasks', pathMatch: 'full' }]),
                 angular_draggable_droppable_1.DragAndDropModule.forRoot(),
                 angular2_resizable_1.ResizableModule,
+                ng2_nouislider_1.NouisliderModule,
             ],
             declarations: [
                 app_component_1.AppComponent,
+                slideable_directive_1.SlideAbleDirective,
+                ng2_styled_directive_1.Ng2StyledDirective,
+                ng2_slider_component_1.Ng2SliderComponent,
                 tasks_list_component_1.TasksListComponent,
                 sprint_add_component_1.SprintAddComponent,
                 sprint_filter_pipe_1.SprintFilterPipe

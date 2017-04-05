@@ -162,10 +162,9 @@ var SprintAddComponent = (function () {
             styleUrls: ['sprint-add.component.css'],
             encapsulation: core_1.ViewEncapsulation.None
         }), 
-        __metadata('design:paramtypes', [sprints_service_1.SprintsService, (typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object])
+        __metadata('design:paramtypes', [sprints_service_1.SprintsService, router_1.ActivatedRoute, router_1.Router])
     ], SprintAddComponent);
     return SprintAddComponent;
-    var _a, _b;
 }());
 exports.SprintAddComponent = SprintAddComponent;
 //# sourceMappingURL=sprint-add.component.js.map

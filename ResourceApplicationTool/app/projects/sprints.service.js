@@ -47,10 +47,9 @@ var SprintsService = (function () {
     };
     SprintsService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
+        __metadata('design:paramtypes', [http_1.Http])
     ], SprintsService);
     return SprintsService;
-    var _a;
 }());
 exports.SprintsService = SprintsService;
 //# sourceMappingURL=sprints.service.js.map

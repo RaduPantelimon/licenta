@@ -16,7 +16,7 @@
         </div>
     </div>
     <div id="tasksContainer"  class="col-md-10 col-lg-10 col-sm-10 col-xs-10">
-        <table class="tasksTable">
+        <table *ngIf="!showTaskDetails" class="tasksTable">
             <thead>
                 <tr>
                     <th width="250">
@@ -52,7 +52,7 @@
                                 <img id="edit-image"
                                      src="/Content/Pictures/edit-icon.png"
                                      class="edit-handle"
-                                     (click)="onDelete($event,day,day.task.TaskID)">
+                                     (click)="onEdit($event,day,day.task.TaskID)">
 
                                 <span class="task-Title" (click)="onLoseFocus($event,day)" >{{day.task.TaskDescription}}</span>
                                 
@@ -78,10 +78,56 @@
                 </tr>
             <tbody>
         </table>
+
+        <div *ngIf="showTaskDetails">
+            <h2>Task Details</h2>
+
+
+            <div class="button-holder form-group">
+
+                <div [ngClass]="['form-group subsection','col-md-12','col-lg-12','col-sm-12','col-xs-12']">
+                    <div [ngClass]= "['control-label','col-md-3','col-sm-3','task-label']">
+                        <span>Task Title</span>
+                    </div>
+                    <div class="col-md-9 col-sm-9">
+                        <input type="text" [ngClass]="['form-control']" [(ngModel)]='currentDay.task.TaskDescription' />
+                        <span *ngIf="taskDescriptionValidation" [ngClass]="['text-danger']"> {{taskDescriptionValidationText}} </span>
+                    </div>
+                </div>
+                <div [ngClass]="['form-group subsection','col-md-12','col-lg-12','col-sm-12','col-xs-12']">
+                    <div [ngClass]="['control-label','col-md-3','col-sm-3','task-label']">
+                        <span>Task Estimation</span>
+                    </div>
+                    <div class="col-md-9 col-sm-9">
+                        <div [ngClass]="['slider-container']">
+                            <nouislider [min]="0" [max]="8" [step]="1" [(ngModel)]="currentDay.task.Estimation"></nouislider>
+                            <p class="value-box">
+                                Hours: <span class="value-span" id="plain_1">{{currentDay.task.Estimation}}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-10">
+                    <button type="button" 
+                            [ngClass]="['btn', 'btn-default']" 
+                            (click)="saveValues($event,currentDay,employee)"
+                            id="edit-task">
+                        Save
+                    </button>
+
+                    <button type="button"
+                            id="cancel-task"
+                            (click)="cancelEdit()"
+                            [ngClass]="['btn', 'btn-default', 'btn-inverse']">
+                        <i class="icon-remove icon-large"></i>
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="context-menu-holder">
     </div>
 </div>
-
-

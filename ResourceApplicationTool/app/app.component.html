@@ -2,7 +2,7 @@
     <div>
         <label for="month-selector">View Sprints from the following month: </label>
         
-        <select id="month-selector" [(ngModel)]='selectedMonth' (ngModelChange)="changeMonth($event)">
+        <select [ngClass]="['form-control','month-selector']" id="month-selector" [(ngModel)]='selectedMonth' (ngModelChange)="changeMonth($event)">
             <option *ngFor="let month of sprintMonths">{{month.displayDate}}</option>
         </select>
     </div>

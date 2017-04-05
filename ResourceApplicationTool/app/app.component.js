@@ -152,10 +152,9 @@ var AppComponent = (function () {
             styleUrls: ['app.component.css'],
             encapsulation: core_1.ViewEncapsulation.None
         }), 
-        __metadata('design:paramtypes', [employees_service_1.EmployeesService, sprints_service_1.SprintsService, (typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object])
+        __metadata('design:paramtypes', [employees_service_1.EmployeesService, sprints_service_1.SprintsService, router_1.ActivatedRoute, router_1.Router])
     ], AppComponent);
     return AppComponent;
-    var _a, _b;
 }());
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

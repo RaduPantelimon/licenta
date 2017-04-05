@@ -31,29 +31,19 @@ export class TasksListComponent implements OnInit {
     dayDescriptions: any[] = [];
     _sub: any;
 
-    //used by the dropdown
-    public menuOptions = [
-        {
-            html: () => 'Edit',
-            click: (item:any, $event:any) => {
-                console.log("Edit");
-            },
-        },
-        {
-            html: (): string => 'Delete',
-            click: (item:any, $event:any): void => {
-                console.log("Delete");
-            }
-        },
-       
-    ];
+
 
 
     //page state Info
+    showTaskDetails: boolean;
     sprintsLoaded: boolean;
     employeesLoaded: boolean;
     currentSprint: any;
+    currentTaskID: number;
+    currentDay: any;
     errorMessage: string;
+    taskDescriptionValidationText: string;
+    taskDescriptionValidation: boolean;
 
     //drag drop resize functionality
     droppedData: string;
@@ -74,9 +64,14 @@ export class TasksListComponent implements OnInit {
     ngOnInit(): void {
         try
         {
+            
+
             //we subscribe to the changes in order to update the input when the parameters change
             let id = window["projectID"];
             this._sub = this._route.params.subscribe((params:any) => {
+
+                //the edit task is disabled each time we change the view
+                this.showTaskDetails = false;
 
                 this.days.length = 0;
                 if (id && !isNaN(parseInt(id)))
@@ -114,6 +109,9 @@ export class TasksListComponent implements OnInit {
                     this._tasksService.addTask(data).subscribe(response => {
 
                         console.log(response);
+                        if (!response.Estimation) {
+                            response.Estimation = 0;
+                        }
                         employee.Days[i].task = response;
                         this.sprintTasks.push(response);
                     },
@@ -172,6 +170,9 @@ export class TasksListComponent implements OnInit {
                         this._tasksService.addTask(data).subscribe(response => {
 
                             console.log(response);
+                            if (!response.Estimation) {
+                                response.Estimation = 0;
+                            }
                             day.task = response;
                             this.sprintTasks.push(response);
                         },
@@ -205,6 +206,8 @@ export class TasksListComponent implements OnInit {
         console.log("Removing Focus");
         this.LoseFocus();
     }
+
+    //will delete a task
     onDelete(event: MouseEvent, day: any, taskID:number)
     {
         this._tasksService.deleteTask(taskID).subscribe(response => {
@@ -222,13 +225,60 @@ export class TasksListComponent implements OnInit {
             error => this.errorMessage = <any>error
         );
     }
+    // currentTaskID: number;
+    // currentDay: any;
+    // taskDescriptionValidationText: string;
+    // taskDescriptionValidation: boolean;
+    //will open the edit task feature
+    onEdit(event: MouseEvent, day: any, taskID: number)
+    {
+        //initializing variables
+        this.currentTaskID = taskID;
+        this.currentDay = day;
+        this.showTaskDetails = true;
+        this.taskDescriptionValidation = false;
+        this.taskDescriptionValidationText = "";
+    }
+   
+    //used to save the taskID
+    saveValues(event: MouseEvent, day: any, taskID: number)
+    {
+        if (!this.currentDay.task.TaskDescription || this.currentDay.task.TaskDescription.trim() == "")
+        {
+            this.taskDescriptionValidation = true;
+            this.taskDescriptionValidationText = "The Title cannot be empty";
+            return;
+        }
+        this.taskDescriptionValidation = false;
+
+        this._tasksService.updateTask(this.currentDay.task).subscribe(response => {
+            if (response.status) {
+                //operation succeded
+                console.log("Task " + taskID + " successfully updated.");
+            }
+            else {
+                //operation failed
+                console.log("Task " + taskID + " could not be upodated.Error:" + response.message);
+            }
+            this.cancelEdit();
+        },
+            error => this.errorMessage = <any>error
+        );
+        console.log(day);
+    }
+    cancelEdit()
+    {
+        //deinitializing variables
+        this.currentTaskID = null;
+        this.currentDay = null;
+        this.showTaskDetails = false;
+        this.taskDescriptionValidation = false;
+        this.taskDescriptionValidationText = "";
+    }
     validate(event: ResizeEvent): boolean {
         const MIN_DIMENSIONS_PX: number = 50;
         
-        /*if (event.rectangle.width < MIN_DIMENSIONS_PX || event.rectangle.height < MIN_DIMENSIONS_PX) {
-            return false;
-        }
-        console.log("testorino");*/
+
         return true;
     }
     private LoseFocus(): any
@@ -272,6 +322,7 @@ export class TasksListComponent implements OnInit {
                             //after we obtained the employees we can get the tasks
                             this._tasksService.getSprintTasks(this.currentSprint.SprintID).subscribe(tasks => this.setTasks(tasks),
                                 error => this.errorMessage = <any>error
+                              
                             );
                         }
                         
@@ -312,6 +363,16 @@ export class TasksListComponent implements OnInit {
     private setTasks(tasks: any[])
     {
         this.sprintTasks = tasks;
+
+
+        for (let i= 0; i < this.sprintTasks.length;i++)
+        {
+            if (!this.sprintTasks[i].Estimation)
+            {
+                this.sprintTasks[i].Estimation = 0;
+            }
+        }
+
         //finding the tasks assigned to each employee
         for (let employee of this.employees)
         {

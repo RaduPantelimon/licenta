@@ -17,6 +17,7 @@ var TasksService = (function () {
         this._http = _http;
         this._tempaltetasksUrl = '/api/restapi/GetTemplateTasks';
         this._sprinttasksUrl = '/api/restapi/GetSprintTasks/';
+        this._edittaskUrl = '/api/restapi/EditTask';
         this._createtaskUrl = '/api/restapi/SaveTask';
         this._deleteUrl = '/api/restapi/DeleteTask';
     }
@@ -42,6 +43,14 @@ var TasksService = (function () {
         return this._http.post(this._createtaskUrl, data, options)
             .map(function (response) { return _this.extractData(response); });
     };
+    //update a task
+    TasksService.prototype.updateTask = function (task) {
+        var _this = this;
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this._http.post(this._edittaskUrl, task, options)
+            .map(function (response) { return _this.extractData(response); });
+    };
     TasksService.prototype.handleError = function (error) {
         console.log(error);
         return Observable_1.Observable.throw(error.json().error || 'Server error');
@@ -52,10 +61,9 @@ var TasksService = (function () {
     };
     TasksService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
+        __metadata('design:paramtypes', [http_1.Http])
     ], TasksService);
     return TasksService;
-    var _a;
 }());
 exports.TasksService = TasksService;
 //# sourceMappingURL=tasks.service.js.map

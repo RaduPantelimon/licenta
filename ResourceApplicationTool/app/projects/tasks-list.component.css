@@ -1,4 +1,5 @@
-﻿.tasksTable {
+﻿@import "/node_modules/nouislider/distribute/nouislider.min.css";
+.tasksTable {
     table-layout:fixed;
     margin-top:40px;
 }
@@ -82,8 +83,8 @@
      display:inline-block;
 }
 #tasksContainer .focused-task{
-     background-color:red;
-     position: relative;
+    background-color:yellowgreen;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -126,3 +127,21 @@
     width:12px;
     margin-right: 3px;
  }
+
+ .task-label{
+    text-align: right;
+    font-weight: bold;
+    margin-bottom: 5px;
+    vertical-align: middle;
+    padding-top: 7px;
+    margin-top: 0;
+    margin-bottom: 0;
+ }
+
+ .slider-container{
+     width:280px;
+ }
+
+
+
+ 

@@ -314,6 +314,7 @@
     <Content Include="Content\Styles\Employee\employeesDetailsStyle.css" />
     <Content Include="Content\Styles\Employee\employeesEditStyle.css" />
     <Content Include="Content\Styles\masterpageStyle.css" />
+    <Content Include="Content\Styles\ng2-nouislider.min.css" />
     <Content Include="Content\Styles\Projects\projectsCommonStyle.css" />
     <Content Include="Content\Styles\Projects\projectsDetailsStyle.css" />
     <Content Include="Content\Styles\slickStyle.css" />
@@ -348,6 +349,7 @@
     </Content>
     <Content Include="package.json" />
     <Content Include="readme.md" />
+    <Content Include="Content\Styles\ng2-nouislider.min" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\departments\departments-common.js" />

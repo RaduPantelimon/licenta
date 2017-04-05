@@ -28,21 +28,6 @@ var TasksListComponent = (function () {
         this.sprints = [];
         this.days = [];
         this.dayDescriptions = [];
-        //used by the dropdown
-        this.menuOptions = [
-            {
-                html: function () { return 'Edit'; },
-                click: function (item, $event) {
-                    console.log("Edit");
-                },
-            },
-            {
-                html: function () { return 'Delete'; },
-                click: function (item, $event) {
-                    console.log("Delete");
-                }
-            },
-        ];
         this.draggingCorner = false;
     }
     TasksListComponent.prototype.ngOnInit = function () {
@@ -51,6 +36,8 @@ var TasksListComponent = (function () {
             //we subscribe to the changes in order to update the input when the parameters change
             var id_1 = window["projectID"];
             this._sub = this._route.params.subscribe(function (params) {
+                //the edit task is disabled each time we change the view
+                _this.showTaskDetails = false;
                 _this.days.length = 0;
                 if (id_1 && !isNaN(parseInt(id_1))) {
                     _this.getData(parseInt(id_1), params);
@@ -82,6 +69,9 @@ var TasksListComponent = (function () {
                     data.sprintID = this_1.currentSprint.SprintID;
                     this_1._tasksService.addTask(data).subscribe(function (response) {
                         console.log(response);
+                        if (!response.Estimation) {
+                            response.Estimation = 0;
+                        }
                         employee.Days[i].task = response;
                         _this.sprintTasks.push(response);
                     }, function (error) { return _this.errorMessage = error; });
@@ -128,6 +118,9 @@ var TasksListComponent = (function () {
                         //adding the new task
                         this_2._tasksService.addTask(data).subscribe(function (response) {
                             console.log(response);
+                            if (!response.Estimation) {
+                                response.Estimation = 0;
+                            }
                             day.task = response;
                             _this.sprintTasks.push(response);
                         }, function (error) { return _this.errorMessage = error; });
@@ -157,6 +150,7 @@ var TasksListComponent = (function () {
         console.log("Removing Focus");
         this.LoseFocus();
     };
+    //will delete a task
     TasksListComponent.prototype.onDelete = function (event, day, taskID) {
         var _this = this;
         this._tasksService.deleteTask(taskID).subscribe(function (response) {
@@ -171,12 +165,51 @@ var TasksListComponent = (function () {
             }
         }, function (error) { return _this.errorMessage = error; });
     };
+    // currentTaskID: number;
+    // currentDay: any;
+    // taskDescriptionValidationText: string;
+    // taskDescriptionValidation: boolean;
+    //will open the edit task feature
+    TasksListComponent.prototype.onEdit = function (event, day, taskID) {
+        //initializing variables
+        this.currentTaskID = taskID;
+        this.currentDay = day;
+        this.showTaskDetails = true;
+        this.taskDescriptionValidation = false;
+        this.taskDescriptionValidationText = "";
+    };
+    //used to save the taskID
+    TasksListComponent.prototype.saveValues = function (event, day, taskID) {
+        var _this = this;
+        if (!this.currentDay.task.TaskDescription || this.currentDay.task.TaskDescription.trim() == "") {
+            this.taskDescriptionValidation = true;
+            this.taskDescriptionValidationText = "The Title cannot be empty";
+            return;
+        }
+        this.taskDescriptionValidation = false;
+        this._tasksService.updateTask(this.currentDay.task).subscribe(function (response) {
+            if (response.status) {
+                //operation succeded
+                console.log("Task " + taskID + " successfully updated.");
+            }
+            else {
+                //operation failed
+                console.log("Task " + taskID + " could not be upodated.Error:" + response.message);
+            }
+            _this.cancelEdit();
+        }, function (error) { return _this.errorMessage = error; });
+        console.log(day);
+    };
+    TasksListComponent.prototype.cancelEdit = function () {
+        //deinitializing variables
+        this.currentTaskID = null;
+        this.currentDay = null;
+        this.showTaskDetails = false;
+        this.taskDescriptionValidation = false;
+        this.taskDescriptionValidationText = "";
+    };
     TasksListComponent.prototype.validate = function (event) {
         var MIN_DIMENSIONS_PX = 50;
-        /*if (event.rectangle.width < MIN_DIMENSIONS_PX || event.rectangle.height < MIN_DIMENSIONS_PX) {
-            return false;
-        }
-        console.log("testorino");*/
         return true;
     };
     TasksListComponent.prototype.LoseFocus = function () {
@@ -242,6 +275,11 @@ var TasksListComponent = (function () {
     };
     TasksListComponent.prototype.setTasks = function (tasks) {
         this.sprintTasks = tasks;
+        for (var i = 0; i < this.sprintTasks.length; i++) {
+            if (!this.sprintTasks[i].Estimation) {
+                this.sprintTasks[i].Estimation = 0;
+            }
+        }
         //finding the tasks assigned to each employee
         var _loop_3 = function(employee) {
             var employeeDays = [];
@@ -279,10 +317,9 @@ var TasksListComponent = (function () {
             styleUrls: ['tasks-list.component.css'],
             encapsulation: core_1.ViewEncapsulation.None
         }), 
-        __metadata('design:paramtypes', [employees_service_1.EmployeesService, sprints_service_1.SprintsService, tasks_service_1.TasksService, (typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object])
+        __metadata('design:paramtypes', [employees_service_1.EmployeesService, sprints_service_1.SprintsService, tasks_service_1.TasksService, router_1.ActivatedRoute, router_1.Router])
     ], TasksListComponent);
     return TasksListComponent;
-    var _a, _b;
 }());
 exports.TasksListComponent = TasksListComponent;
 //# sourceMappingURL=tasks-list.component.js.map

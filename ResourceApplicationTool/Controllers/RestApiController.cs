@@ -83,6 +83,47 @@ namespace ResourceApplicationTool.Controllers
         //save the tasks added by the user
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         [System.Web.Http.HttpGet]
+        public HttpResponseMessage EditTask([Bind(Include = "TaskID,TaskDescription,Estimation")] Task task)
+        {
+            string jsonResponseText = "";
+            try
+            {
+                if(ModelState.IsValid)
+                {
+                    Task existingTask = db.Tasks.Where(x => x.TaskID == task.TaskID).FirstOrDefault();
+                    if(existingTask!=null)
+                    {
+                        existingTask.Estimation = task.Estimation;
+                        existingTask.TaskDescription = task.TaskDescription;
+                        db.Entry(existingTask).Property(X => X.TaskDescription).IsModified = true;
+                        db.Entry(existingTask).Property(X => X.Estimation).IsModified = true;
+                        db.SaveChanges();
+                        jsonResponseText = "{\"status\":1,\"message\":\"The update was successfull\"}";
+                    }
+                    else
+                    {
+                        jsonResponseText = "{\"status\":0,\"message\":\"Task not found\"}";
+
+                    }
+
+                }
+
+                jsonResponseText = JsonConvert.SerializeObject(task);
+                var response = Request.CreateResponse(HttpStatusCode.OK);
+                response.Content = new StringContent(jsonResponseText, Encoding.UTF8, "application/json");
+                return response;
+            }
+            catch(Exception ex)
+            {
+                jsonResponseText = "{\"status\":0,\"error\":\"Error trying to edit the task\",\"message\":\"" + ex.Message + "\"}";
+                var response = Request.CreateResponse(HttpStatusCode.InternalServerError);
+                response.Content = new StringContent(jsonResponseText, Encoding.UTF8, "application/json");
+                return response;
+            }
+        }
+        //save the tasks added by the user
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        [System.Web.Http.HttpGet]
         public HttpResponseMessage SaveTask([FromBody] TaskTemplate data)
         {
             string jsonResponseText = "";
