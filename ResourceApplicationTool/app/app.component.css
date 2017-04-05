@@ -127,3 +127,16 @@ select.month-selector{
 .main-component{
     margin-bottom:100px;
 }
+
+ .slider-container{
+     width:280px;
+ }
+
+ .sprint-button-ribbon{
+     padding:10px 5px;
+ }
+
+ .delete-sprint-button{
+     float:right;
+ }
+ 

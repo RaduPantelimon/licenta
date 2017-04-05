@@ -18,6 +18,7 @@ var SprintsService = (function () {
         this._http = _http;
         this._sprintsUrl = '/api/restapi/GetSprints/';
         this._createSprintUrl = '/api/restapi/SaveSprint';
+        this._deleteUrl = '/api/restapi/DeleteSprint';
         this._obsvInitialized = false;
         this.addedSprints = new Subject_1.Subject();
         this.newSprints = this.addedSprints.asObservable();
@@ -36,6 +37,13 @@ var SprintsService = (function () {
         var options = new http_1.RequestOptions({ headers: headers });
         return this._http.post(this._createSprintUrl, sprint, options)
             .map(function (response) { return _this.extractData(response); });
+    };
+    //delete existing task
+    SprintsService.prototype.deleteSprint = function (sprintID) {
+        var _this = this;
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this._http.delete(this._deleteUrl + "/" + sprintID, options).map(function (response) { return _this.extractData(response); });
     };
     SprintsService.prototype.handleError = function (error) {
         console.log(error);

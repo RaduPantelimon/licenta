@@ -1,21 +1,19 @@
 ﻿<div class="row">
-    <div  class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-        <div id="templatesContainer"  >
+    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
+        <div id="templatesContainer">
             <h4>Task Templates</h4>
             <div>
                 <!--The templates need to be draggable-->
-                <div  class="taskTemplate-holder"  *ngFor='let task of templateTasks'>
-                    <div 
-                    mwlDraggable (dragEnd)="dragEnd($event, task.TaskID)" dropdata="bar"
-                    
-                          class="taskTemplate">
-                        {{task.TaskDescription}}
+                <div class="taskTemplate-holder" *ngFor='let task of templateTasks'>
+                    <div mwlDraggable (dragEnd)="dragEnd($event, task.TaskID)" dropdata="bar"
+                            class="taskTemplate">
+                        <span class="task-Title">{{task.TaskDescription}}</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div id="tasksContainer"  class="col-md-10 col-lg-10 col-sm-10 col-xs-10">
+    <div id="tasksContainer" class="col-md-10 col-lg-10 col-sm-10 col-xs-10">
         <table *ngIf="!showTaskDetails" class="tasksTable">
             <thead>
                 <tr>
@@ -31,47 +29,47 @@
             </thead>
             <tbody>
                 <tr *ngFor='let employee of employees; let empIndex = index'>
-                    <td  width="250">
+                    <td width="250">
                         {{employee.FirstName}} {{employee.LastName}}
                     </td>
-                    <td  *ngFor='let day of employee.Days; let dayIndex = index'>
+                    <td *ngFor='let day of employee.Days; let dayIndex = index'>
                         <div *ngIf='day.task'>
-                            <div  *ngIf='!day.focused'
-                           class="taskTemplate">
-                                <span  class="task-Title" (click)="onFocus($event,day)"> {{day.task.TaskDescription}} </span>
+                            <div *ngIf='!day.focused'
+                                    class="taskTemplate">
+                                <span class="task-Title task-selectable" (click)="onFocus($event,day)"> {{day.task.TaskDescription}} </span>
                             </div>
                             <div *ngIf='day.focused'
-                                 mwlResizable (resizeEnd)="onResizeEnd($event, day.task , empIndex, dayIndex)"  (resizeStart)="onResizeStart($event)" resizeData="test"   
-                                 [validateResize]="validate"
-                                 [enableGhostResize]="true"
-                                 [resizeSnapGrid]="{left: 130, right: 130, top:45, bottom:45}"
-                                 [resizeEdges]="{bottom: true, right: true, top: true, left: true}"   
-                            class="taskTemplate focused-task">
+                                    mwlResizable (resizeEnd)="onResizeEnd($event, day.task , empIndex, dayIndex)" (resizeStart)="onResizeStart($event)" resizeData="test"
+                                    [validateResize]="validate"
+                                    [enableGhostResize]="true"
+                                    [resizeSnapGrid]="{left: 130, right: 130, top:45, bottom:45}"
+                                    [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
+                                    class="taskTemplate focused-task">
 
 
                                 <img id="edit-image"
-                                     src="/Content/Pictures/edit-icon.png"
-                                     class="edit-handle"
-                                     (click)="onEdit($event,day,day.task.TaskID)">
+                                        src="/Content/Pictures/edit-icon.png"
+                                        class="edit-handle"
+                                        (click)="onEdit($event,day,day.task.TaskID)">
 
-                                <span class="task-Title" (click)="onLoseFocus($event,day)" >{{day.task.TaskDescription}}</span>
-                                
+                                <span class="task-Title task-selectable" (click)="onLoseFocus($event,day)">{{day.task.TaskDescription}}</span>
+
                                 <img id="delete-image"
-                                     src="/Content/Pictures/delete-icon.png"
-                                     class="delete-handle"
-                                     (click)="onDelete($event,day,day.task.TaskID)">
+                                        src="/Content/Pictures/delete-icon.png"
+                                        class="delete-handle"
+                                        (click)="onDelete($event,day,day.task.TaskID)">
 
                                 <img id="drag-image"
-                                     src="http://i.imgur.com/eqzz2dl.gif"
-                                     class="resize-handle"
-                                     mwlResizeHandle
-                                     [resizeEdges]="{bottom: true, right: true}">
+                                        src="http://i.imgur.com/eqzz2dl.gif"
+                                        class="resize-handle"
+                                        mwlResizeHandle
+                                        [resizeEdges]="{bottom: true, right: true}">
                             </div>
                         </div>
                         <div *ngIf='!day.task'
-                              class="task-droppable"
-                              mwlDroppable
-                             (drop)="onDrop($event,day,employee)">                            
+                                class="task-droppable"
+                                mwlDroppable
+                                (drop)="onDrop($event,day,employee)">
                         </div>
                     </td>
 
@@ -86,7 +84,7 @@
             <div class="button-holder form-group">
 
                 <div [ngClass]="['form-group subsection','col-md-12','col-lg-12','col-sm-12','col-xs-12']">
-                    <div [ngClass]= "['control-label','col-md-3','col-sm-3','task-label']">
+                    <div [ngClass]="['control-label','col-md-3','col-sm-3','task-label']">
                         <span>Task Title</span>
                     </div>
                     <div class="col-md-9 col-sm-9">
@@ -94,6 +92,7 @@
                         <span *ngIf="taskDescriptionValidation" [ngClass]="['text-danger']"> {{taskDescriptionValidationText}} </span>
                     </div>
                 </div>
+
                 <div [ngClass]="['form-group subsection','col-md-12','col-lg-12','col-sm-12','col-xs-12']">
                     <div [ngClass]="['control-label','col-md-3','col-sm-3','task-label']">
                         <span>Task Estimation</span>
@@ -108,9 +107,22 @@
                     </div>
                 </div>
 
+                <div [ngClass]="['form-group subsection','col-md-12','col-lg-12','col-sm-12','col-xs-12']">
+                    <div [ngClass]="['control-label','col-md-3','col-sm-3','task-label']">
+                        <span> Difficulty </span>
+                    </div>
+                    <div class="col-md-9 col-sm-9">
+                        <div [ngClass]="['slider-container']">
+                            <nouislider [min]="1" [max]="5" [step]="1" [(ngModel)]="currentDay.task.Difficulty"></nouislider>
+                            <p class="value-box">
+                                Difficulty level: <span class="value-span" id="plain_1">{{currentDay.task.Difficulty}}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-10">
-                    <button type="button" 
-                            [ngClass]="['btn', 'btn-default']" 
+                    <button type="button"
+                            [ngClass]="['btn', 'btn-default']"
                             (click)="saveValues($event,currentDay,employee)"
                             id="edit-task">
                         Save

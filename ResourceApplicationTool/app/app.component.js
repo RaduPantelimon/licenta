@@ -115,6 +115,15 @@ var AppComponent = (function () {
             this._router.navigate(['/tasks', newSprint.SprintID]);
         }
     };
+    //used to change the month input when we perform a route from the code
+    AppComponent.prototype.changeMonthInput = function () {
+        for (var i = 0; i < this.sprints.length; i++) {
+            var currentSprint = this.sprints[i];
+            if (currentSprint.selected == true) {
+                this.selectedMonth = moment(currentSprint.StartDate).format("YYYY MMMM");
+            }
+        }
+    };
     AppComponent.prototype.setMonths = function () {
         if (this.sprints && this.sprints.length > 0) {
             //reinitializing the array
@@ -142,6 +151,68 @@ var AppComponent = (function () {
             for (var i = 0; i < this.sprints.length; i++) {
                 _loop_1(i);
             }
+        }
+    };
+    AppComponent.prototype.removeDate = function (date) {
+        var sprintMonthIndex = -1;
+        for (var i = 0; i < this.sprintMonths.length; i++) {
+            if (date = this.sprintMonths[i].displayDate) {
+                sprintMonthIndex = i;
+            }
+        }
+        if (sprintMonthIndex >= 0) {
+            this.sprintMonths.splice(sprintMonthIndex, 1);
+        }
+    };
+    AppComponent.prototype.deleteCurrentSprint = function (event) {
+        var _this = this;
+        var selectedSprintIndex = -1;
+        var selectedSprint;
+        for (var i = 0; i < this.sprints.length; i++) {
+            var currentSprint = this.sprints[i];
+            if (currentSprint.selected == true) {
+                selectedSprint = currentSprint;
+                selectedSprintIndex = i;
+            }
+        }
+        if (selectedSprint) {
+            this.createSprintEnabled = false;
+            selectedSprint.selected = false;
+            this._sprintService.deleteSprint(selectedSprint.SprintID).subscribe(function (response) {
+                if (response.status) {
+                    //operation succeded
+                    _this.sprints.splice(selectedSprintIndex, 1);
+                    //checking if we need to delete the month values from the month selector
+                    var sprintStartDate = moment(selectedSprint.StartDate).format("YYYY MMMM");
+                    var sprintEndDate = moment(selectedSprint.EndDate).format("YYYY MMMM");
+                    var startDateExists = false;
+                    var endDateExists = false;
+                    //let startSprint = this.sprintMonths.filter(s => s.displayDate == sprintStartDate.format("YYYY MMMM"))[0];
+                    for (var i = 0; i < _this.sprints.length; i++) {
+                        var currentSprint = _this.sprints[i];
+                        if (moment(currentSprint.StartDate).format("YYYY MMMM") == sprintStartDate) {
+                            startDateExists = true;
+                        }
+                        if (moment(currentSprint.EndDate).format("YYYY MMMM") == sprintEndDate) {
+                            endDateExists = true;
+                        }
+                    }
+                    if (!startDateExists)
+                        _this.removeDate(sprintStartDate);
+                    if (!endDateExists)
+                        _this.removeDate(sprintEndDate);
+                    if (_this.sprints.length > 0) {
+                        var defaultSprint = _this.sprints[0];
+                        defaultSprint.selected = true;
+                        _this.changeMonthInput();
+                        _this._router.navigate(['/tasks']);
+                    }
+                }
+                else {
+                    //operation failed
+                    console.log("Task " + selectedSprint.SprintID + " could not be removed.Error:" + response.message);
+                }
+            }, function (error) { return _this.errorMessage = error; });
         }
     };
     AppComponent = __decorate([

@@ -10,6 +10,7 @@ import { Subject } from 'rxjs/Subject';
 export class SprintsService {
     private _sprintsUrl = '/api/restapi/GetSprints/';
     private _createSprintUrl = '/api/restapi/SaveSprint';
+    private _deleteUrl = '/api/restapi/DeleteSprint';
 
     private _sprintsObservable: Observable<any[]>;
     public _obsvInitialized: boolean = false;
@@ -40,6 +41,16 @@ export class SprintsService {
             .map(
             (response: Response) => <any>this.extractData(response));
     }
+
+    //delete existing task
+    deleteSprint(sprintID: number): Observable<any> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        return this._http.delete(this._deleteUrl + "/" + sprintID, options).map(
+            (response: Response) => <any>this.extractData(response));
+    }
+
+
 
     private handleError(error: Response) {
         console.log(error);

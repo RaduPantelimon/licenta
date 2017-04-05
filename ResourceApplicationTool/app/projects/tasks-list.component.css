@@ -138,10 +138,14 @@
     margin-bottom: 0;
  }
 
- .slider-container{
-     width:280px;
+ .task-Title{
+    text-overflow: ellipsis;
+    max-width: 95px;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
  }
 
-
-
- 
+ .task-selectable:hover{
+     cursor:pointer;
+ }

@@ -153,6 +153,17 @@ export class AppComponent implements OnInit{
         }
     }
 
+    //used to change the month input when we perform a route from the code
+    private changeMonthInput():void
+    {
+        for (let i = 0; i < this.sprints.length; i++) {
+            let currentSprint = this.sprints[i];
+            if (currentSprint.selected == true) {
+                this.selectedMonth = moment(currentSprint.StartDate).format("YYYY MMMM");
+            }
+        }
+    }
+
     private setMonths() {
         if (this.sprints && this.sprints.length > 0)
         {
@@ -182,6 +193,87 @@ export class AppComponent implements OnInit{
                 }
             }
             //this.selectedMonth = this.sprintMonths[0].displayDate;
+        }
+    }
+
+    public removeDate(date:string):void
+    {
+        let sprintMonthIndex: number = -1; 
+
+        for (let i = 0; i < this.sprintMonths.length; i++)
+        {
+            if (date = this.sprintMonths[i].displayDate)
+            {
+                sprintMonthIndex = i;
+            }
+        }
+
+        if (sprintMonthIndex >= 0)
+        {
+            this.sprintMonths.splice(sprintMonthIndex, 1);
+        }
+    }
+
+    public deleteCurrentSprint(event: MouseEvent)
+    {
+        let selectedSprintIndex: number = -1;
+        var selectedSprint:any;
+        for (let i = 0; i < this.sprints.length; i++) {
+            let currentSprint = this.sprints[i];
+            if (currentSprint.selected == true)
+            {
+                selectedSprint = currentSprint;
+                selectedSprintIndex = i;
+            }
+        }
+
+        if (selectedSprint)
+        {
+           this.createSprintEnabled = false;
+           selectedSprint.selected = false;
+
+           this._sprintService.deleteSprint(selectedSprint.SprintID).subscribe(response => {
+               if (response.status) {
+
+                   //operation succeded
+                   this.sprints.splice(selectedSprintIndex, 1);
+
+                   //checking if we need to delete the month values from the month selector
+                   let sprintStartDate = moment(selectedSprint.StartDate).format("YYYY MMMM");
+                   let sprintEndDate = moment(selectedSprint.EndDate).format("YYYY MMMM");
+
+                   let startDateExists = false;
+                   let endDateExists = false;
+
+                   //let startSprint = this.sprintMonths.filter(s => s.displayDate == sprintStartDate.format("YYYY MMMM"))[0];
+                   for (let i = 0; i < this.sprints.length; i++) {
+                       let currentSprint = this.sprints[i];
+                       if (moment(currentSprint.StartDate).format("YYYY MMMM") == sprintStartDate) {
+                           startDateExists = true;
+                       }
+                       if (moment(currentSprint.EndDate).format("YYYY MMMM") == sprintEndDate) {
+                           endDateExists = true;
+                       }
+                   }
+                   if (!startDateExists) this.removeDate(sprintStartDate);
+                   if (!endDateExists) this.removeDate(sprintEndDate);
+                  
+
+                   if (this.sprints.length > 0)
+                   {
+                       let defaultSprint = this.sprints[0];
+                       defaultSprint.selected = true;
+                       this.changeMonthInput();
+                       this._router.navigate(['/tasks']);
+                   }
+               }
+               else {
+                   //operation failed
+                   console.log("Task " + selectedSprint.SprintID + " could not be removed.Error:" + response.message);
+               }
+           },
+               error => this.errorMessage = <any>error
+           );
         }
     }
 }

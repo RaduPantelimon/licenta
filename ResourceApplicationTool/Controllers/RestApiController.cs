@@ -83,7 +83,7 @@ namespace ResourceApplicationTool.Controllers
         //save the tasks added by the user
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage EditTask([Bind(Include = "TaskID,TaskDescription,Estimation")] Task task)
+        public HttpResponseMessage EditTask([Bind(Include = "TaskID,TaskDescription,Estimation,Difficulty")] Task task)
         {
             string jsonResponseText = "";
             try
@@ -95,8 +95,10 @@ namespace ResourceApplicationTool.Controllers
                     {
                         existingTask.Estimation = task.Estimation;
                         existingTask.TaskDescription = task.TaskDescription;
+                        existingTask.Difficulty = task.Difficulty;
                         db.Entry(existingTask).Property(X => X.TaskDescription).IsModified = true;
                         db.Entry(existingTask).Property(X => X.Estimation).IsModified = true;
+                        db.Entry(existingTask).Property(X => X.Difficulty).IsModified = true;
                         db.SaveChanges();
                         jsonResponseText = "{\"status\":1,\"message\":\"The update was successfull\"}";
                     }
@@ -219,6 +221,36 @@ namespace ResourceApplicationTool.Controllers
             catch (Exception ex)
             {
                 jsonResponseText = "{\"status\":0,\"error\":\"Error trying to create the new task\",\"message\":\"" + ex.Message + "\"}";
+                var response = Request.CreateResponse(HttpStatusCode.InternalServerError);
+                response.Content = new StringContent(jsonResponseText, Encoding.UTF8, "application/json");
+                return response;
+            }
+
+        }
+
+        //deletes a sprint
+        [System.Web.Http.AcceptVerbs("DELETE")]
+        [System.Web.Http.HttpDelete]
+        public HttpResponseMessage DeleteSprint(int id)
+        {
+            string jsonResponseText = "";
+            try
+            {
+                Sprint sprint = db.Sprints.Where(x => x.SprintID == id).FirstOrDefault();
+                if (sprint != null)
+                {
+                    db.Sprints.Remove(sprint);
+                    db.SaveChanges();
+
+                    jsonResponseText = "{\"status\":1,\"message\":\"Sprint was successfully deleted.\"}";
+                }
+                var response = Request.CreateResponse(HttpStatusCode.OK);
+                response.Content = new StringContent(jsonResponseText, Encoding.UTF8, "application/json");
+                return response;
+            }
+            catch (Exception ex)
+            {
+                jsonResponseText = "{\"status\":0,\"error\":\"Error trying to delete the sprint\",\"message\":\"" + ex.Message + "\"}";
                 var response = Request.CreateResponse(HttpStatusCode.InternalServerError);
                 response.Content = new StringContent(jsonResponseText, Encoding.UTF8, "application/json");
                 return response;
