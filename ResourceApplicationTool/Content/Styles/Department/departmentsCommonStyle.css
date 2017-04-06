@@ -51,8 +51,13 @@ h2.departments-title{
     box-shadow: 0 0 8px rgba(0, 0, 0, .8);
 	-webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
 	-moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+        margin-left: 20px;
 }
 
 .profile-header-container{
     margin-top: 220px;
+}
+
+.mainHeaderLogo.departments-logo.departments-custom-logo{
+    background-position: top center;
 }

@@ -33,7 +33,6 @@ namespace ResourceApplicationTool.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Department department = db.Departments.Find(id);
-            department.MonthlyExpenses = 1;
 
             if (department == null)
             {
@@ -66,7 +65,7 @@ namespace ResourceApplicationTool.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(
-            [Bind(Include = "DepartmentID,Title,MaxSize,DeptDescription,StartDate,MonthlyExpenses,BannerImageID,MainImageID")] Department department, 
+            [Bind(Include = "DepartmentID,Title,MaxSize,DeptDescription,StartDate,MonthlyExpenses")] Department department, 
             HttpPostedFileBase uploadPicture,
             HttpPostedFileBase uploadBanner)
         {
@@ -103,10 +102,19 @@ namespace ResourceApplicationTool.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Department department = db.Departments.Include(d => d.File).Include(d => d.File1).SingleOrDefault(s => s.DepartmentID == id);
+
+
+          
+
+          
+
             if (department == null)
             {
                 return HttpNotFound();
             }
+            string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+          Request.ApplicationPath.TrimEnd('/') + "/";
+            ViewBag.baseUrl = baseUrl;
             return View(department);
         }
 
@@ -116,7 +124,7 @@ namespace ResourceApplicationTool.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(
-            [Bind(Include = "DepartmentID,Title,MaxSize,DeptDescription,StartDate,MonthlyExpenses,BannerImageID,MainImageID")] Department department,
+            [Bind(Include = "DepartmentID,Title,MaxSize,DeptDescription,StartDate,MonthlyExpenses")] Department department,
             HttpPostedFileBase uploadPicture,
             HttpPostedFileBase uploadBanner)
         {
@@ -140,9 +148,9 @@ namespace ResourceApplicationTool.Controllers
 
                 existingDept.DeptDescription = department.DeptDescription;
                 existingDept.MaxSize = department.MaxSize;
-                existingDept.MonthlyExpenses = existingDept.MonthlyExpenses;
-                existingDept.StartDate = existingDept.StartDate;
-                existingDept.Title = existingDept.Title;
+                existingDept.MonthlyExpenses = department.MonthlyExpenses;
+                existingDept.StartDate = department.StartDate;
+                existingDept.Title = department.Title;
 
                 db.Entry(existingDept).State = EntityState.Modified;
                 db.SaveChanges();

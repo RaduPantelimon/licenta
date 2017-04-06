@@ -207,12 +207,12 @@
                         @Html.LabelFor(model => model.HireDate, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
                         <div class="col-md-9 col-sm-9">
                             @Html.TextBoxFor(model => model.HireDate, new
-                   {
-                       @Value = Model.HireDate.ToString("MM/dd/yyyy"),
-                       @class = "form-control",
-                       @id = "hireDate-input",
-                       @placeholder = "MM/DD/YYY"
-                   })
+                           {
+                               @Value = Model.HireDate.ToString("MM/dd/yyyy"),
+                               @class = "form-control",
+                               @id = "hireDate-input",
+                               @placeholder = "MM/DD/YYY"
+                           })
                             @Html.ValidationMessageFor(model => model.HireDate, "", new { @class = "text-danger" })
                         </div>
                     </div>

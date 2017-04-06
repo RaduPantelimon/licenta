@@ -1,106 +1,171 @@
 ﻿@model ResourceApplicationTool.Models.Department
+@using ResourceApplicationTool.Models;
+@using ResourceApplicationTool.Utils;
 
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/Content/Styles/Department/departmentsCommonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/commonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/slickStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/Department/departmentsNewStyle.css" rel="stylesheet" />
 
-<h2>Edit</h2>
+@if (Model.BannerImageID.HasValue)
+{
+    <div class="mainHeaderLogo departments-logo departments-custom-logo" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"
+         style="background-image: url('@(ViewBag.baseUrl + Const.PicturePaths.ImgControllerRoot + Model.File.FileNumber)');"></div>
+}
+else
+{
+    <div class="mainHeaderLogo departments-logo" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"
+         style="background-image: url('@ViewBag.BannerImgIDSec');"></div>
+}
+
+
+<h2 class="edit-profile-header sec-title-huge sec-title">Edit Department</h2>
+<hr class="sec-hr" />
+
 
 
 @using (Html.BeginForm("Edit", "Departments", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Department</h4>
-        <hr />
+        <div class="form-horizontal picture-form-group">
+            <div class="form-group">
+                @if (Model.MainImageID.HasValue)
+                {
+                    <div id="main-profile-picture-div" class="item-profile-picture " 
+                          style="background-image: url('@(ViewBag.baseUrl + Const.PicturePaths.ImgControllerRoot + Model.File1.FileNumber)');">
+
+                    </div>
+                }
+                else
+                {
+                    <div id="main-profile-picture-div" class="item-profile-picture " style="background-image: url('@ViewBag.ImgIDSec');"></div>
+                }
+                
+                <div class="profile-header">
+                    <h4 class="sec-title-large sec-title"> @Model.Title</h4>
+
+                    <label for="uploadPicture" class="btn btn-default">
+                        Upload Profile Picture
+                        <input type="file" id="uploadPicture" name="uploadPicture" class="picture-input" />
+                    </label>
+                    <label for="uploadBanner" class="btn btn-default">
+                        Upload Banner Picture
+                        <input type="file" id="uploadBanner" name="uploadBanner" class="picture-input" />
+                    </label>
+                </div>
+            </div>
+        </div>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.DepartmentID)
+        <div class="main-form-container">
+            <div class="main_expandable">
+                <div class="tvd-sub-header">
+                    <table>
+                        <tr>
+                            <td>
+                                <!--<a class="main_expand_collapse">
+                                <img class="expandimg" src="~/Content/Pictures/expand-sign.png" title="expand" height="18" width="18" align="absbottom" style="display: none;">
+                                <img class="collapseimg" src="~/Content/Pictures/collapse-sign.png" title="collapse" height="18" width="18" align="absbottom" style="display: inline;">
+                            </a>-->
+                            </td>
+                            <td>
+                                <h1 class="sec-title-large sec-title" data-scrollname="Projects" style="display: inline; bottom: 0px;">
+                                    Organizational Information
+                                </h1>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="row expandable-content">
+                    <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                        <div class="field-name col-md-3 col-sm-3 control-label">
+                            @Html.DisplayNameFor(model => model.Title)
+                        </div>
+                        <div class="col-md-9 col-sm-9">
+                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                        <div class="field-name col-md-3 col-sm-3">
+                            @Html.DisplayNameFor(model => model.MaxSize)
+                        </div>
+                        <div class="col-md-9 col-sm-9">
+                            @Html.EditorFor(model => model.MaxSize, new { htmlAttributes = new { @class = "form-control", type = "number" } })
+                            @Html.ValidationMessageFor(model => model.MaxSize, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                        <div class="field-name col-md-3 col-sm-3 control-label">
+                            @Html.DisplayNameFor(model => model.StartDate)
+                        </div>
+                        <div class="col-md-9 col-sm-9">
+                           @Html.TextBoxFor(model => model.StartDate, new
+                          {
+                              @Value = Model.StartDate.ToString("MM/dd/yyyy"),
+                              @class = "form-control",
+                              @id = "startDate-input",
+                              @placeholder = "MM/DD/YYY"
+                          })
+                            @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.MaxSize, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MaxSize, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MaxSize, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                        <div class="field-name col-md-3 col-sm-3 control-label">
+                            @Html.DisplayNameFor(model => model.MonthlyExpenses)
+                        </div>
+                        <div class="col-md-9 col-sm-9">
+                            @Html.EditorFor(model => model.MonthlyExpenses, new { htmlAttributes = new { @class = "form-control", type = "number" } })
+                            @Html.ValidationMessageFor(model => model.MonthlyExpenses, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DeptDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DeptDescription, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DeptDescription, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MonthlyExpenses, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MonthlyExpenses, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MonthlyExpenses, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        @if (Model.File != null)
-        {
-            <div class="form-group">
-                <span class="control-label col-md-2"><strong>Current Banner</strong></span>
-                <div class="col-md-10">
-                    <img src="~/Images/@Model.File.FileNumber" alt="avatar" />
+                    <div class="form-group subsection col-md-12 col-lg-12 col-sm-12 col-xs-12" style="clear:both">
+                        <div class="field-name full-row  col-md-2 col-lg-2 col-sm-3 col-xs-12 right-align-not-xs right-align-not-sm">
+                            Department Description
+                        </div>
+                        <div class="col-md-10 col-lg-10 col-sm-9 col-xs-12 full-row">
+                            @Html.TextArea("DeptDescription", new { @class = "form-control full-width-input" })
+                            @Html.ValidationMessageFor(model => model.DeptDescription, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                 </div>
             </div>
-        }
 
-        <div class="form-group">
-            @Html.Label("Avatar", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" id="Avatar" name="uploadBanner" />
-            </div>
-        </div>
-        @if (Model.File1 != null)
-        {
             <div class="form-group">
-                <span class="control-label col-md-2"><strong>Current Picture</strong></span>
                 <div class="col-md-10">
-                    <img src="~/Images/@Model.File1.FileNumber" alt="avatar" />
+                    <input type="submit" value="Save" class="btn btn-default" />
+                    <button type="button"
+                            class="btn btn-default btn-inverse"
+                            id="cancel"
+                            onclick="window.history.back()">
+                        <i class="icon-remove icon-large"></i>
+                        Cancel
+                    </button>
                 </div>
-            </div>
-        }
-
-        <div class="form-group">
-            @Html.Label("Avatar", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" id="Avatar" name="uploadPicture" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap-datepicker") ;
+    @Scripts.Render("~/Content/bootstrap-sliderjs") ;
+    @*@Scripts.Render("~/bundles/jquery-uijs");*@
+    @Styles.Render("~/Content/bootstrap-datepickercss") ;
+    @Styles.Render("~/Content/bootstrap-slidercss") ;
+    @Styles.Render("~/Content/jquery-uicss") ;
 }
+
+
+<script src="~/Scripts/departments/departments-common.js"></script>
+<script src="~/Scripts/departments/departments-new.js"></script>
