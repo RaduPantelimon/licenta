@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ResourceApplicationTool.Models;
+using ResourceApplicationTool.Utils;
 
 namespace ResourceApplicationTool.Controllers
 {
@@ -50,7 +51,12 @@ namespace ResourceApplicationTool.Controllers
         // GET: Departments/Create
         public ActionResult Create()
         {
-           
+
+            string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+            Request.ApplicationPath.TrimEnd('/') + "/";
+
+            ViewBag.ImgIDSec = baseUrl + Const.PicturePaths.DepartmentPictureUrl;
+            ViewBag.BannerImgIDSec = baseUrl + Const.PicturePaths.DepartmentBannerPictureUrl;
             return View();
         }
 

@@ -314,7 +314,9 @@
     <Content Include="Content\Styles\commonStyle.css" />
     <Content Include="Content\Styles\Department\departmentsCommonStyle.css" />
     <Content Include="Content\Styles\Department\departmentsDisplayStyle.css" />
+    <Content Include="Content\Styles\Department\departmentsEditStyle.css" />
     <Content Include="Content\Styles\Department\departmentsIndexStyle.css" />
+    <Content Include="Content\Styles\Department\departmentsNewStyle.css" />
     <Content Include="Content\Styles\Employee\employeesCommonStyle.css" />
     <Content Include="Content\Styles\Employee\employeesDetailsStyle.css" />
     <Content Include="Content\Styles\Employee\employeesEditStyle.css" />
@@ -361,6 +363,7 @@
     <Content Include="Scripts\departments\departments-common.js" />
     <Content Include="Scripts\departments\departments-display.js" />
     <Content Include="Scripts\departments\departments-index.js" />
+    <Content Include="Scripts\departments\departments-new.js" />
     <Content Include="Scripts\employees\employees-index.js" />
     <Content Include="Scripts\employees\employees_common.js" />
     <Content Include="Scripts\employees\employees_details.js" />

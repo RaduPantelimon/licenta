@@ -19,6 +19,9 @@ namespace ResourceApplicationTool.Utils
             public static readonly string PictureUrlRoot = "Content/Pictures/";
             public static readonly string ImgControllerRoot = "Images/";
             public static readonly string ProfilePictureUrl = "Content/Pictures/default-profile-picture.png";
+
+            public static readonly string DepartmentPictureUrl = "Content/Pictures/default-profile-picture.png";
+            public static readonly string DepartmentBannerPictureUrl = "Content/Pictures/departments-picture.png";
         }
 
         public partial class QueryStringParams
