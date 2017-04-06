@@ -184,6 +184,115 @@ else
     </div>
 </div>
 
+<h2 class="sec-title-large sec-title carousel-header"> Projects developed by this department </h2>
+@if (Model.Employees == null || Model.Employees.Count == 0)
+{
+    <h3 class="sec-title-large sec-title carousel-header carousel-empty-header">This department currently isn't developing any projects</h3>
+}
+<div class="row">
+    <div class="carousel-depts">
+        @foreach (Project proj in Model.Projects)
+        {
+
+            <!--<div class="wip-div" ></div>-->
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 department-item carousel-item carousel-item-nopicture ">
+                <div class="mask-background-parent">
+                    <div class="mask-background">
+
+                        <div class="mask-front">
+                            <div class="stat sec-sweep-title">
+
+                                <div class="stat-sec sweep-stat slick-main-header">
+                                    <h2 class="limited-container">@proj.Title</h2>
+                                </div>
+                                <figure class="view third-effect">
+                                    <div>
+                                        <div class="stat-row">
+                                            <div class="secondary-pj-field container-padding">
+                                                <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/calendar-icon.png" alt="" height="28" width="28">
+                                                <p class="project-secondary-label"></p>
+                                            </div>
+                                            <div class="secondary-pj-field  container-value">
+                                                <p class="project-secondary-label">
+                                                    <span class="field-name">Start:</span>
+                                                    @String.Format("{0:MM/dd/yyyy}", proj.StartDate)
+                                                </p>
+                                            </div>
+                                            <div class="secondary-pj-field ">
+                                                <p class="project-secondary-label">
+                                                    <span class="field-name">End:</span>
+                                                    @String.Format("{0:MM/dd/yyyy}", proj.EndDate)
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="stat-row">
+                                            <div class="secondary-pj-field container-padding">
+                                                <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/effort-icon.png" alt="" height="28" width="28">
+                                                <p class="project-secondary-label"></p>
+                                            </div>
+                                            <div class="secondary-pj-field">
+                                                <p class="project-secondary-label">
+                                                    <span class="field-name">Effort in man days:</span>
+                                                    @proj.ManDaysEffort
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                        <div class="stat-row">
+                                            <div class="secondary-pj-field container-padding">
+                                                <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/department-icon.png" alt="" height="28" width="28">
+                                                <p class="project-secondary-label"></p>
+                                            </div>
+                                            <div class="secondary-pj-field">
+                                                <p class="project-secondary-label">
+                                                    <span class="field-name dept-information-container" departmentId="@proj.Department.DepartmentID">Department:</span>
+                                                    <!--<a href="/Departments/Details/@proj.DepartmentID">-->
+                                                    @((proj.Department != null && !String.IsNullOrEmpty(proj.Department.Title)) ? proj.Department.Title : "")
+                                                    <!--</a>-->
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="stat-row sec-pj-detail-label">
+                                        <div>
+                                            <p class="project-secondary-label ">
+                                                <span class="field-name">Project Details</span>
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                    <div class="sec-pj-detail">
+                                        @proj.PJDescription
+                                    </div>
+                                    <div class="mask clickable-mask" onclick="redirectToUrl('/Projects/Details/@proj.ProjectID')">
+                                        <a href="" class="info">Read More</a>
+                                    </div>
+
+                                    <div class="mask">
+                                        <a href="/Projects/Details/@proj.ProjectID" class="info">Read More</a>
+                                    </div>
+
+                                </figure>
+                                <div class="bottom-footer">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
 <script src="~/Scripts/common.js"></script>
 <script src="~/Scripts/departments/departments-common.js"></script>
 <script src="~/Scripts/departments/departments-display.js"></script>

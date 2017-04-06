@@ -19,15 +19,17 @@
     {
         @Html.AntiForgeryToken()
 
+
+
         <div class="main_expandable">
             <div class="tvd-sub-header">
                 <table>
                     <tr>
                         <td>
-                            <a class="main_expand_collapse">
+                            <!--<a class="main_expand_collapse">
                                 <img class="expandimg" src="~/Content/Pictures/expand-sign.png" title="expand" height="18" width="18" align="absbottom" style="display: none;">
                                 <img class="collapseimg" src="~/Content/Pictures/collapse-sign.png" title="collapse" height="18" width="18" align="absbottom" style="display: inline;">
-                            </a>
+                            </a>-->
                         </td>
                         <td>
                             <h1 class="sec-title-large sec-title" data-scrollname="Projects" style="display: inline; bottom: 0px;">
@@ -56,7 +58,13 @@
                 <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
                     @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
                     <div class="col-md-9 col-sm-9">
-                        @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                       @Html.TextBoxFor(model => model.StartDate, new
+                      {
+                          @Value = "",
+                          @class = "form-control",
+                          @id = "startDate-input",
+                          @placeholder = "MM/DD/YYY"
+                      })
                         @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -64,7 +72,13 @@
                 <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
                     @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
                     <div class="col-md-9 col-sm-9">
-                        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.TextBoxFor(model => model.EndDate, new
+                       {
+                           @Value = "",
+                           @class = "form-control",
+                           @id = "endDate-input",
+                           @placeholder = "MM/DD/YYY"
+                       })
                         @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -75,46 +89,59 @@
                         @Html.ValidationMessageFor(model => model.DepartmentID, "", new { @class = "text-danger" })
                     </div>
                 </div>
+
+                @*
+                    <!--No contact for now-->
                 <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
                    @Html.LabelFor(model => model.ContactID1, "ContactID", htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
                     <div class="col-md-9 col-sm-9">
                         @Html.DropDownList("ContactID", null, htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.ContactID1, "", new { @class = "text-danger" })
                     </div>
-                </div>
+                </div>*@
                 <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
                     @Html.LabelFor(model => model.Budget, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
                     <div class="col-md-9 col-sm-9">
-                        @Html.EditorFor(model => model.Budget, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Budget, new { htmlAttributes = new { @class = "form-control", type="number" } })
                         @Html.ValidationMessageFor(model => model.Budget, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group subsection col-md-12 col-lg-12 col-sm-12 col-xs-12" style="clear:both">
-                    <div class="field-name full-row  col-md-2 col-lg-2 col-sm-3 col-xs-12 right-align-not-xs">
+                    <div class="field-name full-row  col-md-2 col-lg-2 col-sm-3 col-xs-12 right-align-not-xs right-align-not-sm">
                        Project Description
                     </div>
                     <div class="col-md-10 col-lg-10 col-sm-9 col-xs-12 full-row">
-                       @Html.EditorFor(model => model.PJDescription, new { htmlAttributes = new { @class = "form-control" } })
+                       @Html.TextArea("PJDescription", new { @class = "form-control full-width-input" } ) 
                        @Html.ValidationMessageFor(model => model.PJDescription, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="form-group">
+                <div class="col-md-10 button-holder">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                    <button type="button"
+                            class="btn btn-default btn-inverse"
+                            id="cancel"
+                            onclick="window.history.back()">
+                        <i class="icon-remove icon-large"></i>
+                        Cancel
+                    </button>
+                </div>
             </div>
         </div>
-    }
-</div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+     
+    }
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap-datepicker") ;
+    @Scripts.Render("~/Content/bootstrap-sliderjs") ;
+    @*@Scripts.Render("~/bundles/jquery-uijs");*@
+    @Styles.Render("~/Content/bootstrap-datepickercss") ;
+    @Styles.Render("~/Content/bootstrap-slidercss") ;
+    @Styles.Render("~/Content/jquery-uicss") ;
 }
 
 <script src="~/Scripts/projects/projects_common.js"></script>

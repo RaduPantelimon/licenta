@@ -9,4 +9,8 @@ function initializePage() {
         MainExpandCollapse(this, 'auto');
 
     });
+
+    //initialize date time pickers
+    InitializeDatePickers('#startDate-input');
+    InitializeDatePickers('#endDate-input');
 }
