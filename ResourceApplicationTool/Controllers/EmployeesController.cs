@@ -26,6 +26,38 @@ namespace ResourceApplicationTool.Controllers
             return View(employees.ToList());
         }
 
+        // GET: Employees/GenerateCV/5
+        public /*System.Net.Http.HttpResponseMessage*/ ActionResult GenerateCV(int? id)
+        {
+
+            Employee employee = db.Employees.Find(id);
+
+
+            string generatedPDFHtml = this.RenderView("PdfCVGenerator", employee);
+            string headertext = "<span>" + "Header" + "</span><img style='float:right; width:162px; height:46px;' alt='Image unavailable' src=''>";
+            byte[] pdfBuffer = PdfGenerator.ConvertHtmlToPDF(generatedPDFHtml, headertext);
+
+            Common.CreateSkillTemplates(employee);
+
+            string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+            Request.ApplicationPath.TrimEnd('/') + "/";
+
+
+
+            employee.SkillLevelsList = employee.SkillLevels.ToList();
+            ViewBag.SkillCategories = db.SkillCategories.OrderByDescending(x => x.Skills.Count).ToList();
+
+            //var response = Request.CreateResponse(HttpStatusCode.OK);
+            this.HttpContext.Response.ContentType = "application/pdf";
+            this.HttpContext.Response.AddHeader("Content-Disposition", "attachment; filename=" + "Test.pdf");
+            this.HttpContext.Response.BinaryWrite(pdfBuffer);
+            this.HttpContext.Response.Flush();
+            this.HttpContext.Response.Close();
+
+            return View(employee);
+        }
+
+
         // GET: Employees/Details/5
         public ActionResult Details(int? id)
         {

@@ -258,12 +258,7 @@ hr.title-hr{
         text-align:left;
     }
 }
-@media (min-width: 768px) && (max-width: 992px) {
-        .right-align-not-sm {
-        text-align:left;
-    }
 
-}
 
 
 .full-width-input {

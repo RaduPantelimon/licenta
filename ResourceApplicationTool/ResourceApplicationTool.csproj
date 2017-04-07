@@ -51,6 +51,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NReco, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NReco.2.0.3.0\lib\net40\NReco.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NReco.PdfGenerator, Version=1.1.15.0, Culture=neutral, PublicKeyToken=231663d50a41b451, processorArchitecture=MSIL">
+      <HintPath>..\packages\NReco.PdfGenerator.1.1.15\lib\net20\NReco.PdfGenerator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -262,6 +270,8 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\Common.cs" />
     <Compile Include="Utils\Const.cs" />
+    <Compile Include="Utils\ControllerExtensions.cs" />
+    <Compile Include="Utils\PdfGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.component.css" />
@@ -275,6 +285,26 @@
     <Content Include="app\projects\tasks-edit.component.html" />
     <Content Include="app\projects\tasks-list.component.css" />
     <Content Include="app\projects\tasks-list.component.html" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-conio-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-convert-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-environment-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-filesystem-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-heap-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-locale-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-math-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-multibyte-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-private-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-process-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-runtime-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-stdio-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-string-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-time-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\api-ms-win-crt-utility-l1-1-0.dll" />
+    <Content Include="App_Data\wkhtmltopdf\concrt140.dll" />
+    <Content Include="App_Data\wkhtmltopdf\msvcp140.dll" />
+    <Content Include="App_Data\wkhtmltopdf\ucrtbase.dll" />
+    <Content Include="App_Data\wkhtmltopdf\vcruntime140.dll" />
+    <Content Include="App_Data\wkhtmltopdf\wkhtmltopdf.exe" />
     <Content Include="Content\bootstrap-datepicker3.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -481,9 +511,9 @@
     <Content Include="Views\Educations\Details.cshtml" />
     <Content Include="Views\Educations\Edit.cshtml" />
     <Content Include="Views\Educations\Index.cshtml" />
+    <Content Include="Views\Employees\PdfCVGenerator.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Views\Images\" />
   </ItemGroup>
   <ItemGroup>
