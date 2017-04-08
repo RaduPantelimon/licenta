@@ -14,7 +14,7 @@
 @if (Model.BannerImageID.HasValue)
 {
     <div class="mainHeaderLogo departments-logo departments-custom-logo" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"
-         style="background-image: url('@(ViewBag.baseUrl + Const.PicturePaths.ImgControllerRoot + Model.File.FileNumber)');"></div>
+         style="background-image: url('@(ViewBag.baseUrl + Const.PicturePaths.ImgControllerRoot + Model.File.FileID.ToString())');"></div>
 }
 else
 {
@@ -24,7 +24,7 @@ else
     <div class="form-group profile-header-container">
         @if (Model.MainImageID.HasValue)
         {
-            <div id="main-profile-picture-div" class="department-main-picture " style="background-image: url('@(ViewBag.baseUrl + Const.PicturePaths.ImgControllerRoot + Model.File1.FileNumber)');"></div>
+            <div id="main-profile-picture-div" class="department-main-picture " style="background-image: url('@(ViewBag.baseUrl + Const.PicturePaths.ImgControllerRoot + Model.File1.FileID.ToString())');"></div>
         }
         else
         {

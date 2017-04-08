@@ -1,0 +1,18 @@
+﻿@{
+    Layout = null;
+}
+@model ResourceApplicationTool.Models.Employee
+
+<div style='width:100%; margin-top:1em; display:block; height:130px;'>
+
+    <div style="float:left; font-size:14px; color:#bbbbbb; margin-top:30px;">
+       <span style="display:block" >Employee Information for: @(Model.FirstName + " " + Model.LastName)</span>
+       <span style="display:block" >Report Created at: @(DateTime.Now.ToString("M/d/yyyy"))</span>
+       
+    </div>
+    <img style='float:right; display:inline-block;' 
+         width='125' 
+         height='100' 
+         src='@Html.Raw("file:///" + System.Web.HttpContext.Current.Server.MapPath("~/Content/Pictures/employees-icon.jpg"))' />
+
+</div>

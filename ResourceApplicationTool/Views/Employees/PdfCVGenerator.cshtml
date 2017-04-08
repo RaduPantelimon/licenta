@@ -1,12 +1,273 @@
 ﻿@model ResourceApplicationTool.Models.Employee
+@using ResourceApplicationTool.Models;
+@using ResourceApplicationTool.Utils;
+
 @{
     Layout = null;
 }
-<style>
-    p{
-        color:red;
-    }
-</style>
+
+@Html.Partial("~/Views/Employees/EditorTemplates/PDFStyle.cshtml", null)
+
 <div>
-    <p>Samurai Jack</p> 
+
+    <table id="top-section" style="max-width:1000px" class="header-table">   
+        <tr>
+            <td class="frontPageInfo" rowspan="2">
+                <div class="form-group main-form-group">
+                    @if (ViewBag.justHtml == true)
+                    {
+                        <img class="user-profile-picture" width="200" src="~/Content/Pictures/default-profile-picture.png">
+                    }
+                    else if (!String.IsNullOrEmpty(ViewBag.profilePicUrl))
+                    {
+
+                        <img class="user-profile-picture" width="200" src="@(Html.Raw("file:///" + ViewBag.profilePicUrl))">
+
+                    }
+                </div>
+            </td>
+            <td style="width: 100%;" >
+                <h4 class="sec-title-large sec-title"> @Model.FirstName @Model.LastName </h4>
+               
+                @if (Model.Role != null)
+                {
+                    <h5 class="sec-title-small sec-title sec-title-italic"> @Model.Role.Name </h5>
+                }
+                <hr />
+
+                <div style="float:left; font-size:14px; color:#999999; margin-top:20px; margin-left:10px;">
+                    <span style="display:block">Report Created at: @(DateTime.Now.ToString("M/d/yyyy"))</span>
+                    <span style="display:block">Get the latest version: <a href="@(ViewBag.baseUrl + "Employees/Details/" + Model.EmployeeID)">View this profile online</a></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+               
+            </td>
+        </tr>
+    </table>
+
+    <table id="chapter_general_info" class="content-table general-info">
+        <thead>
+            <tr class="header-section">
+                <td class="first-td last-td">
+                    Table of Contents
+                </td>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="background-color:white;" >
+                <td >
+                    <ul>
+                        <li class="section-anchor"><a href="#chapter_general_info">General</a></li>
+                        @if (Model.Educations != null && Model.Educations.Count > 0)
+                        {
+                            <li class="section-anchor"><a href="#education_contact_info">Education</a> </li>
+                        }
+                        @if (ViewBag.projects != null && ViewBag.projects.Count > 0)
+                        {
+                            <li class="section-anchor"><a href="#projects_contact_info">Past and current projects</a> </li>
+                        }
+                        <li class="section-anchor"><a href="#skills_contact_info">Skills</a> 
+                            <ul>
+                                @for (int i = 0; i < ViewBag.SkillCategories.Count; i++)
+                                {
+                                    SkillCategory skillCat = ViewBag.SkillCategories[i];
+                                    <li class="subsection-anchor">
+                                        <a href="#sub-skill-@(skillCat.CategoryID)">@skillCat.Title</a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+                </td>
+            </li>
+        </tbody>
+    </table>
+
+
+
+    <table id="chapter_general_info" class="content-table general-info">
+       <thead>
+           <tr class="header-section">
+               <td width="200" class="first-td">
+                   General Information
+               </td>
+               <td class="last-td"> 
+               </td>
+           </tr>
+       </thead>
+       <tbody>
+           <tr class="odd-row">
+               <td width="200" class="label-container">Department</td>
+               <td>@(Model.Department != null ? Model.Department.Title : "Idle")</td>
+           </tr>
+           <tr class="even-row">
+               <td width="200" class="label-container">Hire Date</td>
+               <td>@String.Format("{0:MM/dd/yyyy}", Model.HireDate)</td>
+           </tr>
+          
+           @if (Model.Employees1 != null && Model.Employees1.Count > 0)
+           {
+               <tr class="odd-row">
+                    <td width="200" class="label-container">Mananger</td>
+                    <td>@(Model.Employee1 != null ? (Model.Employee1.FirstName + " " + Model.Employee1.LastName) : "")</td>
+               </tr>
+               <tr class="even-row last-row" >
+                   <td width="200" class="label-container first-td">Team Size</td>
+                   <td  class="last-td" >@Model.Employees1.Count</td>
+               </tr>
+           }
+           else
+           {
+            <tr class="odd-row last-row">
+                <td width="200" class="label-container first-td">Mananger</td>
+                <td class="last-td" >@(Model.Employee1 != null ? (Model.Employee1.FirstName + " " + Model.Employee1.LastName) : "")</td>
+            </tr>
+           }
+       </tbody>
+    </table>
+    @if (Model.Educations != null && Model.Educations.Count > 0)
+    {
+        <table id="education_contact_info" class="content-table general-info">
+            <thead>
+                <tr class="header-section">
+                    <td width="200" class="first-td">
+                        Education
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td class="last-td"></td>
+                </tr>
+                <tr>
+                    <td  class="header-cell">Title</td>
+                    <td  class="header-cell">Start Date</td>
+                    <td  class="header-cell">End Date</td>
+                    <td  class="header-cell">Degree</td>
+                </tr>
+            </thead>
+            <tbody>
+               @{ 
+                   List<Education> educations = Model.Educations.ToList();
+               }
+               @for (int i = 0; i < educations.Count; i++)
+               {
+                   Education e = educations[i];
+                    <tr class="@((i+1 == ViewBag.projects.Count)?"last-row":"")">
+                        <td class="header-cell first-td"> @e.Title </td>
+                        <td class="header-cell">@String.Format("{0:MM/dd/yyyy}", e.StartDate) </td>
+                        <td class="header-cell">@String.Format("{0:MM/dd/yyyy}", e.EndDate) </td>
+                        <td class="header-cell last-td"> @e.Degree </td>
+                    </tr>
+               }
+
+            </tbody>
+        </table>
+    }
+
+    @if (ViewBag.projects != null && ViewBag.projects.Count > 0)
+    {
+        <table id="projects_contact_info" class="content-table general-info">
+            <thead>
+                <tr class="header-section">
+                    <td width="200" class="first-td">
+                        Past and current projects
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td class="last-td"></td>
+                </tr>
+                <tr>
+                    <td class="header-cell">Title</td>
+                    <td class="header-cell">Start Date</td>
+                    <td class="header-cell">End Date</td>
+                    <td class="header-cell">Effort in Days</td>
+                </tr>
+            </thead>
+            <tbody>
+                @for(int i=0;i<ViewBag.projects.Count;i++)
+                {
+                    Project p = ViewBag.projects[i];
+
+                    <tr class="@((i+1 == ViewBag.projects.Count)?"last-row":"")">
+                        <td class="header-cell first-td"> @p.Title </td>
+                        <td class="header-cell">@String.Format("{0:MM/dd/yyyy}", p.StartDate) </td>
+                        <td class="header-cell">@String.Format("{0:MM/dd/yyyy}", p.EndDate) </td>
+                        <td class="header-cell last-td"> @p.ManDaysEffort </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <table id="skills_contact_info" class="content-table general-info">
+        <tbody>
+            <tr class="header-section">
+                <td width="200" class="first-td">Skills</td>
+                <td class="last-td"></td>
+            </tr>
+           @for (int i=0;i< ViewBag.SkillCategories.Count;i++)
+           {
+               SkillCategory skillCat = ViewBag.SkillCategories[i];
+               <tr id="sub-skill-@(skillCat.CategoryID)" class="secondary-header-section">
+                    <td width="200" class="first-td">@skillCat.Title</td>
+                    <td class="last-td"></td>
+                </tr>
+               for (int j = 0; j < Model.SkillLevels.Count; j++)
+               {
+                   if (Model.SkillLevelsList[j].Skill.CategoryID == skillCat.CategoryID)
+                   {
+                    <tr class="@((i + 1 == ViewBag.SkillCategories.Count && j + 1== Model.SkillLevels.Count) ? "last-row" : "")">
+                    
+                        <td width="200" class="label-container">
+                            <span>@Model.SkillLevelsList[j].Skill.Title</span>
+                        </td>
+                        <td>
+                            @for (int k = 0; k < Const.SkillLevels.Length; k++)
+                            {
+                                if (Model.SkillLevelsList[j].Level >= k)
+                                {
+                                    <div class="skill-container skill-level@(Model.SkillLevelsList[j].Level)">
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="skill-container">
+                                    </div>
+                                }
+                                
+                            }
+                            <span class="skill-level-text">@Const.SkillLevels[Model.SkillLevelsList[j].Level]</span>
+                        </td>
+                    </tr>
+                   }     
+               }
+           }
+        </tbody>
+    </table>
+
+
+    <table id="chapter_contact_info" class="content-table general-info">
+        <thead>
+            <tr class="header-section">
+                <td width="200" class="first-td">
+                   Contact
+                </td>
+                <td class="last-td"></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="odd-row">
+                <td width="200" class="label-container">Email</td>
+                <td>@Model.Email</td>
+            </tr>
+            <tr class="even-row last-row">
+                <td width="200" class="label-container first-td">Phone Number</td>
+                <td  class="last-td">@Model.PhoneNumber</td>
+            </tr>
+            
+        </tbody>
+    </table>
 </div>

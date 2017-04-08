@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using ResourceApplicationTool.Models;
+using System.IO;
 
 namespace ResourceApplicationTool.Utils
 {
@@ -15,7 +16,7 @@ namespace ResourceApplicationTool.Utils
             try
             {
                 Guid avatarGuid = System.Guid.NewGuid();
-                var avatar = new File
+                var avatar = new Models.File
                 {
                     FileNumber = System.IO.Path.GetFileName(uploadPicture.FileName),
                     FileID = avatarGuid,
@@ -35,6 +36,55 @@ namespace ResourceApplicationTool.Utils
             }
             return null;
         }
+
+        public static string SaveImgLocally(RATV3Entities db, string guid)
+        {
+            string path = "";
+            try
+            {
+                //get file by GUID
+                Models.File fileToRetrieve = db.Files.Where(x => (x.FileID.ToString() == guid)).FirstOrDefault();
+
+                //if getting the file by ID did not work, we'll try to get it by its Title
+                if (fileToRetrieve == null)
+                {
+                    fileToRetrieve = db.Files.Where(x => (x.FileNumber == guid)).FirstOrDefault();
+                }
+                if (fileToRetrieve != null)
+                {
+
+                    //file successfully retrieved
+                    byte[] file = fileToRetrieve.ItemImage;
+                    //generating the name under which we will save the file locally for the PDF Generation
+                    string fileExtension = fileToRetrieve.FileNumber.Split('.').Last();
+                    string uniqueComponent = Guid.NewGuid().ToString();
+
+                    string imgPath = Path.Combine(HttpContext.Current.Server.MapPath("~/Content/Temp/"),
+                                       uniqueComponent + "." + fileExtension).ToString();
+
+                    using (var fileStream = new FileStream(imgPath, FileMode.Create, FileAccess.Write))
+                    {
+                        fileStream.Write(fileToRetrieve.ItemImage,0,fileToRetrieve.ItemImage.Length);
+                    }
+
+                    path = imgPath;
+                }
+               
+            }
+            catch(Exception ex)
+            {
+                //could not save img locally
+                //error handling
+            }
+
+
+            return path;
+        }
+        public static void DeleteLocalImage(string imgPath)
+        {
+            if (System.IO.File.Exists(imgPath)) { System.IO.File.Delete(imgPath); }
+        }
+
 
         public static void CreateSkillTemplates(Employee emp)
         {

@@ -17,8 +17,14 @@ namespace ResourceApplicationTool.Controllers
         public ActionResult ViewImage(string imgName)
         {
             List<File> fields = db.Files.Where(x => x.FileID.ToString().Length > 0).ToList();
-            File fileToRetrieve = db.Files.Where(x => (x.FileNumber == imgName)).FirstOrDefault();
-            if(fileToRetrieve != null) return File(fileToRetrieve.ItemImage, fileToRetrieve.FileNumber);
+            File fileToRetrieve = db.Files.Where(x => (x.FileID.ToString() == imgName)).FirstOrDefault();
+
+            //if getting the file by ID did not work, we'll try to get it by its Title
+            if (fileToRetrieve == null)
+            {
+                fileToRetrieve = db.Files.Where(x => (x.FileNumber == imgName)).FirstOrDefault();
+            }
+            if (fileToRetrieve != null) return File(fileToRetrieve.ItemImage, fileToRetrieve.FileNumber);
 
             return new EmptyResult();
         }

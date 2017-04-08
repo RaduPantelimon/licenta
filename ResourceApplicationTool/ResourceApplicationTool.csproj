@@ -272,6 +272,7 @@
     <Compile Include="Utils\Const.cs" />
     <Compile Include="Utils\ControllerExtensions.cs" />
     <Compile Include="Utils\PdfGenerator.cs" />
+    <Compile Include="Utils\ViewRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.component.css" />
@@ -323,6 +324,7 @@
     <Content Include="Content\Pictures\edit-image.png" />
     <Content Include="Content\Pictures\effort-icon.png" />
     <Content Include="Content\Pictures\employees-banner-icon.png" />
+    <Content Include="Content\Pictures\employees-icon.jpg" />
     <Content Include="Content\Pictures\expand-sign.png" />
     <Content Include="Content\Pictures\expand-small.png" />
     <Content Include="Content\Pictures\imghover.png" />
@@ -512,8 +514,11 @@
     <Content Include="Views\Educations\Edit.cshtml" />
     <Content Include="Views\Educations\Index.cshtml" />
     <Content Include="Views\Employees\PdfCVGenerator.cshtml" />
+    <Content Include="Views\Employees\EditorTemplates\PDFStyle.cshtml" />
+    <Content Include="Views\Employees\PdfCVHeader.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\Temp\" />
     <Folder Include="Views\Images\" />
   </ItemGroup>
   <ItemGroup>

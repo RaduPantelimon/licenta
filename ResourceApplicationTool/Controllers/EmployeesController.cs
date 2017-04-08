@@ -26,37 +26,6 @@ namespace ResourceApplicationTool.Controllers
             return View(employees.ToList());
         }
 
-        // GET: Employees/GenerateCV/5
-        public /*System.Net.Http.HttpResponseMessage*/ ActionResult GenerateCV(int? id)
-        {
-
-            Employee employee = db.Employees.Find(id);
-
-
-            string generatedPDFHtml = this.RenderView("PdfCVGenerator", employee);
-            string headertext = "<span>" + "Header" + "</span><img style='float:right; width:162px; height:46px;' alt='Image unavailable' src=''>";
-            byte[] pdfBuffer = PdfGenerator.ConvertHtmlToPDF(generatedPDFHtml, headertext);
-
-            Common.CreateSkillTemplates(employee);
-
-            string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
-            Request.ApplicationPath.TrimEnd('/') + "/";
-
-
-
-            employee.SkillLevelsList = employee.SkillLevels.ToList();
-            ViewBag.SkillCategories = db.SkillCategories.OrderByDescending(x => x.Skills.Count).ToList();
-
-            //var response = Request.CreateResponse(HttpStatusCode.OK);
-            this.HttpContext.Response.ContentType = "application/pdf";
-            this.HttpContext.Response.AddHeader("Content-Disposition", "attachment; filename=" + "Test.pdf");
-            this.HttpContext.Response.BinaryWrite(pdfBuffer);
-            this.HttpContext.Response.Flush();
-            this.HttpContext.Response.Close();
-
-            return View(employee);
-        }
-
 
         // GET: Employees/Details/5
         public ActionResult Details(int? id)
@@ -286,6 +255,7 @@ namespace ResourceApplicationTool.Controllers
             return View(employee);
         }
 
+
         // POST: Employees/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -296,6 +266,216 @@ namespace ResourceApplicationTool.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        #region PDFGenerators
+        // GET: Employees/GenerateCV/5
+        public ActionResult GenerateCV(int? id)
+            {
+
+                Employee employee = db.Employees.Find(id);
+                string profilePicUrl = "";
+
+                //getting the picture ready
+                Common.CreateSkillTemplates(employee);
+                if (employee.File != null)
+                {
+                    profilePicUrl = Utils.Common.SaveImgLocally(db, employee.File.FileID.ToString());
+                    ViewBag.profilePicUrl = profilePicUrl;
+
+                }
+                else
+                {
+                    ViewBag.profilePicUrl = System.Web.HttpContext.Current.Server.MapPath("~/Content/Pictures/");
+                }
+
+                //getting the projects for this employee
+                List<Task> tasks = db.Tasks.Include(x => x.Sprint).Where(x => x.EmployeeID == employee.EmployeeID).ToList();
+                List<Project> projects = (from t in db.Tasks
+                                          join s in db.Sprints on t.SprintID equals s.SprintID
+                                          join p in db.Projects on s.ProjectID equals p.ProjectID
+                                          where t.EmployeeID == employee.EmployeeID
+                                          select p).Distinct().ToList();
+
+                foreach (Project p in projects)
+                {
+                    //selecting the correct tasks for each project
+                    List<Task> projectTasks = tasks.Where(x => x.Sprint != null && x.Sprint.ProjectID == p.ProjectID).ToList();
+                    foreach (Task t in projectTasks)
+                    {
+                        if (t.Estimation.HasValue)
+                        {
+                            p.ManHoursEffort += t.Estimation.Value;
+                        }
+
+                    }
+
+                }
+
+
+                ViewBag.projects = projects;
+                ViewBag.headertext = "CV: " + employee.FirstName + " " + employee.LastName;
+
+                //initialize baseUrl
+                string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+                Request.ApplicationPath.TrimEnd('/') + "/";
+
+                ViewBag.baseUrl = baseUrl;
+
+                //initializing CV
+                employee.SkillLevelsList = employee.SkillLevels.ToList();
+                ViewBag.SkillCategories = db.SkillCategories.OrderByDescending(x => x.Skills.Count).ToList();
+
+
+                //string generatedPDFHtml = this.RenderView("PdfCVGenerator", employee, ViewData);
+                string generatedPDFHtml = ViewRenderer.RenderView("~/Views/Employees/PdfCVGenerator.cshtml", employee,
+                                                     ControllerContext);
+                //generating the header
+                string headertext = ViewRenderer.RenderView("~/Views/Employees/PdfCVHeader.cshtml", employee,
+                                                     ControllerContext);
+
+                byte[] pdfBuffer = PdfGenerator.ConvertHtmlToPDF(generatedPDFHtml, headertext);
+
+                //delete the temporary generated file
+                if(!String.IsNullOrEmpty(profilePicUrl))
+                {
+                    Utils.Common.DeleteLocalImage(profilePicUrl);
+                }
+
+
+                //sending the pdf file to download
+                this.HttpContext.Response.ContentType = "application/pdf";
+                this.HttpContext.Response.AddHeader("Content-Disposition", "attachment; filename=" + "Test.pdf");
+                this.HttpContext.Response.BinaryWrite(pdfBuffer);
+                this.HttpContext.Response.Flush();
+                this.HttpContext.Response.Close();
+
+                return View(employee);
+            }
+
+            // GET: Employees/GenerateCV/5
+            public ActionResult GetCVHtml(int? id)
+            {
+
+                Employee employee = db.Employees.Find(id);
+                string profilePicUrl = "";
+
+                //getting the picture ready
+                Common.CreateSkillTemplates(employee);
+                if (employee.File != null)
+                {
+                    profilePicUrl = Utils.Common.SaveImgLocally(db, employee.File.FileID.ToString());
+                    ViewBag.profilePicUrl = profilePicUrl;
+
+                }
+
+                //getting the projects for this employee
+                List<Task> tasks = db.Tasks.Include(x => x.Sprint).Where(x => x.EmployeeID == employee.EmployeeID).ToList();
+                List<Project> projects = (from t in db.Tasks
+                                          join s in db.Sprints on t.SprintID equals s.SprintID
+                                          join p in db.Projects on s.ProjectID equals p.ProjectID
+                                          where t.EmployeeID == employee.EmployeeID
+                                          select p).Distinct().ToList();
+
+                foreach (Project p in projects)
+                {
+                    //selecting the correct tasks for each project
+                    List<Task> projectTasks = tasks.Where(x => x.Sprint != null && x.Sprint.ProjectID == p.ProjectID).ToList();
+                    foreach (Task t in projectTasks)
+                    {
+                        if (t.Estimation.HasValue)
+                        {
+                            p.ManHoursEffort += t.Estimation.Value;
+                        }
+                    }
+                }
+
+
+                ViewBag.projects = projects;
+                ViewBag.headertext = "CV: " + employee.FirstName + " " + employee.LastName;
+
+                //initializing CV
+                employee.SkillLevelsList = employee.SkillLevels.ToList();
+                ViewBag.SkillCategories = db.SkillCategories.OrderByDescending(x => x.Skills.Count).ToList();
+
+                //initialize baseUrl
+                string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+                Request.ApplicationPath.TrimEnd('/') + "/";
+
+                ViewBag.baseUrl = baseUrl;
+
+                ViewBag.justHtml = true;
+
+                //delete the temporary generated file
+                if (!String.IsNullOrEmpty(profilePicUrl))
+                {
+                    Utils.Common.DeleteLocalImage(profilePicUrl);
+                }
+            return View("PdfCVGenerator", employee);
+            }
+
+            // GET: Employees/GenerateCV/5
+            public ActionResult GetCVHeader(int? id)
+            {
+
+                Employee employee = db.Employees.Find(id);
+                string profilePicUrl = "";
+
+                //getting the picture ready
+                Common.CreateSkillTemplates(employee);
+                if (employee.File != null)
+                {
+                    profilePicUrl = Utils.Common.SaveImgLocally(db, employee.File.FileID.ToString());
+                    ViewBag.profilePicUrl = profilePicUrl;
+
+                }
+
+                //getting the projects for this employee
+                List<Task> tasks = db.Tasks.Include(x => x.Sprint).Where(x => x.EmployeeID == employee.EmployeeID).ToList();
+                List<Project> projects = (from t in db.Tasks
+                                          join s in db.Sprints on t.SprintID equals s.SprintID
+                                          join p in db.Projects on s.ProjectID equals p.ProjectID
+                                          where t.EmployeeID == employee.EmployeeID
+                                          select p).Distinct().ToList();
+
+                foreach (Project p in projects)
+                {
+                    //selecting the correct tasks for each project
+                    List<Task> projectTasks = tasks.Where(x => x.Sprint != null && x.Sprint.ProjectID == p.ProjectID).ToList();
+                    foreach (Task t in projectTasks)
+                    {
+                        if (t.Estimation.HasValue)
+                        {
+                            p.ManHoursEffort += t.Estimation.Value;
+                        }
+                    }
+                }
+
+
+                ViewBag.projects = projects;
+                ViewBag.headertext = "CV: " + employee.FirstName + " " + employee.LastName;
+
+                //initializing CV
+                employee.SkillLevelsList = employee.SkillLevels.ToList();
+                ViewBag.SkillCategories = db.SkillCategories.OrderByDescending(x => x.Skills.Count).ToList();
+
+                //initialize baseUrl
+                string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+                Request.ApplicationPath.TrimEnd('/') + "/";
+
+                ViewBag.baseUrl = baseUrl;
+
+                ViewBag.justHtml = true;
+
+                //delete the temporary generated file
+                if (!String.IsNullOrEmpty(profilePicUrl))
+                {
+                    Utils.Common.DeleteLocalImage(profilePicUrl);
+                }
+                return View("PdfCVHeader", employee);
+            }
+        #endregion
+
+     
 
         protected override void Dispose(bool disposing)
         {

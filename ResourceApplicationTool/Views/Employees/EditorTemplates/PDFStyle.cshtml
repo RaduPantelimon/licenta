@@ -1,0 +1,205 @@
+﻿<style>
+    p {
+        color: red;
+    }
+
+    .content-table {
+        width: 100%;
+        table-layout: fixed;
+        margin-top: 30px;
+    }
+
+    .header-table {
+    }
+
+    .user-profile-picture {
+        display: inline-block;
+        float: left;
+        border-radius: 10px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        margin-left: 20px;
+
+    }
+
+    .slick-section {
+        margin-top: 100px;
+    }
+
+    .sec-title {
+        margin-bottom: 5px;
+        transition: 0.2s;
+    }
+
+    .sec-title-huge {
+        font-size: 30px;
+        font-weight: 500;
+        color: #333333;
+    }
+
+    .sec-title-large {
+        font-size: 24px;
+        font-weight: 500;
+        color: #555555;
+    }
+
+    .sec-title-medium {
+        font-size: 18px;
+        color: #555555;
+        margin-left: 5px;
+    }
+
+    .sec-title-small {
+        font-size: 16px;
+        color: #7e858c;
+        margin-left: 10px;
+    }
+
+    .sec-title-italic {
+        font-style: italic;
+    }
+
+    .sec-hr {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    h4, h5, h6 {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 500;
+        line-height: 1.1;
+    }
+
+    table.general-info > tbody > tr > td, table.general-info > tbody > tr > th, table.general-info > tfoot > tr > td, table.general-info > tfoot > tr > th, table.general-info > thead > tr > td, table.general-info > thead > tr > th {
+        border: 1px solid #ddd;
+    }
+
+    table.general-info > tbody > tr > td, table.general-info > tbody > tr > th, table.general-info > tfoot > tr > td, table.general-info > tfoot > tr > th, table.general-info > thead > tr > td, table.general-info > thead > tr > th {
+        padding: 8px;
+        line-height: 1.42857143;
+        vertical-align: top;
+        border: none;
+        border-top: 1px solid #ddd;
+    }
+
+    table.general-info > tbody > tr:nth-of-type(even),
+    table.general-info tr.even-row {
+        background-color: #f9f9f9;
+    }
+
+    table.general-info > tbody > tr:nth-of-type(odd),
+    table.general-info tr.odd-row {
+        background-color: #ffffff;
+    }
+
+    table.general-info {
+        border-spacing: 0;
+        border-collapse: collapse;
+    }
+
+    table.general-info tr.last-row td.first-td {
+        border-bottom-left-radius: 20px;
+    }
+
+    table.general-info tr.last-row td.last-td  {
+        border-bottom-right-radius: 20px;      
+    }
+
+    .content-table.general-info .header-section {
+        background-color: #428bca;
+        padding: 10px 5px;
+    }
+
+    .content-table.general-info .header-section td {
+        color: white;
+        border: none;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .content-table.general-info .header-section td.first-td {
+        border-top-left-radius: 20px;      
+    }
+    .content-table.general-info .header-section td.last-td {
+        border-top-right-radius: 20px;
+    }
+    .content-table.general-info .secondary-header-section{
+        background-color:beige;
+        font-weight:bold;
+    }
+
+    .label-container {
+        font-weight: bold;
+        text-align: right;
+    }
+
+    li.section-anchor a,
+    li.subsection-anchor a{
+        color:#7e858c;
+        text-decoration:none;
+
+    }
+     li.section-anchor > a{
+        font-weight:bold
+    }
+    li.section-anchor{
+        color: #428bca;
+        list-style-type: square;
+    }
+    li.subsection-anchor{
+         color: #428bca;
+        list-style-type: disc;
+    }
+     table.general-info > thead > tr > td.header-cell{
+        font-weight:bold;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+
+       table.general-info > tbody > tr > td.header-cell{
+            /*border: 1px solid #ddd;*/
+            text-align: center;
+    }
+
+    /*Avoid page break ruining out export */
+    table, tr, td, th, tbody, thead, tfoot {
+        page-break-inside: avoid !important;
+    }
+
+    div.skill-container{
+        width:20px;
+        height:20px;
+        border-radius:10px;
+        display:inline-block;
+        margin:0;
+        border: 1px solid black;
+
+    }
+    .skill-level0{
+        background:lightblue;
+    }
+    .skill-level1{
+        background:#999999;
+    }
+    .skill-level2{
+        background:green;
+    }
+    .skill-level3{
+        background:yellow;
+    }
+    .skill-level4{
+        background:orange;
+    }
+    .skill-level5{
+        background:red;
+    }
+    .skill-level-text{
+        font-style:italic;
+        font-weight:bold;
+    }
+</style>
