@@ -1,0 +1,39 @@
+﻿body {
+    background-color:#eeeeee;
+}
+div.mainHeaderLogo.departments-logo{
+    /*background-color: white;*/
+    background-color:#eeeeee;
+
+}
+
+div.mainHeaderLogo.search-logo{
+    background:url(/Content/Pictures/search-banner.png) no-repeat right fixed;
+    background-position: top right;
+    /*height: 413px;*/
+    height: 400px;
+    border:none;
+    border-bottom: 1px solid lightgray;
+    opacity: 0.5;
+}
+div.mainHeaderLogo.search-logo.logo-details{
+    height: 350px;
+}
+.query-container{
+    margin-top: 200px;
+}
+
+input.query-input{
+   width: calc(100% - 200px);
+   max-width: none;
+   margin-right:20px;
+   display: inline-block;
+   font-size:24px;
+   height:50px; 
+}
+input.query-button{
+   width:150px;
+   display: inline-block;
+    height: 40px;
+    font-size: 20px;
+}

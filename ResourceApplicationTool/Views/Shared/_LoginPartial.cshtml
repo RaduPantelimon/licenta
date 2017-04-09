@@ -1,4 +1,9 @@
 ﻿@using Microsoft.AspNet.Identity
+
+
+
+
+
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -16,6 +21,22 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
+        <li class="search-component">
+            <a class="search-anchor" href="" >
+                <img height="20" width="20" src="~/Content/Pictures/search-icon.png">
+            </a>
+            <div class="search-input-main" style="display:none;">
+                <div class="search-input-container"> 
+                    <input id="search-box" class="form-control search-input" value="" autocomplete="off" />
+                 </div>
+                <a id="process-search" class="search-button" href="" style="display:none;">
+                    <img height="20" width="20" src="~/Content/Pictures/arrow-28-512.png">
+                </a>
+            </div>
+            <!--<a id="close-search-input" class="search-anchor" href="">
+                <img height="20" width="20" src="~/Content/Pictures/cross-512.png">
+            </a>-->
+        </li>
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>

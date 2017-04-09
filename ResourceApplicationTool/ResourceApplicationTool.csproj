@@ -201,6 +201,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\RestApiController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -246,6 +247,7 @@
     <Compile Include="Models\Role.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SecondaryModels\SearchResult.cs" />
     <Compile Include="Models\SecondaryModels\SerializableDepartment.cs" />
     <Compile Include="Models\SecondaryModels\SerializableEmployee.cs" />
     <Compile Include="Models\Skill.cs">
@@ -311,6 +313,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Pictures\ajax-loader.gif" />
     <Content Include="Content\Pictures\albert-camus.jpg" />
+    <Content Include="Content\Pictures\arrow-28-512.png" />
     <Content Include="Content\Pictures\arrows.png" />
     <Content Include="Content\Pictures\calendar-icon.png" />
     <Content Include="Content\Pictures\collapse-sign.png" />
@@ -339,6 +342,8 @@
     <Content Include="Content\Pictures\resizable-handler.gif" />
     <Content Include="Content\Pictures\role-icon.png" />
     <Content Include="Content\Pictures\sartre.jpg" />
+    <Content Include="Content\Pictures\search-banner.png" />
+    <Content Include="Content\Pictures\search-icon.png" />
     <Content Include="Content\Pictures\settings_background.png" />
     <Content Include="Content\Pictures\settings_background_img.png" />
     <Content Include="Content\Pictures\shape.png" />
@@ -357,6 +362,7 @@
     <Content Include="Content\Styles\Projects\projectsCommonStyle.css" />
     <Content Include="Content\Styles\Projects\projectsDetailsStyle.css" />
     <Content Include="Content\Styles\Projects\projectsIndexStyle.css" />
+    <Content Include="Content\Styles\search.css" />
     <Content Include="Content\Styles\slickStyle.css" />
     <Content Include="Content\Styles\style.css" />
     <Content Include="favicon.ico" />
@@ -373,6 +379,8 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\biggora-bootstrap-ajax-typeahead\js\bootstrap-typeahead.js" />
+    <Content Include="Scripts\biggora-bootstrap-ajax-typeahead\js\bootstrap-typeahead.min.js" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap-sliders\bootstrap-slider.js" />
     <Content Include="Scripts\bootstrap-sliders\bootstrap-slider.min.js" />
@@ -391,6 +399,8 @@
     <Content Include="readme.md" />
     <Content Include="Content\Styles\ng2-nouislider.min" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\bootstrap3-typeahead.js" />
+    <Content Include="Scripts\bootstrap3-typeahead.min.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\departments\departments-common.js" />
     <Content Include="Scripts\departments\departments-display.js" />
@@ -427,6 +437,8 @@
     <Content Include="Scripts\projects\projects_new.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\search_header.js" />
+    <Content Include="Scripts\search_main.js" />
     <Content Include="Scripts\slick\index.html" />
     <Content Include="Scripts\slick\slick\ajax-loader.gif" />
     <Content Include="Scripts\slick\slick\fonts\slick.svg" />
@@ -516,6 +528,7 @@
     <Content Include="Views\Employees\PdfCVGenerator.cshtml" />
     <Content Include="Views\Employees\EditorTemplates\PDFStyle.cshtml" />
     <Content Include="Views\Employees\PdfCVHeader.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Temp\" />

@@ -19,6 +19,8 @@
         <base href="@ViewBag.hrefVal">
     }
 
+    <script src="~/Scripts/biggora-bootstrap-ajax-typeahead/js/bootstrap-typeahead.js" type="text/javascript"></script>
+    <script src="~/Scripts/search_header.js"></script>
 </head>
 <body>
     <div>
@@ -33,7 +35,6 @@
                 </div>
                 <div class="navbar-collapse navbar-links-container">
                     <ul class="nav navbar-nav navbar-links-list">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
                         <li>@Html.ActionLink("Departments", "Index", "Departments")</li>
                         <li>@Html.ActionLink("Employees", "Index", "Employees")</li>
                         <li>@Html.ActionLink("Projects", "Index", "Projects")</li>

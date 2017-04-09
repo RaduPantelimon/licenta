@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/Styles/search.css" rel="stylesheet" />
+<link href="~/Content/Styles/commonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/slickStyle.css" rel="stylesheet" />
+
+
+<div class="mainHeaderLogo search-logo logo-details" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"></div>
+
+
+<div class="main-items-container ">
+
+    <div class="text-info">
+        <h2 class="sec-title-huge sec-title projects-title">Search</h2>
+    </div>
+    <hr class="sec-hr title-hr" />
+</div>
+
+<div class="query-container">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <input type="text" 
+               name="query" 
+               value="@(!String.IsNullOrEmpty(ViewBag.query) ? ViewBag.query:"")" 
+               class="main-search-input query-input form-control" 
+               autocomplete="off">
+        <input type="submit" 
+               value="Search!" 
+               class="btn btn-warning" />
+
+    }
+</div>
+    <script src="~/Scripts/search_main.js"></script>
