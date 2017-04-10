@@ -21,9 +21,35 @@ namespace ResourceApplicationTool.Controllers
         // GET: Search
         public ActionResult Index(string query)
         {
+            MainSearchResult searchRes = new MainSearchResult();
+
+            //executing the search queries
+            if(!String.IsNullOrEmpty(query) && query.Length>3)
+            {
+                SearchForDepartments(searchRes, query);
+                SearchForEmployees(searchRes, query);
+                SearchForProjects(searchRes, query);
+                SearchForRoles(searchRes, query);
+
+            }
+
+            //checking if we will omit any data
+            if (searchRes.employeeSearchResults.Count >12 ||
+                searchRes.employeeSearchResults.Count> 12 ||
+                searchRes.employeeSearchResults.Count > 12)
+            {
+                ViewBag.dataIsOmitted = true;
+            }
+
+            //limiting the number of results shown
+            searchRes.employeeSearchResults = searchRes.employeeSearchResults.Take(12).ToList();
+            searchRes.departmentSearchResults = searchRes.departmentSearchResults.Take(12).ToList();
+            searchRes.projectSearchResults = searchRes.projectSearchResults.Take(12).ToList();
+
+            searchRes.initializeQuickSearchResults();
 
             ViewBag.query = query;
-            return View();
+            return View(searchRes);
         }
 
         // GET: Search/GetPartial
