@@ -16,6 +16,8 @@ namespace ResourceApplicationTool.Controllers
 {
     public class SearchController : Controller
     {
+        private RATV3Entities db = new RATV3Entities();
+
         // GET: Search
         public ActionResult Index(string query)
         {
@@ -24,7 +26,7 @@ namespace ResourceApplicationTool.Controllers
             return View();
         }
 
-        // GET: Search
+        // GET: Search/GetPartial
         public JsonResult GetPartial(string query)
         {
             List<SearchResult> dummyResults = null;
@@ -42,5 +44,52 @@ namespace ResourceApplicationTool.Controllers
 
             return this.Json(dummyResults, JsonRequestBehavior.AllowGet);
         }
+
+
+        #region Departments
+
+        public void SearchForDepartments(MainSearchResult res, string query,bool retriveRelatedEmployees = true, bool retriveRelatedProjects = true)
+        {
+            query = query.ToLower();
+            List<Department> resDepts = db.Departments.Where(d => d.Title.ToLower().Contains(query) || 
+                                                            d.DeptDescription.ToLower().Contains(query)).ToList();
+            res.departmentSearchResults.AddRange(resDepts);
+
+            //we'll also get the employees associated to these departments
+            if(retriveRelatedEmployees)
+            {
+                List<int> deptIds = resDepts.Select(d => d.DepartmentID).ToList();
+                List<Employee> resEmp = db.Employees.Where(e => e.DepartmentID.HasValue && deptIds.Contains(e.DepartmentID.Value)).ToList();
+
+                res.employeeSearchResults.AddRange(resEmp);
+            }
+
+            //we'll also get the proejcts associated to these departments
+            if (retriveRelatedProjects)
+            {
+                List<int> deptIds = resDepts.Select(d => d.DepartmentID).ToList();
+                List<Project> resProj = db.Projects.Where(p => p.DepartmentID.HasValue && deptIds.Contains(p.DepartmentID.Value)).ToList();
+
+                res.projectSearchResults.AddRange(resProj);
+            }
+        }
+        public void SearchForEmployees(MainSearchResult res, string query)
+        {
+            query = query.ToLower();
+
+            List<Employee> resEmp = db.Employees.Where(e => (e.FirstName.ToLower().Contains(query) || 
+            e.LastName.ToLower().Contains(query)) ||
+            (e.FirstName + " " + e.LastName).ToLower().Contains(query) ||
+            (e.LastName + " " + e.FirstName).ToLower().Contains(query) || 
+            e.Email.ToLower().Contains(query) ||
+            e.Account.ToLower().Contains(query) ||
+            query.Contains(e.Account.ToLower()) ||
+            query.Contains(e.Email.ToLower()) ||
+            query.Contains(e.FirstName.ToLower()) ||
+            query.Contains(e.LastName.ToLower()) 
+            ).ToList();
+            res.employeeSearchResults.AddRange(resEmp);
+        }
+        #endregion
     }
 }
