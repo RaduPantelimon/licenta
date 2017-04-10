@@ -12,5 +12,34 @@ namespace ResourceApplicationTool.Models.SecondaryModels
         public List<Department> departmentSearchResults;
         public List<Role> roleSearchResults;
         public List<Project> projectSearchResults;
+        public List<SearchResult> quickSearch;
+
+        public MainSearchResult() {
+            employeeSearchResults = new List<Employee>();
+            departmentSearchResults = new List<Department>();
+            projectSearchResults = new List<Project>();
+
+            quickSearch = new List<SearchResult>();
+        }
+
+        
+
+
+
+        public void initializeQuickSearchResults()
+        {
+            List<SearchResult> employeesQuickSearch = employeeSearchResults.Select(x => new SearchResult(x.FirstName + " " + x.LastName,
+                "/Employees/Details/" + x.EmployeeID,"Employee")).ToList();
+            List<SearchResult> departmentsQuickSearch = departmentSearchResults.Select(x => new SearchResult(x.Title,
+                    "/Departments/Details/" + x.DepartmentID, "Department")).ToList();
+            List<SearchResult> projectsQuickSearch = projectSearchResults.Select(x => new SearchResult(x.Title,
+                "/Projects/Details/" + x.ProjectID, "Project")).ToList();
+
+            quickSearch.AddRange(employeesQuickSearch);
+            quickSearch.AddRange(departmentsQuickSearch);
+            quickSearch.AddRange(projectsQuickSearch);
+
+
+        }
     }
 }

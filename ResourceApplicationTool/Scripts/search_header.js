@@ -48,7 +48,7 @@ function showSearchBox()
             },
             preProcess: function (data) {
 
-                if (data.success === false) {
+                if (!data || data.success === false) {
                     return false;
                 } else {
                     return data;

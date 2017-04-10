@@ -240,6 +240,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\PartialModels\Department.cs" />
     <Compile Include="Models\PartialModels\Employee.cs" />
     <Compile Include="Models\PartialModels\Project.cs" />
     <Compile Include="Models\Project.cs">

@@ -21,6 +21,16 @@ namespace ResourceApplicationTool.Controllers
             string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
             Request.ApplicationPath.TrimEnd('/') + "/";
             var departments = db.Departments.Include(d => d.File).Include(d => d.File1);
+
+            List<Project> projects = db.Projects.ToList();
+            List<Employee> employees = db.Employees.ToList();
+
+            foreach(Department dept in departments)
+            {
+                dept.projectsNumber = projects.Where(x => x.DepartmentID == dept.DepartmentID).Count();
+                dept.employeesNumber = employees.Where(x => x.DepartmentID == dept.DepartmentID).Count();
+            }
+
             ViewBag.baseUrl = baseUrl;
             return View(departments.ToList());
         }

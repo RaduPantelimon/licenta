@@ -15,6 +15,16 @@ namespace ResourceApplicationTool.Controllers
             HomeModel model = new HomeModel();
 
             List<Department> depts = db.Departments.AsQueryable().ToList();
+
+            List<Project> projects = db.Projects.ToList();
+            List<Employee> employees = db.Employees.ToList();
+
+            foreach (Department dept in depts)
+            {
+                dept.projectsNumber = projects.Where(x => x.DepartmentID == dept.DepartmentID).Count();
+                dept.employeesNumber = employees.Where(x => x.DepartmentID == dept.DepartmentID).Count();
+            }
+
             model.Departments = depts;
             return View(model);
         }
