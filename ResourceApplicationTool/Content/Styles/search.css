@@ -34,6 +34,30 @@ input.query-input{
 input.query-button{
    width:150px;
    display: inline-block;
-    height: 40px;
+   height: 40px;
+   font-size: 20px;
+}
+
+.warning-container{
+    padding:20px;
+}
+.warning-container img{
+    height:20px;
+    width:20px;
+    display:inline;
+    margin-bottom: 5px;
+}
+
+.sec-title-large.warning-header{
+    display:inline;
+    font-weight: bold;
     font-size: 20px;
+    line-height:24px;
+    font-family: OpenSans-lighter;
+    margin-bottom: 0;
+    color: #434a54;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px 10px;
+    /* text-align: center; */
 }

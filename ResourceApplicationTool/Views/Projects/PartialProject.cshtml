@@ -1,0 +1,90 @@
+﻿@model ResourceApplicationTool.Models.Project
+@using ResourceApplicationTool.Models;
+@using ResourceApplicationTool.Utils;
+
+<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 department-item carousel-item carousel-item-nopicture ">
+    <div class="mask-background-parent">
+        <div class="mask-background">
+
+            <div class="mask-front">
+                <div class="stat sec-sweep-title">
+
+                    <div class="stat-sec sweep-stat slick-main-header">
+                        <h2 class="limited-container">@Model.Title</h2>
+                    </div>
+                    <figure class="view third-effect">
+                        <div>
+                            <div class="stat-row">
+                                <div class="secondary-pj-field container-padding">
+                                    <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/calendar-icon.png" alt="" height="28" width="28">
+                                    <p class="project-secondary-label"></p>
+                                </div>
+                                <div class="secondary-pj-field  container-value">
+                                    <p class="project-secondary-label">
+                                        <span class="field-name">Start:</span>
+                                        @String.Format("{0:MM/dd/yyyy}", Model.StartDate)
+                                    </p>
+                                </div>
+                                <div class="secondary-pj-field ">
+                                    <p class="project-secondary-label">
+                                        <span class="field-name">End:</span>
+                                        @String.Format("{0:MM/dd/yyyy}", Model.EndDate)
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="stat-row">
+                                <div class="secondary-pj-field container-padding">
+                                    <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/effort-icon.png" alt="" height="28" width="28">
+                                    <p class="project-secondary-label"></p>
+                                </div>
+                                <div class="secondary-pj-field">
+                                    <p class="project-secondary-label">
+                                        <span class="field-name">Effort in man days:</span>
+                                        @Model.ManDaysEffort
+                                    </p>
+                                </div>
+
+                            </div>
+                            <div class="stat-row">
+                                <div class="secondary-pj-field container-padding">
+                                    <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/department-icon.png" alt="" height="28" width="28">
+                                    <p class="project-secondary-label"></p>
+                                </div>
+                                <div class="secondary-pj-field">
+                                    <p class="project-secondary-label">
+                                        <span class="field-name dept-information-container" departmentId="@Model.Department.DepartmentID">Department:</span>
+                                        <!--<a href="/Departments/Details/@Model.DepartmentID">-->
+                                        @((Model.Department != null && !String.IsNullOrEmpty(Model.Department.Title)) ? Model.Department.Title : "")
+                                        <!--</a>-->
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="stat-row sec-pj-detail-label">
+                            <div>
+                                <p class="project-secondary-label ">
+                                    <span class="field-name">Project Details</span>
+                                </p>
+                            </div>
+
+                        </div>
+                        <div class="sec-pj-detail">
+                            @Model.PJDescription
+                        </div>
+                        <div class="mask clickable-mask" onclick="redirectToUrl('/Projects/Details/@Model.ProjectID')">
+                            <a href="" class="info">Read More</a>
+                        </div>
+
+                        <div class="mask">
+                            <a href="/Projects/Details/@Model.ProjectID" class="info">Read More</a>
+                        </div>
+
+                    </figure>
+                    <div class="bottom-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

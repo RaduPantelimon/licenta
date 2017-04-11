@@ -19,36 +19,59 @@ namespace ResourceApplicationTool.Controllers
         private RATV3Entities db = new RATV3Entities();
 
         // GET: Search
-        public ActionResult Index(string query)
+        public ActionResult Index(string query,string filter)
         {
             MainSearchResult searchRes = new MainSearchResult();
 
+            if (!String.IsNullOrEmpty(filter))
+            {
+                ViewBag.filteredData = true;
+                ViewBag.filter = filter;
+            }
+            else
+            {
+                ViewBag.filteredData = false;
+            }
+
             //executing the search queries
-            if(!String.IsNullOrEmpty(query) && query.Length>3)
+            if(!String.IsNullOrEmpty(query) && query.Length>=2)
             {
                 SearchForDepartments(searchRes, query);
                 SearchForEmployees(searchRes, query);
                 SearchForProjects(searchRes, query);
                 SearchForRoles(searchRes, query);
 
+                ViewBag.searchDone = true;
+            }
+            else if(!String.IsNullOrEmpty(query) && query.Length > 0)
+            {
+                ViewBag.searchDone = false;
             }
 
             //checking if we will omit any data
-            if (searchRes.employeeSearchResults.Count >12 ||
+            if ((searchRes.employeeSearchResults.Count >12 ||
                 searchRes.employeeSearchResults.Count> 12 ||
-                searchRes.employeeSearchResults.Count > 12)
+                searchRes.employeeSearchResults.Count > 12) & !String.IsNullOrEmpty(filter))
             {
                 ViewBag.dataIsOmitted = true;
-            }
 
-            //limiting the number of results shown
-            searchRes.employeeSearchResults = searchRes.employeeSearchResults.Take(12).ToList();
-            searchRes.departmentSearchResults = searchRes.departmentSearchResults.Take(12).ToList();
-            searchRes.projectSearchResults = searchRes.projectSearchResults.Take(12).ToList();
+                //limiting the number of results shown
+                searchRes.employeeSearchResults = searchRes.employeeSearchResults.Take(12).ToList();
+                searchRes.departmentSearchResults = searchRes.departmentSearchResults.Take(12).ToList();
+                searchRes.projectSearchResults = searchRes.projectSearchResults.Take(12).ToList();
+            }
 
             searchRes.initializeQuickSearchResults();
 
             ViewBag.query = query;
+
+
+            //initialize baseUrl
+            string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+            Request.ApplicationPath.TrimEnd('/') + "/";
+            ViewBag.baseUrl = baseUrl;
+
+
             return View(searchRes);
         }
 
@@ -65,32 +88,16 @@ namespace ResourceApplicationTool.Controllers
 
             searchRes.initializeQuickSearchResults();
 
-            /*
-             * List<SearchResult> dummyResults = null;
-             * if (!String.IsNullOrEmpty(query) && query.Length >= 2 )
-            {
-                dummyResults = new List<SearchResult>{ new SearchResult("Albert Camus", "/Employees/Details/14", " Employee"),
-                                                   new SearchResult("Albanezu Michi", "/Employees/Details/14", " Employee")};
-            }
-            else
-            {
-                dummyResults = new List<SearchResult>{ new SearchResult("Albert Camus", "/Employees/Details/14", " Employee"),
-                                                   new SearchResult("Jean-Paul Sartre", "/Employees/Details/15", "Employee") };
-            }
-            
-             */
-
             return this.Json(searchRes.quickSearch, JsonRequestBehavior.AllowGet);
         }
 
 
-        #region Departments
+        #region Queries
 
         public void SearchForDepartments(MainSearchResult res, string query,bool retriveRelatedEmployees = true, bool retriveRelatedProjects = true)
         {
             query = query.ToLower();
-            List<Department> resDepts = db.Departments.Where(d => d.Title.ToLower().Contains(query) || 
-                                                            d.DeptDescription.ToLower().Contains(query)).ToList();
+            List<Department> resDepts = db.Departments.Where(d => d.Title.ToLower().Contains(query)).ToList();
             res.departmentSearchResults.AddRange(resDepts);
             res.departmentSearchResults = res.departmentSearchResults.Distinct().ToList();
 

@@ -1,0 +1,54 @@
+﻿@model ResourceApplicationTool.Models.Department
+@using ResourceApplicationTool.Models;
+@using ResourceApplicationTool.Utils;
+
+
+<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 department-item carousel-item">
+
+    <figure class="view third-effect">
+        <div class="joined"></div>
+        @if (Model.MainImageID.HasValue)
+        {
+            <div class="small_sweepimage" style="background-image:url('@(ViewBag.baseUrl + Const.PicturePaths.ImgControllerRoot + Model.File1.FileNumber )');"></div>
+        }
+        else
+        {
+            <div class="small_sweepimage" style="background-image:url('../Content/Pictures/masterpagepic.jpg');"></div>
+        }
+
+        <div class="mask clickable-mask" onclick="redirectToUrl('/Departments/Details/@Model.DepartmentID')">
+            <a href="" class="info">Read More</a>
+        </div>
+
+        <div class="mask">
+            <a href="/Departments/Details/@Model.DepartmentID" class="info">Read More</a>
+        </div>
+
+    </figure>
+    <div class="mask-background-parent">
+        <div class="mask-background">
+            <div class="mask-front">
+                <div class="stat sec-sweep-title ">
+                    <div class="stat-sec sweep-stat">
+                        <h2 class="limited-container dept-title">@Model.Title</h2>
+                    </div>
+                    <div class="sweep_stat_right">
+                        <div class="stat-sec banner-stat-right">
+                            <div class="secondary-dept-field">
+                                <img class="banner-icon department-secondary-label department-banner-icon" src="../Content/Pictures/projects-icon.png" alt="" height="28" width="28">
+                                <p class="banner-bold-value department-secondary-label"> @Model.projectsNumber </p>
+                            </div>
+                            <div class="secondary-dept-field">
+                                <img class="banner-icon department-secondary-label department-banner-icon" src="../Content/Pictures/users-icon.png" alt="" height="28" width="28">
+                                <p class="banner-bold-value department-secondary-label"> @Model.employeesNumber</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sec-dept-detail">
+                    @Model.DeptDescription
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

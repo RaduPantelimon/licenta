@@ -351,6 +351,7 @@
     <Content Include="Content\Pictures\settings_background_img.png" />
     <Content Include="Content\Pictures\shape.png" />
     <Content Include="Content\Pictures\users-icon.png" />
+    <Content Include="Content\Pictures\warning-icon.png" />
     <Content Include="Content\Styles\commonStyle.css" />
     <Content Include="Content\Styles\Department\departmentsCommonStyle.css" />
     <Content Include="Content\Styles\Department\departmentsDisplayStyle.css" />
@@ -532,6 +533,9 @@
     <Content Include="Views\Employees\EditorTemplates\PDFStyle.cshtml" />
     <Content Include="Views\Employees\PdfCVHeader.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Employees\PartialEmployee.cshtml" />
+    <Content Include="Views\Projects\PartialProject.cshtml" />
+    <Content Include="Views\Departments\PartialDepartment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Temp\" />

@@ -69,12 +69,14 @@
                                     <div class="stat-sec sweep-stat">
                                         @if (emp.Department != null && !String.IsNullOrEmpty(emp.Department.Title))
                                         {
-                                            <h2 class="limited-container dept-title dept-information-container" departmentId="@emp.Department.DepartmentID" >
+                                            <a href="/Departments/Details/@emp.Department.DepartmentID">
+                                                <h2 class="limited-container dept-title dept-information-container" departmentId="@emp.Department.DepartmentID" >
                                             
-                                                @((emp.Department.Title != null && !String.IsNullOrEmpty(emp.Department.Title))
-                                                            ? emp.Department.Title : "Idle")
+                                                    @((emp.Department.Title != null && !String.IsNullOrEmpty(emp.Department.Title))
+                                                                ? emp.Department.Title : "Idle")
                                            
-                                            </h2>
+                                                </h2>
+                                            </a>
                                         }
                                     </div>
                                 </div>

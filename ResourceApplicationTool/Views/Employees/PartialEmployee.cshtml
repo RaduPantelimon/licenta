@@ -1,0 +1,60 @@
+﻿@model ResourceApplicationTool.Models.Employee
+@using ResourceApplicationTool.Models;
+@using ResourceApplicationTool.Utils;
+
+<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 department-item">
+
+    <figure class="view third-effect">
+        @if (Model.ProfileImageID.HasValue)
+        {
+            <div class="small_sweepimage" style="background-image:url('@(ViewBag.baseUrl + Const.PicturePaths.ImgControllerRoot + Model.File.FileNumber )');"></div>
+        }
+        else
+        {
+            <div class="small_sweepimage" style="background-image:url('../../Content/Pictures/default-profile-picture.png');"></div>
+        }
+
+        <div class="mask clickable-mask" onclick="redirectToUrl('/Departments/Details/@Model.EmployeeID')">
+            <a href="" class="info">Read More</a>
+        </div>
+
+        <div class="mask">
+            <a href="/Employees/Details/@Model.EmployeeID" class="info">Read More</a>
+        </div>
+
+    </figure>
+    <div class="mask-background-parent">
+        <div class="mask-background">
+            <div class="mask-front">
+                <div class="stat sec-sweep-title ">
+                    <div class="stat-sec sweep-stat">
+                        <h2 class="limited-container dept-title">@Model.FirstName @Model.LastName</h2>
+                    </div>
+                    <div class="stat-sec sweep-stat">
+                        @if (Model.Department != null && !String.IsNullOrEmpty(Model.Department.Title))
+                        {
+                            <a href="/Departments/Details/@Model.Department.DepartmentID">
+                                <h2 class="limited-container dept-title dept-information-container" departmentId="@Model.Department.DepartmentID">
+
+                                    @((Model.Department.Title != null && !String.IsNullOrEmpty(Model.Department.Title))
+                                                            ? Model.Department.Title : "Idle")
+
+                                </h2>
+                            </a>
+                        }
+                    </div>
+                </div>
+                <div class="stat-sec stat-sec-bottom banner-stat-right">
+                    <div class="secondary-dept-field full-row-field">
+                        <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/phone-icon.png" alt="" height="28" width="28">
+                        <p class="banner-bold-value department-secondary-label"> @Model.PhoneNumber </p>
+                    </div>
+                    <div class="secondary-dept-field full-row-field">
+                        <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/mail-icon.png" alt="" height="28" width="28">
+                        <p class="banner-bold-value department-secondary-label"> @Model.Email </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,6 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<link href="~/Content/Styles/Department/departmentsCommonStyle.css" rel="stylesheet" />
 <link href="~/Content/Styles/search.css" rel="stylesheet" />
 <link href="~/Content/Styles/commonStyle.css" rel="stylesheet" />
 <link href="~/Content/Styles/slickStyle.css" rel="stylesheet" />
@@ -42,241 +43,67 @@
 <div class="results-container">
 </div>
 
-
-<h2 class="sec-title-large sec-title carousel-header"> Employees found </h2>
-@if (Model.employeeSearchResults == null || Model.employeeSearchResults.Count == 0)
+@if(ViewBag.searchDone!=null && !ViewBag.searchDone)
 {
-    <h3 class="sec-title-large sec-title carousel-header carousel-empty-header">This department currently has no employees</h3>
-}
-<div class="row">
-    <div class="carousel-depts">
-        @foreach (Employee emp in Model.employeeSearchResults)
-        {
 
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 department-item">
-
-                <figure class="view third-effect">
-                    @if (emp.ProfileImageID.HasValue)
-                    {
-                        <div class="small_sweepimage" style="background-image:url('@(ViewBag.baseUrl + Const.PicturePaths.ImgControllerRoot + emp.File.FileNumber )');"></div>
-                    }
-                    else
-                    {
-                        <div class="small_sweepimage" style="background-image:url('../../Content/Pictures/default-profile-picture.png');"></div>
-                    }
-
-                    <div class="mask clickable-mask" onclick="redirectToUrl('/Departments/Details/@emp.EmployeeID')">
-                        <a href="" class="info">Read More</a>
-                    </div>
-
-                    <div class="mask">
-                        <a href="/Employees/Details/@emp.EmployeeID" class="info">Read More</a>
-                    </div>
-
-                </figure>
-                <div class="mask-background-parent">
-                    <div class="mask-background">
-                        <div class="mask-front">
-                            <div class="stat sec-sweep-title ">
-                                <div class="stat-sec sweep-stat">
-                                    <h2 class="limited-container dept-title">@emp.FirstName @emp.LastName</h2>
-                                </div>
-                                <div class="sweep_stat_right">
-                                    <div class="stat-sec banner-stat-right">
-                                        <div class="secondary-dept-field">
-                                            @if (emp.Role != null && !String.IsNullOrEmpty(emp.Role.Name))
-                                            {
-                                                <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/role-icon.png" alt="" height="28" width="28">
-                                                <p class="banner-bold-value department-secondary-label"> @((emp.Role != null && !String.IsNullOrEmpty(emp.Role.Name)) ? emp.Role.Name : "Not selected") </p>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="stat-sec stat-sec-bottom banner-stat-right">
-                                <div class="secondary-dept-field full-row-field">
-                                    <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/phone-icon.png" alt="" height="28" width="28">
-                                    <p class="banner-bold-value department-secondary-label"> @emp.PhoneNumber </p>
-                                </div>
-                                <div class="secondary-dept-field full-row-field">
-                                    <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/mail-icon.png" alt="" height="28" width="28">
-                                    <p class="banner-bold-value department-secondary-label"> @emp.Email </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
+    <div class="warning-container">
+        <img src="~/Content/Pictures/warning-icon.png"/>
+        <h3 class="sec-title-large sec-title warning-header" > Please try again with a more specific query</h3>
     </div>
-</div>
 
-<h2 class="sec-title-large sec-title carousel-header"> Projects found </h2>
-@if (Model.projectSearchResults == null || Model.projectSearchResults.Count == 0)
-{
-    <h3 class="sec-title-large sec-title carousel-header carousel-empty-header">This department currently isn't developing any projects</h3>
 }
-<div class="row">
-    <div class="carousel-depts">
-        @foreach (Project proj in Model.projectSearchResults)
-        {
-
-            <!--<div class="wip-div" ></div>-->
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 department-item carousel-item carousel-item-nopicture ">
-                <div class="mask-background-parent">
-                    <div class="mask-background">
-
-                        <div class="mask-front">
-                            <div class="stat sec-sweep-title">
-
-                                <div class="stat-sec sweep-stat slick-main-header">
-                                    <h2 class="limited-container">@proj.Title</h2>
-                                </div>
-                                <figure class="view third-effect">
-                                    <div>
-                                        <div class="stat-row">
-                                            <div class="secondary-pj-field container-padding">
-                                                <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/calendar-icon.png" alt="" height="28" width="28">
-                                                <p class="project-secondary-label"></p>
-                                            </div>
-                                            <div class="secondary-pj-field  container-value">
-                                                <p class="project-secondary-label">
-                                                    <span class="field-name">Start:</span>
-                                                    @String.Format("{0:MM/dd/yyyy}", proj.StartDate)
-                                                </p>
-                                            </div>
-                                            <div class="secondary-pj-field ">
-                                                <p class="project-secondary-label">
-                                                    <span class="field-name">End:</span>
-                                                    @String.Format("{0:MM/dd/yyyy}", proj.EndDate)
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="stat-row">
-                                            <div class="secondary-pj-field container-padding">
-                                                <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/effort-icon.png" alt="" height="28" width="28">
-                                                <p class="project-secondary-label"></p>
-                                            </div>
-                                            <div class="secondary-pj-field">
-                                                <p class="project-secondary-label">
-                                                    <span class="field-name">Effort in man days:</span>
-                                                    @proj.ManDaysEffort
-                                                </p>
-                                            </div>
-
-                                        </div>
-                                        <div class="stat-row">
-                                            <div class="secondary-pj-field container-padding">
-                                                <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/department-icon.png" alt="" height="28" width="28">
-                                                <p class="project-secondary-label"></p>
-                                            </div>
-                                            <div class="secondary-pj-field">
-                                                <p class="project-secondary-label">
-                                                    <span class="field-name dept-information-container" departmentId="@proj.Department.DepartmentID">Department:</span>
-                                                    <!--<a href="/Departments/Details/@proj.DepartmentID">-->
-                                                    @((proj.Department != null && !String.IsNullOrEmpty(proj.Department.Title)) ? proj.Department.Title : "")
-                                                    <!--</a>-->
-                                                </p>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="stat-row sec-pj-detail-label">
-                                        <div>
-                                            <p class="project-secondary-label ">
-                                                <span class="field-name">Project Details</span>
-                                            </p>
-                                        </div>
-
-                                    </div>
-                                    <div class="sec-pj-detail">
-                                        @proj.PJDescription
-                                    </div>
-                                    <div class="mask clickable-mask" onclick="redirectToUrl('/Projects/Details/@proj.ProjectID')">
-                                        <a href="" class="info">Read More</a>
-                                    </div>
-
-                                    <div class="mask">
-                                        <a href="/Projects/Details/@proj.ProjectID" class="info">Read More</a>
-                                    </div>
-
-                                </figure>
-                                <div class="bottom-footer">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
-</div>
-
-
-<h2 class="sec-title-large sec-title carousel-header"> Departments found </h2>
-@if (Model.departmentSearchResults == null || Model.departmentSearchResults.Count == 0)
+else if (!ViewBag.filteredData != null && ViewBag.searchDone!= null && !ViewBag.filteredData && ViewBag.searchDone)
 {
-    <h3 class="sec-title-large sec-title carousel-header carousel-empty-header">This department currently isn't developing any projects</h3>
-}
+    if (ViewBag.dataIsOmitted != null && ViewBag.dataIsOmitted)
+    {
+        <div class="warning-container">
+            <img src="~/Content/Pictures/warning-icon.png" />
+            <h3 class="sec-title-large sec-title warning-header">The query returned too many results. Only some of them will be displayed.Please use a different query and/or a filter and try again.</h3>
+        </div>
+    }
 
-<div class="row">
-    <div class="carousel-depts">
-        @foreach (Department dept in Model.departmentSearchResults)
-        {
-
-            <!--<div class="wip-div" ></div>-->
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 department-item carousel-item">
-
-                <figure class="view third-effect">
-                    <div class="joined"></div>
-                    @if (dept.MainImageID.HasValue)
+    if (Model.employeeSearchResults != null && Model.employeeSearchResults.Count > 0)
+    {
+        <h2 class="sec-title-large sec-title carousel-header"> Employees found </h2>
+        <div class="row">
+            <div class="carousel-depts">
+                @foreach (Employee emp in Model.employeeSearchResults)
                 {
-                        <div class="small_sweepimage" style="background-image:url('@(ViewBag.baseUrl + Const.PicturePaths.ImgControllerRoot + dept.File1.FileNumber )');"></div>
-                    }
-                    else
-                    {
-                        <div class="small_sweepimage" style="background-image:url('../Content/Pictures/masterpagepic.jpg');"></div>
-                    }
-
-                    <div class="mask clickable-mask" onclick="redirectToUrl('/Departments/Details/@dept.DepartmentID')">
-                        <a href="" class="info">Read More</a>
-                    </div>
-
-                    <div class="mask">
-                        <a href="/Departments/Details/@dept.DepartmentID" class="info">Read More</a>
-                    </div>
-
-                </figure>
-                <div class="mask-background-parent">
-                    <div class="mask-background">
-                        <div class="mask-front">
-                            <div class="stat sec-sweep-title ">
-                                <div class="stat-sec sweep-stat">
-                                    <h2 class="limited-container dept-title">@dept.Title</h2>
-                                </div>
-                                <div class="sweep_stat_right">
-                                    <div class="stat-sec banner-stat-right">
-                                        <div class="secondary-dept-field">
-                                            <img class="banner-icon department-secondary-label department-banner-icon" src="../Content/Pictures/projects-icon.png" alt="" height="28" width="28">
-                                            <p class="banner-bold-value department-secondary-label"> @dept.projectsNumber </p>
-                                        </div>
-                                        <div class="secondary-dept-field">
-                                            <img class="banner-icon department-secondary-label department-banner-icon" src="../Content/Pictures/users-icon.png" alt="" height="28" width="28">
-                                            <p class="banner-bold-value department-secondary-label"> @dept.employeesNumber</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sec-dept-detail">
-                                @dept.DeptDescription
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    Html.RenderPartial("~/Views/Employees/PartialEmployee.cshtml", emp, ViewData);
+                }
             </div>
-        }
-    </div>
-</div>
+        </div>
+    }
+
+    if (Model.projectSearchResults != null && Model.projectSearchResults.Count > 0)
+    {
+        <h2 class="sec-title-large sec-title carousel-header"> Projects found </h2>
+        <div class="row">
+            <div class="carousel-depts">
+                @foreach (Project proj in Model.projectSearchResults)
+                {
+                    Html.RenderPartial("~/Views/Projects/PartialProject.cshtml", proj, ViewData);
+                }
+            </div>
+        </div>
+    }
+
+    if (Model.departmentSearchResults != null && Model.departmentSearchResults.Count > 0)
+    {
+            <h2 class="sec-title-large sec-title carousel-header"> Departments found </h2>
+            <div class="row">
+                <div class="carousel-depts">
+                    @foreach (Department dept in Model.departmentSearchResults)
+                    {
+                        Html.RenderPartial("~/Views/Departments/PartialDepartment.cshtml", dept, ViewData);
+                    }
+            </div>
+        </div>
+    }
+}
+
+
+
 
 
 
