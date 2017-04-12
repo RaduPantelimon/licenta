@@ -73,12 +73,12 @@
                 <li>
                     <label for="dept_radio" class="sec-title-medium">Departments</label>
                     <input type="radio" name="filter" id="dept_radio" value="Department"
-                            @((!String.IsNullOrEmpty(ViewBag.filter) && ViewBag.filter.ToLower() == "departments") ? "checked='true'" : "") />
+                            @((!String.IsNullOrEmpty(ViewBag.filter) && ViewBag.filter.ToLower() == "department") ? "checked='true'" : "") />
                 </li>
                 <li>
                     <label for="pj_radio" class="sec-title-medium">Projects</label>
                     <input type="radio" name="filter" id="pj_radio" value="Project"
-                            @((!String.IsNullOrEmpty(ViewBag.filter) && ViewBag.filter.ToLower() == "projects") ? "checked='true'" : "") />
+                            @((!String.IsNullOrEmpty(ViewBag.filter) && ViewBag.filter.ToLower() == "project") ? "checked='true'" : "") />
                 </li>
             </ul>
             </div>
@@ -153,6 +153,14 @@ else if (ViewBag.searchDone != null && !ViewBag.filteredData != null && ViewBag.
     if (!String.IsNullOrEmpty(ViewBag.filter) && ViewBag.filter.ToLower() == "employee")
     {
         Html.RenderPartial("~/Views/Search/PagedEmployees.cshtml", Model.pagedEmployees, ViewData);
+    }
+    else if (!String.IsNullOrEmpty(ViewBag.filter) && ViewBag.filter.ToLower() == "department")
+    {
+        Html.RenderPartial("~/Views/Search/PagedDepartments.cshtml", Model.pagedDepartments, ViewData);
+    }
+    else if (!String.IsNullOrEmpty(ViewBag.filter) && ViewBag.filter.ToLower() == "project")
+    {
+        Html.RenderPartial("~/Views/Search/PagedProjects.cshtml", Model.pagedProjects, ViewData);
     }
 }
 

@@ -34,8 +34,8 @@ namespace ResourceApplicationTool.Utils
         {
             public static readonly int pageSize = 3;
             public static readonly string EmployeeFilterName = "Employee";
-            public static readonly string DepartmentFilterName = "Project";
-            public static readonly string ProjectFilterName = "Department";
+            public static readonly string DepartmentFilterName = "Department";
+            public static readonly string ProjectFilterName = "Project";
         }
 
         public static readonly string[] SkillLevels = {"None","Theory", "Practice", "Proficient","Expert", "Guru"};

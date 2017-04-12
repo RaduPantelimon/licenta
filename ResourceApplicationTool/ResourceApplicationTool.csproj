@@ -547,6 +547,8 @@
     <Content Include="Views\Projects\PartialProject.cshtml" />
     <Content Include="Views\Departments\PartialDepartment.cshtml" />
     <Content Include="Views\Search\PagedEmployees.cshtml" />
+    <Content Include="Views\Search\PagedDepartments.cshtml" />
+    <Content Include="Views\Search\PagedProjects.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Temp\" />

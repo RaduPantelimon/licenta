@@ -87,6 +87,80 @@ namespace ResourceApplicationTool.Controllers
                 int pageNumber = (page ?? 1);
                 if (!String.IsNullOrEmpty(secondaryFilter))
                 {
+                    //applying project filters
+                    #region ProjectFilters
+                    if (secondaryFilter == "project_name")
+                    {
+                        searchRes.projectSearchResults = searchRes.projectSearchResults.OrderBy(x => x.Title).ToList();
+                    }
+                    else if (secondaryFilter == "project_name_desc")
+                    {
+                        searchRes.projectSearchResults = searchRes.projectSearchResults.OrderByDescending(x => x.Title).ToList();
+                    }
+                    else if (secondaryFilter == "project_department")
+                    {
+                        searchRes.projectSearchResults = searchRes.projectSearchResults.OrderBy(x => x.Department.Title).ToList();
+                    }
+                    else if (secondaryFilter == "project_department_desc")
+                    {
+                        searchRes.projectSearchResults = searchRes.projectSearchResults.OrderByDescending(x => x.Department.Title).ToList();
+                    }
+                    else if (secondaryFilter == "project_start_date")
+                    {
+                        searchRes.projectSearchResults = searchRes.projectSearchResults.OrderBy(x => x.StartDate).ToList();
+
+                    }
+                    else if (secondaryFilter == "project_start_date_desc")
+                    {
+                        searchRes.projectSearchResults = searchRes.projectSearchResults.OrderByDescending(x => x.StartDate).ToList();
+                    }
+                    else if (secondaryFilter == "project_end_date")
+                    {
+                        searchRes.projectSearchResults = searchRes.projectSearchResults.OrderBy(x => x.EndDate).ToList();
+                    }
+                    else if (secondaryFilter == "project_end_date_desc")
+                    {
+                        searchRes.projectSearchResults = searchRes.projectSearchResults.OrderByDescending(x => x.EndDate).ToList();
+                    }
+                    #endregion
+                    //applying department filters
+                    #region DepartmentFilters
+                    if (secondaryFilter == "department_name")
+                    {
+                        searchRes.departmentSearchResults = searchRes.departmentSearchResults.OrderBy(x => x.Title).ToList();
+                    }
+                    else if (secondaryFilter == "department_name_desc")
+                    {
+                        searchRes.departmentSearchResults = searchRes.departmentSearchResults.OrderByDescending(x => x.Title).ToList();
+                    }
+                    else if (secondaryFilter == "department_start_date")
+                    {
+                        searchRes.departmentSearchResults = searchRes.departmentSearchResults.OrderBy(x => x.StartDate).ToList();
+                    }
+                    else if (secondaryFilter == "department_start_date_desc")
+                    {
+                        searchRes.departmentSearchResults = searchRes.departmentSearchResults.OrderByDescending(x => x.StartDate).ToList();
+                    }
+                    else if (secondaryFilter == "department_employees_number")
+                    {
+                        searchRes.departmentSearchResults = searchRes.departmentSearchResults.Where(x => x.Employees == null).Concat(
+                            searchRes.departmentSearchResults.Where(x => x.Employees != null).OrderBy(x => x.Employees.Count())).ToList();
+
+                    }
+                    else if (secondaryFilter == "department_employees_number_desc")
+                    {
+                        searchRes.departmentSearchResults = searchRes.departmentSearchResults.Where(x => x.Employees != null).OrderBy(x => x.Employees.Count()).Concat(
+                            searchRes.departmentSearchResults.Where(x => x.Employees == null)).ToList();
+                    }
+                    else if (secondaryFilter == "department_description")
+                    {
+                        searchRes.departmentSearchResults = searchRes.departmentSearchResults.OrderBy(x => x.DeptDescription).ToList();
+                    }
+                    else if (secondaryFilter == "department_description_desc")
+                    {
+                        searchRes.departmentSearchResults = searchRes.departmentSearchResults.OrderByDescending(x => x.DeptDescription).ToList();
+                    }
+                    #endregion
                     //applying employee filters
                     #region EmployeeFilters
                     if (secondaryFilter == "employee_name")

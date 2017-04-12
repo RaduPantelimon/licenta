@@ -1,0 +1,70 @@
+﻿@model PagedList.IPagedList<ResourceApplicationTool.Models.Project>
+@using ResourceApplicationTool.Models;
+@using ResourceApplicationTool.Utils;
+@using PagedList.Mvc;
+@using PagedList;
+
+
+<h2 class="sec-title-large sec-title carousel-header"> Projects </h2>
+<table class="table table-striped table-bordered filtered-table employee-table">
+    <thead>
+        <tr>
+            <th class="sec-title-medium">
+                Name
+                <div class="arrow-container">
+                    <div class="arrow-up  arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="project_name")?"selected-arrow":"")"
+                         data-filter="project_name"></div>
+                    <div class="arrow-down arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="project_name_desc")?"selected-arrow":"")"
+                         data-filter="project_name_desc"></div>
+                </div>
+            </th>
+            <th class="sec-title-medium">
+                Department
+                <div class="arrow-container">
+                    <div class="arrow-up  arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="project_department")?"selected-arrow":"")"
+                         data-filter="project_department"></div>
+                    <div class="arrow-down arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="project_department_desc")?"selected-arrow":"")"
+                         data-filter="project_department_desc"></div>
+                </div>
+            </th>
+            <th class="sec-title-medium">
+                 Start Date
+                <div class="arrow-container">
+                    <div class="arrow-up  arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="project_start_date")?"selected-arrow":"")"
+                         data-filter="project_start_date"></div>
+                    <div class="arrow-down arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="project_start_date_desc")?"selected-arrow":"")"
+                         data-filter="project_start_date_desc"></div>
+                </div>
+            </th>
+            <th class="sec-title-medium">
+                End Date
+                <div class="arrow-container">
+                    <div class="arrow-up  arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="project_end_date")?"selected-arrow":"")"
+                         data-filter="project_end_date"></div>
+                    <div class="arrow-down arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="project_end_date_desc")?"selected-arrow":"")"
+                         data-filter="project_end_date_desc"></div>
+                </div>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Project pj in Model)
+        {
+            <tr>
+                <td class="sec-title-small">
+                    <a class="title-anchor" href="/Employees/Details/@pj.ProjectID">@(pj.Title)</a>
+                </td>
+                <td class="sec-title-small"> <a href="/Departments/Details/@pj.DepartmentID">@pj.Department.Title </a></td>
+                <td class="sec-title-small">@String.Format("{0:MM/dd/yyyy}", pj.StartDate) </td>
+                <td class="sec-title-small"> @String.Format("{0:MM/dd/yyyy}", pj.EndDate) </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+
+<div>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+                new { page, query = ViewBag.query, filter = ViewBag.filter, secondaryFilter = ViewBag.secondaryFilter }))
+</div>

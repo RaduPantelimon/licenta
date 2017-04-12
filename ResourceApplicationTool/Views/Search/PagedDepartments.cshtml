@@ -1,0 +1,93 @@
+﻿@model PagedList.IPagedList<ResourceApplicationTool.Models.Department>
+@using ResourceApplicationTool.Models;
+@using ResourceApplicationTool.Utils;
+@using PagedList.Mvc;
+@using PagedList;
+
+
+<h2 class="sec-title-large sec-title carousel-header"> Departments </h2>
+<table class="table table-striped table-bordered filtered-table employee-table">
+    <thead>
+        <tr>
+            <th class="sec-title-medium">
+                Title
+                <div class="arrow-container">
+                    <div class="arrow-up  arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="department_name")?"selected-arrow":"")"
+                         data-filter="department_name"></div>
+                    <div class="arrow-down arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="department_name_desc")?"selected-arrow":"")"
+                         data-filter="department_name_desc"></div>
+                </div>
+            </th>
+            <th class="sec-title-medium">
+                Start Date
+                <div class="arrow-container">
+                    <div class="arrow-up  arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="department_start_date")?"selected-arrow":"")"
+                         data-filter="department_start_date"></div>
+                    <div class="arrow-down arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="department_start_date_desc")?"selected-arrow":"")"
+                         data-filter="department_start_date_desc"></div>
+                </div>
+            </th>
+            <th class="sec-title-medium">
+                Size
+                <div class="arrow-container">
+                    <div class="arrow-up  arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="department_employees_number")?"selected-arrow":"")"
+                         data-filter="department_employees_number"></div>
+                    <div class="arrow-down arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="department_employees_number_desc")?"selected-arrow":"")"
+                         data-filter="department_employees_number_desc"></div>
+                </div>
+            </th>
+            <th class="sec-title-medium">
+                Description
+                <div class="arrow-container">
+                    <div class="arrow-up  arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="department_description")?"selected-arrow":"")"
+                         data-filter="department_description"></div>
+                    <div class="arrow-down arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="department_description_desc")?"selected-arrow":"")"
+                         data-filter="department_description_desc"></div>
+                </div>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Department dept in Model)
+        {
+            <tr>
+                <td class="sec-title-small picture-container">
+                    <table>
+                        <tr>
+                            <td class="secondary-cell">
+                                @if (dept.File1 != null)
+                                {
+                                    <div id="main-profile-picture-div"
+                                         class="search-picture"
+                                         style="background-image:url('@(ViewBag.baseUrl + Const.PicturePaths.ImgControllerRoot + dept.File1.FileID )');"></div>
+                                }
+                                else
+                                {
+                                    <div id="main-profile-picture-div"
+                                         class="search-picture"
+                                         style="background-image:url('/Content/Pictures/masterpagepic.jpg');"></div>
+                                }
+                            </td>
+                            <td class="secondary-cell">
+                                <span class="search-data-prop element-picture-info">
+                                    <a href="/Employees/Details/@dept.DepartmentID">@(dept.Title)</a>
+                                    <hr class="element-picture-hr" />
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="sec-title-small">@String.Format("{0:MM/dd/yyyy}", dept.StartDate)</td>
+                <td class="sec-title-small"> @((dept.Employees!= null)?dept.Employees.Count().ToString():"0") </td>
+                <td class="sec-title-small"> @dept.DeptDescription </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+
+<div>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+                new { page, query = ViewBag.query, filter = ViewBag.filter, secondaryFilter = ViewBag.secondaryFilter }))
+</div>
