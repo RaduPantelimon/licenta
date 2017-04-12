@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ResourceApplicationTool.Models;
+using System.Globalization;
 
 namespace ResourceApplicationTool.Controllers
 {
@@ -56,6 +57,9 @@ namespace ResourceApplicationTool.Controllers
             //making sure that the masterpage will render the <base href> elem for our angular module
             ViewBag.showBaseHref = true;
             ViewBag.hrefVal = "/Projects/Details/" + id;
+
+            //adding months to viewbag
+            ViewBag.months = Months();
 
             //determining the base url
             string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
@@ -142,6 +146,28 @@ namespace ResourceApplicationTool.Controllers
             return View(project);
         }
 
+        public ActionResult GenerateMonthlyReport(int projectID,int month, int year)
+        {
+            try
+            {
+                HttpContext.Response.Clear();
+                HttpContext.Response.ContentType = "application/ms-excel";
+                HttpContext.Response.AddHeader("Content-Disposition",
+                "attachment; filename=" + "ProjectName.xlsx" + ";");
+                byte[] array = Utils.ExcelReportGenerator.GenerateExcelReport(projectID,month,year,db);
+
+                HttpContext.Response.OutputStream.Write(array, 0, array.Length);
+                HttpContext.Response.End();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return View();
+        }
+
+
         // POST: Projects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -152,6 +178,20 @@ namespace ResourceApplicationTool.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        public IEnumerable<SelectListItem> Months()
+        {
+                return DateTimeFormatInfo
+                       .InvariantInfo
+                       .MonthNames
+                       .Select((monthName, index) => new SelectListItem
+                       {
+                           Value = (index + 1).ToString(),
+                           Text = monthName
+                       });
+
+        }
+
 
         protected override void Dispose(bool disposing)
         {

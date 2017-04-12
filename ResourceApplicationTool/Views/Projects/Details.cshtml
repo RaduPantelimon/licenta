@@ -44,6 +44,7 @@
             <h2 class="sec-title-large sec-title page-buttons-title"> @Model.Title</h2>
             @Html.ActionLink("Edit", "Edit", new { @id = Model.ProjectID }, new { @class = "btn-primary add-new-button", @id = Model.ProjectID })
             @Html.ActionLink("Delete", "Delete", new { @id = Model.ProjectID }, new { @class = "btn-danger add-new-button", @id = Model.ProjectID })
+            <button type="button" id='generate-report' class="btn-primary">Download Monthly Report</button>
         </div>
         <hr class="title-hr" />
     </div>
@@ -158,6 +159,36 @@
 <div class="angular-component">
     <pm-app></pm-app>
 </div>
+
+<div id='dialog-modal' class='modal' data-project='@Model.ProjectID'>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Education</h4>
+    </div>
+    <div class="modal-body">
+        <div id='modal-body-content'>
+            @Html.DropDownList("Month-Selector", ViewBag.Months as IEnumerable<SelectListItem>, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="save-education-changes" type="button" class="btn btn-primary">Save changes</button>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap-datepicker");
+    @Scripts.Render("~/Content/bootstrap-sliderjs");
+    @*@Scripts.Render("~/bundles/jquery-uijs");*@
+
+
+    @Styles.Render("~/Content/bootstrap-datepickercss");
+    @Styles.Render("~/Content/bootstrap-slidercss");
+    @Styles.Render("~/Content/jquery-uicss");
+}
+
 <script src="~/Scripts/common.js"></script>
 <script src="~/Scripts/projects/projects_common.js"></script>
 <script src="~/Scripts/projects/projects_details.js"></script>

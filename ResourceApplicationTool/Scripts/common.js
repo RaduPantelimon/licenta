@@ -97,11 +97,18 @@ function LoadModalView(button, container, body)
         });
     });
 
+}
 
-   
-   
+//used in order to view and initialize pop-up page - download project Status -XML
+function LoadModalXLSXDownloadView() {
+    $('#generate-report').click(function () {
+        $('#dialog-modal').modal('show');
+        $('#dialog-modal').show();
+    });
 
 }
+
+
 
 //behaviour used to initialize the hiredate pickers
 function InitializeDatePickers(selector) {

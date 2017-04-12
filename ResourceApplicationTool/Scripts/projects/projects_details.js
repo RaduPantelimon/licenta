@@ -9,4 +9,8 @@ function initializePage() {
         MainExpandCollapse(this, 'auto');
 
     });
+
+    //download_report
+    //used in order to view and initialize pop-up page - download project Status -XML
+   LoadModalXLSXDownloadView();
 }
