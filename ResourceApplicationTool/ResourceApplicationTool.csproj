@@ -361,6 +361,7 @@
     <Content Include="Content\Pictures\shape.png" />
     <Content Include="Content\Pictures\users-icon.png" />
     <Content Include="Content\Pictures\warning-icon.png" />
+    <Content Include="Content\Styles\arrows.css" />
     <Content Include="Content\Styles\commonStyle.css" />
     <Content Include="Content\Styles\Department\departmentsCommonStyle.css" />
     <Content Include="Content\Styles\Department\departmentsDisplayStyle.css" />
@@ -545,6 +546,7 @@
     <Content Include="Views\Employees\PartialEmployee.cshtml" />
     <Content Include="Views\Projects\PartialProject.cshtml" />
     <Content Include="Views\Departments\PartialDepartment.cshtml" />
+    <Content Include="Views\Search\PagedEmployees.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Temp\" />

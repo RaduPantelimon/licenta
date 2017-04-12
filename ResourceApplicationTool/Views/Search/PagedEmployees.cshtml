@@ -1,0 +1,89 @@
+﻿@model PagedList.IPagedList<ResourceApplicationTool.Models.Employee>
+@using ResourceApplicationTool.Models;
+@using ResourceApplicationTool.Utils;
+@using PagedList.Mvc;
+@using PagedList;
+
+
+<h2 class="sec-title-large sec-title carousel-header"> Employees </h2>
+<table class="table table-striped table-bordered filtered-table employee-table">
+    <thead>
+        <tr>
+            <th class="sec-title-medium" > Name   
+                <div class="arrow-container">
+                    <div class="arrow-up  arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="employee_name")?"selected-arrow":"")"
+                         data-filter="employee_name"></div>
+                    <div class="arrow-down arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="employee_name_desc")?"selected-arrow":"")" 
+                         data-filter="employee_name_desc"></div>
+                </div>
+            </th>
+            <th class="sec-title-medium" >Department
+                <div class="arrow-container">
+                    <div class="arrow-up  arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="employee_department")?"selected-arrow":"")"
+                         data-filter="employee_department"></div>
+                    <div class="arrow-down arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="employee_department_desc")?"selected-arrow":"")"
+                         data-filter="employee_department_desc"></div>
+                </div> 
+            </th>
+            <th class="sec-title-medium" > Role
+                <div class="arrow-container">
+                    <div class="arrow-up  arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="employee_role")?"selected-arrow":"")" 
+                         data-filter="employee_role"></div>
+                    <div class="arrow-down arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="employee_role_desc")?"selected-arrow":"")" 
+                         data-filter="employee_role_desc"></div>
+                </div> 
+            </th>
+            <th class="sec-title-medium" > Hire Date
+                <div class="arrow-container">
+                    <div class="arrow-up  arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="employee_date")?"selected-arrow":"")"
+                         data-filter="employee_date"></div>
+                    <div class="arrow-down arrow-search @((ViewBag.secondaryFilter != null && ViewBag.secondaryFilter =="employee_date_desc")?"selected-arrow":"")" 
+                         data-filter="employee_date_desc"></div>
+                </div> 
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Employee emp in Model)
+        {
+            <tr>
+                <td class="sec-title-small picture-container"> 
+                    <table>
+                    <tr>
+                        <td class="secondary-cell">
+                            @if (emp.ProfileImageID.HasValue)
+                            {
+                                <div id="main-profile-picture-div" 
+                                     class="search-picture" 
+                                     style="background-image:url('@(ViewBag.baseUrl + Const.PicturePaths.ImgControllerRoot + emp.File.FileNumber )');"></div>
+                            }
+                            else
+                            {
+                                <div id="main-profile-picture-div" 
+                                     class="search-picture" 
+                                     style="background-image:url('../../Content/Pictures/default-profile-picture.png');"></div>
+                            }
+                        </td>
+                        <td class="secondary-cell">
+                            <span class="search-data-prop element-picture-info">
+                                <a href="/Employees/Details/@emp.EmployeeID">@(emp.FirstName + " " + emp.LastName)</a>
+                                <hr class="element-picture-hr" />
+                            </span>
+                        </td>
+                    </tr>
+                    </table>
+                </td>
+                <td class="sec-title-small"> <a href="/Departments/Details/@emp.DepartmentID">@emp.Department.Title </a></td>
+                <td class="sec-title-small"> @(emp.Role != null ? emp.Role.Name : "") </td>
+                <td class="sec-title-small"> @String.Format("{0:MM/dd/yyyy}", emp.HireDate) </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+
+<div>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+                new { page, query = ViewBag.query, filter = ViewBag.filter, secondaryFilter = ViewBag.secondaryFilter }))
+</div>

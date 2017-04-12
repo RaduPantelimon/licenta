@@ -61,3 +61,80 @@ input.query-button{
     padding: 30px 10px;
     /* text-align: center; */
 }
+
+.filter-list{
+    list-style-type: none;
+
+}
+
+ul.filter-list  li > label{
+    display:inline;
+}
+ul.filter-list  li > input{
+    display: inline;
+    margin-bottom: 10px;
+    vertical-align: middle;
+}
+ul.filter-list  li{
+    vertical-align: middle;
+    margin: 5px 10px;
+}
+
+.filtered-table tr th{
+    font-weight:bold;
+    text-align:center;
+    color:white;
+    background-color: #428bca;
+    vertical-align:middle;
+}
+
+.filtered-table tr td{
+    vertical-align:middle;
+    color:#555555;
+    text-align:center;
+}
+.table-striped > tbody > tr:nth-child(even) > td, .table-striped > tbody > tr:nth-child(even) > th {
+    background-color: #fcfcf4;
+}
+
+h2.carousel-header{
+    font-weight: bold;
+}
+table.filtered-table > tbody > tr > td{
+    vertical-align:middle;
+    color:#555555;
+    text-align:center;
+}
+table.filtered-table > tbody > tr > td.picture-container{
+    min-height:80px;
+    position:relative;
+    padding:2px;
+    padding-left:30px;
+}
+td.picture-container td.secondary-cell{
+    border:none;
+    vertical-align:middle;
+    padding: 0px 6px;
+}
+.search-picture
+{
+    background-image: url(../../Content/Pictures/default-profile-picture.png);
+    width: 80px;
+    height: 80px;
+    background-size: contain;
+    background-size: cover;
+    display: inline-block;
+    border-radius: 40px;
+}
+.element-picture-hr{
+    margin:3px 0px;
+    color:#555555;
+    border-top: 1px solid #cccccc;
+}
+.element-picture-info{
+    font-weight:bold;
+}
+
+.secondary-cell a{
+    text-decoration:none;
+}

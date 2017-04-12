@@ -21,7 +21,7 @@ namespace ResourceApplicationTool.Controllers
         private RATV3Entities db = new RATV3Entities();
 
         // GET: Search
-        public ActionResult Index(string query,string filter, int? page)
+        public ActionResult Index(string query,string filter, int? page, string secondaryFilter)
         {
             MainSearchResult searchRes = new MainSearchResult();
 
@@ -35,6 +35,11 @@ namespace ResourceApplicationTool.Controllers
             else
             {
                 ViewBag.filteredData = false;
+            }
+
+            if(!String.IsNullOrEmpty(secondaryFilter))
+            {
+                ViewBag.secondaryFilter = secondaryFilter;
             }
 
             //executing the search queries
@@ -80,9 +85,50 @@ namespace ResourceApplicationTool.Controllers
             {
                 int pageSize =Const.SearchParams.pageSize;
                 int pageNumber = (page ?? 1);
+                if (!String.IsNullOrEmpty(secondaryFilter))
+                {
+                    //applying employee filters
+                    #region EmployeeFilters
+                    if (secondaryFilter == "employee_name")
+                    {
+                        searchRes.employeeSearchResults = searchRes.employeeSearchResults.OrderBy(x => x.FirstName + " " + x.LastName).ToList();
+                    }
+                    else if(secondaryFilter == "employee_name_desc")
+                    {
+                        searchRes.employeeSearchResults = searchRes.employeeSearchResults.OrderByDescending(x => x.FirstName + " " + x.LastName).ToList();
+                    }
+                    else if (secondaryFilter == "employee_department")
+                    {
+                        searchRes.employeeSearchResults = searchRes.employeeSearchResults.OrderBy(x => x.Department.Title).ToList();
+                    }
+                    else if (secondaryFilter == "employee_department_desc")
+                    {
+                        searchRes.employeeSearchResults = searchRes.employeeSearchResults.OrderByDescending(x => x.Department.Title).ToList();
+                    }
+                    else if (secondaryFilter == "employee_role")
+                    {
+                        searchRes.employeeSearchResults = searchRes.employeeSearchResults.Where(x => x.Role == null).Concat(
+                            searchRes.employeeSearchResults.Where(x => x.Role != null).OrderBy(x => x.Role.Name)).ToList();
+                        
+                    }
+                    else if (secondaryFilter == "employee_role_desc")
+                    {
+                        searchRes.employeeSearchResults = searchRes.employeeSearchResults.Where(x => x.Role != null).OrderBy(x => x.Role.Name).Concat(
+                            searchRes.employeeSearchResults.Where(x => x.Role == null)).ToList();
+                    }
+                    else if (secondaryFilter == "employee_date")
+                    {
+                        searchRes.employeeSearchResults = searchRes.employeeSearchResults.OrderBy(x => x.HireDate).ToList();
+                    }
+                    else if (secondaryFilter == "employee_date_desc")
+                    {
+                        searchRes.employeeSearchResults = searchRes.employeeSearchResults.OrderByDescending(x => x.HireDate).ToList();
+                    }
+                    #endregion
+                }
 
                 //depending on the selected filter, we will initialize a pagedList
-                if(filter.ToLower() == Const.SearchParams.EmployeeFilterName.ToLower())
+                if (filter.ToLower() == Const.SearchParams.EmployeeFilterName.ToLower())
                 {
                     searchRes.pagedEmployees = searchRes.employeeSearchResults.ToPagedList(pageNumber, pageSize);
                 }
