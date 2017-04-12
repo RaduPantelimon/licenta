@@ -30,7 +30,17 @@ namespace ResourceApplicationTool.Utils
             public static readonly string employeeID = "employeeID";
         }
 
+        public partial class SearchParams
+        {
+            public static readonly int pageSize = 3;
+            public static readonly string EmployeeFilterName = "Employee";
+            public static readonly string DepartmentFilterName = "Project";
+            public static readonly string ProjectFilterName = "Department";
+        }
+
         public static readonly string[] SkillLevels = {"None","Theory", "Practice", "Proficient","Expert", "Guru"};
+        public static readonly string[] SearchModelFilters = { "Employee", "Project", "Department"};
+
         public static readonly List<SelectListItem> Permissions = new List<SelectListItem>{
                     new SelectListItem{ Text="Employee", Value = "Employee" },
                     new SelectListItem{ Text="Manager", Value = "Manager" },

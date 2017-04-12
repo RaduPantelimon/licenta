@@ -7,10 +7,12 @@ using System.Web.Http;
 using System.Net.Http;
 using ResourceApplicationTool.Models;
 using ResourceApplicationTool.Models.SecondaryModels;
+using ResourceApplicationTool.Utils;
 using Newtonsoft.Json;
 using System.Text;
 using ResourceApplicationTool.Utils;
 using System.Net;
+using PagedList;
 
 namespace ResourceApplicationTool.Controllers
 {
@@ -19,14 +21,16 @@ namespace ResourceApplicationTool.Controllers
         private RATV3Entities db = new RATV3Entities();
 
         // GET: Search
-        public ActionResult Index(string query,string filter)
+        public ActionResult Index(string query,string filter, int? page)
         {
             MainSearchResult searchRes = new MainSearchResult();
 
-            if (!String.IsNullOrEmpty(filter))
+            bool filteredData = false;
+            if (!String.IsNullOrEmpty(filter) && Const.SearchModelFilters.Any(x => x.ToLower() == filter.ToLower()))
             {
                 ViewBag.filteredData = true;
-                ViewBag.filter = filter;
+                filteredData = true;
+                
             }
             else
             {
@@ -51,7 +55,7 @@ namespace ResourceApplicationTool.Controllers
             //checking if we will omit any data
             if ((searchRes.employeeSearchResults.Count >12 ||
                 searchRes.employeeSearchResults.Count> 12 ||
-                searchRes.employeeSearchResults.Count > 12) & !String.IsNullOrEmpty(filter))
+                searchRes.employeeSearchResults.Count > 12) && !filteredData)
             {
                 ViewBag.dataIsOmitted = true;
 
@@ -64,13 +68,34 @@ namespace ResourceApplicationTool.Controllers
             searchRes.initializeQuickSearchResults();
 
             ViewBag.query = query;
-
+            ViewBag.filter = filter;
 
             //initialize baseUrl
             string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
             Request.ApplicationPath.TrimEnd('/') + "/";
             ViewBag.baseUrl = baseUrl;
 
+
+            if(filteredData)
+            {
+                int pageSize =Const.SearchParams.pageSize;
+                int pageNumber = (page ?? 1);
+
+                //depending on the selected filter, we will initialize a pagedList
+                if(filter.ToLower() == Const.SearchParams.EmployeeFilterName.ToLower())
+                {
+                    searchRes.pagedEmployees = searchRes.employeeSearchResults.ToPagedList(pageNumber, pageSize);
+                }
+                else if( filter.ToLower() == Const.SearchParams.DepartmentFilterName.ToLower())
+                {
+                    searchRes.pagedDepartments = searchRes.departmentSearchResults.ToPagedList(pageNumber, pageSize);
+                }
+                else if( filter.ToLower() == Const.SearchParams.ProjectFilterName.ToLower())
+                {
+                    searchRes.pagedProjects = searchRes.projectSearchResults.ToPagedList(pageNumber, pageSize);
+                }
+
+            }
 
             return View(searchRes);
         }

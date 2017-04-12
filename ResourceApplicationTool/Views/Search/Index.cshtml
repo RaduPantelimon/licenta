@@ -1,6 +1,9 @@
 ﻿@model ResourceApplicationTool.Models.SecondaryModels.MainSearchResult
 @using ResourceApplicationTool.Models;
 @using ResourceApplicationTool.Utils;
+@using PagedList.Mvc;
+@using PagedList;
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -36,8 +39,14 @@
         <input type="submit" 
                value="Search!" 
                class="btn btn-warning" />
+        <div>
+            <label for="emp_radio">Employee</label> <input type="radio" name="filter" id="emp_radio" value="Employee" />
+            <label for="dept_radio">Departments</label> <input type="radio" name="filter" id="dept_radio" value="Department" />
+            <label for="pj_radio">Project</label> <input type="radio" name="filter" id="pj_radio" value="Project" />
+        </div>
 
     }
+    
 </div>
 
 <div class="results-container">
@@ -74,7 +83,6 @@ else if (!ViewBag.filteredData != null && ViewBag.searchDone!= null && !ViewBag.
             </div>
         </div>
     }
-
     if (Model.projectSearchResults != null && Model.projectSearchResults.Count > 0)
     {
         <h2 class="sec-title-large sec-title carousel-header"> Projects found </h2>
@@ -101,8 +109,36 @@ else if (!ViewBag.filteredData != null && ViewBag.searchDone!= null && !ViewBag.
         </div>
     }
 }
+else if (ViewBag.searchDone != null && !ViewBag.filteredData != null && ViewBag.filteredData == true && ViewBag.searchDone == true)
+{
+    if (!String.IsNullOrEmpty(ViewBag.filter) && ViewBag.filter.ToLower() == "employee")
+    {
+        <h2 class="sec-title-large sec-title carousel-header"> Employees </h2>
+        <table class="table table-striped table-bordered">
+            <thead>
+               
+            </thead>
+            <tbody>
+                    @foreach (Employee emp in Model.pagedEmployees)
+                    {
+                        <tr>
+                            <td> @(emp.FirstName + " " + emp.LastName) </td>
+                            <td> @emp.Department.Title </td>
+                            <td> @(emp.Role != null ? emp.Role.Name : "") </td>
+                            <td> @emp.HireDate </td>
+                        </tr>
+                    }             
+            </tbody>
+        </table>
+        <br/>
 
-
+        <div>
+            Page @(Model.pagedEmployees.PageCount < Model.pagedEmployees.PageNumber ? 0 : Model.pagedEmployees.PageNumber) of @Model.pagedEmployees.PageCount
+            @Html.PagedListPager(Model.pagedEmployees, page => Url.Action("Index",
+                new { page, query = ViewBag.query, filter = ViewBag.filter }))
+        </div>
+    }
+}
 
 
 

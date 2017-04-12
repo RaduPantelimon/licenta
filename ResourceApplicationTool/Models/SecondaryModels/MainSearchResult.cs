@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using ResourceApplicationTool.Models;
 using ResourceApplicationTool.Utils;
+using PagedList;
 namespace ResourceApplicationTool.Models.SecondaryModels
 {
     public class MainSearchResult
@@ -13,6 +14,10 @@ namespace ResourceApplicationTool.Models.SecondaryModels
         public List<Role> roleSearchResults;
         public List<Project> projectSearchResults;
         public List<SearchResult> quickSearch;
+
+        public IPagedList<Employee> pagedEmployees;
+        public IPagedList<Department> pagedDepartments;
+        public IPagedList<Project> pagedProjects;
 
         public MainSearchResult() {
             employeeSearchResults = new List<Employee>();
