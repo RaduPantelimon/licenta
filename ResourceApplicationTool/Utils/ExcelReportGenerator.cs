@@ -8,11 +8,6 @@ using System.Web;
 using System.Web.Mvc;
 using ResourceApplicationTool.Models;
 using System.Globalization;
-
-
-
-
-
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml;
@@ -86,31 +81,50 @@ namespace ResourceApplicationTool.Utils
                     };
                     sheets.AppendChild(sheet);
 
+
+                    //create header rows
                     List<string> MergeableRows = new List<string>();
-                    Row sprintRow = CreateSprintRow(firstDayOfMonth,lastDayOfMonth,sprints, MergeableRows, 1);
-                    Row headerRow = CreateDatesRow(firstDayOfMonth, lastDayOfMonth, 2);
+                    Row projectRow = CreateProjectRow(firstDayOfMonth, lastDayOfMonth, project, MergeableRows, 1);
+                    Row sprintRow = CreateSprintRow(firstDayOfMonth,lastDayOfMonth,sprints, MergeableRows, 2);
+                    Row headerRow = CreateDatesRow(firstDayOfMonth, lastDayOfMonth, 3);
+
+                    sheetData.AppendChild(projectRow);
                     sheetData.AppendChild(sprintRow);
                     sheetData.AppendChild(headerRow);
 
 
-                    //create a MergeCells class to hold each MergeCell
+                    //Merging cells
                     MergeCells mergeCells = new MergeCells();
-
-                    //append a MergeCell to the mergeCells for each set of merged cells
                     for (int i= 0;i<MergeableRows.Count;i+=2)
                     {
                         mergeCells.Append(new MergeCell() { Reference = new StringValue(MergeableRows[i] + ":" + MergeableRows[i+1]) });
                     }
-                    /*mergeCells.Append(new MergeCell() { Reference = new StringValue("C1:F1") });
-                    mergeCells.Append(new MergeCell() { Reference = new StringValue("A3:B3") });
-                    mergeCells.Append(new MergeCell() { Reference = new StringValue("G5:K5") });*/
 
+                    //creating content rows
+                    int colIndex = 4;
+                    foreach (Employee emp in employees)
+                    {
+                        //creating row for this employee
+                        List<Task>  empTasks = tasks.Where(x => x.EmployeeID == emp.EmployeeID).ToList();
+                        Row row = CreateEmployeeRow(firstDayOfMonth, lastDayOfMonth, colIndex, emp, empTasks);
+                        sheetData.AppendChild(row);
+
+                        colIndex++;
+                    }
+
+
+                    //set col width
+                    Columns columns = new Columns();
+                    columns.Append(new Column() { Min = 1, Max = 1, Width = 20, CustomWidth = true });
+                    columns.Append(new Column() { Min = 2, Max = 100, Width = 12, CustomWidth = true });
+                    worksheetPart.Worksheet.Append(columns);
+
+                    //merging cells
                     worksheetPart.Worksheet.InsertAfter(mergeCells, worksheetPart.Worksheet.Elements<SheetData>().First());
 
-
+                    //save data
                     worksheetPart.Worksheet.Save();
                     document.Close();
-
                 }
 
                 result = memoryStream.ToArray();
@@ -154,6 +168,30 @@ namespace ResourceApplicationTool.Utils
 
             return sprintsRow;
         }
+        private static Row CreateProjectRow(DateTime firstDayOfMonth, DateTime lastDayOfMonth, Project project, List<string> mergeableRows, int rowIndex)
+        {
+            int index = -1;
+            Row projectRow = new Row();
+            projectRow.RowIndex = (UInt32)rowIndex;
+            DateTime dt = firstDayOfMonth;
+
+            //adding first cell
+            mergeableRows.Add(ColumnLetter(index + 1) + rowIndex);
+            Cell firstcell = CreateCell(project.Title, ref index, rowIndex);
+            projectRow.AppendChild(firstcell);
+
+            while (dt.Date <= lastDayOfMonth.Date)
+            {
+                string text = "";
+                Cell newcell = CreateCell(text, ref index, rowIndex);
+
+                dt = dt.AddDays(1);
+                projectRow.AppendChild(newcell);
+            }
+            mergeableRows.Add(ColumnLetter(index + 1) + rowIndex);
+            return projectRow;
+        }
+
         private static Row CreateDatesRow(DateTime firstDayOfMonth, DateTime lastDayOfMonth, int rowIndex)
         {
             int index = 0;
@@ -168,10 +206,67 @@ namespace ResourceApplicationTool.Utils
                 dt = dt.AddDays(1);
                 headerRow.AppendChild(newcell);
             }
-            Cell totalcell = CreateCell("Total", ref index, 1);
+            Cell totalcell = CreateCell("Total", ref index, rowIndex);
             headerRow.AppendChild(totalcell);
 
             return headerRow;
+        }
+
+        private static Row  CreateEmployeeRow(DateTime firstDayOfMonth, DateTime lastDayOfMonth, int colIndex, Employee employee, List<Task> empTasks)
+        {
+            // New Row
+            Row row = new Row();
+            row.RowIndex = (UInt32)colIndex;
+            int total = 0, rowIndex = -1;
+            DateTime day = firstDayOfMonth;
+
+            Cell titleCell = CreateCell(employee.FirstName + " " + employee.LastName, ref rowIndex, colIndex);
+            row.AppendChild(titleCell);
+
+            //preparing the formula
+            string start = ColumnLetter(1) + colIndex;
+
+            while (day.Date <= lastDayOfMonth.Date)
+            {
+                Task currentTask = empTasks.Where(x =>x.StartDate.HasValue && (x.StartDate.Value.Date == day.Date)).FirstOrDefault();
+                int hours = 0;
+                if (currentTask != null && currentTask.Estimation.HasValue)
+                {
+                    hours = currentTask.Estimation.Value;
+                }
+                Cell newcell = CreateNumberContentCell(hours, ref rowIndex, colIndex);
+                day = day.AddDays(1);
+                row.AppendChild(newcell);
+                total += hours;
+            }
+            string finish = ColumnLetter(rowIndex) + colIndex;
+
+            string Formula = "SUM(" + start + ":" + finish + ")";
+
+            Cell totalCell = CreateFormulaCell(Formula,total.ToString(), ref rowIndex, colIndex);
+            row.AppendChild(totalCell);
+
+
+            return row;
+        }
+
+        private static Cell CreateNumberContentCell(int value, ref int index, int colIndex)
+        {
+            Cell cell = new Cell();
+            cell.DataType = CellValues.Number;
+            // Column A1, 2, 3 ... and so on
+            cell.CellReference = ColumnLetter(++index) + colIndex;
+            // Create Text object
+            /*Text t = new Text();
+            t.Text = value;
+
+            // Append Text to InlineString object
+            InlineString inlineString = new InlineString();
+            inlineString.AppendChild(t);*/
+
+            // Append InlineString to Cell
+            cell.CellValue = new CellValue(value.ToString());
+            return cell;
         }
 
         private static Cell CreateCell(string value, ref int index, int colIndex)
@@ -192,6 +287,19 @@ namespace ResourceApplicationTool.Utils
             cell.AppendChild(inlineString);
             return cell;
         }
+        private static Cell CreateFormulaCell(string Formula, string value, ref int index, int colIndex)
+        {
+            Cell cell = new Cell() { CellReference = ColumnLetter(++index) + colIndex };
+            CellFormula cellformula = new CellFormula();
+            cellformula.Text = Formula;
+            CellValue cellValue = new CellValue();
+            cellValue.Text = value;
+            cell.Append(cellformula);
+            cell.Append(cellValue);
+
+            return cell;
+        }
+
         private static string ColumnLetter(int intCol)
         {
             var intFirstLetter = ((intCol) / 676) + 64;
