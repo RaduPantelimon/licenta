@@ -11,7 +11,6 @@ using System.Globalization;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Packaging;
 using System.IO;
 
 namespace ResourceApplicationTool.Utils
@@ -24,38 +23,7 @@ namespace ResourceApplicationTool.Utils
             Project project = db.Projects.Where(x => x.ProjectID == ProjectID).FirstOrDefault();
             if(project!= null)
             {
-                #region GetData
-                //getting the department
-                Department department = db.Departments.Where(x => x.DepartmentID == project.DepartmentID).FirstOrDefault();
                 
-                //setting the date interval for our Sprints
-                DateTime firstDayOfMonth = new DateTime(year, month, 1);
-                DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddTicks(-1);
-
-                while (firstDayOfMonth.DayOfWeek != DayOfWeek.Monday)
-                {
-                    firstDayOfMonth = firstDayOfMonth.AddDays(-1);
-                }
-                while(lastDayOfMonth.DayOfWeek!=DayOfWeek.Sunday)
-                {
-                    lastDayOfMonth = lastDayOfMonth.AddDays(1);
-                }
-
-                //GETTING SPRINTS + SPRINT IDS
-                List<Sprint> sprints = db.Sprints.Where(x => x.ProjectID == ProjectID &&
-                                                        (DbFunctions.TruncateTime(x.StartDate) >= firstDayOfMonth.Date && 
-                                                        DbFunctions.TruncateTime(x.EndDate) <= lastDayOfMonth.Date))
-                                                        .OrderBy(x => x.StartDate).ToList();
-                int[] sprintIds = new int[] { 0 };
-                if(sprints!= null && sprints.Count>0)
-                {
-                    sprintIds = sprints.Select(x => x.SprintID).ToArray();
-                }
-
-                //Getting Employees and Tasks
-                List<Employee> employees = db.Employees.Where(x => x.DepartmentID == department.DepartmentID).ToList();
-                List<Task> tasks = db.Tasks.Where(x => x.SprintID.HasValue && sprintIds.Contains(x.SprintID.Value)).ToList();
-                #endregion
 
 
                 #region GenerateDocument
@@ -69,73 +37,19 @@ namespace ResourceApplicationTool.Utils
                     stylePart.Stylesheet = GenerateStylesheet();
                     stylePart.Stylesheet.Save();
 
-                    var worksheetPart = workbookpart.AddNewPart<WorksheetPart>();
-                    var sheetData = new SheetData();
-
-
-
-                    worksheetPart.Worksheet = new Worksheet(sheetData);
+                    //var worksheetPart = workbookpart.AddNewPart<WorksheetPart>();
+                  
 
                     var sheets = document.WorkbookPart.Workbook.
                         AppendChild<Sheets>(new Sheets());
 
-                    var sheet = new Sheet()
-                    {
-                        Id = document.WorkbookPart
-                        .GetIdOfPart(worksheetPart),
-                        SheetId = 1,
-                        Name = "Sheet 1"
-                    };
-                    sheets.AppendChild(sheet);
 
-
-                    //create header rows
-                    DateTime monthDate = new DateTime(year, month, 1);
-
-                    List<string> MergeableRows = new List<string>();
-                    Row projectRow = CreateProjectRow(firstDayOfMonth, lastDayOfMonth, project, MergeableRows, monthDate, 1);
-                    Row sprintRow = CreateSprintRow(firstDayOfMonth,lastDayOfMonth,sprints, MergeableRows, 2);
-                    Row headerRow = CreateDatesRow(firstDayOfMonth, lastDayOfMonth, 3);
-
-                    sheetData.AppendChild(projectRow);
-                    sheetData.AppendChild(sprintRow);
-                    sheetData.AppendChild(headerRow);
-
-
-                    //Merging cells
-                    MergeCells mergeCells = new MergeCells();
-                    for (int i= 0;i<MergeableRows.Count;i+=2)
-                    {
-                        mergeCells.Append(new MergeCell() { Reference = new StringValue(MergeableRows[i] + ":" + MergeableRows[i+1]) });
-                    }
-
-                    //creating content rows
-                    int colIndex = 4;
-                    foreach (Employee emp in employees)
-                    {
-                        //creating row for this employee
-                        List<Task>  empTasks = tasks.Where(x => x.EmployeeID == emp.EmployeeID).ToList();
-                        Row row = CreateEmployeeRow(firstDayOfMonth, lastDayOfMonth, colIndex, emp, empTasks);
-                        sheetData.AppendChild(row);
-
-                        colIndex++;
-                    }
-
-
-                    //set col width
-                    Columns columns = new Columns();
-                    columns.Append(new Column() { Min = 1, Max = 1, Width = 20, CustomWidth = true });
-                    columns.Append(new Column() { Min = 2, Max = 100, Width = 12, CustomWidth = true });
-                    worksheetPart.Worksheet.Append(columns);
-
-                    //merging cells
-                    worksheetPart.Worksheet.InsertAfter(mergeCells, worksheetPart.Worksheet.Elements<SheetData>().First());
-
+                    CreateProjectSheet(document, workbookpart, sheets, ProjectID, month, year, db);
 
 
 
                     //save data
-                    worksheetPart.Worksheet.Save();
+                    //worksheetPart.Worksheet.Save();
                     document.Close();
                 }
 
@@ -143,6 +57,158 @@ namespace ResourceApplicationTool.Utils
                 #endregion
             }
             return result;
+        }
+
+        public static byte[] GenerateExcelReportForDepartment(int DepartmentID, int month, int year, RATV3Entities db)
+        {
+            byte[] result = new byte[0];
+            Department department = db.Departments.Where(x => x.DepartmentID == DepartmentID).FirstOrDefault();
+            if (department != null)
+            {
+
+
+
+                #region GenerateDocument
+                MemoryStream memoryStream = new MemoryStream();
+                using (SpreadsheetDocument document = SpreadsheetDocument.Create(memoryStream, SpreadsheetDocumentType.Workbook))
+                {
+                    var workbookpart = document.AddWorkbookPart();
+                    workbookpart.Workbook = new Workbook();
+                    //add Style
+                    WorkbookStylesPart stylePart = workbookpart.AddNewPart<WorkbookStylesPart>();
+                    stylePart.Stylesheet = GenerateStylesheet();
+                    stylePart.Stylesheet.Save();
+
+                    
+
+
+                    var sheets = document.WorkbookPart.Workbook.
+                        AppendChild<Sheets>(new Sheets());
+
+                    uint sheetID = 1;
+
+                    foreach(Project projectID in department.Projects)
+                    {
+                        CreateProjectSheet(document, workbookpart, sheets, projectID.ProjectID, month, year, db, sheetID);
+                        sheetID++;
+                    }
+                    
+                    //save data
+                   
+                    document.Close();
+                }
+
+                result = memoryStream.ToArray();
+                #endregion
+            }
+            return result;
+        }
+
+
+        private static Sheet CreateProjectSheet(SpreadsheetDocument document,
+            WorkbookPart workbookpart,
+            Sheets sheets, 
+            int ProjectID, 
+            int month, 
+            int year, 
+            RATV3Entities db,
+            uint sheetID = 1)
+        {
+            #region GetData
+            //getting the department
+            Project project = db.Projects.Where(x => x.ProjectID == ProjectID).FirstOrDefault();
+            Department department = db.Departments.Where(x => x.DepartmentID == project.DepartmentID).FirstOrDefault();
+
+            //setting the date interval for our Sprints
+            DateTime firstDayOfMonth = new DateTime(year, month, 1);
+            DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddTicks(-1);
+
+            while (firstDayOfMonth.DayOfWeek != DayOfWeek.Monday)
+            {
+                firstDayOfMonth = firstDayOfMonth.AddDays(-1);
+            }
+            while (lastDayOfMonth.DayOfWeek != DayOfWeek.Sunday)
+            {
+                lastDayOfMonth = lastDayOfMonth.AddDays(1);
+            }
+
+            //GETTING SPRINTS + SPRINT IDS
+            List<Sprint> sprints = db.Sprints.Where(x => x.ProjectID == ProjectID &&
+                                                    (DbFunctions.TruncateTime(x.StartDate) >= firstDayOfMonth.Date &&
+                                                    DbFunctions.TruncateTime(x.EndDate) <= lastDayOfMonth.Date))
+                                                    .OrderBy(x => x.StartDate).ToList();
+            int[] sprintIds = new int[] { 0 };
+            if (sprints != null && sprints.Count > 0)
+            {
+                sprintIds = sprints.Select(x => x.SprintID).ToArray();
+            }
+
+            //Getting Employees and Tasks
+            List<Employee> employees = db.Employees.Where(x => x.DepartmentID == department.DepartmentID).ToList();
+            List<Task> tasks = db.Tasks.Where(x => x.SprintID.HasValue && sprintIds.Contains(x.SprintID.Value)).ToList();
+            #endregion
+
+            WorksheetPart newWorksheetPart = document.WorkbookPart.AddNewPart<WorksheetPart>();
+
+            string relationshipId = document.WorkbookPart.GetIdOfPart(newWorksheetPart);
+            var sheet = new Sheet()
+            {
+                Id = relationshipId,
+                SheetId = sheetID,
+                Name = project.Title
+            };
+            sheets.AppendChild(sheet);
+
+            var sheetData = new SheetData();
+
+
+
+            newWorksheetPart.Worksheet = new Worksheet(sheetData);
+
+            //create header rows
+            DateTime monthDate = new DateTime(year, month, 1);
+
+            List<string> MergeableRows = new List<string>();
+            Row projectRow = CreateProjectRow(firstDayOfMonth, lastDayOfMonth, project, MergeableRows, monthDate, 1);
+            Row sprintRow = CreateSprintRow(firstDayOfMonth, lastDayOfMonth, sprints, MergeableRows, 2);
+            Row headerRow = CreateDatesRow(firstDayOfMonth, lastDayOfMonth, 3);
+
+            sheetData.AppendChild(projectRow);
+            sheetData.AppendChild(sprintRow);
+            sheetData.AppendChild(headerRow);
+
+
+            //Merging cells
+            MergeCells mergeCells = new MergeCells();
+            for (int i = 0; i < MergeableRows.Count; i += 2)
+            {
+                mergeCells.Append(new MergeCell() { Reference = new StringValue(MergeableRows[i] + ":" + MergeableRows[i + 1]) });
+            }
+
+            //creating content rows
+            int colIndex = 4;
+            foreach (Employee emp in employees)
+            {
+                //creating row for this employee
+                List<Task> empTasks = tasks.Where(x => x.EmployeeID == emp.EmployeeID).ToList();
+                Row row = CreateEmployeeRow(firstDayOfMonth, lastDayOfMonth, colIndex, emp, empTasks);
+                sheetData.AppendChild(row);
+
+                colIndex++;
+            }
+
+
+            //set col width
+            Columns columns = new Columns();
+            columns.Append(new Column() { Min = 1, Max = 1, Width = 20, CustomWidth = true });
+            columns.Append(new Column() { Min = 2, Max = 100, Width = 12, CustomWidth = true });
+            newWorksheetPart.Worksheet.Append(columns);
+
+            //merging cells
+            newWorksheetPart.Worksheet.InsertAfter(mergeCells, newWorksheetPart.Worksheet.Elements<SheetData>().First());
+
+            newWorksheetPart.Worksheet.Save();
+            return sheet;
         }
 
         private static Row CreateSprintRow(DateTime firstDayOfMonth,DateTime lastDayOfMonth, List<Sprint> sprints,List<string> mergeableRows, int rowIndex)

@@ -229,5 +229,29 @@ namespace ResourceApplicationTool.Controllers
             }
             return null;
         }
+
+
+        public ActionResult GenerateMonthlyReport(int departmentID, int month, int year)
+        {
+            try
+            {
+                HttpContext.Response.Clear();
+                HttpContext.Response.ContentType = "application/ms-excel";
+                HttpContext.Response.AddHeader("Content-Disposition",
+                "attachment; filename=" + "Report.xlsx" + ";");
+                byte[] array = Utils.ExcelReportGenerator.GenerateExcelReportForDepartment(departmentID, month, year, db);
+
+                HttpContext.Response.OutputStream.Write(array, 0, array.Length);
+                HttpContext.Response.End();
+            }
+            catch (Exception ex)
+            {
+                //error handling
+            }
+
+            return View();
+        }
+
+
     }
 }
