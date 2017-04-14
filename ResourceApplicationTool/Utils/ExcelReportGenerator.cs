@@ -167,7 +167,9 @@ namespace ResourceApplicationTool.Utils
                 }
                 else if(dt.DayOfWeek == DayOfWeek.Monday)
                 {
-                    text += "(Empty Weeek)";
+                    text += "(Empty Week)";
+                    mergeableRows.Add(ColumnLetter(index + 1) + rowIndex);
+                    ++weekCount;
                 }
 
                 if(dt.DayOfWeek == DayOfWeek.Sunday)
