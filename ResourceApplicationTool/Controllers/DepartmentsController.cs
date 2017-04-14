@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using ResourceApplicationTool.Models;
 using ResourceApplicationTool.Utils;
+using System.Globalization;
 
 namespace ResourceApplicationTool.Controllers
 {
@@ -48,8 +49,12 @@ namespace ResourceApplicationTool.Controllers
             {
                 return HttpNotFound();
             }
+
+            //adding months to viewbag
+            ViewBag.months = Months();
+
             //department.File = db.Files.ToList().First();
-          
+
             string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
             Request.ApplicationPath.TrimEnd('/') + "/";
             ViewBag.baseUrl = baseUrl;
@@ -251,7 +256,18 @@ namespace ResourceApplicationTool.Controllers
 
             return View();
         }
+        public IEnumerable<SelectListItem> Months()
+        {
+            return DateTimeFormatInfo
+                   .InvariantInfo
+                   .MonthNames
+                   .Select((monthName, index) => new SelectListItem
+                   {
+                       Value = (index + 1).ToString(),
+                       Text = monthName
+                   });
 
+        }
 
     }
 }
