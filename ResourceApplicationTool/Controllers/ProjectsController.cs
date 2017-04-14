@@ -161,7 +161,7 @@ namespace ResourceApplicationTool.Controllers
             }
             catch (Exception ex)
             {
-
+                //error handling
             }
 
             return View();
