@@ -19,8 +19,12 @@ namespace Models.Models
         public List<Claim> GetClaims(ClaimsPrincipal principal)
         {
             //getting the claims for the token created by the sts
-            List<Claim> claims = new List<Claim>() { new Claim(System.IdentityModel.Claims.ClaimTypes.Name, principal.Identity.Name),
-                new Claim(System.IdentityModel.Claims.ClaimTypes.NameIdentifier, principal.Identity.Name),
+            List<Claim> claims = new List<Claim>() {
+                new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", Email),
+                new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", Email),
+                new Claim("'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress",Email),
+                new Claim(System.IdentityModel.Claims.ClaimTypes.Name, Email),
+                //new Claim(System.IdentityModel.Claims.ClaimTypes.NameIdentifier, Email),
                 new Claim(Const.CLAIM.CLAIM_NAMESPACE + "/" + "Email", Email) ,
                 new Claim(Const.CLAIM.CLAIM_NAMESPACE + "/" + "PhoneNumber",PhoneNumber),
                 new Claim(Const.CLAIM.CLAIM_NAMESPACE + "/" + Const.Fields.EMPLOYEE_ROLE_ID, ManagerID.ToString()),

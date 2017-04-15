@@ -5,6 +5,10 @@ using System.Web;
 using System.Web.Mvc;
 using ResourceApplicationTool.Models;
 using ResourceApplicationTool.Models.ControllerModels;
+
+using System.IdentityModel.Services;
+using System.IdentityModel.Services.Configuration;
+
 namespace ResourceApplicationTool.Controllers
 {
     public class HomeController : Controller
