@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e33cf2c51a28475c92960784e55894b3" Name="Diagram1">
+        <EntityTypeShape EntityType="RATV3Model.Contact" Width="1.5" PointX="9.125" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RATV3Model.Department" Width="1.5" PointX="5.5" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RATV3Model.Education" Width="1.5" PointX="2.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RATV3Model.Employee" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RATV3Model.File" Width="1.5" PointX="0.5" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RATV3Model.Project" Width="1.5" PointX="9" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RATV3Model.Role" Width="1.5" PointX="5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RATV3Model.SkillCategory" Width="1.5" PointX="6.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RATV3Model.SkillLevel" Width="1.5" PointX="12.875" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RATV3Model.Skill" Width="1.5" PointX="10" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RATV3Model.Sprint" Width="1.5" PointX="11.125" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RATV3Model.Task" Width="1.5" PointX="13.25" PointY="4.5" IsExpanded="true" />
+        <AssociationConnector Association="RATV3Model.FK_ContactID" ManuallyRouted="false" />
+        <AssociationConnector Association="RATV3Model.FK_BannerID" ManuallyRouted="false" />
+        <AssociationConnector Association="RATV3Model.FK_DepartmentID" ManuallyRouted="false" />
+        <AssociationConnector Association="RATV3Model.FK_DepartmentIDProject" ManuallyRouted="false" />
+        <AssociationConnector Association="RATV3Model.FK_MainImageID" ManuallyRouted="false" />
+        <AssociationConnector Association="RATV3Model.FK_EmployeeID" ManuallyRouted="false" />
+        <AssociationConnector Association="RATV3Model.FK_Employee1ID" ManuallyRouted="false" />
+        <AssociationConnector Association="RATV3Model.FK_EmployeeIDTasks" ManuallyRouted="false" />
+        <AssociationConnector Association="RATV3Model.FK_ManagerID" ManuallyRouted="false" />
+        <AssociationConnector Association="RATV3Model.fk_ProfileImageID" ManuallyRouted="false" />
+        <AssociationConnector Association="RATV3Model.FK_RoleID" ManuallyRouted="false" />
+        <AssociationConnector Association="RATV3Model.FK_ProjectID" ManuallyRouted="false" />
+        <AssociationConnector Association="RATV3Model.FK_RoleIDTasks" ManuallyRouted="false" />
+        <AssociationConnector Association="RATV3Model.FK_CategoryID" ManuallyRouted="false" />
+        <AssociationConnector Association="RATV3Model.FK_SkillID" ManuallyRouted="false" />
+        <AssociationConnector Association="RATV3Model.FK_SprintID" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

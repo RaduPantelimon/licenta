@@ -5,7 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-
+using Models.Models;
+using Models.Utils;
 namespace SingleSignOn.Controllers
 {
     public class LoginController : Controller
@@ -22,7 +23,8 @@ namespace SingleSignOn.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (loginModel.Username == "user" && loginModel.Password == "password")
+                Employee emp = Authentication.GetEmployee(loginModel.Username, loginModel.Password);
+                if (emp!=null)
                 {
                     FormsAuthentication.SetAuthCookie(loginModel.Username, true);
                     return Redirect(returnUrl);

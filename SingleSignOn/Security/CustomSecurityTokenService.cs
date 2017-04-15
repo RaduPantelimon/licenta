@@ -8,6 +8,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 
+using System.Collections;
+using Models.Utils;
+using Models.Models;
+using System.Collections.Generic;
+
 namespace SingleSignOn.Security
 {
     public class CustomSecurityTokenService : SecurityTokenService
@@ -66,13 +71,9 @@ namespace SingleSignOn.Security
 
         protected override ClaimsIdentity GetOutputClaimsIdentity(ClaimsPrincipal principal, RequestSecurityToken request, Scope scope)
         {
-            var claims = new[]
-                {
-                    new Claim(System.IdentityModel.Claims.ClaimTypes.Name, principal.Identity.Name),
-                    new Claim(System.IdentityModel.Claims.ClaimTypes.NameIdentifier, principal.Identity.Name),
-                };
-
-            var identity = new ClaimsIdentity(claims);
+            Employee currentEmployee = Authentication.GetEmployee(principal.Identity.Name);
+            List<Claim> claims = currentEmployee.GetClaims(principal);
+            var identity = new ClaimsIdentity(claims.ToArray());
 
             return identity;
         }

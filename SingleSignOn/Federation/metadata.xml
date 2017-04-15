@@ -5,7 +5,8 @@
     <KeyDescriptor use="signing">
       <KeyInfo xmlns="http://www.w3.org/2000/09/xmldsig#">
         <X509Data>
-          <X509Certificate>MIIEvDCCAqSgAwIBAgIQc17AK42lHYJOeArjt4jzMTANBgkqhkiG9w0BAQUFADAa
+          <X509Certificate>
+            MIIEvDCCAqSgAwIBAgIQc17AK42lHYJOeArjt4jzMTANBgkqhkiG9w0BAQUFADAa
             MRgwFgYDVQQDEw9sb2NhbGhvc3Q6MjQ5ODMwHhcNMTYxMDAxMjEwMDAwWhcNMjYx
             MDA4MjEwMDAwWjAaMRgwFgYDVQQDEw9sb2NhbGhvc3Q6MjQ5ODMwggIiMA0GCSqG
             SIb3DQEBAQUAA4ICDwAwggIKAoICAQDNb3Ku9B6VlHpyhjLo0PtDuK0Usd8g1RD0
@@ -30,7 +31,8 @@
             Mho2GBe6BVanxU3g/v3916CLnW8lLBMfV95+ydReVuPXTXXobDv4mhrx4tcC+jEb
             RbB7YV19cYhjRlnJC38j1OezDLYjmze2+4TYinG2Evg2OLlPFkpEsB9eHO9jCB7g
             HFtlPymFzRJdN/uvDh/Du/ZzyQYLrUyemmdOFi4pVZ/k0FmPGa8MB2IBwWnmsAJO
-            b7VTVSm0eoAFOUuZJxlI9w==</X509Certificate>
+            b7VTVSm0eoAFOUuZJxlI9w==
+          </X509Certificate>
         </X509Data>
       </KeyInfo>
     </KeyDescriptor>
