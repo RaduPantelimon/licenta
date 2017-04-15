@@ -11,7 +11,7 @@ namespace Models.Utils
         public partial class CLAIM
         {
             //Employees
-            public static string CLAIM_NAMESPACE = "tractoarepebune";
+            public static string CLAIM_NAMESPACE = "resourceallocationtool";
             public static string USER_ACCOUNT = "UserAccount";
             public static string USER_ID = "UserID";
             public static string USER_ACCESS_LEVEL = "UserAccessLevel";

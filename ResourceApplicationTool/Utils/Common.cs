@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using ResourceApplicationTool.Models;
 using System.IO;
-
+using System.Security.Principal;
 namespace ResourceApplicationTool.Utils
 {
     public class Common
@@ -114,6 +114,26 @@ namespace ResourceApplicationTool.Utils
             {
                 //error handling
             }
+        }
+
+        public static bool CheckDepartmentAuthentication(HttpSessionStateBase Session, IPrincipal User, Department department)
+        {
+            //we check if the user is either an administrator or a manager for the department
+            bool isValid = false;
+            if (User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ID] != null)
+            {
+                int empID = Convert.ToInt32(Session[Const.CLAIM.USER_ID]);
+                Employee emp = db.Employees.Where(x => x.EmployeeID == empID).FirstOrDefault();
+                if (emp != null &&
+                    (emp.Administrator == Const.PermissionLevels.Administrator ||
+                    (emp.DepartmentID == department.DepartmentID && emp.Administrator == Const.PermissionLevels.Manager)))
+                {
+                     isValid = true;
+
+                }
+            }
+
+            return isValid;
         }
     }
 }

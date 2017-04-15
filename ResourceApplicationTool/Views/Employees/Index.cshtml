@@ -18,7 +18,12 @@
 
     <div class="text-info">
         <h2 class="sec-title-huge sec-title departments-title">Employees</h2>
-        @Html.ActionLink("Add New", "Create", null, new { @class = "btn-primary add-new-button" })
+        @if (User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                                    && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                                    && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
+        {
+            @Html.ActionLink("Add New", "Create", null, new { @class = "btn-primary add-new-button" })
+        }
     </div>
     <hr class="sec-hr title-hr" />
 

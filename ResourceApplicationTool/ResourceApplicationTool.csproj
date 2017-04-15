@@ -560,6 +560,8 @@
     <Content Include="Views\Search\PagedDepartments.cshtml" />
     <Content Include="Views\Search\PagedProjects.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Login\UserProfile.cshtml" />
+    <Content Include="Views\Home\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Temp\" />

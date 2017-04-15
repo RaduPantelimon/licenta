@@ -27,12 +27,23 @@
             <h4 class="sec-title-large sec-title"> @Model.FirstName @Model.LastName </h4>
             <h5 class="sec-title-small sec-title sec-title-italic"> @ViewBag.RoleName </h5>
 
-            <!--<label for="uploadProfilePicture" class="btn btn-default">
-                Upload Profile Picture
-                <input type="file" id="uploadProfilePicture" name="uploadProfilePicture" class="picture-input" />
-            </label>-->
-            @Html.ActionLink("Edit", "Edit", new { @id = Model.EmployeeID }, new { @class = "btn-primary edit-department-button", @id = Model.DepartmentID })
-            @Html.ActionLink("Delete", "Delete", new { @id = Model.EmployeeID }, new { @class = "btn-danger edit-department-button", @id = Model.DepartmentID })
+           @if (User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                 &&( 
+                 (Session[Const.CLAIM.USER_ACCESS_LEVEL] != null && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
+                 || (Session[Const.CLAIM.USER_ID] != null && (Session[Const.CLAIM.USER_ID].ToString() == Model.EmployeeID.ToString() ||
+                    Session[Const.CLAIM.USER_ID].ToString() == Model.ManagerID.ToString() ))
+           ))
+           {
+                @Html.ActionLink("Edit", "Edit", new { @id = Model.EmployeeID }, new { @class = "btn-primary edit-department-button", @id = Model.DepartmentID })
+           }
+                
+            @if (User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null 
+                && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
+            {
+                @Html.ActionLink("Delete", "Delete", new { @id = Model.EmployeeID }, new { @class = "btn-danger edit-department-button", @id = Model.DepartmentID })
+            }
+           
         </div>
     </div>
     <div class="main_expandable">
@@ -88,23 +99,21 @@
                     @Html.DisplayFor(model => model.LastName)
                 </div>
             </div>
-
-            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
-                    @Html.DisplayNameFor(model => model.Title)
+            @if (User.Identity.IsAuthenticated && ((Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                                                && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                                                && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator) ||
+                                                (Session[Const.CLAIM.USER_ID].ToString() == Model.EmployeeID.ToString())))
+            {
+                //we can view the CNP only if we are this user or an Admin
+                <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                    <div class="field-name col-md-3 col-sm-3 control-label">
+                        @Html.DisplayNameFor(model => model.CNP)
+                    </div>
+                    <div class="col-md-9 col-sm-9 control-label">
+                        @Html.DisplayFor(model => model.CNP)
+                    </div>
                 </div>
-                <div class="col-md-9 col-sm-9 control-label">
-                    @Html.DisplayFor(model => model.Title)
-                </div>
-            </div>
-            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
-                    @Html.DisplayNameFor(model => model.CNP)
-                </div>
-                <div class="col-md-9 col-sm-9 control-label">
-                    @Html.DisplayFor(model => model.CNP)
-                </div>
-            </div>
+            }
         </div>
     </div>
     <div class="main_expandable">

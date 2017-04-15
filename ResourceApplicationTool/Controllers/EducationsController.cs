@@ -78,6 +78,19 @@ namespace ResourceApplicationTool.Controllers
         {
             if (ModelState.IsValid)
             {
+                Employee emp = db.Employees.Where(x => x.EmployeeID == education.EmployeeID).FirstOrDefault();
+
+                if(emp == null || !(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                         && (
+                         (Session[Const.CLAIM.USER_ACCESS_LEVEL] != null && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
+                         || (Session[Const.CLAIM.USER_ID] != null && (Session[Const.CLAIM.USER_ID].ToString() == emp.EmployeeID.ToString() ||
+                            Session[Const.CLAIM.USER_ID].ToString() == emp.ManagerID.ToString()))
+                   )))
+                {
+                    //only the manager of the employee/ the employee or an admin can perform this action
+                    return RedirectToAction("NotFound", "Home");
+                }
+
                 db.Educations.Add(education);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -109,6 +122,20 @@ namespace ResourceApplicationTool.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Education education = db.Educations.Find(id);
+
+            Employee emp = db.Employees.Where(x => x.EmployeeID == education.EmployeeID).FirstOrDefault();
+
+            if (emp == null || !(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                     && (
+                     (Session[Const.CLAIM.USER_ACCESS_LEVEL] != null && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
+                     || (Session[Const.CLAIM.USER_ID] != null && (Session[Const.CLAIM.USER_ID].ToString() == emp.EmployeeID.ToString() ||
+                        Session[Const.CLAIM.USER_ID].ToString() == emp.ManagerID.ToString()))
+               )))
+            {
+                //only the manager of the employee/ the employee or an admin can perform this action
+                return RedirectToAction("NotFound", "Home");
+            }
+
             if (education == null)
             {
                 return HttpNotFound();
@@ -126,6 +153,19 @@ namespace ResourceApplicationTool.Controllers
         {
             if (ModelState.IsValid)
             {
+                Employee emp = db.Employees.Where(x => x.EmployeeID == education.EmployeeID).FirstOrDefault();
+
+                if (emp == null || !(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                         && (
+                         (Session[Const.CLAIM.USER_ACCESS_LEVEL] != null && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
+                         || (Session[Const.CLAIM.USER_ID] != null && (Session[Const.CLAIM.USER_ID].ToString() == emp.EmployeeID.ToString() ||
+                            Session[Const.CLAIM.USER_ID].ToString() == emp.ManagerID.ToString()))
+                   )))
+                {
+                    //only the manager of the employee/ the employee or an admin can perform this action
+                    return RedirectToAction("NotFound", "Home");
+                }
+
                 db.Entry(education).State = EntityState.Modified;
                 db.Entry(education).Property(x => x.EmployeeID).IsModified = false;
                 db.Entry(education).Property(x => x.Duration).IsModified = false;
@@ -155,6 +195,20 @@ namespace ResourceApplicationTool.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Education education = db.Educations.Find(id);
+
+            Employee emp = db.Employees.Where(x => x.EmployeeID == education.EmployeeID).FirstOrDefault();
+
+            if (emp == null || !(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                     && (
+                     (Session[Const.CLAIM.USER_ACCESS_LEVEL] != null && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
+                     || (Session[Const.CLAIM.USER_ID] != null && (Session[Const.CLAIM.USER_ID].ToString() == emp.EmployeeID.ToString() ||
+                        Session[Const.CLAIM.USER_ID].ToString() == emp.ManagerID.ToString()))
+               )))
+            {
+                //only the manager of the employee/ the employee or an admin can perform this action
+                return RedirectToAction("NotFound", "Home");
+            }
+
             if (education == null)
             {
                 return HttpNotFound();
@@ -168,6 +222,20 @@ namespace ResourceApplicationTool.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Education education = db.Educations.Find(id);
+
+            Employee emp = db.Employees.Where(x => x.EmployeeID == education.EmployeeID).FirstOrDefault();
+
+            if (emp == null || !(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                     && (
+                     (Session[Const.CLAIM.USER_ACCESS_LEVEL] != null && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
+                     || (Session[Const.CLAIM.USER_ID] != null && (Session[Const.CLAIM.USER_ID].ToString() == emp.EmployeeID.ToString() ||
+                        Session[Const.CLAIM.USER_ID].ToString() == emp.ManagerID.ToString()))
+               )))
+            {
+                //only the manager of the employee/ the employee or an admin can perform this action
+                return RedirectToAction("NotFound", "Home");
+            }
+
             db.Educations.Remove(education);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -193,8 +261,23 @@ namespace ResourceApplicationTool.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    Employee emp = db.Employees.Where(x => x.EmployeeID == education.EmployeeID).FirstOrDefault();
+
+                    if (emp == null || !(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                             && (
+                             (Session[Const.CLAIM.USER_ACCESS_LEVEL] != null && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
+                             || (Session[Const.CLAIM.USER_ID] != null && (Session[Const.CLAIM.USER_ID].ToString() == emp.EmployeeID.ToString() ||
+                                Session[Const.CLAIM.USER_ID].ToString() == emp.ManagerID.ToString()))
+                       )))
+                    {
+                        //only the manager of the employee/ the employee or an admin can perform this action
+                        return Json(new { status = "0", statusMessage = "You do not have the necessary permissions to create this item" });
+                    }
+
                     db.Educations.Add(education);
                     db.SaveChanges();
+
+                    education.Employee = null;
                     jsonResponseText = JsonConvert.SerializeObject(education);
                     return Json(education);
                 }
@@ -218,6 +301,20 @@ namespace ResourceApplicationTool.Controllers
             try
             {
                 Education education = db.Educations.Find(id);
+
+                Employee emp = db.Employees.Where(x => x.EmployeeID == education.EmployeeID).FirstOrDefault();
+
+                if (emp == null || !(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                         && (
+                         (Session[Const.CLAIM.USER_ACCESS_LEVEL] != null && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
+                         || (Session[Const.CLAIM.USER_ID] != null && (Session[Const.CLAIM.USER_ID].ToString() == emp.EmployeeID.ToString() ||
+                            Session[Const.CLAIM.USER_ID].ToString() == emp.ManagerID.ToString()))
+                   )))
+                {
+                    //only the manager of the employee/ the employee or an admin can perform this action
+                    return Json(new { status = "0", statusMessage = "You do not have the necessary permissions to delete this item" });
+                }
+
                 db.Educations.Remove(education);
                 db.SaveChanges();
                 return Json(new { status = "1", statusMessage = "The item was successfully deleted." });
@@ -235,6 +332,14 @@ namespace ResourceApplicationTool.Controllers
             string jsonResponseText = "";
             try
             {
+                
+
+                if (!(User.Identity.IsAuthenticated))
+                {
+                    //only the manager of the employee/ the employee or an admin can perform this action
+                    return Json(new { status = "0", statusMessage = "You do not have the necessary permissions to edit this item" });
+                }
+
                 if (ModelState.IsValid)
                 {
                     db.Entry(education).State = EntityState.Modified;
@@ -242,6 +347,7 @@ namespace ResourceApplicationTool.Controllers
                     db.Entry(education).Property(x => x.Duration).IsModified = false;
                     db.SaveChanges();
                     jsonResponseText = JsonConvert.SerializeObject(education);
+                    education.Employee = null;
                     return Json(education);
                 }
                 

@@ -12,7 +12,7 @@ namespace ResourceApplicationTool.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
+    using Newtonsoft.Json;
 
     public partial class Education
     {
@@ -25,7 +25,7 @@ namespace ResourceApplicationTool.Models
         public string Degree { get; set; }
         public int EmployeeID { get; set; }
         public Nullable<int> Duration { get; set; }
-    
+        [JsonIgnore]
         public virtual Employee Employee { get; set; }
     }
 }

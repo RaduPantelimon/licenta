@@ -94,155 +94,156 @@
                             @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
                         </div>
                     </div>
-
-                    <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                        <div class="col-md-9 col-sm-9">
-                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    @if (User.Identity.IsAuthenticated 
+                        && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                        && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
+                    {
+                        //only the administrator can change the CNP
+                        <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            @Html.LabelFor(model => model.CNP, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
+                            <div class="col-md-9 col-sm-9">
+                                @Html.EditorFor(model => model.CNP, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CNP, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                        @Html.LabelFor(model => model.CNP, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                        <div class="col-md-9 col-sm-9">
-                            @Html.EditorFor(model => model.CNP, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.CNP, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
-            <div class="main_expandable" >
-                <div class="tvd-sub-header" >
-                    <table>
-                        <tr>
-                            <td>
-                                <a class="main_expand_collapse">
-                                    <img class="expandimg" src="~/Content/Pictures/expand-sign.png" title="expand" height="18" width="18" align="absbottom" style="display: none;">
-                                    <img class="collapseimg" src="~/Content/Pictures/collapse-sign.png" title="collapse" height="18" width="18" align="absbottom" style="display: inline;">
-                                </a>
-                            </td>
-                            <td>
-                                <h1 class="sec-title-large sec-title" data-scrollname="Projects" style="display: inline; bottom: 0px;">
-                                    Organizational Information
-                                </h1>
-                            </td>
-                        </tr>
-                    </table>
+            @if (User.Identity.IsAuthenticated && ((Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                                                                            && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                                                                            && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator) ||
+                                                                            (Session[Const.CLAIM.USER_ID].ToString() == Model.ManagerID.ToString())))
+            {
+                //only the Manager or an Admin can change these settings
+                <div class="main_expandable" >
+                    <div class="tvd-sub-header" >
+                        <table>
+                            <tr>
+                                <td>
+                                    <a class="main_expand_collapse">
+                                        <img class="expandimg" src="~/Content/Pictures/expand-sign.png" title="expand" height="18" width="18" align="absbottom" style="display: none;">
+                                        <img class="collapseimg" src="~/Content/Pictures/collapse-sign.png" title="collapse" height="18" width="18" align="absbottom" style="display: inline;">
+                                    </a>
+                                </td>
+                                <td>
+                                    <h1 class="sec-title-large sec-title" data-scrollname="Projects" style="display: inline; bottom: 0px;">
+                                        Organizational Information
+                                    </h1>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="row expandable-content">
+                        <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            @Html.LabelFor(model => model.RoleID, "Role", htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
+                            <div class="col-md-9 col-sm-9">
+                                @Html.DropDownList("RoleID", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.RoleID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            @Html.LabelFor(model => model.ManagerID, "Manager", htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
+                            <div class="col-md-9 col-sm-9">
+                                @Html.DropDownList("ManagerID", null, htmlAttributes: new { @class = "form-control", @id = "managers-input" })
+                                @Html.ValidationMessageFor(model => model.ManagerID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            @Html.LabelFor(model => model.DepartmentID, "Department", htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
+                            <div class="col-md-9 col-sm-9">
+                                @Html.DropDownList("DepartmentID", null, htmlAttributes: new { @class = "form-control", @id = "departments-input" })
+                                @Html.ValidationMessageFor(model => model.DepartmentID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            @Html.LabelFor(model => model.Salary, htmlAttributes: new { @class = "control-label  col-md-3 col-sm-3" })
+                            <div class="col-md-9 col-sm-9">
+                                @Html.EditorFor(model => model.Salary, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Salary, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="row expandable-content">
-                    <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                        @Html.LabelFor(model => model.RoleID, "Role", htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                        <div class="col-md-9 col-sm-9">
-                            @Html.DropDownList("RoleID", null, htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.RoleID, "", new { @class = "text-danger" })
-                        </div>
+                <div class="main_expandable">
+                    <div class="tvd-sub-header" >
+                        <table>
+                            <tr>
+                                <td>
+                                    <a class="main_expand_collapse">
+                                        <img class="expandimg" src="~/Content/Pictures/expand-sign.png" title="expand" height="18" width="18" align="absbottom" style="display: none;">
+                                        <img class="collapseimg" src="~/Content/Pictures/collapse-sign.png" title="collapse" height="18" width="18" align="absbottom" style="display: inline;">
+                                    </a>
+                                </td>
+                                <td>
+                                    <h1 class="sec-title-large sec-title" data-scrollname="Projects" style="display: inline; bottom: 0px;">
+                                        Contact Information and Other
+                                    </h1>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                    <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                        @Html.LabelFor(model => model.ManagerID, "Manager", htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                        <div class="col-md-9 col-sm-9">
-                            @Html.DropDownList("ManagerID", null, htmlAttributes: new { @class = "form-control", @id = "managers-input" })
-                            @Html.ValidationMessageFor(model => model.ManagerID, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                        @Html.LabelFor(model => model.DepartmentID, "Department", htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                        <div class="col-md-9 col-sm-9">
-                            @Html.DropDownList("DepartmentID", null, htmlAttributes: new { @class = "form-control", @id = "departments-input" })
-                            @Html.ValidationMessageFor(model => model.DepartmentID, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                        @Html.LabelFor(model => model.Salary, htmlAttributes: new { @class = "control-label  col-md-3 col-sm-3" })
-                        <div class="col-md-9 col-sm-9">
-                            @Html.EditorFor(model => model.Salary, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Salary, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="main_expandable">
-                <div class="tvd-sub-header" >
-                    <table>
-                        <tr>
-                            <td>
-                                <a class="main_expand_collapse">
-                                    <img class="expandimg" src="~/Content/Pictures/expand-sign.png" title="expand" height="18" width="18" align="absbottom" style="display: none;">
-                                    <img class="collapseimg" src="~/Content/Pictures/collapse-sign.png" title="collapse" height="18" width="18" align="absbottom" style="display: inline;">
-                                </a>
-                            </td>
-                            <td>
-                                <h1 class="sec-title-large sec-title" data-scrollname="Projects" style="display: inline; bottom: 0px;">
-                                    Contact Information and Other
-                                </h1>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="row expandable-content">
-                    <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                        <div class="col-md-9 col-sm-9">
-                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
+                    <div class="row expandable-content">
 
-                    <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                        <div class="col-md-9 col-sm-9">
-                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
+                            <div class="col-md-9 col-sm-9">
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                        @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                        <div class="col-md-9 col-sm-9">
-                            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                        <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
+                            <div class="col-md-9 col-sm-9">
+                                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                        @Html.LabelFor(model => model.HireDate, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                        <div class="col-md-9 col-sm-9">
-                            @Html.TextBoxFor(model => model.HireDate, new
+                        <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            @Html.LabelFor(model => model.HireDate, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
+                            <div class="col-md-9 col-sm-9">
+                                @Html.TextBoxFor(model => model.HireDate, new
                            {
                                @Value = Model.HireDate.ToString("MM/dd/yyyy"),
                                @class = "form-control",
                                @id = "hireDate-input",
                                @placeholder = "MM/DD/YYY"
                            })
-                            @Html.ValidationMessageFor(model => model.HireDate, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(model => model.HireDate, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                        @Html.LabelFor(model => model.TerminationDate, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                        <div class="col-md-9 col-sm-9">
-                            @Html.TextBoxFor(model => model.TerminationDate, new
-                   {
-                       @Value = Model.TerminationDate.HasValue ? Model.TerminationDate.Value.ToString("MM/dd/yyyy") : "",
-                       @class = "form-control",
-                       @id = "terminationDate-input",
-                       @placeholder = "MM/DD/YYY"
-                   })
-                            @Html.ValidationMessageFor(model => model.TerminationDate, "", new { @class = "text-danger" })
+                        <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            @Html.LabelFor(model => model.TerminationDate, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
+                            <div class="col-md-9 col-sm-9">
+                                @Html.TextBoxFor(model => model.TerminationDate, new
+                           {
+                               @Value = Model.TerminationDate.HasValue ? Model.TerminationDate.Value.ToString("MM/dd/yyyy") : "",
+                               @class = "form-control",
+                               @id = "terminationDate-input",
+                               @placeholder = "MM/DD/YYY"
+                           })
+                                @Html.ValidationMessageFor(model => model.TerminationDate, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
+                        @if (User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                                                            && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                                                            && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
+                        {
+                            //only admins can edit this field
 
-                    <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                        @Html.LabelFor(model => model.Administrator, "Permissions level", htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                        <div class="col-md-9 col-sm-9">
-                            @*@Html.EditorFor(model => model.Administrator, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Administrator, "", new { @class = "text-danger" })*@
-                            @Html.DropDownListFor(model => model.Administrator, Const.Permissions, new Dictionary<string, object> { { "class", "form-control" } })
-                            @*new { htmlAttributes = new { @class = "form-control" } })*@
-                            @Html.ValidationMessageFor(model => model.Administrator, "", new { @class = "text-danger" })
-                        </div>
+                            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                @Html.LabelFor(model => model.Administrator, "Permissions level", htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
+                                <div class="col-md-9 col-sm-9">
+                                    @Html.DropDownListFor(model => model.Administrator, Const.Permissions, new Dictionary<string, object> { { "class", "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Administrator, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
-            </div>
+            }
             <div class="main_expandable">
                 <div class="tvd-sub-header" >
                     <table>
@@ -358,7 +359,7 @@
                     </table>
                 </div>
                 <div class="row expandable-content">
-                   
+               
                     <button type="button" id='add-education' class="btn-primary education-button">Add Education</button>
                     <table id="educations-table" class="table table-striped table-bordered">
                         <thead>

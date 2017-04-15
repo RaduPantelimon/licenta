@@ -75,6 +75,13 @@ namespace ResourceApplicationTool.Controllers
         // GET: Employees/Create
         public ActionResult Create()
         {
+            //checking if we have the permission necessary to add a new user
+            if(!(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+            && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+            && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator))
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
 
             //initially the user will have the default profile picture
             string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
@@ -109,6 +116,15 @@ namespace ResourceApplicationTool.Controllers
         public ActionResult Create([Bind(Include = "EmployeeID,RoleID,Account,Password,ManagerID,DepartmentID,FirstName,MiddleInitial,LastName,Title,CNP,Email,PhoneNumber,Salary,PriorSalary,LastRaise,HireDate,TerminationDate,Administrator")] Employee employee,
              HttpPostedFileBase uploadProfilePicture)
         {
+            //checking if we have the permission necessary to add a new user
+            if (!(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+            && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+            && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator))
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+
+
             if (ModelState.IsValid)
             {
                 //saving the profile picture
@@ -139,11 +155,24 @@ namespace ResourceApplicationTool.Controllers
         // GET: Employees/Edit/5
         public ActionResult Edit(int? id)
         {
+           
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Employee employee = db.Employees.Include(e => e.Role).Include(e => e.Educations).SingleOrDefault(x => x.EmployeeID == id);
+
+            //checking if we have the permission necessary to add a new user
+            if (!(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                  && (
+                  (Session[Const.CLAIM.USER_ACCESS_LEVEL] != null && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
+                  || (Session[Const.CLAIM.USER_ID] != null && (Session[Const.CLAIM.USER_ID].ToString() == employee.EmployeeID.ToString() ||
+                     Session[Const.CLAIM.USER_ID].ToString() == employee.ManagerID.ToString())))
+            ))
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
 
             if (employee == null)
             {
@@ -210,6 +239,18 @@ namespace ResourceApplicationTool.Controllers
             if (ModelState.IsValid)
             {
 
+                //checking if we have the permission necessary to add a new user
+                if (!(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                      && (
+                      (Session[Const.CLAIM.USER_ACCESS_LEVEL] != null && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
+                      || (Session[Const.CLAIM.USER_ID] != null && (Session[Const.CLAIM.USER_ID].ToString() == employee.EmployeeID.ToString() ||
+                         Session[Const.CLAIM.USER_ID].ToString() == employee.ManagerID.ToString())))
+                ))
+                {
+                    return RedirectToAction("NotFound", "Home");
+                }
+
+
                 db.Entry(employee).State = EntityState.Modified;
                 if (uploadProfilePicture != null && uploadProfilePicture.ContentLength > 0)
                 {
@@ -228,6 +269,26 @@ namespace ResourceApplicationTool.Controllers
                     db.Entry(skLvl).State = EntityState.Modified;
                 }
 
+                //we will disable the properties that different users are not allowed to edit
+                if (Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() != Const.PermissionLevels.Administrator)
+                {
+                    db.Entry(employee).Property(X => X.CNP).IsModified = false;
+                    db.Entry(employee).Property(X => X.Administrator).IsModified = false;
+                }
+                if (Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() != Const.PermissionLevels.Manager && 
+                    Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() != Const.PermissionLevels.Administrator)
+                {
+                    //various info
+                    db.Entry(employee).Property(X => X.RoleID).IsModified = false;
+                    db.Entry(employee).Property(X => X.ManagerID).IsModified = false;
+                    db.Entry(employee).Property(X => X.DepartmentID).IsModified = false;
+                    db.Entry(employee).Property(X => X.Salary).IsModified = false;
+                    //contact
+                    db.Entry(employee).Property(X => X.Email).IsModified = false;
+                    db.Entry(employee).Property(X => X.PhoneNumber).IsModified = false;
+                    db.Entry(employee).Property(X => X.HireDate).IsModified = false;
+                    db.Entry(employee).Property(X => X.TerminationDate).IsModified = false;
+                }
                 db.Entry(employee).Property(X => X.Password).IsModified = false;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -252,6 +313,15 @@ namespace ResourceApplicationTool.Controllers
             {
                 return HttpNotFound();
             }
+
+            //checking if we have the permission necessary to add a new user
+            if (!(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+            && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+            && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator))
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+
             return View(employee);
         }
 
@@ -262,6 +332,15 @@ namespace ResourceApplicationTool.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Employee employee = db.Employees.Find(id);
+
+            //checking if we have the permission necessary to add a new user
+            if (employee == null || !(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+            && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+            && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator))
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+
             db.Employees.Remove(employee);
             db.SaveChanges();
             return RedirectToAction("Index");

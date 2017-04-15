@@ -46,6 +46,7 @@ namespace ResourceApplicationTool.Controllers
 
             return response;
         }
+
         #region SprintAndTaskActions definition  
         // GET: Template Tasks
         public HttpResponseMessage GetTemplateTasks()
@@ -264,6 +265,7 @@ namespace ResourceApplicationTool.Controllers
 
         public HttpResponseMessage GetEducations(int id)
         {
+
             string jsonResponseText = "";
             Employee employee = db.Employees.Include(x => x.Educations).Where(x => x.EmployeeID == id).FirstOrDefault();
             if (employee != null)

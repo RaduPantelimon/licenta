@@ -33,6 +33,13 @@ namespace ResourceApplicationTool.Controllers
             return View(model);
         }
 
+        public ActionResult NotFound()
+        {
+            ViewBag.Message = "Page or resource not found.";
+
+            return View();
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

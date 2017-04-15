@@ -59,12 +59,22 @@ namespace ResourceApplicationTool.Controllers
             Request.ApplicationPath.TrimEnd('/') + "/";
             ViewBag.baseUrl = baseUrl;
 
+
+            //permission of current user
+            ViewBag.canEdit = Utils.Common.CheckDepartmentAuthentication(Session, User, department);
             return View(department);
         }
 
         // GET: Departments/Create
         public ActionResult Create()
         {
+            //checking if we have the permission necessary to add a new user
+            if (!(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+            && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+            && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator))
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
 
             string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
             Request.ApplicationPath.TrimEnd('/') + "/";
@@ -84,6 +94,14 @@ namespace ResourceApplicationTool.Controllers
             HttpPostedFileBase uploadPicture,
             HttpPostedFileBase uploadBanner)
         {
+            //checking if we have the permission necessary to add a new user
+            if (!(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+            && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+            && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator))
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+
             if (ModelState.IsValid)
             {
                 if (uploadPicture != null && uploadPicture.ContentLength > 0)
@@ -118,10 +136,10 @@ namespace ResourceApplicationTool.Controllers
             }
             Department department = db.Departments.Include(d => d.File).Include(d => d.File1).SingleOrDefault(s => s.DepartmentID == id);
 
-
-          
-
-          
+            if (!Utils.Common.CheckDepartmentAuthentication(Session,User,department))
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
 
             if (department == null)
             {
@@ -148,6 +166,13 @@ namespace ResourceApplicationTool.Controllers
             {
                 //finding the existing dept
                 existingDept = db.Departments.Include(d => d.File).Include(d => d.File1).Where(x => x.DepartmentID == department.DepartmentID).FirstOrDefault();
+
+                if (!Utils.Common.CheckDepartmentAuthentication(Session, User, existingDept))
+                {
+                    return RedirectToAction("NotFound", "Home");
+                }
+
+
                 if (uploadPicture != null && uploadPicture.ContentLength > 0)
                 {
                     Guid? avatarGuid = CreateImage(uploadPicture);
@@ -182,6 +207,12 @@ namespace ResourceApplicationTool.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Department department = db.Departments.Find(id);
+            if (!(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+            && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+            && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator))
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
             if (department == null)
             {
                 return HttpNotFound();
@@ -195,6 +226,12 @@ namespace ResourceApplicationTool.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Department department = db.Departments.Find(id);
+            if (!(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+             && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+             && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator))
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
             db.Departments.Remove(department);
             db.SaveChanges();
             return RedirectToAction("Index");
