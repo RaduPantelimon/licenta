@@ -287,9 +287,6 @@
                                     if (Model.SkillLevelsList[i].Skill.CategoryID == skillCat.CategoryID)
                                     {
                                         <div class="employee-skill col-ld-6 col-md-6 col-sm-6 col-xs-12">
-                                            @*Html.HiddenFor(m => Model.SkillLevelsList[i].SkillID)
-                                            @Html.HiddenFor(m => Model.SkillLevelsList[i].EmployeeID)
-                                            @Html.TextBoxFor(m => Model.SkillLevelsList[i].Level)*@
 
                                             <div class="control-label skill-label col-ld-6 col-md-6 col-sm-6 col-xs-6">
                                                 <span class="skill-title">@Model.SkillLevelsList[i].Skill.Title</span>
@@ -297,12 +294,6 @@
                                             </div>
                                             <div class="col-ld-6 col-md-6 col-md-6 col-sm-6 col-xs-12">
                                                 @Html.TextBoxFor(m => Model.SkillLevelsList[i].Level,
-                                                                    @*new { htmlAttributes = new { @class = "form-control skill-slider-input",
-                                                                        @data_slider_min = "0",
-                                                                        @data_slider_max = "20",
-                                                                        @data_slider_step = "1",
-                                                                        @data_slider_value = "14"
-                                                                    } }*@
                                                                 new Dictionary<string, object> { { "class", "form-control skill-slider-input" },
                                                                                                     { "data-slider-min", "0" },
                                                                                                     { "data-slider-max", "5" },

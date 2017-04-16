@@ -18,7 +18,8 @@ var TasksService = (function () {
         this._tempaltetasksUrl = '/api/restapi/GetTemplateTasks';
         this._sprinttasksUrl = '/api/restapi/GetSprintTasks/';
         this._edittaskUrl = '/api/restapi/EditTask';
-        this._createtaskUrl = '/api/restapi/SaveTask';
+        //private _createtaskUrl = '/api/restapi/SaveTask';
+        this._createtaskUrl = '/Projects/SaveTask';
         this._deleteUrl = '/api/restapi/DeleteTask';
     }
     TasksService.prototype.getTemplateTasks = function () {

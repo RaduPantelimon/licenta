@@ -93,16 +93,26 @@ namespace ResourceApplicationTool.Controllers
                 if(ModelState.IsValid)
                 {
                     Task existingTask = db.Tasks.Where(x => x.TaskID == task.TaskID).FirstOrDefault();
+                   
                     if(existingTask!=null)
                     {
-                        existingTask.Estimation = task.Estimation;
-                        existingTask.TaskDescription = task.TaskDescription;
-                        existingTask.Difficulty = task.Difficulty;
-                        db.Entry(existingTask).Property(X => X.TaskDescription).IsModified = true;
-                        db.Entry(existingTask).Property(X => X.Estimation).IsModified = true;
-                        db.Entry(existingTask).Property(X => X.Difficulty).IsModified = true;
-                        db.SaveChanges();
-                        jsonResponseText = "{\"status\":1,\"message\":\"The update was successfull\"}";
+                        string accessLevel = Common.CheckTaskAuthentication(User, existingTask.SprintID);
+                        if (accessLevel != Const.PermissionLevels.Administrator && accessLevel != Const.PermissionLevels.Manager)
+                        {
+                            jsonResponseText = "{\"status\":0,\"message\":\"Permissions missing\"}";
+                        }
+                        else
+                        {
+                            existingTask.Estimation = task.Estimation;
+                            existingTask.TaskDescription = task.TaskDescription;
+                            existingTask.Difficulty = task.Difficulty;
+                            db.Entry(existingTask).Property(X => X.TaskDescription).IsModified = true;
+                            db.Entry(existingTask).Property(X => X.Estimation).IsModified = true;
+                            db.Entry(existingTask).Property(X => X.Difficulty).IsModified = true;
+                            db.SaveChanges();
+                            jsonResponseText = "{\"status\":1,\"message\":\"The update was successfull\"}";
+                        }
+                        
                     }
                     else
                     {
@@ -145,10 +155,18 @@ namespace ResourceApplicationTool.Controllers
                     task.StartDate = startDate;
                     task.EndDate = startDate;
                     task.Difficulty = templateTask.Difficulty;
-                    db.Tasks.Add(task);
-                    db.SaveChanges();
 
-                    jsonResponseText = JsonConvert.SerializeObject(task);
+                    string accessLevel = Common.CheckSprintAuthentication(User);
+                    if (accessLevel != Const.PermissionLevels.Administrator && accessLevel != Const.PermissionLevels.Manager)
+                    {
+                        jsonResponseText = "{\"status\":0,\"error\":\"Error trying to create the new task\",\"message\":\"" + "Insufficient permissions" + "\"}";
+                    }
+                    else
+                    {
+                        db.Tasks.Add(task);
+                        db.SaveChanges();
+                        jsonResponseText = JsonConvert.SerializeObject(task);
+                    }
                 }
                 var response = Request.CreateResponse(HttpStatusCode.OK);
                 response.Content = new StringContent(jsonResponseText, Encoding.UTF8, "application/json");
@@ -176,13 +194,20 @@ namespace ResourceApplicationTool.Controllers
                 {
                     //checking if there are any other sprints created on the same interval
                     //(StartA <= EndB) and (EndA >= StartB)
-
-                    int existingSprintsNo = db.Sprints.Where(
+                    string accessLevel = Common.CheckSprintAuthentication(User);
+                    if (accessLevel != Const.PermissionLevels.Administrator && accessLevel != Const.PermissionLevels.Manager)
+                    {
+                        jsonResponseText = "{\"status\":0,\"message\":\"Permissions missing\"}";
+                    }
+                    else
+                    {
+                        int existingSprintsNo = db.Sprints.Where(
                         x => (x.StartDate <= newSprint.EndDate && x.EndDate >= newSprint.StartDate) && (x.ProjectID == newSprint.ProjectID)).Count();
 
-                    db.Sprints.Add(newSprint);
-                    db.SaveChanges();
-                    jsonResponseText = JsonConvert.SerializeObject(newSprint);
+                        db.Sprints.Add(newSprint);
+                        db.SaveChanges();
+                        jsonResponseText = JsonConvert.SerializeObject(newSprint);
+                    }
                 }
                 var response = Request.CreateResponse(HttpStatusCode.OK);
                 response.Content = new StringContent(jsonResponseText, Encoding.UTF8, "application/json");
@@ -211,10 +236,18 @@ namespace ResourceApplicationTool.Controllers
                 Task task = db.Tasks.Where(x => x.TaskID == id).FirstOrDefault();
                 if (task != null)
                 {
-                    db.Tasks.Remove(task);
-                    db.SaveChanges();
+                    string accessLevel = Common.CheckTaskAuthentication(User, task.SprintID);
+                    if (accessLevel != Const.PermissionLevels.Administrator && accessLevel != Const.PermissionLevels.Manager)
+                    {
+                        jsonResponseText = "{\"status\":0,\"message\":\"Permissions missing\"}";
+                    }
+                    else
+                    {
+                        db.Tasks.Remove(task);
+                        db.SaveChanges();
 
-                    jsonResponseText = "{\"status\":1,\"message\":\"Task was successfully deleted.\"}";
+                        jsonResponseText = "{\"status\":1,\"message\":\"Task was successfully deleted.\"}";
+                    }
                 }
                 var response = Request.CreateResponse(HttpStatusCode.OK);
                 response.Content = new StringContent(jsonResponseText, Encoding.UTF8, "application/json");
@@ -241,10 +274,18 @@ namespace ResourceApplicationTool.Controllers
                 Sprint sprint = db.Sprints.Where(x => x.SprintID == id).FirstOrDefault();
                 if (sprint != null)
                 {
-                    db.Sprints.Remove(sprint);
-                    db.SaveChanges();
+                    string accessLevel = Common.CheckTaskAuthentication(User, sprint.SprintID);
+                    if (accessLevel != Const.PermissionLevels.Administrator && accessLevel != Const.PermissionLevels.Manager)
+                    {
+                        jsonResponseText = "{\"status\":0,\"message\":\"Permissions missing\"}";
+                    }
+                    else
+                    {
+                        db.Sprints.Remove(sprint);
+                        db.SaveChanges();
 
-                    jsonResponseText = "{\"status\":1,\"message\":\"Sprint was successfully deleted.\"}";
+                        jsonResponseText = "{\"status\":1,\"message\":\"Sprint was successfully deleted.\"}";
+                    }
                 }
                 var response = Request.CreateResponse(HttpStatusCode.OK);
                 response.Content = new StringContent(jsonResponseText, Encoding.UTF8, "application/json");

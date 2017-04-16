@@ -35,6 +35,7 @@ var TasksListComponent = (function () {
         try {
             //we subscribe to the changes in order to update the input when the parameters change
             var id_1 = window["projectID"];
+            this.permissions = window["accessLevel"];
             this._sub = this._route.params.subscribe(function (params) {
                 //the edit task is disabled each time we change the view
                 _this.showTaskDetails = false;

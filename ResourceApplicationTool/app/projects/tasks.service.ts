@@ -10,7 +10,8 @@ export class TasksService {
     private _tempaltetasksUrl = '/api/restapi/GetTemplateTasks';
     private _sprinttasksUrl = '/api/restapi/GetSprintTasks/';
     private _edittaskUrl = '/api/restapi/EditTask';
-    private _createtaskUrl = '/api/restapi/SaveTask';
+    //private _createtaskUrl = '/api/restapi/SaveTask';
+    private _createtaskUrl = '/Projects/SaveTask';
     private _deleteUrl = '/api/restapi/DeleteTask';
     constructor(private _http: Http) {
 

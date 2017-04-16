@@ -28,7 +28,8 @@
 
 
 <script>
-    var projectID ="@Model.ProjectID";
+    var projectID = "@Model.ProjectID";
+    var accessLevel = "@ViewBag.userAccess";
 </script>
 <script>
     //angular entry point
@@ -42,8 +43,11 @@
     <div class="form-group main-form-group profile-header-container">
         <div class="text-info">
             <h2 class="sec-title-large sec-title page-buttons-title"> @Model.Title</h2>
-            @Html.ActionLink("Edit", "Edit", new { @id = Model.ProjectID }, new { @class = "btn-primary add-new-button", @id = Model.ProjectID })
-            @Html.ActionLink("Delete", "Delete", new { @id = Model.ProjectID }, new { @class = "btn-danger add-new-button", @id = Model.ProjectID })
+            @if (ViewBag.userAccess == Const.PermissionLevels.Manager || ViewBag.userAccess == Const.PermissionLevels.Administrator)
+            {
+                @Html.ActionLink("Edit", "Edit", new { @id = Model.ProjectID }, new { @class = "btn-primary add-new-button", @id = Model.ProjectID })
+                @Html.ActionLink("Delete", "Delete", new { @id = Model.ProjectID }, new { @class = "btn-danger add-new-button", @id = Model.ProjectID })
+            }
             <button type="button" id='generate-report' class="btn-primary btn-warning download-report-button">Download Monthly Report</button>
         </div>
         <hr class="title-hr" />

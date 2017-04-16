@@ -1,6 +1,6 @@
 ﻿<div class="row">
     <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-        <div id="templatesContainer">
+        <div id="templatesContainer" *ngIf="permissions=='Administrator'||permissions=='Manager'">
             <h4>Task Templates</h4>
             <div>
                 <!--The templates need to be draggable-->
@@ -38,7 +38,7 @@
                                     class="taskTemplate">
                                 <span class="task-Title task-selectable" (click)="onFocus($event,day)"> {{day.task.TaskDescription}} </span>
                             </div>
-                            <div *ngIf='day.focused'
+                            <div *ngIf="day.focused && (permissions=='Administrator'|| permissions=='Manager')"
                                     mwlResizable (resizeEnd)="onResizeEnd($event, day.task , empIndex, dayIndex)" (resizeStart)="onResizeStart($event)" resizeData="test"
                                     [validateResize]="validate"
                                     [enableGhostResize]="true"
@@ -65,6 +65,18 @@
                                         mwlResizeHandle
                                         [resizeEdges]="{bottom: true, right: true}">
                             </div>
+                            <div *ngIf="day.focused && !(permissions=='Administrator'||permissions=='Manager')"
+                                 class="taskTemplate focused-task">
+
+
+                                <img id="edit-image"
+                                     src="/Content/Pictures/edit-icon.png"
+                                     class="edit-handle"
+                                     (click)="onEdit($event,day,day.task.TaskID)">
+
+                                <span class="task-Title task-selectable" (click)="onLoseFocus($event,day)">{{day.task.TaskDescription}}</span>
+                            </div>
+
                         </div>
                         <div *ngIf='!day.task'
                                 class="task-droppable"
@@ -88,7 +100,15 @@
                         <span>Task Title</span>
                     </div>
                     <div class="col-md-9 col-sm-9">
-                        <input type="text" [ngClass]="['form-control']" [(ngModel)]='currentDay.task.TaskDescription' />
+                        <input *ngIf="!(permissions=='Administrator'||permissions=='Manager')"  
+                               type="text" 
+                               [ngClass]="['form-control']" 
+                               [(ngModel)]='currentDay.task.TaskDescription'  disabled />
+                        <input *ngIf="permissions=='Administrator'||permissions=='Manager'" 
+                               type="text" 
+                               [ngClass]="['form-control']" 
+                               [(ngModel)]='currentDay.task.TaskDescription' 
+                                />
                         <span *ngIf="taskDescriptionValidation" [ngClass]="['text-danger']"> {{taskDescriptionValidationText}} </span>
                     </div>
                 </div>
@@ -99,7 +119,19 @@
                     </div>
                     <div class="col-md-9 col-sm-9">
                         <div [ngClass]="['slider-container']">
-                            <nouislider [min]="0" [max]="8" [step]="1" [(ngModel)]="currentDay.task.Estimation"></nouislider>
+                            <nouislider  *ngIf="!(permissions=='Administrator'||permissions=='Manager')" 
+                                        [min]="0" 
+                                        [max]="8" 
+                                        [step]="1"  
+                                        disabled="true" 
+                                        [(ngModel)]="currentDay.task.Estimation"></nouislider>
+
+                            <nouislider *ngIf="permissions=='Administrator'||permissions=='Manager'" 
+                                        [min]="0" 
+                                        [max]="8" 
+                                        [step]="1"  
+                                        [(ngModel)]="currentDay.task.Estimation"></nouislider>
+
                             <p class="value-box">
                                 Hours: <span class="value-span" id="plain_1">{{currentDay.task.Estimation}}</span>
                             </p>
@@ -113,7 +145,17 @@
                     </div>
                     <div class="col-md-9 col-sm-9">
                         <div [ngClass]="['slider-container']">
-                            <nouislider [min]="1" [max]="5" [step]="1" [(ngModel)]="currentDay.task.Difficulty"></nouislider>
+                            <nouislider *ngIf="permissions=='Administrator'||permissions=='Manager'"  
+                                        [min]="1" 
+                                        [max]="5" 
+                                        [step]="1" 
+                                        [(ngModel)]="currentDay.task.Difficulty"></nouislider>
+                            <nouislider *ngIf="!(permissions=='Administrator'||permissions=='Manager')"
+                                        [min]="1"
+                                        [max]="5"
+                                        [step]="1"
+                                        disabled="true" 
+                                        [(ngModel)]="currentDay.task.Difficulty"></nouislider>
                             <p class="value-box">
                                 Difficulty level: <span class="value-span" id="plain_1">{{currentDay.task.Difficulty}}</span>
                             </p>
@@ -121,7 +163,8 @@
                     </div>
                 </div>
                 <div class="col-md-10">
-                    <button type="button"
+                    <button *ngIf="permissions=='Administrator'||permissions=='Manager'"
+                            type="button"
                             [ngClass]="['btn', 'btn-default']"
                             (click)="saveValues($event,currentDay,employee)"
                             id="edit-task">

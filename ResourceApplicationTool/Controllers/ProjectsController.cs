@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using ResourceApplicationTool.Models;
 using System.Globalization;
 
+using ResourceApplicationTool.Utils;
+
 namespace ResourceApplicationTool.Controllers
 {
     public class ProjectsController : Controller
@@ -38,6 +40,7 @@ namespace ResourceApplicationTool.Controllers
 
             List<Department> departmentsForProjects = db.Departments.ToList();
             ViewBag.departments = departmentsForProjects;
+            ViewBag.userAccess = Session[Const.CLAIM.USER_ACCESS_LEVEL];
             return View(projects.ToList());
         }
 
@@ -66,14 +69,45 @@ namespace ResourceApplicationTool.Controllers
             Request.ApplicationPath.TrimEnd('/') + "/";
             ViewBag.baseUrl = baseUrl;
 
+            string accessLevel = Common.CheckProjectAuthentication(Session, User, project);
+            ViewBag.userAccess = accessLevel;
+
             return View(project);
         }
 
         // GET: Projects/Create
         public ActionResult Create()
         {
+            if(!User.Identity.IsAuthenticated || 
+                Session[Const.CLAIM.USER_ACCESS_LEVEL] == null ||
+                (Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Employee))
+            {
+                //a normal employee shouldn't be able to create a new project
+                return RedirectToAction("NotFound", "Home");
+            }
+
             ViewBag.ContactID = new SelectList(db.Contacts, "ContactID", "ContactName");
-            ViewBag.DepartmentID = new SelectList(db.Departments, "DepartmentID", "Title");
+
+            //a manager will only be able to add a project for his department
+
+
+            if ((Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Manager))
+            {
+                int empID = Convert.ToInt32(Session[Const.CLAIM.USER_ID]);
+                Employee emp = db.Employees.Where(x => x.EmployeeID == empID).FirstOrDefault();
+                if(emp != null)
+                {
+                    ViewBag.DepartmentID = new SelectList(db.Departments.Where(X => X.DepartmentID == emp.DepartmentID), "DepartmentID", "Title");
+                }
+                
+            }
+            else
+            {
+                ViewBag.DepartmentID = new SelectList(db.Departments, "DepartmentID", "Title");
+            }
+
+           
+
             return View();
         }
 
@@ -86,6 +120,14 @@ namespace ResourceApplicationTool.Controllers
         {
             if (ModelState.IsValid)
             {
+                string accessLevel = Common.CheckProjectAuthentication(Session, User, project);
+                if(accessLevel != Const.PermissionLevels.Administrator && 
+                    accessLevel != Const.PermissionLevels.Manager)
+                {
+                    //a manager should only create a project only for his department
+                    return RedirectToAction("NotFound", "Home");
+                }
+
                 db.Projects.Add(project);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -104,12 +146,33 @@ namespace ResourceApplicationTool.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Project project = db.Projects.Find(id);
+            string accessLevel = Common.CheckProjectAuthentication(Session, User, project);
+            if (accessLevel != Const.PermissionLevels.Administrator &&
+                accessLevel != Const.PermissionLevels.Manager)
+            {
+                //a manager should only edit a project only for his department
+                return RedirectToAction("NotFound", "Home");
+            }
+
             if (project == null)
             {
                 return HttpNotFound();
             }
             ViewBag.ContactID = new SelectList(db.Contacts, "ContactID", "ContactName", project.ContactID1);
-            ViewBag.DepartmentID = new SelectList(db.Departments, "DepartmentID", "Title", project.DepartmentID);
+            if(accessLevel == Const.PermissionLevels.Manager)
+            {
+                int empID = Convert.ToInt32(Session[Const.CLAIM.USER_ID]);
+                Employee emp = db.Employees.Where(x => x.EmployeeID == empID).FirstOrDefault();
+                if (emp != null)
+                {
+                    ViewBag.DepartmentID = new SelectList(db.Departments.Where(X => X.DepartmentID == emp.DepartmentID), "DepartmentID", "Title");
+                }
+            }
+            else
+            {
+                ViewBag.DepartmentID = new SelectList(db.Departments, "DepartmentID", "Title", project.DepartmentID);
+            }
+            ViewBag.userAccess = accessLevel;
             return View(project);
         }
 
@@ -122,6 +185,13 @@ namespace ResourceApplicationTool.Controllers
         {
             if (ModelState.IsValid)
             {
+                string accessLevel = Common.CheckProjectAuthentication(Session, User, project);
+                if (accessLevel != Const.PermissionLevels.Administrator &&
+                    accessLevel != Const.PermissionLevels.Manager)
+                {
+                    //a manager should only edit a project only for his department
+                    return RedirectToAction("NotFound", "Home");
+                }
                 db.Entry(project).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -139,6 +209,13 @@ namespace ResourceApplicationTool.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Project project = db.Projects.Find(id);
+            string accessLevel = Common.CheckProjectAuthentication(Session, User, project);
+            if (accessLevel != Const.PermissionLevels.Administrator &&
+                accessLevel != Const.PermissionLevels.Manager)
+            {
+                //a manager should only edit a project only for his department
+                return RedirectToAction("NotFound", "Home");
+            }
             if (project == null)
             {
                 return HttpNotFound();
@@ -174,6 +251,13 @@ namespace ResourceApplicationTool.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Project project = db.Projects.Find(id);
+            string accessLevel = Common.CheckProjectAuthentication(Session, User, project);
+            if (accessLevel != Const.PermissionLevels.Administrator &&
+                accessLevel != Const.PermissionLevels.Manager)
+            {
+                //a manager should only edit a project only for his department
+                return RedirectToAction("NotFound", "Home");
+            }
             db.Projects.Remove(project);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -189,6 +273,47 @@ namespace ResourceApplicationTool.Controllers
                            Value = (index + 1).ToString(),
                            Text = monthName
                        });
+
+        }
+
+        //save the tasks added by the user
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        [System.Web.Http.HttpGet]
+        public ActionResult SaveTask(TaskTemplate data)
+        { 
+            try
+            {
+                Task templateTask = db.Tasks.Where(x => x.TaskID == data.templateTaskID).FirstOrDefault();
+                if (templateTask != null)
+                {
+                    DateTime startDate = DateTime.Parse(data.startDate);
+                    Task task = new Task();
+
+                    task.TaskDescription = templateTask.TaskDescription;
+                    task.SprintID = data.sprintID;
+                    task.EmployeeID = data.employeeID;
+                    task.StartDate = startDate;
+                    task.EndDate = startDate;
+                    task.Difficulty = templateTask.Difficulty;
+
+                    string accessLevel = Common.CheckSprintAuthentication(Session,User);
+                    if (accessLevel != Const.PermissionLevels.Administrator && accessLevel != Const.PermissionLevels.Manager)
+                    {
+                       
+                        return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "Could not save the new task. Insufficient permissions");
+                    }
+
+                    db.Tasks.Add(task);
+                    db.SaveChanges();
+                    //jsonResponseText = JsonConvert.SerializeObject(task);
+                    return Json(task);
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "Could not save the new task.");
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "Could not save the new task");
+            }
 
         }
 

@@ -27,6 +27,7 @@ var AppComponent = (function () {
         var _this = this;
         try {
             var id_1 = window["projectID"];
+            this.permissions = window["accessLevel"];
             if (id_1 && !isNaN(parseInt(id_1))) {
                 var currentComponent_1 = this;
                 //getting the sprint id from the url

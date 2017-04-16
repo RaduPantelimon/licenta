@@ -104,6 +104,8 @@ namespace ResourceApplicationTool.Controllers
 
             if (ModelState.IsValid)
             {
+
+                
                 if (uploadPicture != null && uploadPicture.ContentLength > 0)
                 {
                     Guid? avatarGuid = CreateImage(uploadPicture);

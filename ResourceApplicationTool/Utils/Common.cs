@@ -1,10 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
+using System.Web.Mvc;
 using ResourceApplicationTool.Models;
 using System.IO;
 using System.Security.Principal;
+
+using System.IdentityModel.Services;
+using System.IdentityModel.Services.Configuration;
+using System.Security.Claims;
+
 namespace ResourceApplicationTool.Utils
 {
     public class Common
@@ -134,6 +143,135 @@ namespace ResourceApplicationTool.Utils
             }
 
             return isValid;
+        }
+
+        public static string CheckProjectAuthentication(HttpSessionStateBase Session, IPrincipal User, Project project)
+        {
+            //we check if the user is either an administrator or a manager for the department
+            string accessLevel = Const.PermissionLevels.Employee;
+            if (User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ID] != null)
+            {
+                int empID = Convert.ToInt32(Session[Const.CLAIM.USER_ID]);
+                Employee emp = db.Employees.Where(x => x.EmployeeID == empID).FirstOrDefault();
+
+                if (emp != null &&
+                    (emp.Administrator == Const.PermissionLevels.Administrator))
+                {
+                    accessLevel = Const.PermissionLevels.Administrator;
+                }
+                if (emp != null && (emp.DepartmentID == project.DepartmentID && emp.Administrator == Const.PermissionLevels.Manager))
+                {
+                    accessLevel = Const.PermissionLevels.Manager;
+
+                }
+            }
+
+            return accessLevel;
+        }
+        public static string CheckTaskAuthentication(IPrincipal User, int? sprintID)
+        {
+            //we check if the user is either an administrator or a manager for the department
+            string accessLevel = Const.PermissionLevels.Employee;
+            try
+            {
+
+            
+                ClaimsIdentity claimsIdentity = (ClaimsIdentity)User.Identity;
+                IEnumerable<Claim> claims = claimsIdentity.Claims;
+
+               string userID = claims.Where(x => x.Type == Const.CLAIM.CLAIM_NAMESPACE
+                + "/" + Const.Fields.EMPLOYEE_ID).FirstOrDefault().Value;
+
+                if (User.Identity.IsAuthenticated && userID != null && sprintID.HasValue)
+                {
+                    int empID = Convert.ToInt32(userID);
+                    Employee emp = db.Employees.Where(x => x.EmployeeID == empID).FirstOrDefault();
+                    if (emp != null &&
+                       (emp.Administrator == Const.PermissionLevels.Administrator))
+                    {
+                        accessLevel = Const.PermissionLevels.Administrator;
+                    }
+                    else
+                    {
+                        Sprint sprint = db.Sprints.Include(x => x.Project).Where(x => x.SprintID == sprintID.Value).FirstOrDefault();
+                        if (emp != null && sprint != null && (emp.DepartmentID == sprint.Project.DepartmentID && emp.Administrator == Const.PermissionLevels.Manager))
+                        {
+                            accessLevel = Const.PermissionLevels.Manager;
+                        }
+                    }
+
+                }
+            }
+            catch(Exception ex)
+            {
+                //handle exception
+            }
+            return accessLevel;
+        }
+
+        public static string CheckSprintAuthentication(IPrincipal User)
+        {
+            //we check if the user is either an administrator or a manager for the department
+            string accessLevel = Const.PermissionLevels.Employee;
+            try
+            {
+
+
+                ClaimsIdentity claimsIdentity = (ClaimsIdentity)User.Identity;
+                IEnumerable<Claim> claims = claimsIdentity.Claims;
+
+                string userID = claims.Where(x => x.Type == Const.CLAIM.CLAIM_NAMESPACE
+                 + "/" + Const.Fields.EMPLOYEE_ID).FirstOrDefault().Value;
+
+                if (User.Identity.IsAuthenticated && userID != null )
+                {
+                    int empID = Convert.ToInt32(userID);
+                    Employee emp = db.Employees.Where(x => x.EmployeeID == empID).FirstOrDefault();
+                    if (emp != null &&
+                       (emp.Administrator == Const.PermissionLevels.Administrator))
+                    {
+                        accessLevel = Const.PermissionLevels.Administrator;
+                    }
+                    else if(emp.Administrator == Const.PermissionLevels.Manager)
+                    {
+                            accessLevel = Const.PermissionLevels.Manager;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                //handle exception
+            }
+            return accessLevel;
+        }
+
+        public static string CheckSprintAuthentication(HttpSessionStateBase Session, IPrincipal User)
+        {
+            //we check if the user is either an administrator or a manager for the department
+            string accessLevel = Const.PermissionLevels.Employee;
+            try
+            {
+
+                if (User.Identity.IsAuthenticated)
+                {
+                  
+                    if (Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
+                    {
+                        accessLevel = Const.PermissionLevels.Administrator;
+                    }
+                    else if (Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Manager)
+                    {
+                        accessLevel = Const.PermissionLevels.Manager;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                //handle exception
+            }
+            return accessLevel;
         }
     }
 }

@@ -21,7 +21,11 @@
 
     <div class="text-info">
         <h2 class="sec-title-huge sec-title projects-title">Projects</h2>
-        @Html.ActionLink("Create New", "Create", null, new { @class = "btn-primary add-new-button" })
+        @if (ViewBag.userAccess == Const.PermissionLevels.Manager || ViewBag.userAccess == Const.PermissionLevels.Administrator)
+        {
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn-primary add-new-button" })
+        }
+       
     </div>
     <hr class="sec-hr title-hr" />
 

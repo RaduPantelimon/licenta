@@ -44,6 +44,7 @@ export class TasksListComponent implements OnInit {
     errorMessage: string;
     taskDescriptionValidationText: string;
     taskDescriptionValidation: boolean;
+    permissions: string;
 
     //drag drop resize functionality
     droppedData: string;
@@ -68,6 +69,8 @@ export class TasksListComponent implements OnInit {
 
             //we subscribe to the changes in order to update the input when the parameters change
             let id = window["projectID"];
+            this.permissions = window["accessLevel"];
+
             this._sub = this._route.params.subscribe((params:any) => {
 
                 //the edit task is disabled each time we change the view

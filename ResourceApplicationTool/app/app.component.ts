@@ -24,6 +24,7 @@ export class AppComponent implements OnInit{
     //employees: any[] = [];
     sprints: any[] = [];
     errorMessage: string;
+    permissions: string;
 
     constructor(private _employeesService: EmployeesService,
         private _sprintService: SprintsService,
@@ -36,6 +37,7 @@ export class AppComponent implements OnInit{
         try {
 
             let id = window["projectID"];
+            this.permissions = window["accessLevel"];
 
             if (id && !isNaN(parseInt(id)))
             {
