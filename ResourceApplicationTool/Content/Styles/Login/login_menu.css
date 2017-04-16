@@ -1,0 +1,73 @@
+﻿
+.side-nav-box{
+    margin-top:50px;
+    margin-left:20px;
+    margin-right: 20px;
+}
+
+#cssmenu {
+    width: 200px;
+    background: #404b52;
+    font-family: 'Oxygen Mono', Tahoma, Arial, sans-serif;
+    font-size: 12px;
+    zoom: 1;
+    border-top: 4px solid #428bca;
+    margin-top:70px;
+
+}
+
+#cssmenu > ul {
+    width: 200px;
+    opacity:0.8;
+}
+#cssmenu ul {
+    position: relative;
+    z-index: 597;
+    float: left;
+}
+#cssmenu ul, #cssmenu ul li, #cssmenu ul ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#cssmenu ul li {
+    float: none;
+}
+#cssmenu ul li {
+    float: left;
+    min-height: 1px;
+    line-height: 1em;
+    vertical-align: middle;
+    position: relative;
+}
+#cssmenu ul, #cssmenu ul li, #cssmenu ul ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+}
+#cssmenu li {
+    position: relative;
+}
+
+#cssmenu > ul > li a:hover, #cssmenu > ul > li:hover a {
+    background: #428bca;
+}
+#cssmenu > ul > li.active a {
+    background: #428bca;
+}
+#cssmenu > ul > li > a:hover {
+    color: #fff;
+}
+#cssmenu > ul > li > a {
+    border-right: 4px solid #428bca;
+    color: #fff;
+}
+#cssmenu a {
+    display: block;
+    padding: 15px 20px;
+    color:fff; /* #FD6022;*/
+    font-weight:bold;
+    text-decoration: none;
+    text-transform: uppercase;
+}
