@@ -11,12 +11,11 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data;
 using System.Data.Entity;
-using System.Linq;
 using System.Net;
 
 using ResourceApplicationTool.Utils;
 using ResourceApplicationTool.Models;
-
+using ResourceApplicationTool.Models.SecondaryModels;
 
 namespace ResourceApplicationTool.Controllers
 {
@@ -127,34 +126,18 @@ namespace ResourceApplicationTool.Controllers
         }
 
         // GET: Employees/Edit/5
-        public ActionResult ChangePassword(int? id)
+        public ActionResult ChangePassword()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Employee employee = db.Employees.Include(e => e.Role).Include(e => e.Educations).SingleOrDefault(x => x.EmployeeID == id);
+
+           
 
             //checking if we have the permission necessary to change the password for this user
             if (!User.Identity.IsAuthenticated ||
-                     Session[Const.CLAIM.USER_ID].ToString() != employee.EmployeeID.ToString())
+                     String.IsNullOrEmpty(Session[Const.CLAIM.USER_ID].ToString()))
             {
                 return RedirectToAction("NotFound", "Home");
             }
-
-            if (employee == null)
-            {
-                return HttpNotFound();
-            }
-            if (employee.Role != null && employee.Role.Name != null)
-            {
-                ViewBag.RoleName = employee.Role.Name;
-            }
-            else
-            {
-                ViewBag.RoleName = "";
-            }
-            return View(employee);
+            return View();
         }
 
         // POST: Employees/Edit/5
@@ -162,38 +145,36 @@ namespace ResourceApplicationTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ChangePassword(
-           int employeeID,
-           string password,
-           string confirmPassword,
-           string oldPassword)
+        public ActionResult ChangePassword([Bind(Include = "OldPassword,Password,ConfirmPassword")] ResetPassword passmodel)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && Session[Const.CLAIM.USER_ID].ToString() != null)
             {
 
+                int employeeID = Convert.ToInt32(Session[Const.CLAIM.USER_ID]);
                 Employee employee = db.Employees.Where(x => x.EmployeeID == employeeID).FirstOrDefault();
 
                 //checking if we have the permission necessary to change the password for this user
-                if (employee == null || !User.Identity.IsAuthenticated ||
-                         Session[Const.CLAIM.USER_ID].ToString() != employee.EmployeeID.ToString())
+                if (employee == null || !User.Identity.IsAuthenticated)
                 {
                     return RedirectToAction("NotFound", "Home");
                 }
 
-                if(oldPassword != employee.Password)
+                if(passmodel.OldPassword != employee.Password)
                 {
-                    ModelState.AddModelError("IncorrectOldPassword", "Old Password not correct");
-                    return View();
+                    ModelState.AddModelError("", "Old Password not correct");
+                    ViewBag.error = "Either the 2 passwords do not match or the old password is not valid";
+                    return View(passmodel);
                 }
-                if(password != confirmPassword)
+                if(passmodel.Password != passmodel.ConfirmPassword)
                 {
                     ModelState.AddModelError("PasswordsDoNotMatch", "Passwords Do Not Match");
-                    return View();
+                    ViewBag.error = "Either the 2 passwords do not match or the old password is not valid";
+                    return View(passmodel);
                 }
-
+                employee.Password = passmodel.Password;
                 db.Entry(employee).Property(X => X.Password).IsModified = true;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Home");
             }
 
             return View();

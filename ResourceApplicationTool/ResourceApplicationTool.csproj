@@ -267,6 +267,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SecondaryModels\MainSearchResult.cs" />
+    <Compile Include="Models\SecondaryModels\ResetPassword.cs" />
     <Compile Include="Models\SecondaryModels\SearchResult.cs" />
     <Compile Include="Models\SecondaryModels\SerializableDepartment.cs" />
     <Compile Include="Models\SecondaryModels\SerializableEmployee.cs" />
