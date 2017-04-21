@@ -358,6 +358,9 @@
     <Content Include="Content\Pictures\mail-icon.png" />
     <Content Include="Content\Pictures\mask.png" />
     <Content Include="Content\Pictures\masterpagepic.jpg" />
+    <Content Include="Content\Pictures\menu-btn-p.png" />
+    <Content Include="Content\Pictures\menu-btn.png" />
+    <Content Include="Content\Pictures\menu-icon-blue.png" />
     <Content Include="Content\Pictures\phone-icon.png" />
     <Content Include="Content\Pictures\privatepyle.jpg" />
     <Content Include="Content\Pictures\projects-banner-icon.png" />
@@ -382,6 +385,7 @@
     <Content Include="Content\Styles\Employee\employeesCommonStyle.css" />
     <Content Include="Content\Styles\Employee\employeesDetailsStyle.css" />
     <Content Include="Content\Styles\Employee\employeesEditStyle.css" />
+    <Content Include="Content\Styles\homePage.css" />
     <Content Include="Content\Styles\Login\login_common.css" />
     <Content Include="Content\Styles\Login\login_menu.css" />
     <Content Include="Content\Styles\Login\user_profile.css" />
@@ -429,6 +433,7 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap3-typeahead.js" />
     <Content Include="Scripts\bootstrap3-typeahead.min.js" />
+    <Content Include="Scripts\cbp-search-header.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\departments\departments-common.js" />
     <Content Include="Scripts\departments\departments-display.js" />
@@ -439,6 +444,7 @@
     <Content Include="Scripts\employees\employees_details.js" />
     <Content Include="Scripts\employees\employees_edit.js" />
     <Content Include="Scripts\employees\employees_new.js" />
+    <Content Include="Scripts\homePage.js" />
     <Content Include="Scripts\home\home.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -458,6 +464,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\masterpage-file.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\projects\projects_common.js" />
     <Content Include="Scripts\projects\projects_details.js" />
@@ -467,6 +474,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\search_header.js" />
     <Content Include="Scripts\search_main.js" />
+    <Content Include="Scripts\slick\cbp-search-header.js" />
     <Content Include="Scripts\slick\index.html" />
     <Content Include="Scripts\slick\slick\ajax-loader.gif" />
     <Content Include="Scripts\slick\slick\fonts\slick.svg" />

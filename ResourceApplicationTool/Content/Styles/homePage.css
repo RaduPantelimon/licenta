@@ -1,0 +1,317 @@
+﻿.menu-button-container{
+    float: left;
+    padding: 15px 15px;
+    display:none;
+}
+
+.menu-button{
+    background: url(../Pictures/menu-btn.png) no-repeat center;
+    width:30px;
+    height:20px;
+    border: none;
+}
+
+@media (max-width: 992px){
+   .menu-button-container{
+       display:inline-block;
+        display:initial;
+    }
+   .container > .navbar-header, .container > .navbar-collapse {
+        margin-right: 0;
+        margin-left: 0;
+    }
+   .navbar-collapse {
+        width: auto;
+        border-top: 0;
+        box-shadow: none;
+        display: none;
+    }
+   .navbar-nav > li {
+        float: none;
+    }
+   .navbar-nav {
+        float: none;
+        margin: 0;
+    }
+}
+
+
+/** Attempt  **/
+
+
+.header  .navigation, 
+.cbp-spmenu-open .navigation {
+    margin-top: 25px;
+    text-align: left;
+}
+
+.header div.registration .navigation {
+    margin-top: 25px;
+    text-align: right;
+	height:21px;
+}
+
+div.registration .navigation a.log {
+    color:black;
+	font-family: "OpenSans-SemiBold", OpenSans-SemiBold, sans-serif;
+	font-size: 11pt;
+	font-weight: normal;
+}
+
+div.registration .navigation a.sup {
+    color:white;
+	font-family: "OpenSans-SemiBold", OpenSans-SemiBold, sans-serif;
+	font-size: 11pt;
+	padding: 6px 21px 7px;
+	text-decoration: none;
+	background: #428bca;
+	border-radius: 25px;
+	line-height: initial;
+    height:30px;
+}
+
+.navigation li {
+	display: inline-block;
+}
+.header .navigation li a.primary-nav-link:hover{
+    color: #00bea5;
+}
+.header  .navigation li a,
+.cbp-spmenu-open .navigation li a{
+	color: #666666;
+    font-family:"OpenSans-Regular";
+    font-size: 13pt;
+	font-weight: normal;
+	padding: 2px 5px 2px;
+    text-decoration: none;
+}
+
+.header  .navigation li a.active,
+.cbp-spmenu-open .navigation li a.active {
+	font-weight: 600;
+}
+
+.cbp-spmenu .user .img-user{
+    float: left;
+    margin-right: 5px;
+	border-radius: 40px;
+	height:60px;
+	width:60px;
+}
+.cbp-spmenu  .name-user,.cbp-spmenu  .img-coinpurse{
+		display: inline-block;
+}
+.cbp-spmenu  .name-user{
+	padding-top: 10px;
+}
+
+
+/* Orientation-dependent styles for the content of the menu */
+.cbp-spmenu-vertical {
+    width: 260px;
+    height: 100%;
+    top: 0;
+    z-index: 1000;
+    padding-top: 25px;
+}
+
+.cbp-spmenu-vertical ul li.item-link a {
+    font-size: 17px;
+    padding: .7em 2.4em;
+	font-family: "OpenSans-Bold", OpenSans-SemiBold, sans-serif;
+}
+	
+.cbp-spmenu-vertical ul li.item-link:first-child {
+    border-top: 1px solid #d3d3d3;
+}
+.cbp-spmenu-vertical ul li.item-link {
+    border-bottom: 1px solid #d3d3d3;
+}
+
+
+.cbp-spmenu-horizontal {
+    width: 100%;
+    height: 150px;
+    left: 0;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+    .cbp-spmenu-horizontal h3 {
+        height: 100%;
+        width: 20%;
+        float: left;
+    }
+
+    .cbp-spmenu-horizontal a {
+        float: left;
+        width: 20%;
+        padding: 0.8em;
+        border-left: 1px solid #258ecd;
+    }
+
+/* Vertical menu that slides from the left or right */
+.cbp-spmenu-left {
+    left: -280px;
+}
+
+    .cbp-spmenu-left.cbp-spmenu-open {
+        left: 0px;
+    }
+
+/* Transitions */
+.cbp-spmenu,
+.cbp-spmenu-push {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+/* Example media queries */
+@media screen and (max-width: 55.1875em) {
+    .cbp-spmenu-horizontal {
+        font-size: 75%;
+        height: 110px;
+    }
+
+    .cbp-spmenu-top {
+        top: -110px;
+    }
+
+    .cbp-spmenu-bottom {
+        bottom: -110px;
+    }
+}
+
+.cbp-spmenu {
+    background: #ffffff;
+    position: fixed;
+	overflow: auto;
+    top:80px;
+    /*opacity: 0.8;*/ /* WIP - still not 100% sure about the opacity*/
+    background: #404b52;
+}
+
+
+
+.cbp-spmenu-vertical ul li.item-link a {
+    font-size: 17px;
+    padding: .7em 2.4em;
+    font-family: "OpenSans-Bold", OpenSans-SemiBold, sans-serif;
+}
+
+.cbp-spmenu a {
+    display: block;
+    font-size: .7em;
+    font-weight: 300;
+    /*color:orange;*/
+}
+
+.cbp-spmenu a:hover, .cbp-spmenu a:focus {
+    text-decoration: none;
+    background-color: #eeeeee;
+}
+
+.cbp-spmenu-vertical ul li.item-link:first-child {
+    border-top: 1px solid #d3d3d3;
+}
+
+.cbp-spmenu-vertical ul li.item-link {
+    border-bottom: 1px solid #d3d3d3;
+}
+
+.cbp-spmenu-vertical  ul, .cbp-spmenu-vertical  li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.cbp-spmenu-vertical  ul{
+    margin-top: 25px;
+}
+
+
+.top.popover .close, .cbp-spmenu .close, .mask-notify .close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background: url(../images/btn-close.png) no-repeat center;
+    height: 14px;
+    width: 15px;
+}
+
+button.close {
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    -webkit-appearance: none;
+}
+
+.close {
+    float: right;
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 1;
+    color: #aaaaaa;
+    text-shadow: none;
+    opacity: 0.2;
+    filter: alpha(opacity=20);
+}
+.cbp-spmenu-open .navigation {
+    margin-top: 25px;
+    padding-left: 2.4em;
+
+}
+
+.navigation .search-input-main{
+    padding: .7em 2.4em;
+}
+
+/*setting cbp CSS*/
+
+.cbp-search-input-main {
+    display: inline-block;
+    padding-left: 20px;
+}
+
+.cbp-search-input-container {
+    display: inline-block;
+    background: url(../Pictures/search-icon.png) no-repeat right;
+    /* background-position: center right; */
+    background-position: 95%;
+    background-size: 20px 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 35px;
+}
+
+.cbp-search-input-container {
+    display: inline-block;
+    background: url(../Pictures/search-icon.png) no-repeat right;
+    /* background-position: center right; */
+    background-position: 95%;
+    background-size: 20px 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 35px;
+}
+
+.cbp-search-input {
+    display: inline-block;
+    border-radius: 17px;
+    background-color: white;
+    opacity: 0.5;
+}
+.cbp-spmenu-vertical ul li.item-link a.cbp-search-button{
+    padding:0px;
+    display:inline-block;
+
+}
+
+.cbp-spmenu-vertical ul li.item-link a.cbp-search-button:hover{
+background-color:#404b52;
+
+}
+.cbp-spmenu-vertical  ul.typeahead{
+    margin:0px;
+}

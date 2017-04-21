@@ -1,26 +1,31 @@
 ﻿
 <link href="~/Content/Styles/Login/login_menu.css" rel="stylesheet" />
+<div  class="side-nav-box">
+    <div id="cssheader" class="profile_summary">
+        <div class="tvd-sub-header">
+            <h1 class="sec-title-large sec-title" data-scrollname="Projects" style="display: inline; bottom: 0px;">
+               Options
+            </h1>
+        </div>
+    </div>
+    <div id="cssmenu">
 
-<div id="cssmenu" class="side-nav-box">
-    <ul class="side-nav-bar">
-        <li class="link-li">
-            <a href="http://localhost:8080/proiectTransport//Users/myaccount.php" class="side-link">
-                Profile Details
-            </a>
-        </li>
+        <ul class="side-nav-bar">
+            <li class="link-li">
+                @Html.ActionLink("Profile Summary", "UserProfile", "Login", routeValues: null, htmlAttributes: new { id = "loginLink" })
+            </li>
 
-        <li class="link-li">
-            @Html.ActionLink("Change Password", "ChangePassword", "Login", routeValues: null, htmlAttributes: new { id = "loginLink" })
-        </li>
-        <li class="link-li">
-            <a href="http://localhost:8080/proiectTransport//Users/ChangePassword.php" class="side-link">
-                View Department
-            </a>
-        </li>
-        <li class="link-li">
-            <a href="http://localhost:8080/proiectTransport//Users/logout.php" class="side-link">
-                Logout
-            </a>
-        </li>
-    </ul>
+            <li class="link-li">
+                @Html.ActionLink("Change Password", "ChangePassword", "Login", routeValues: null, htmlAttributes: new { id = "loginLink" })
+            </li>
+            <li class="link-li">
+                <a href="http://localhost:8080/proiectTransport//Users/ChangePassword.php" class="side-link">
+                    View Department
+                </a>
+            </li>
+            <li class="link-li">
+                @Html.ActionLink("Log out", "Logout", "Login", routeValues: null, htmlAttributes: new { id = "loginLink" })
+            </li>
+        </ul>
+    </div>
 </div>

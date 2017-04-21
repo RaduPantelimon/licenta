@@ -1,24 +1,37 @@
 ﻿
 .side-nav-box{
-    margin-top:50px;
+    margin-top:15px;
     margin-left:20px;
     margin-right: 20px;
 }
-
+#cssheader{
+    width: 200px;
+    background: #404b52;
+    font-family: 'Oxygen Mono', Tahoma, Arial, sans-serif;
+    font-size: 12px;
+    zoom: 1;
+    /*border-top: 4px solid #428bca;*/
+    margin-bottom:0px;
+    border-bottom-left-radius:0;
+    border-bottom-right-radius:0;
+}
+#cssheader.profile_summary {
+    margin:0px;
+    border:none;
+}
 #cssmenu {
     width: 200px;
     background: #404b52;
     font-family: 'Oxygen Mono', Tahoma, Arial, sans-serif;
     font-size: 12px;
     zoom: 1;
-    border-top: 4px solid #428bca;
-    margin-top:70px;
+    /*border-top: 4px solid #428bca;*/
 
 }
 
 #cssmenu > ul {
     width: 200px;
-    opacity:0.8;
+    
 }
 #cssmenu ul {
     position: relative;
@@ -29,6 +42,11 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    background: #404b52;
+   
+}
+#cssmenu ul li{
+     opacity:0.8;
 }
 #cssmenu ul li {
     float: none;
@@ -49,12 +67,20 @@
 #cssmenu li {
     position: relative;
 }
-
+#cssmenu li:last-child, #cssmenu ul, #cssmenu li:last-child a{
+   border-bottom-left-radius:20px;
+   border-bottom-right-radius:20px;
+}
+ #cssmenu > ul > li:hover{
+      opacity:1;
+ }
 #cssmenu > ul > li a:hover, #cssmenu > ul > li:hover a {
     background: #428bca;
+   
 }
 #cssmenu > ul > li.active a {
     background: #428bca;
+   
 }
 #cssmenu > ul > li > a:hover {
     color: #fff;
@@ -66,7 +92,7 @@
 #cssmenu a {
     display: block;
     padding: 15px 20px;
-    color:fff; /* #FD6022;*/
+    color:#fff; /* #FD6022;*/
     font-weight:bold;
     text-decoration: none;
     text-transform: uppercase;
