@@ -47,6 +47,8 @@ namespace ResourceApplicationTool.Utils
             public static string USER_ACCESS_LEVEL = "UserAccessLevel";
             public static string USER_FIRST_NAME = "UserFirstName";
             public static string USER_LAST_NAME = "UserLastName";
+            public static string USER_ROLE = "UserRole";
+            public static string USER_DEPARTMENT = "UserDepartment";
         }
         public partial class Fields
         {

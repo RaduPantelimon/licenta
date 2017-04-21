@@ -53,6 +53,21 @@ namespace ResourceApplicationTool.Controllers
                 Session[Const.CLAIM.USER_FIRST_NAME] = firstName;
                 Session[Const.CLAIM.USER_LAST_NAME] = lastName;
 
+
+                //setting user Role + Department
+                int empID = Convert.ToInt32(Session[Const.CLAIM.USER_ID]);
+                Employee emp = db.Employees.Include(x => x.Role).Include(x => x.Department).Where(x => x.EmployeeID == empID).FirstOrDefault();
+
+                if(emp.Department != null)
+                {
+                    Session[Const.CLAIM.USER_DEPARTMENT] = emp.Department.Title;
+                }
+                if (emp.Role != null)
+                {
+                    Session[Const.CLAIM.USER_ROLE] = emp.Role.Name;
+                }
+
+
             }
             return RedirectToAction("Index","Home");
         }

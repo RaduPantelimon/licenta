@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+@using ResourceApplicationTool.Utils;
+
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -56,20 +60,37 @@
             <button id="showLeft" type="button" class="close" onclick="closeLeftMenu()" style="opacity:1; height:18px;">x</button>
             <div class="side-profile user">
                 <div class="no-login-side-buttons side-profile registration">
-                    <ul class="navigation">
+                   
                        @if (!Request.IsAuthenticated)
                        {
-                            <li><a class="sup"  href="/Login">Login</a></li>
+                        <ul class="navigation">
+                            <li><a class="sup" href="/Login">Login</a></li>
                             <li></li>
+                        </ul>
                        }
                        else
                        {
-
+                           string userDisplayName = (Session[Const.CLAIM.USER_FIRST_NAME] != null ? Session[Const.CLAIM.USER_FIRST_NAME] : "") + " " +
+                           (Session[Const.CLAIM.USER_LAST_NAME] != null ? Session[Const.CLAIM.USER_LAST_NAME] : "");
+                            <ul class="navigation authenticated-navigation">
+                                <li class="cbp-profile-container">
+                                    <div class="profile-container">
+                                        <div class="small-user-profile-picture"
+                                             style="background-image: url(/Images/GetImgForEmployee/@(!String.IsNullOrEmpty(Session[Const.CLAIM.USER_ID].ToString())?Session[Const.CLAIM.USER_ID]:""))">
+                                        </div>
+                                    </div>
+                                    <div class="user-details-container">
+                                        @Html.ActionLink(userDisplayName, "UserProfile", "Login", routeValues: null, htmlAttributes: new { title = "Manage", @class = "user-display-name-link" })
+                                        <span class="role-name-container">@(Session[Const.CLAIM.USER_ROLE])</span>
+                                    </div>
+                                </li>
+                            </ul>
                        }
-                       
+    
 
-                    </ul>
-                </div>
+
+
+</div>
             </div>
             <ul class="" >
                 <li class="item-link">@Html.ActionLink("Departments", "Index", "Departments")</li>

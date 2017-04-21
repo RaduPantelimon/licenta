@@ -25,7 +25,16 @@
 
       
         <li>
-            @Html.ActionLink("Hello, " + userDisplayName + "!", "UserProfile", "Login", routeValues: null, htmlAttributes: new { title = "Manage" })
+            <div class="profile-container">
+                <div class="small-user-profile-picture" 
+                     style="background-image: url(/Images/GetImgForEmployee/@(!String.IsNullOrEmpty(Session[Const.CLAIM.USER_ID].ToString())?Session[Const.CLAIM.USER_ID]:""))">
+                </div>
+            </div>
+            <div class="user-details-container">
+                @Html.ActionLink(userDisplayName, "UserProfile", "Login", routeValues: null, htmlAttributes: new { title = "Manage", @class="user-display-name-link" })
+                <span class="role-name-container" >@(Session[Const.CLAIM.USER_ROLE])</span>
+            </div>
+            
         </li>
         <li>
             @Html.ActionLink("Log out", "Logout", "Login", routeValues: null, htmlAttributes: new { id = "loginLink" })

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -33,5 +35,33 @@ namespace ResourceApplicationTool.Controllers
             File fileToRetrieve = db.Files.First();
             return File(fileToRetrieve.ItemImage, fileToRetrieve.FileNumber);
         }
+
+        public ActionResult GetImgForEmployee(int? id)
+        {
+            if(id.HasValue)
+            {
+                Employee emp = db.Employees.Include(x => x.File).Where(x => x.EmployeeID == id).FirstOrDefault();
+
+                if (emp != null && emp.File != null)
+                {
+                    return File(emp.File.ItemImage, emp.File.FileNumber);
+                }
+            }
+
+            //if we havent found the employee or his picture, return default
+            string path = Server.MapPath("/Content/Pictures/default-profile-picture.png");
+            return base.File(path, "image/png");
+
+            /*
+            
+                MVC: 7.6 milliseconds per photo
+                Direct: 6.7 milliseconds per photo
+                Note: this is the average time of a request. The average was calculated by making thousands of requests on the local machine, so the totals should not include network latency or bandwidth issues.
+             
+             */
+        }
     }
 }
+
+
+
