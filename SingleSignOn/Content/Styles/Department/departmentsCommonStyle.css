@@ -1,0 +1,88 @@
+﻿div.mainHeaderLogo.departments-logo{
+    background:url(/Content/Pictures/departments-picture.png) no-repeat right fixed;
+    background-position: top right;
+    /*height: 413px;*/
+    height: 400px;
+    border:none;
+    border-bottom: 1px solid lightgray;
+
+}
+
+.mask-background-parent{
+    background-color:white;
+    width:324px;
+}
+
+@media (max-width: 992px) {
+    /* Solving dpacing issues for departments*/
+    .department-item > figure,
+    .department-item > div.mask-background-parent{
+        margin-left:auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Solving dpacing issues for departments*/
+    .department-item > figure,
+    .department-item > div.mask-background-parent{
+        margin-left:auto;
+        margin-right: auto;
+    }
+}
+
+
+h2.departments-title{
+    display:inline-block;
+    vertical-align:middle;
+    margin-top: 0px;
+
+}
+
+.department-main-picture {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    float:left;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	-webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	-moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+        margin-left: 20px;
+}
+
+.profile-header-container{
+    margin-top: 220px;
+}
+
+.mainHeaderLogo.departments-logo.departments-custom-logo{
+    background-position: top center;
+}
+
+/* MODAL STYLE*/
+#dialog-modal{
+    width: 50%;
+    left: 50%;
+    margin-left: -25%;
+    height:500px;
+    top:300px;
+    overflow-y: auto;
+    border-radius:20px;
+}
+
+.modal-header{
+    background-color:#428bca;
+    color:white;
+}
+.modal-body,
+.modal-footer{
+    background-color:white;
+}
+.modal-footer{
+    margin-top: 0px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}

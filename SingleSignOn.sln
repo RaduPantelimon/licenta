@@ -9,7 +9,51 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingleSignOn", "SingleSignO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{6975B674-C69B-4FA4-BFD3-8F24501AC0F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RelyingParty1", "RelyingParty1\RelyingParty1.csproj", "{30F97FBA-5C06-44E5-849D-CBED6D49AC47}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Project Files", "Shared Project Files", "{51D09D07-6793-441F-80BE-642657938B35}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{353090E2-B808-4988-8F59-E2C2B398F0B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{24409404-0BE2-40B2-9162-364B486D334F}"
+	ProjectSection(SolutionItems) = preProject
+		ResourceApplicationTool\Content\Styles\arrows.css = ResourceApplicationTool\Content\Styles\arrows.css
+		ResourceApplicationTool\Content\Styles\commonStyle.css = ResourceApplicationTool\Content\Styles\commonStyle.css
+		ResourceApplicationTool\Content\Styles\homePage.css = ResourceApplicationTool\Content\Styles\homePage.css
+		ResourceApplicationTool\Content\Styles\masterpageStyle.css = ResourceApplicationTool\Content\Styles\masterpageStyle.css
+		ResourceApplicationTool\Content\Styles\ng2-nouislider.min.css = ResourceApplicationTool\Content\Styles\ng2-nouislider.min.css
+		ResourceApplicationTool\Content\Styles\search.css = ResourceApplicationTool\Content\Styles\search.css
+		ResourceApplicationTool\Content\Styles\slickStyle.css = ResourceApplicationTool\Content\Styles\slickStyle.css
+		ResourceApplicationTool\Content\Styles\style.css = ResourceApplicationTool\Content\Styles\style.css
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Department", "Department", "{15838E84-D56D-4584-8550-2B1F76BDE8AE}"
+	ProjectSection(SolutionItems) = preProject
+		ResourceApplicationTool\Content\Styles\Department\departmentsCommonStyle.css = ResourceApplicationTool\Content\Styles\Department\departmentsCommonStyle.css
+		ResourceApplicationTool\Content\Styles\Department\departmentsDisplayStyle.css = ResourceApplicationTool\Content\Styles\Department\departmentsDisplayStyle.css
+		ResourceApplicationTool\Content\Styles\Department\departmentsEditStyle.css = ResourceApplicationTool\Content\Styles\Department\departmentsEditStyle.css
+		ResourceApplicationTool\Content\Styles\Department\departmentsIndexStyle.css = ResourceApplicationTool\Content\Styles\Department\departmentsIndexStyle.css
+		ResourceApplicationTool\Content\Styles\Department\departmentsNewStyle.css = ResourceApplicationTool\Content\Styles\Department\departmentsNewStyle.css
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Employee", "Employee", "{BDC9DDCE-1FAF-42F8-84FA-DBC2A9369C12}"
+	ProjectSection(SolutionItems) = preProject
+		ResourceApplicationTool\Content\Styles\Employee\employeesCommonStyle.css = ResourceApplicationTool\Content\Styles\Employee\employeesCommonStyle.css
+		ResourceApplicationTool\Content\Styles\Employee\employeesDetailsStyle.css = ResourceApplicationTool\Content\Styles\Employee\employeesDetailsStyle.css
+		ResourceApplicationTool\Content\Styles\Employee\employeesEditStyle.css = ResourceApplicationTool\Content\Styles\Employee\employeesEditStyle.css
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{48CCE9AA-1D96-4CC0-BD82-0AA72A62CA29}"
+	ProjectSection(SolutionItems) = preProject
+		ResourceApplicationTool\Content\Styles\Projects\projectsCommonStyle.css = ResourceApplicationTool\Content\Styles\Projects\projectsCommonStyle.css
+		ResourceApplicationTool\Content\Styles\Projects\projectsDetailsStyle.css = ResourceApplicationTool\Content\Styles\Projects\projectsDetailsStyle.css
+		ResourceApplicationTool\Content\Styles\Projects\projectsIndexStyle.css = ResourceApplicationTool\Content\Styles\Projects\projectsIndexStyle.css
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Login", "Login", "{6AA8D8BD-8E1F-4F9E-AA13-E33F1010AB3B}"
+	ProjectSection(SolutionItems) = preProject
+		ResourceApplicationTool\Content\Styles\Login\login_common.css = ResourceApplicationTool\Content\Styles\Login\login_common.css
+		ResourceApplicationTool\Content\Styles\Login\login_menu.css = ResourceApplicationTool\Content\Styles\Login\login_menu.css
+		ResourceApplicationTool\Content\Styles\Login\user_profile.css = ResourceApplicationTool\Content\Styles\Login\user_profile.css
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,12 +73,16 @@ Global
 		{6975B674-C69B-4FA4-BFD3-8F24501AC0F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6975B674-C69B-4FA4-BFD3-8F24501AC0F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6975B674-C69B-4FA4-BFD3-8F24501AC0F0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{30F97FBA-5C06-44E5-849D-CBED6D49AC47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{30F97FBA-5C06-44E5-849D-CBED6D49AC47}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{30F97FBA-5C06-44E5-849D-CBED6D49AC47}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{30F97FBA-5C06-44E5-849D-CBED6D49AC47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{353090E2-B808-4988-8F59-E2C2B398F0B8} = {51D09D07-6793-441F-80BE-642657938B35}
+		{24409404-0BE2-40B2-9162-364B486D334F} = {51D09D07-6793-441F-80BE-642657938B35}
+		{15838E84-D56D-4584-8550-2B1F76BDE8AE} = {24409404-0BE2-40B2-9162-364B486D334F}
+		{BDC9DDCE-1FAF-42F8-84FA-DBC2A9369C12} = {24409404-0BE2-40B2-9162-364B486D334F}
+		{48CCE9AA-1D96-4CC0-BD82-0AA72A62CA29} = {24409404-0BE2-40B2-9162-364B486D334F}
+		{6AA8D8BD-8E1F-4F9E-AA13-E33F1010AB3B} = {24409404-0BE2-40B2-9162-364B486D334F}
 	EndGlobalSection
 EndGlobal

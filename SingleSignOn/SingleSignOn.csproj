@@ -139,6 +139,77 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\bootstrap-datepicker3.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\Pictures\ajax-loader.gif" />
+    <Content Include="Content\Pictures\albert-camus.jpg" />
+    <Content Include="Content\Pictures\arrow-28-512.png" />
+    <Content Include="Content\Pictures\arrows - Copy.png" />
+    <Content Include="Content\Pictures\arrows.png" />
+    <Content Include="Content\Pictures\calendar-icon.png" />
+    <Content Include="Content\Pictures\collapse-sign.png" />
+    <Content Include="Content\Pictures\collapse-small.png" />
+    <Content Include="Content\Pictures\cross-512.png" />
+    <Content Include="Content\Pictures\default-profile-picture.png" />
+    <Content Include="Content\Pictures\delete-icon.png" />
+    <Content Include="Content\Pictures\department-icon.png" />
+    <Content Include="Content\Pictures\departments-picture.png" />
+    <Content Include="Content\Pictures\edit-icon.png" />
+    <Content Include="Content\Pictures\edit-image.png" />
+    <Content Include="Content\Pictures\effort-icon.png" />
+    <Content Include="Content\Pictures\employees-banner-icon.png" />
+    <Content Include="Content\Pictures\employees-icon.jpg" />
+    <Content Include="Content\Pictures\expand-sign.png" />
+    <Content Include="Content\Pictures\expand-small.png" />
+    <Content Include="Content\Pictures\imghover.png" />
+    <Content Include="Content\Pictures\joined.png" />
+    <Content Include="Content\Pictures\mail-icon.png" />
+    <Content Include="Content\Pictures\mask.png" />
+    <Content Include="Content\Pictures\masterpagepic.jpg" />
+    <Content Include="Content\Pictures\menu-btn-p.png" />
+    <Content Include="Content\Pictures\menu-btn.png" />
+    <Content Include="Content\Pictures\menu-icon-blue.png" />
+    <Content Include="Content\Pictures\padlock.jpg" />
+    <Content Include="Content\Pictures\phone-icon.png" />
+    <Content Include="Content\Pictures\privatepyle.jpg" />
+    <Content Include="Content\Pictures\projects-banner-icon.png" />
+    <Content Include="Content\Pictures\projects-icon.png" />
+    <Content Include="Content\Pictures\resizable-handler.gif" />
+    <Content Include="Content\Pictures\role-icon.png" />
+    <Content Include="Content\Pictures\sartre.jpg" />
+    <Content Include="Content\Pictures\search-banner.png" />
+    <Content Include="Content\Pictures\search-icon.png" />
+    <Content Include="Content\Pictures\settings_background.png" />
+    <Content Include="Content\Pictures\settings_background_img.png" />
+    <Content Include="Content\Pictures\shape.png" />
+    <Content Include="Content\Pictures\users-icon.png" />
+    <Content Include="Content\Pictures\warning-icon.png" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\Styles\arrows.css" />
+    <Content Include="Content\Styles\commonStyle.css" />
+    <Content Include="Content\Styles\Department\departmentsCommonStyle.css" />
+    <Content Include="Content\Styles\Department\departmentsDisplayStyle.css" />
+    <Content Include="Content\Styles\Department\departmentsEditStyle.css" />
+    <Content Include="Content\Styles\Department\departmentsIndexStyle.css" />
+    <Content Include="Content\Styles\Department\departmentsNewStyle.css" />
+    <Content Include="Content\Styles\Employee\employeesCommonStyle.css" />
+    <Content Include="Content\Styles\Employee\employeesDetailsStyle.css" />
+    <Content Include="Content\Styles\Employee\employeesEditStyle.css" />
+    <Content Include="Content\Styles\homePage.css" />
+    <Content Include="Content\Styles\Login\login_common.css" />
+    <Content Include="Content\Styles\Login\login_menu.css" />
+    <Content Include="Content\Styles\Login\user_profile.css" />
+    <Content Include="Content\Styles\masterpageStyle.css" />
+    <Content Include="Content\Styles\ng2-nouislider.min.css" />
+    <Content Include="Content\Styles\Projects\projectsCommonStyle.css" />
+    <Content Include="Content\Styles\Projects\projectsDetailsStyle.css" />
+    <Content Include="Content\Styles\Projects\projectsIndexStyle.css" />
+    <Content Include="Content\Styles\search.css" />
+    <Content Include="Content\Styles\SingleSignOnStyle\LoginPage.css" />
+    <Content Include="Content\Styles\slickStyle.css" />
+    <Content Include="Content\Styles\style.css" />
     <Content Include="Federation\metadata.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -172,6 +243,9 @@
       <Project>{6975b674-c69b-4fa4-bfd3-8f24501ac0f0}</Project>
       <Name>Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Styles\ng2-nouislider.min" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -361,6 +361,7 @@
     <Content Include="Content\Pictures\menu-btn-p.png" />
     <Content Include="Content\Pictures\menu-btn.png" />
     <Content Include="Content\Pictures\menu-icon-blue.png" />
+    <Content Include="Content\Pictures\padlock.jpg" />
     <Content Include="Content\Pictures\phone-icon.png" />
     <Content Include="Content\Pictures\privatepyle.jpg" />
     <Content Include="Content\Pictures\projects-banner-icon.png" />

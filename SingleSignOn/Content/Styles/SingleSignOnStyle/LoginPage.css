@@ -1,0 +1,46 @@
+﻿body{
+    background: url(/Content/Pictures/padlock.jpg) no-repeat center;
+}
+.parent-row{
+    width:100%;
+    
+}
+div.profile_summary{
+    padding:0px;
+    margin:0px;
+}
+.content-box{
+    max-width:800px;
+    margin: 100px auto;
+    display:block;
+    float:none;
+    background-color:white;
+    opacity:1;
+    border-radius: 20px;
+}
+
+.label-container{
+    text-align:right;
+}
+
+
+.tvd-sub-header:hover h1.sec-title {
+    background-color: #428bca;
+}
+.login-button{
+    margin: 50px auto;
+    margin-bottom:25px;
+    width:200px;
+}
+
+.validation-summary-errors ul li{
+    color:red;
+    list-style-type: none;
+    max-width:250px;
+    margin: 0 auto;
+     
+}
+.validation-summary-errors ul{
+    margin-bottom:25px;
+    padding-left:100px;
+}

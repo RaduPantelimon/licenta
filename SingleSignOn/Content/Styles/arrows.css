@@ -1,0 +1,30 @@
+﻿.arrow-up {
+  width: 0; 
+  height: 0; 
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  
+  border-bottom: 6px solid black;
+  margin-bottom:6px;
+}
+.arrow-up.selected-arrow{
+    border-bottom: 5px solid red;
+}
+.arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #000000;
+}
+.arrow-down.selected-arrow{
+    border-top: 5px solid red;
+}
+.arrow-container{
+    display:inline-block;
+    vertical-align:middle;
+    padding: 5px 4px;
+}
+.arrow-search{
+   cursor:pointer;
+}
