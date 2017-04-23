@@ -46,5 +46,13 @@ namespace ResourceApplicationTool.Models.SecondaryModels
 
 
         }
+
+        public List<SearchResult> getEmployeeResults()
+        {
+            List<SearchResult> employeesQuickSearch = employeeSearchResults.Select(x => new SearchResult(x.FirstName + " " + x.LastName,
+               "/Employees/Details/" + x.EmployeeID, "Employee")).ToList();
+
+            return employeesQuickSearch;
+        } 
     }
 }

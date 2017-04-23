@@ -236,6 +236,21 @@ namespace ResourceApplicationTool.Controllers
             return this.Json(searchRes.quickSearch, JsonRequestBehavior.AllowGet);
         }
 
+        // GET: Search/GetPartialEmployees
+        public JsonResult GetPartialEmployees(string query)
+        {
+            MainSearchResult searchRes = new MainSearchResult();
+
+            //executing the search queries
+            SearchForDepartments(searchRes, query);
+            SearchForEmployees(searchRes, query);
+            SearchForProjects(searchRes, query);
+            SearchForRoles(searchRes, query);
+
+            List<SearchResult> results = searchRes.getEmployeeResults();
+
+            return this.Json(results, JsonRequestBehavior.AllowGet);
+        }
 
         #region Queries
 

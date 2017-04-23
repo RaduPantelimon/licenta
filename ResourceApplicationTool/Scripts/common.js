@@ -139,6 +139,19 @@ function InitializeDatePickers(selector) {
     var date_input = $(selector);
     date_input.datepicker(/*options*/);
 }
+function InitializeDateTimePickers(selector) {
+    var container = $("#main-form-container > form").length > 0 ? $('"#main-form-container > form').parent() : "body";
+    var options = {
+        format: 'mm/dd/yyyy',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+    };
+
+
+    var date_input = $(selector);
+    date_input.datetimepicker(/*options*/);
+}
 
 //expand collapse behaviour for the main sections
 function MainExpandCollapse(link, action) {

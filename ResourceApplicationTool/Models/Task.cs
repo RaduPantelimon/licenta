@@ -11,7 +11,7 @@ namespace ResourceApplicationTool.Models
 {
     using System;
     using System.Collections.Generic;
-    using Newtonsoft.Json;
+    
     public partial class Task
     {
         public int TaskID { get; set; }
@@ -24,11 +24,9 @@ namespace ResourceApplicationTool.Models
         public string TaskDescription { get; set; }
         public int Difficulty { get; set; }
         public Nullable<int> Estimation { get; set; }
-        [JsonIgnore]
+    
         public virtual Employee Employee { get; set; }
-        [JsonIgnore]
         public virtual Role Role { get; set; }
-        [JsonIgnore]
         public virtual Sprint Sprint { get; set; }
     }
 }

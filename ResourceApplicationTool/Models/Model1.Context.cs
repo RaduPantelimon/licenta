@@ -37,5 +37,7 @@ namespace ResourceApplicationTool.Models
         public virtual DbSet<SkillCategory> SkillCategories { get; set; }
         public virtual DbSet<SkillLevel> SkillLevels { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
+        public virtual DbSet<Event> Events { get; set; }
+        public virtual DbSet<Attendant> Attendants { get; set; }
     }
 }

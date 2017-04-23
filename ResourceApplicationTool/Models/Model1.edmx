@@ -5,6 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="RATV3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Attendants">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="EventID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="EventID" Type="int" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Contacts">
           <Key>
             <PropertyRef Name="ContactID" />
@@ -65,6 +74,18 @@
           <Property Name="TerminationDate" Type="date" />
           <Property Name="Administrator" Type="varchar" MaxLength="50" />
           <Property Name="ProfileImageID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="Events">
+          <Key>
+            <PropertyRef Name="EventID" />
+          </Key>
+          <Property Name="EventID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" />
+          <Property Name="EventType" Type="varchar" MaxLength="50" />
+          <Property Name="Location" Type="varchar" MaxLength="500" />
+          <Property Name="CreatorID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="Files">
           <Key>
@@ -150,6 +171,18 @@
           <Property Name="Difficulty" Type="int" Nullable="false" />
           <Property Name="Estimation" Type="int" />
         </EntityType>
+        <Association Name="FK_Attendant">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Attendants" Type="Self.Attendants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Attendants">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_BannerID">
           <End Role="Files" Type="Self.Files" Multiplicity="0..1" />
           <End Role="Departments" Type="Self.Departments" Multiplicity="*" />
@@ -187,6 +220,18 @@
             </Principal>
             <Dependent Role="Projects">
               <PropertyRef Name="ContactID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CreatorID">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="CreatorID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -249,6 +294,18 @@
             </Principal>
             <Dependent Role="Tasks">
               <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventID">
+          <End Role="Events" Type="Self.Events" Multiplicity="1" />
+          <End Role="Attendants" Type="Self.Attendants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Events">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Attendants">
+              <PropertyRef Name="EventID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -353,10 +410,12 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="RATV3ModelStoreContainer">
+          <EntitySet Name="Attendants" EntityType="Self.Attendants" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Educations" EntityType="Self.Educations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Files" EntityType="Self.Files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
@@ -365,6 +424,10 @@
           <EntitySet Name="Skills" EntityType="Self.Skills" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sprints" EntityType="Self.Sprints" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Attendant" Association="Self.FK_Attendant">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Attendants" EntitySet="Attendants" />
+          </AssociationSet>
           <AssociationSet Name="FK_BannerID" Association="Self.FK_BannerID">
             <End Role="Files" EntitySet="Files" />
             <End Role="Departments" EntitySet="Departments" />
@@ -376,6 +439,10 @@
           <AssociationSet Name="FK_ContactID" Association="Self.FK_ContactID">
             <End Role="Contacts" EntitySet="Contacts" />
             <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CreatorID" Association="Self.FK_CreatorID">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Events" EntitySet="Events" />
           </AssociationSet>
           <AssociationSet Name="FK_DepartmentID" Association="Self.FK_DepartmentID">
             <End Role="Departments" EntitySet="Departments" />
@@ -396,6 +463,10 @@
           <AssociationSet Name="FK_EmployeeIDTasks" Association="Self.FK_EmployeeIDTasks">
             <End Role="Employees" EntitySet="Employees" />
             <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventID" Association="Self.FK_EventID">
+            <End Role="Events" EntitySet="Events" />
+            <End Role="Attendants" EntitySet="Attendants" />
           </AssociationSet>
           <AssociationSet Name="FK_MainImageID" Association="Self.FK_MainImageID">
             <End Role="Files" EntitySet="Files" />
@@ -508,6 +579,8 @@
           <Property Name="ProfileImageID" Type="Guid" />
           <NavigationProperty Name="File" Relationship="RATV3Model.fk_ProfileImageID" FromRole="Employee" ToRole="File" />
           <NavigationProperty Name="SkillLevels" Relationship="RATV3Model.FK_Employee1ID" FromRole="Employee" ToRole="SkillLevel" />
+          <NavigationProperty Name="Events" Relationship="RATV3Model.FK_CreatorID" FromRole="Employee" ToRole="Event" />
+          <NavigationProperty Name="Attendants" Relationship="RATV3Model.FK_Attendant1" FromRole="Employee" ToRole="Attendant" />
         </EntityType>
         <EntityType Name="File">
           <Key>
@@ -795,6 +868,20 @@
             <End Role="Skill" EntitySet="Skills" />
             <End Role="SkillLevel" EntitySet="SkillLevels" />
           </AssociationSet>
+          <EntitySet Name="Events" EntityType="RATV3Model.Event" />
+          <AssociationSet Name="FK_CreatorID" Association="RATV3Model.FK_CreatorID">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <EntitySet Name="Attendants" EntityType="RATV3Model.Attendant" />
+          <AssociationSet Name="FK_Attendant1" Association="RATV3Model.FK_Attendant1">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Attendant" EntitySet="Attendants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventID1" Association="RATV3Model.FK_EventID1">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Attendant" EntitySet="Attendants" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="fk_ProfileImageID">
           <End Type="RATV3Model.File" Role="File" Multiplicity="0..1" />
@@ -888,6 +975,67 @@
             </Principal>
             <Dependent Role="SkillLevel">
               <PropertyRef Name="SkillID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="EventID" />
+          </Key>
+          <Property Name="EventID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="EventType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreatorID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="RATV3Model.FK_CreatorID" FromRole="Event" ToRole="Employee" />
+          <NavigationProperty Name="Attendants" Relationship="RATV3Model.FK_EventID1" FromRole="Event" ToRole="Attendant" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_CreatorID">
+          <End Type="RATV3Model.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="RATV3Model.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="CreatorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Attendant">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="EventID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="EventID" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Employee" Relationship="RATV3Model.FK_Attendant1" FromRole="Attendant" ToRole="Employee" />
+          <NavigationProperty Name="Event" Relationship="RATV3Model.FK_EventID1" FromRole="Attendant" ToRole="Event" />
+        </EntityType>
+        <Association Name="FK_Attendant1">
+          <End Type="RATV3Model.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="RATV3Model.Attendant" Role="Attendant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Attendant">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventID1">
+          <End Type="RATV3Model.Event" Role="Event" Multiplicity="1" />
+          <End Type="RATV3Model.Attendant" Role="Attendant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Attendant">
+              <PropertyRef Name="EventID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1050,6 +1198,28 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="SkillID" ColumnName="SkillID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="RATV3Model.Event">
+              <MappingFragment StoreEntitySet="Events">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="CreatorID" ColumnName="CreatorID" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="EventType" ColumnName="EventType" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Attendants">
+            <EntityTypeMapping TypeName="RATV3Model.Attendant">
+              <MappingFragment StoreEntitySet="Attendants">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

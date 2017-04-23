@@ -11,8 +11,7 @@ namespace ResourceApplicationTool.Models
 {
     using System;
     using System.Collections.Generic;
-    using Newtonsoft.Json;
-
+    
     public partial class Sprint
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -26,10 +25,8 @@ namespace ResourceApplicationTool.Models
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
         public Nullable<int> Duration { get; set; }
-
-        [JsonIgnore]
+    
         public virtual Project Project { get; set; }
-        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Task> Tasks { get; set; }
     }

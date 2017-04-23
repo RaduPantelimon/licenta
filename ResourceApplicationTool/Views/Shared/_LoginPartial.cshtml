@@ -20,10 +20,21 @@
     @if (User.Identity.IsAuthenticated)
     {
 
-        string userDisplayName = (Session[Const.CLAIM.USER_FIRST_NAME] != null? Session[Const.CLAIM.USER_FIRST_NAME]:"") + " " +
-            (Session[Const.CLAIM.USER_LAST_NAME] != null ? Session[Const.CLAIM.USER_LAST_NAME] : "");
+        string userDisplayName;
 
-      
+
+        try
+        {
+            userDisplayName = (Session[Const.CLAIM.USER_FIRST_NAME] != null ? Session[Const.CLAIM.USER_FIRST_NAME] : "") + " ";
+            userDisplayName +=(Session[Const.CLAIM.USER_LAST_NAME] != null ? Session[Const.CLAIM.USER_LAST_NAME] : "");
+        }
+        catch (Exception ex)
+        {
+            userDisplayName = "";
+        }
+
+
+
         <li>
             <div class="profile-container">
                 <div class="small-user-profile-picture" 
