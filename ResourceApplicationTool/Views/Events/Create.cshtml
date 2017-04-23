@@ -21,7 +21,7 @@
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-        <input type="hidden" name="AttendantsIDs" value="" />
+        <input id="AttendantsIDs" type="hidden" name="AttendantsIDs" value="" />
         <div class="main_expandable">
             <div class="tvd-sub-header">
                 <table>
@@ -96,33 +96,44 @@
                 </div>
                 <div class="form-group subsection col-md-12 col-lg-12 col-sm-12 col-xs-12" style="clear:both">
                     <div class="field-name full-row  col-md-2 col-lg-2 col-sm-3 col-xs-12 right-align-not-xs right-align-not-sm">
-                       Attendants
+                       New Attendant
                     </div>
                     <div class="col-md-10 col-lg-10 col-sm-9 col-xs-12 full-row">
                         <div id="add-attendants-section">
                             <input id="employees-search-box" class="form-control employees-search-input" value="" autocomplete="off" />
-                            <button id="add-employee" class="form-control" type="button"> Add User</button>
+                            <button id="add-employee" class="form-control" type="button"> Add</button>
                         </div>
+                    </div>
+                </div>
+                <div class="form-group subsection col-md-12 col-lg-12 col-sm-12 col-xs-12" style="clear:both">
+                    <div class="field-name full-row  col-md-2 col-lg-2 col-sm-3 col-xs-12 right-align-not-xs right-align-not-sm">
+                        Current Attendants
+                    </div>
+                    <div class="col-md-10 col-lg-10 col-sm-9 col-xs-12 full-row">
                         <div id="attendants-container">
                         </div>
                     </div>
                 </div>
 
 
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Create" class="btn btn-default" />
-                    </div>
-                </div>
             </div>
         </div>
-        }
+        <div class="form-group last-section">
+            <div class="col-md-10 button-holder">
+                <input type="submit" value="Create" class="btn btn-default" />
+                <button type="button"
+                        class="btn btn-default btn-inverse"
+                        id="cancel"
+                        onclick="window.history.back()">
+                    <i class="icon-remove icon-large"></i>
+                    Cancel
+                </button>
+            </div>
+        </div>
+    }
     </div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
 
 
 @section Scripts {
