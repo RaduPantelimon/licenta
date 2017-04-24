@@ -127,6 +127,8 @@ function addEmployee() {
             currentAddedAttendant.EmpId = EmpId;
             empsArr.push(currentAddedAttendant);
             $("#AttendantsNames").val(JSON.stringify(empsArr));
+            checkAttendeesNumber(empsArr);
+            
         }
        
     }
@@ -182,5 +184,60 @@ function removeAttendant() {
         }
     }
     $("#AttendantsNames").val(JSON.stringify(empsArr));
+    checkAttendeesNumber(empsArr);
+}
+function initializeEventTypeSelector()
+{
+    $("select.permissions-selector").change(eventTypeChange);
+}
 
+function eventTypeChange()
+{
+    var eventSelctor = $(this);
+    var detailsHolder = eventSelctor.parent().children(".event-type-container");
+
+    //hide all, at first
+    detailsHolder.find(".event-type-text span").hide();
+
+    var eventType = eventSelctor.val();
+    var eventText = detailsHolder.find(".event-type-text span[data-event-type='" + eventType + "']");
+
+    if(eventText.length)
+    {
+        //we found the text
+        detailsHolder.show();
+        eventText.show();
+    }
+    else {
+        detailsHolder.hide();
+
+    }
+
+    //validation for the Attendants
+    var empsArr = JSON.parse($("#AttendantsNames").val());
+    if (eventType == "Performance Review" && empsArr && empsArr.length > 1)
+    {
+        $(".save-button").prop('disabled', true);
+        $(".attendants-warning-container").show();
+    }
+    else {
+        $(".save-button").prop('disabled', false);
+        $(".attendants-warning-container").hide();
+    }
+}
+
+function checkAttendeesNumber(empsArr) {
+
+    if (empsArr && empsArr.length <= 1) {
+
+        $(".save-button").prop('disabled', false);
+        $(".attendants-warning-container").hide();
+
+    }
+
+    var eventType = $(".permissions-selector").val();
+    if (eventType == "Performance Review" && empsArr && empsArr.length > 1) {
+        $(".save-button").prop('disabled', true);
+        $(".attendants-warning-container").show();
+    }
 }

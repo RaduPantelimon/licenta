@@ -133,6 +133,7 @@ namespace ResourceApplicationTool.Controllers
         // GET: Events/Edit/5
         public ActionResult Edit(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -162,9 +163,13 @@ namespace ResourceApplicationTool.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "EventID,StartTime,EndTime,EventType,Location,Title")] Event @event)
         {
-            //TO DO ADD USER PERMISSION VERIFICATION
             if (ModelState.IsValid)
             {
+                if (!(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                && (
+                (Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
+                || (Session[Const.CLAIM.USER_ID] != null && Session[Const.CLAIM.USER_ID].ToString() == @event.CreatorID.ToString()))
+              ))
                 db.Entry(@event).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -276,6 +276,7 @@
     <Compile Include="Models\Role.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SecondaryModels\EventTypeInfo.cs" />
     <Compile Include="Models\SecondaryModels\MainSearchResult.cs" />
     <Compile Include="Models\SecondaryModels\ResetPassword.cs" />
     <Compile Include="Models\SecondaryModels\SearchResult.cs" />
@@ -305,6 +306,7 @@
     <Compile Include="Utils\Const.cs" />
     <Compile Include="Utils\ControllerExtensions.cs" />
     <Compile Include="Utils\ExcelReportGenerator.cs" />
+    <Compile Include="Utils\Mailer.cs" />
     <Compile Include="Utils\PdfGenerator.cs" />
     <Compile Include="Utils\ViewRenderer.cs" />
   </ItemGroup>

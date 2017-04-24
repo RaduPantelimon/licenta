@@ -14,5 +14,10 @@ function initializePage() {
     InitializeDateTimePickers('#startDate-input');
     InitializeDateTimePickers('#endDate-input');
 
+    //employees search for the attendants
     initializeEmployeeSearchBox();
+
+    //initialize event type selector
+    initializeEventTypeSelector();
+
 }

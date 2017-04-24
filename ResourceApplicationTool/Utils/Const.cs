@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ResourceApplicationTool.Models;
+using ResourceApplicationTool.Models.SecondaryModels;
 
 namespace ResourceApplicationTool.Utils
 {
@@ -83,10 +85,23 @@ namespace ResourceApplicationTool.Utils
                  };
 
         public static readonly List<SelectListItem> EventTypes = new List<SelectListItem>{
+                    new SelectListItem{ Text="", Value = "" },
                     new SelectListItem{ Text="Audit", Value = "Audit" },
                     new SelectListItem{ Text="Performance Review", Value = "Performance Review" },
                     new SelectListItem { Text="Sprint Review Meeting", Value="Sprint Review Meeting" },
-                    new SelectListItem { Text="Daily Scrum Meeting", Value="Daily Scrum Meeting" }
+                    new SelectListItem { Text="Daily Scrum Meeting", Value="Daily Scrum Meeting" },
+                    new SelectListItem { Text="Department Monthly Meeting", Value="Department Monthly Meeting" }
+                 };
+
+        public static readonly List<EventTypeInfo> EventTypesinfo = new List<EventTypeInfo>{
+                    new EventTypeInfo{ EventType="", DetailInfo = "If left empty, no email will be sent", DisplayWarning=true },
+                    new EventTypeInfo{ EventType="Audit", DetailInfo = "Audit", DisplayWarning=false  },
+                    new EventTypeInfo{ EventType="Performance Review", DetailInfo = "Performance Review for a certain Employee. You will only be able to add one Attendant", DisplayWarning=true },
+                    new EventTypeInfo { EventType="Sprint Review Meeting", DetailInfo = "Sprint Review Meeting", DisplayWarning=false },
+                    new EventTypeInfo { EventType="Daily Scrum Meeting", DetailInfo = "Daily Scrum Meeting", DisplayWarning=false },
+                    new EventTypeInfo { EventType="Department Monthly Meeting",
+                        DetailInfo = "Will automatically attach a report of your department, for the current month",
+                        DisplayWarning =true }
                  };
     }
 }

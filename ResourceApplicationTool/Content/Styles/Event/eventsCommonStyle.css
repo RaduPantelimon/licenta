@@ -55,6 +55,8 @@ div.mainHeaderLogo.events-logo {
 }
 .attendant-name-holder{
     
+    font-weight: bold;
+    color: grey;
 }
 
 .remove-attendant{
@@ -72,4 +74,17 @@ div.mainHeaderLogo.events-logo {
     padding: 3px 5px 3px 2px;
     top: 0;
     right: 0;
+}
+
+.event-type-container{
+    margin-top:10px;
+}
+
+.event-type-text span{
+    color:lightgray;
+    margin-left: 5px;
+}
+
+.event-type-text{
+    display: inline;
 }
