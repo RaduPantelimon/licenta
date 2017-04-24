@@ -27,10 +27,11 @@ function initializeEmployeeSearchBox() {
         if (itemExists)
         {
             $("#employees-search-box").css({ "background": "#beec78" });
-            currentAddedAttendant = null;
+            
         }
         else {
             $("#employees-search-box").css({ "background": "#fdfda7" });
+            currentAddedAttendant = null;
         }
     });
 
@@ -79,7 +80,15 @@ function initializeEmployeeSearchBox() {
 function addEmployee() {
     if(currentAddedAttendant)
     {
-        var values = currentAddedAttendant.value.split("/");
+        var values;
+        if (currentAddedAttendant.value)
+        {
+            values = currentAddedAttendant.value.split("/");
+        }
+        else
+        {
+            values = currentAddedAttendant.url.split("/");
+        }
         var EmpId = values[values.length - 1];
 
         var currentAttendants = $("#AttendantsIDs").val();
@@ -104,11 +113,20 @@ function addEmployee() {
             currentAttendants += EmpId + ";";
             $("#AttendantsIDs").val(currentAttendants);
 
+
             $(".remove-attendant").click(removeAttendant);
 
             //empty search box
             $("#employees-search-box").val("");
             $("#employees-search-box").css({ "background": "#ffffff" });
+
+
+            //add to the names array
+
+            var empsArr = JSON.parse($("#AttendantsNames").val());
+            currentAddedAttendant.EmpId = EmpId;
+            empsArr.push(currentAddedAttendant);
+            $("#AttendantsNames").val(JSON.stringify(empsArr));
         }
        
     }
@@ -146,6 +164,23 @@ function removeAttendant() {
     currentAttendants = currentAttendants.replace(empID + ";", "");
     $("#AttendantsIDs").val(currentAttendants);
 
-
+    //remove from the UI
     attendantCell.remove();
+
+    //remove from the names array
+
+    var empsArr = JSON.parse($("#AttendantsNames").val());
+    
+    if (empsArr.length)
+    {
+        for (var i=empsArr.length-1;i>=0;i--)
+        {
+            if (empsArr[i].EmpId == empID)
+            {
+                empsArr.splice(i, 1);
+            }
+        }
+    }
+    $("#AttendantsNames").val(JSON.stringify(empsArr));
+
 }

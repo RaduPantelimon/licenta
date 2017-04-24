@@ -80,6 +80,13 @@ namespace ResourceApplicationTool.Utils
                     new SelectListItem{ Text="Employee", Value = "Employee" },
                     new SelectListItem{ Text="Manager", Value = "Manager" },
                     new SelectListItem { Text="Administrator", Value="Administrator" }
-                 }; 
+                 };
+
+        public static readonly List<SelectListItem> EventTypes = new List<SelectListItem>{
+                    new SelectListItem{ Text="Audit", Value = "Audit" },
+                    new SelectListItem{ Text="Performance Review", Value = "Performance Review" },
+                    new SelectListItem { Text="Sprint Review Meeting", Value="Sprint Review Meeting" },
+                    new SelectListItem { Text="Daily Scrum Meeting", Value="Daily Scrum Meeting" }
+                 };
     }
 }

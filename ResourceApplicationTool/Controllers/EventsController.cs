@@ -41,6 +41,15 @@ namespace ResourceApplicationTool.Controllers
         // GET: Events/Create
         public ActionResult Create()
         {
+            int currentUserID;
+
+            if (!User.Identity.IsAuthenticated ||
+                String.IsNullOrEmpty(Session[Const.CLAIM.USER_ID].ToString()) ||
+                !int.TryParse(Session[Const.CLAIM.USER_ID].ToString(), out currentUserID))
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+
             ViewBag.CreatorID = new SelectList(db.Employees, "EmployeeID", "Account");
             return View();
         }
@@ -50,18 +59,70 @@ namespace ResourceApplicationTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EventID,StartTime,EndTime,EventType,Location,CreatorID,Title")] Event @event)
+        public ActionResult Create([Bind(Include = "EventID,StartTime,EndTime,EventType,Location,CreatorID,Title")] Event @event,
+            string AttendantsIDs)
         {
             //checking if we have the permission necessary to add a new event
-            if (!User.Identity.IsAuthenticated)
+
+            int currentUserID;
+
+            if (!User.Identity.IsAuthenticated || 
+                String.IsNullOrEmpty(Session[Const.CLAIM.USER_ID].ToString()) ||
+                !int.TryParse(Session[Const.CLAIM.USER_ID].ToString(), out currentUserID))
             {
                 return RedirectToAction("NotFound", "Home");
             }
-
             if (ModelState.IsValid)
             {
+                @event.CreatorID = currentUserID;
+
+                //finding employees
+                List<Employee> attendantEmployees = new List<Employee>();
+                if (!String.IsNullOrEmpty(AttendantsIDs))
+                {
+                    string[] ids = AttendantsIDs.Split(';');
+                    List<int> parsedIDs = new List<int>();
+                    foreach (string id in ids)
+                    {
+                        int resultID;
+                        if(int.TryParse(id, out resultID))
+                        {
+                            parsedIDs.Add(resultID);
+                        }
+                    }
+
+                    //get attendants
+                   attendantEmployees = db.Employees.Where(x => parsedIDs.Contains(x.EmployeeID)).ToList();
+
+                }
+                
+
                 db.Events.Add(@event);
                 db.SaveChanges();
+                
+                //if we found any attendants, add them to the database
+                if(attendantEmployees != null && attendantEmployees.Count() > 0)
+                {
+                    try
+                    {
+
+                        foreach(Employee att in attendantEmployees)
+                        {
+                            Attendant newAtt = new Attendant();
+                            newAtt.EmployeeID = att.EmployeeID;
+                            newAtt.EventID = @event.EventID;
+
+                            db.Attendants.Add(newAtt);
+                        }
+                        db.SaveChanges();
+
+                    }
+                    catch(Exception ex)
+                    {
+                        //handle exception
+                    }
+                }
+
                 return RedirectToAction("Index");
             }
 
