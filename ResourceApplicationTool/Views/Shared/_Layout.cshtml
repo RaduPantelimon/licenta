@@ -1,6 +1,11 @@
 ﻿@using Microsoft.AspNet.Identity
 @using ResourceApplicationTool.Utils;
 
+@{ 
+    string numeVar = (Session[Const.CLAIM.USER_FIRST_NAME] != null ? Session[Const.CLAIM.USER_FIRST_NAME] : "") + " " +
+                          (Session[Const.CLAIM.USER_LAST_NAME] != null ? Session[Const.CLAIM.USER_LAST_NAME] : "");
+
+}
 
 <!DOCTYPE html>
 <html>
@@ -51,8 +56,11 @@
                         <li>@Html.ActionLink("Departments", "Index", "Departments")</li>
                         <li>@Html.ActionLink("Employees", "Index", "Employees")</li>
                         <li>@Html.ActionLink("Projects", "Index", "Projects")</li>
+                        <li>@Html.ActionLink("Events", "Index", "Events")</li>
                     </ul>
                     @Html.Partial("_LoginPartial")
+                  
+                  
                 </div>
             </div>
         </div>
@@ -71,8 +79,6 @@
                        }
                        else
                        {
-                           string userDisplayName = (Session[Const.CLAIM.USER_FIRST_NAME] != null ? Session[Const.CLAIM.USER_FIRST_NAME] : "") + " " +
-                           (Session[Const.CLAIM.USER_LAST_NAME] != null ? Session[Const.CLAIM.USER_LAST_NAME] : "");
                             <ul class="navigation authenticated-navigation">
                                 <li class="cbp-profile-container">
                                     <div class="profile-container">
@@ -81,7 +87,7 @@
                                         </div>
                                     </div>
                                     <div class="user-details-container">
-                                        @Html.ActionLink(userDisplayName, "UserProfile", "Login", routeValues: null, htmlAttributes: new { title = "Manage", @class = "user-display-name-link" })
+                                        @Html.ActionLink(numeVar, "UserProfile", "Login", routeValues: null, htmlAttributes: new { title = "Manage", @class = "user-display-name-link" })
                                         <span class="role-name-container">@(Session[Const.CLAIM.USER_ROLE])</span>
                                     </div>
                                 </li>
@@ -97,6 +103,7 @@
                 <li class="item-link">@Html.ActionLink("Departments", "Index", "Departments")</li>
                 <li class="item-link">@Html.ActionLink("Employees", "Index", "Employees")</li>
                 <li class="item-link">@Html.ActionLink("Projects", "Index", "Projects")</li>
+                <li class="item-link">@Html.ActionLink("Events", "Index", "Events")</li>
                 <li class="item-link">
                     <a class="cbp-search-anchor" href="">
                        Search <img height="20" width="20" src="/Content/Pictures/search-icon.png"> 

@@ -55,5 +55,9 @@ namespace ResourceApplicationTool.Models
         public virtual File File { get; set; }
         [JsonIgnore]
         public virtual ICollection<SkillLevel> SkillLevels { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Event> Events { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Attendant> Attendants { get; set; }
     }
 }

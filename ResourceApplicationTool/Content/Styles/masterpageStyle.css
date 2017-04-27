@@ -106,3 +106,24 @@
 }
 
 
+.main-header.container.master-page-header
+{
+    padding-left:4px;
+    padding-right:4px;
+}
+
+
+.nav > li > a:hover, .nav > li > a:focus {
+    text-decoration: none;
+    background-color: #eee;
+    border-bottom:2px #47c9af solid;
+}
+/*@media only screen and (max-width: 600px) and (min-width: 400px)*/
+@media (min-width:800px) and (max-width: 1210px) {
+
+.nav.navbar-nav.navbar-links-list > li > a {
+    padding-left:8px;
+    padding-right:8px;
+}
+
+}

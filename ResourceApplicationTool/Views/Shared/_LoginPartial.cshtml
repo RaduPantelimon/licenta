@@ -1,7 +1,14 @@
 ﻿@using Microsoft.AspNet.Identity
 @using ResourceApplicationTool.Utils;
 
-
+@{
+    string namearoni = (Session[Const.CLAIM.USER_FIRST_NAME] != null ? Session[Const.CLAIM.USER_FIRST_NAME] : "") + " " +
+                          (Session[Const.CLAIM.USER_LAST_NAME] != null ? Session[Const.CLAIM.USER_LAST_NAME] : "");
+    if (String.IsNullOrEmpty(namearoni) || String.IsNullOrWhiteSpace(namearoni))
+    {
+        namearoni = "User";
+    }
+}
 
 <ul class="nav navbar-nav navbar-right">
     <li class="search-component">
@@ -20,18 +27,7 @@
     @if (User.Identity.IsAuthenticated)
     {
 
-        string userDisplayName;
-
-
-        try
-        {
-            userDisplayName = (Session[Const.CLAIM.USER_FIRST_NAME] != null ? Session[Const.CLAIM.USER_FIRST_NAME] : "") + " ";
-            userDisplayName +=(Session[Const.CLAIM.USER_LAST_NAME] != null ? Session[Const.CLAIM.USER_LAST_NAME] : "");
-        }
-        catch (Exception ex)
-        {
-            userDisplayName = "";
-        }
+        
 
 
 
@@ -42,7 +38,7 @@
                 </div>
             </div>
             <div class="user-details-container">
-                @Html.ActionLink(userDisplayName, "UserProfile", "Login", routeValues: null, htmlAttributes: new { title = "Manage", @class="user-display-name-link" })
+                @Html.ActionLink(namearoni, "UserProfile", "Login", routeValues: null, htmlAttributes: new { title = "Manage", @class="user-display-name-link" })
                 <span class="role-name-container" >@(Session[Const.CLAIM.USER_ROLE])</span>
             </div>
             

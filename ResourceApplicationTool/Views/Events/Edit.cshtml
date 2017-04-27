@@ -1,70 +1,173 @@
 ﻿@model ResourceApplicationTool.Models.Event
+@using ResourceApplicationTool.Models.SecondaryModels;
+@using ResourceApplicationTool.Utils;
 
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<link href="~/Content/Styles/Event/eventsCommonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/Event/eventsEditStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/commonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/slickStyle.css" rel="stylesheet" />
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Event</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.EventID)
+<div class="mainHeaderLogo events-logo logo-details" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"></div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+<h2 class="sec-title-huge sec-title main-form-header">Edit @(Model.Title)</h2>
+<hr class="sec-hr" />
+
+
+
+<div class="main-form-container">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <input id="AttendantsIDs" type="hidden" name="AttendantsIDs" value="" />
+        <input id="AttendantsNames" type="hidden" name="AttendantsNames" value="[]" />
+        <div class="main_expandable">
+            <div class="tvd-sub-header">
+                <table>
+                    <tr>
+                        <td>
+                            <!--<a class="main_expand_collapse">
+                                <img class="expandimg" src="~/Content/Pictures/expand-sign.png" title="expand" height="18" width="18" align="absbottom" style="display: none;">
+                                <img class="collapseimg" src="~/Content/Pictures/collapse-sign.png" title="collapse" height="18" width="18" align="absbottom" style="display: inline;">
+                            </a>-->
+                        </td>
+                        <td>
+                            <h1 class="sec-title-large sec-title" data-scrollname="Projects" style="display: inline; bottom: 0px;">
+                                General Information
+                            </h1>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="row expandable-content">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
+                    <div class="col-md-9 col-sm-9">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                    @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
+                    <div class="col-md-9 col-sm-9">
+                        @Html.TextBoxFor(model => model.StartTime, new
+                   {
+                       @Value = "",
+                       @class = "form-control",
+                       @id = "startDate-input",
+                       @placeholder = "MM/DD/YYY"
+                   })
+                        @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                    @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
+                    <div class="col-md-9 col-sm-9">
+                        @Html.TextBoxFor(model => model.EndTime, new
+                   {
+                       @Value = "",
+                       @class = "form-control",
+                       @id = "endDate-input",
+                       @placeholder = "MM/DD/YYY"
+                   })
+                        @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group  col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                    @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
+                    <div class="col-md-9 col-sm-9">
+                        @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                    @Html.LabelFor(model => model.EventType, "Permissions level", htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
+                    <div class="col-md-9 col-sm-9">
+
+                        @Html.DropDownListFor(model => model.EventType, Const.EventTypes, new Dictionary<string, object> { { "class", "form-control permissions-selector" } })
+                        @Html.ValidationMessageFor(model => model.EventType, "", new { @class = "text-danger" })
+
+                        <div class="event-type-container" style="display:none;">
+                            <img class="event-type-warning" src="~/Content/Pictures/warning-icon.png" width="20" height="20" />
+                            <div class="event-type-text">
+                                @foreach (EventTypeInfo typeInfo in Const.EventTypesinfo)
+                                {
+                                    if (typeInfo.DisplayWarning)
+                                    {
+                                        <span style="display:none;" data-event-type="@typeInfo.EventType">@typeInfo.DetailInfo</span>
+                                    }
+
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group subsection col-md-12 col-lg-12 col-sm-12 col-xs-12" style="clear:both">
+                    <div class="field-name full-row  col-md-2 col-lg-2 col-sm-3 col-xs-12 right-align-not-xs right-align-not-sm">
+                        New Attendant
+                    </div>
+                    <div class="col-md-10 col-lg-10 col-sm-9 col-xs-12 full-row">
+                        <div id="add-attendants-section">
+                            <input id="employees-search-box" class="form-control employees-search-input" value="" autocomplete="off" />
+                            <button id="add-employee" class="form-control" type="button"> Add</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group subsection col-md-12 col-lg-12 col-sm-12 col-xs-12" style="clear:both">
+                    <div class="field-name full-row  col-md-2 col-lg-2 col-sm-3 col-xs-12 right-align-not-xs right-align-not-sm">
+                        Current Attendants
+                    </div>
+                    <div class="col-md-10 col-lg-10 col-sm-9 col-xs-12 full-row">
+                        <div id="attendants-container">
+                        </div>
+                        <div class="attendants-warning-container" style="display:none;">
+                            <img class="validation-warning" src="~/Content/Pictures/warning-icon.png" width="20" height="20" />
+                            <div class="validation-text">
+                                <span>The performance review must have only one attendant.</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
+        <div class="form-group last-section">
+            <div class="col-md-10 button-holder">
+                <input type="submit" value="Create" class="btn btn-default save-button" />
+                <button type="button"
+                        class="btn btn-default btn-inverse"
+                        id="cancel"
+                        onclick="window.history.back()">
+                    <i class="icon-remove icon-large"></i>
+                    Cancel
+                </button>
             </div>
         </div>
+    }
+</div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.EventType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EventType, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EventType, "", new { @class = "text-danger" })
-            </div>
-        </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatorID, "CreatorID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("CreatorID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CreatorID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+    @Styles.Render("~/Content/jquery-uicss") ;
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+<script type="text/javascript" src="/scripts/moment.min.js"></script>
+<script type="text/javascript" src="/scripts/bootstrap-datetimepicker.js"></script>
+<script src="~/Scripts/common.js"></script>
+<script src="~/Scripts/events/events_common.js"></script>
+<script src="~/Scripts/events/events_edit.js"></script>
+<link rel="stylesheet" href="/Content/bootstrap-datetimepicker.css" />
