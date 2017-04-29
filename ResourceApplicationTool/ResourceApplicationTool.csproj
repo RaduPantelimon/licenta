@@ -277,6 +277,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SecondaryModels\EventTypeInfo.cs" />
+    <Compile Include="Models\SecondaryModels\ExistingAttendant.cs" />
     <Compile Include="Models\SecondaryModels\MainSearchResult.cs" />
     <Compile Include="Models\SecondaryModels\ResetPassword.cs" />
     <Compile Include="Models\SecondaryModels\SearchResult.cs" />

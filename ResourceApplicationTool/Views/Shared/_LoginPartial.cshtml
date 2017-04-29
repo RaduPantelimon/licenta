@@ -2,8 +2,8 @@
 @using ResourceApplicationTool.Utils;
 
 @{
-    string namearoni = (Session[Const.CLAIM.USER_FIRST_NAME] != null ? Session[Const.CLAIM.USER_FIRST_NAME] : "") + " " +
-                          (Session[Const.CLAIM.USER_LAST_NAME] != null ? Session[Const.CLAIM.USER_LAST_NAME] : "");
+    string namearoni = (Session[Const.CLAIM.USER_FIRST_NAME] != null ? Session[Const.CLAIM.USER_FIRST_NAME].ToString() : "") + " " +
+                          (Session[Const.CLAIM.USER_LAST_NAME] != null ? Session[Const.CLAIM.USER_LAST_NAME].ToString() : "");
     if (String.IsNullOrEmpty(namearoni) || String.IsNullOrWhiteSpace(namearoni))
     {
         namearoni = "User";

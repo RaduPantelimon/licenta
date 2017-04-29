@@ -20,4 +20,8 @@ function initializePage() {
     //initialize event type selector
     initializeEventTypeSelector();
 
+    //initialize existing Attendants
+    initializeExistingAttendants();
+
+
 }

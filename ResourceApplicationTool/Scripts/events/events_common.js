@@ -241,3 +241,21 @@ function checkAttendeesNumber(empsArr) {
         $(".attendants-warning-container").show();
     }
 }
+
+function initializeExistingAttendants()
+{
+    var empsArr = JSON.parse($("#AttendantsNames").val());
+    if(empsArr && empsArr.length)
+    {
+        if(empsArr && empsArr.length)
+            for(var i = 0; i<empsArr.length;i++)
+            {
+                $("#attendants-container").append(
+                  "<div class='attendant-cell' Emp-Url='" + empsArr[i].empID + "'><span class='attendant-name-holder'>" + empsArr[i].text + "</span>" +
+                  "<button type='button' class='remove-attendant' >x</button>" + "</div>");
+            }
+    }
+
+    $(".remove-attendant").click(removeAttendant);
+    
+}

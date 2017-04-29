@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using ResourceApplicationTool.Models;
 using ResourceApplicationTool.Models.SecondaryModels;
 using ResourceApplicationTool.Utils;
+using Newtonsoft.Json;
+
 
 namespace ResourceApplicationTool.Controllers
 {
@@ -153,6 +155,19 @@ namespace ResourceApplicationTool.Controllers
                 return HttpNotFound();
             }
             ViewBag.CreatorID = new SelectList(db.Employees, "EmployeeID", "Account", @event.CreatorID);
+
+            //getting the existing attendants
+            List<Attendant> attendants = db.Attendants.Where(X => X.EventID == @event.EventID).ToList();
+            List<ExistingAttendant> existing = attendants.Select(x => new ExistingAttendant(
+                                "/Employees/Details/" + x.EmployeeID,
+                                x.Employee.FirstName + " " + x.Employee.LastName, 
+                                x.EmployeeID)).ToList();
+
+            string attendantIDs = String.Join(";",attendants.Select(x => x.EmployeeID.ToString()));
+
+            ViewBag.AttendantIDs = attendantIDs + ";";
+            ViewBag.AttendantNames = JsonConvert.SerializeObject(existing);
+
             return View(@event);
         }
 
@@ -161,19 +176,85 @@ namespace ResourceApplicationTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EventID,StartTime,EndTime,EventType,Location,Title")] Event @event)
+        public ActionResult Edit(
+            [Bind(Include = "EventID,StartTime,EndTime,EventType,Location,Title")] Event @event, 
+            string AttendantsIDs,
+           string AttendantsNames)
         {
             if (ModelState.IsValid)
             {
+                Event ev = db.Events.Where(x => x.EventID == @event.EventID).FirstOrDefault();
+                int creatorID = ev.CreatorID;
+
+                ev.StartTime = @event.StartTime;
+                ev.EndTime = @event.EndTime;
+                ev.EventType = @event.EventType;
+                ev.Title = @event.Title;
+
                 if (!(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
                 && (
                 (Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
-                || (Session[Const.CLAIM.USER_ID] != null && Session[Const.CLAIM.USER_ID].ToString() == @event.CreatorID.ToString()))
+                || (Session[Const.CLAIM.USER_ID] != null && Session[Const.CLAIM.USER_ID].ToString() == ev.CreatorID.ToString()))
               ))
-                db.Entry(@event).State = EntityState.Modified;
+                {
+                    return RedirectToAction("NotFound", "Home");
+                }
+                int.TryParse(Session[Const.CLAIM.USER_ID].ToString(), out creatorID);
+
+                ev.CreatorID = creatorID;
+                db.Entry(ev).State = EntityState.Modified;
                 db.SaveChanges();
+
+                //updating the attendants
+                List<Employee> attendantEmployees = new List<Employee>();
+                List<int> parsedIDs = new List<int>();
+
+                if (!String.IsNullOrEmpty(AttendantsIDs))
+                {
+                    string [] ids = AttendantsIDs.Split(';');
+                    
+                    foreach (string id in ids)
+                    {
+                        int resultID;
+                        if (int.TryParse(id, out resultID))
+                        {
+                            parsedIDs.Add(resultID);
+                        }
+                    }
+
+                    
+                }
+                List<Attendant> existingAttendants = db.Attendants.Where(x => x.EventID == @event.EventID).ToList();
+                
+                //delete removed attendants
+                List<Attendant> removedAttendants = existingAttendants.Where(x => !parsedIDs.Contains(x.EmployeeID)).ToList();
+                foreach(Attendant att in removedAttendants)
+                {
+                    db.Attendants.Remove(att);
+                }
+
+                //get new attendants
+                parsedIDs = parsedIDs.Where(x => !existingAttendants.Any(y => y.EmployeeID == x)).ToList();
+                attendantEmployees = db.Employees.Where(x => parsedIDs.Contains(x.EmployeeID)).ToList();
+
+                //add new attendants
+                foreach (Employee att in attendantEmployees)
+                {
+                 
+                    Attendant newAtt = new Attendant();
+                    newAtt.EmployeeID = att.EmployeeID;
+                    newAtt.EventID = @event.EventID;
+
+                    db.Attendants.Add(newAtt);
+                }
+                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
+
+            ViewBag.AttendantIDs = AttendantsIDs;
+            ViewBag.AttendantNames = AttendantsNames;
+
             ViewBag.CreatorID = new SelectList(db.Employees, "EmployeeID", "Account", @event.CreatorID);
             return View(@event);
         }
@@ -224,6 +305,9 @@ namespace ResourceApplicationTool.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+
+       
 
         protected override void Dispose(bool disposing)
         {

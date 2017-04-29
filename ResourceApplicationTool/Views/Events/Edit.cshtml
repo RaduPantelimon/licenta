@@ -24,8 +24,10 @@
     {
         @Html.AntiForgeryToken()
 
-        <input id="AttendantsIDs" type="hidden" name="AttendantsIDs" value="" />
-        <input id="AttendantsNames" type="hidden" name="AttendantsNames" value="[]" />
+        <input id="AttendantsIDs" type="hidden" name="AttendantsIDs" value="@ViewBag.AttendantIDs" />
+        <input id="AttendantsNames" type="hidden" name="AttendantsNames" value="@ViewBag.AttendantNames" />
+        @Html.HiddenFor(model => model.EventID)
+
         <div class="main_expandable">
             <div class="tvd-sub-header">
                 <table>
@@ -58,10 +60,10 @@
                     <div class="col-md-9 col-sm-9">
                         @Html.TextBoxFor(model => model.StartTime, new
                    {
-                       @Value = "",
+                       @Value = Model.StartTime.ToString("MM/dd/yyyy hh:mm tt"),
                        @class = "form-control",
                        @id = "startDate-input",
-                       @placeholder = "MM/DD/YYY"
+                       @placeholder = "MM/dd/YYYY hh:mm tt"
                    })
                         @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
                     </div>
@@ -72,10 +74,10 @@
                     <div class="col-md-9 col-sm-9">
                         @Html.TextBoxFor(model => model.EndTime, new
                    {
-                       @Value = "",
+                       @Value = (Model.EndTime.HasValue)?Model.EndTime.Value.ToString("MM/dd/yyyy hh:mm tt") :"",
                        @class = "form-control",
                        @id = "endDate-input",
-                       @placeholder = "MM/DD/YYY"
+                       @placeholder = "MM/dd/YYYY hh:mm tt"
                    })
                         @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
                     </div>
