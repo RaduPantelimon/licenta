@@ -309,6 +309,7 @@
     <Compile Include="Utils\ExcelReportGenerator.cs" />
     <Compile Include="Utils\Mailer.cs" />
     <Compile Include="Utils\PdfGenerator.cs" />
+    <Compile Include="Utils\PrivateConst.cs" />
     <Compile Include="Utils\ViewRenderer.cs" />
   </ItemGroup>
   <ItemGroup>

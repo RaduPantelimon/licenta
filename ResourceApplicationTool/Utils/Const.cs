@@ -8,7 +8,7 @@ using ResourceApplicationTool.Models.SecondaryModels;
 
 namespace ResourceApplicationTool.Utils
 {
-    public class Const
+    public partial class Const
     {
         public partial class PermissionLevels
         {
