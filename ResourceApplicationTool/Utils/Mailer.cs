@@ -38,6 +38,7 @@ namespace ResourceApplicationTool.Utils
 
             try
             {
+
                 string embededHtml = "<html><head></head><body>" + "<p>Test</p>" + "<br/><br/>" + "<p>Test Embeded</p>" + "<br/>" + "<p>Test Ending</p>" + "<br/></body></html>";
 
                 //preping the email message
@@ -60,23 +61,32 @@ namespace ResourceApplicationTool.Utils
                 htmlView.ContentType.CharSet = Encoding.UTF8.WebName;
 
 
-
-                if(ev.EventType == "Performance Review" && ev.Attendants!= null && ev.Attendants.Count > 0)
+                Attendant at = ev.Attendants.FirstOrDefault();
+                Employee reviewed = db.Employees.Where(x => x.EmployeeID == at.EmployeeID).FirstOrDefault();
+                reviewed.SkillLevelsList = reviewed.SkillLevels.ToList();
+                if (ev.EventType == "Performance Review" && ev.Attendants!= null && ev.Attendants.Count > 0 && reviewed != null)
                 {
                     //we'll attach the pdf to the email
 
-                    Attendant at = ev.Attendants.FirstOrDefault();
-                    Employee reviewed = db.Employees.Where(x => x.EmployeeID == at.EmployeeID).FirstOrDefault();
-                    if(reviewed != null)
-                    {
                         Stream pdfDocument = GenerateUserCV(reviewed, ControllerContext);
                         if (pdfDocument != null)
                         {
                             LinkedResource resource = new LinkedResource(pdfDocument);
                             resource.ContentType.Name = reviewed.FirstName + " " + reviewed.LastName + " " + "Report.pdf";
                             htmlView.LinkedResources.Add(resource);
-                        }
-                    }      
+                        }     
+                }
+                else if (ev.EventType == "Department Monthly Meeting" && reviewed.DepartmentID.HasValue)
+                {
+                    byte[] array = ExcelReportGenerator.GenerateExcelReportForDepartment(reviewed.DepartmentID.Value, ev.StartTime.Month, ev.StartTime.Year, db);
+                    Stream excelDocument = new MemoryStream(array);
+                    if (excelDocument != null)
+                    {
+                        LinkedResource resource = new LinkedResource(excelDocument);
+                        resource.ContentType.Name = "Department Report.xlsx";
+                        htmlView.LinkedResources.Add(resource);
+                    }
+
                 }
 
 
@@ -95,7 +105,7 @@ namespace ResourceApplicationTool.Utils
 
 
 
-                AlternateView avCal = CreateICSView(email, ev.StartTime, endTime);
+                AlternateView avCal = CreateICSView(email, ev.StartTime, endTime, ev);
                 //email.Headers.Add("Content-class", "urn:content-classes:calendarmessage");
                 email.AlternateViews.Add(htmlView);
                 email.AlternateViews.Add(avCal);
@@ -164,10 +174,10 @@ namespace ResourceApplicationTool.Utils
         /// <summary>
         /// Creates Outlook meeting notification
         /// </summary>
-        public  AlternateView CreateICSView(MailMessage email, DateTime startDate, DateTime endDate)
+        public  AlternateView CreateICSView(MailMessage email, DateTime startDate, DateTime endDate,Event ev)
         {
             // Now Contruct the ICS file using string builder
-            string str = CreateICSBody(email, startDate, endDate);
+            string str = CreateICSBody(email, startDate, endDate,ev);
             System.Net.Mime.ContentType contype = new System.Net.Mime.ContentType("text/calendar");
             contype.Parameters.Add("method", "REQUEST");
             contype.Parameters.Add("name", "Meeting.ics");
@@ -178,8 +188,11 @@ namespace ResourceApplicationTool.Utils
         /// <summary>
         /// Creates body of Outlook meeting notification
         /// </summary>
-        public  string CreateICSBody(MailMessage email, DateTime startDate, DateTime endDate)
+        public  string CreateICSBody(MailMessage email, DateTime startDate, DateTime endDate, Event ev)
         {
+
+            string location = String.IsNullOrEmpty(ev.Location)?"Conference Call":ev.Location;
+
             StringBuilder str = new StringBuilder();
             str.AppendLine("BEGIN:VCALENDAR");
             str.AppendLine("PRODID:-//Schedule a Meeting");
@@ -189,7 +202,7 @@ namespace ResourceApplicationTool.Utils
             str.AppendLine(string.Format("DTSTART:{0:yyyyMMddTHHmmssZ}", startDate));
             str.AppendLine(string.Format("DTSTAMP:{0:yyyyMMddTHHmmssZ}", DateTime.UtcNow));
             str.AppendLine(string.Format("DTEND:{0:yyyyMMddTHHmmssZ}", endDate));
-            str.AppendLine("LOCATION: Conference Call");
+            str.AppendLine("LOCATION:" + location);
             str.AppendLine(string.Format("UID:{0}", Guid.NewGuid()));
             str.AppendLine(string.Format("DESCRIPTION:{0}", email.Body));
             str.AppendLine(string.Format("X-ALT-DESC;FMTTYPE=text/html:{0}", email.Body));

@@ -141,6 +141,12 @@ namespace ResourceApplicationTool.Controllers
         public ActionResult Create([Bind(Include = "EventID,StartTime,EndTime,EventType,Location,CreatorID,Title")] Event @event,
             string AttendantsIDs)
         {
+            //initialize baseUrl
+            string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+            Request.ApplicationPath.TrimEnd('/') + "/";
+
+            ViewBag.baseUrl = baseUrl;
+
             //checking if we have the permission necessary to add a new event
 
             int currentUserID;
@@ -203,8 +209,25 @@ namespace ResourceApplicationTool.Controllers
                 }
 
                 //after the save actions are completed, we'll send the notifications to the attendants
-                Mailer mailer = new Mailer();
-                mailer.SendMail(db, @event, attendantEmployees, @event.Employee, ControllerContext);
+
+                //adding the necessary data to the viewbag
+                if (@event.EventType == "Performance Review" && @event.Attendants != null && @event.Attendants.Count > 0)
+                {
+                    Attendant at = @event.Attendants.FirstOrDefault();
+                    Employee employee = db.Employees.Find(at.EmployeeID);
+                    if (employee != null)
+                    {
+                        Common.GeneratePDFViewBag(@event.EventID,ViewBag);
+                    }
+                }
+                if(!String.IsNullOrEmpty(@event.EventType))
+                {
+                    //we only send a request if the meeting type is selected
+                    Mailer mailer = new Mailer();
+                    Employee creator = db.Employees.Find(currentUserID);
+                    mailer.SendMail(db, @event, attendantEmployees, creator, ControllerContext);
+                }
+
 
 
                 return RedirectToAction("Index");

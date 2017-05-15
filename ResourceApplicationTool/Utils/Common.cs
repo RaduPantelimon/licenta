@@ -20,6 +20,66 @@ namespace ResourceApplicationTool.Utils
     {
         private static RATV3Entities db = new RATV3Entities();
 
+        public static void GeneratePDFViewBag(int id, dynamic ViewBag)
+        {
+            Event @event = db.Events.Find(id);
+            if (@event.EventType == "Performance Review" && @event.Attendants != null && @event.Attendants.Count > 0)
+            {
+                #region PrepareViewBag
+                Attendant at = @event.Attendants.FirstOrDefault();
+                Employee employee = db.Employees.Find(at.EmployeeID);
+                string profilePicUrl = "";
+
+                //getting the picture ready
+                Common.CreateSkillTemplates(employee);
+                if (employee.File != null)
+                {
+                    profilePicUrl = Utils.Common.SaveImgLocally(db, employee.File.FileID.ToString());
+                    ViewBag.profilePicUrl = profilePicUrl;
+
+                }
+                else
+                {
+                    ViewBag.profilePicUrl = System.Web.HttpContext.Current.Server.MapPath("~/Content/Pictures/");
+                }
+
+                //getting the projects for this employee
+                List<Task> tasks = db.Tasks.Include(x => x.Sprint).Where(x => x.EmployeeID == employee.EmployeeID).ToList();
+                List<Project> projects = (from t in db.Tasks
+                                          join s in db.Sprints on t.SprintID equals s.SprintID
+                                          join p in db.Projects on s.ProjectID equals p.ProjectID
+                                          where t.EmployeeID == employee.EmployeeID
+                                          select p).Distinct().ToList();
+
+                foreach (Project p in projects)
+                {
+                    //selecting the correct tasks for each project
+                    List<Task> projectTasks = tasks.Where(x => x.Sprint != null && x.Sprint.ProjectID == p.ProjectID).ToList();
+                    foreach (Task t in projectTasks)
+                    {
+                        if (t.Estimation.HasValue)
+                        {
+                            p.ManHoursEffort += t.Estimation.Value;
+                        }
+
+                    }
+
+                }
+
+
+                ViewBag.projects = projects;
+                ViewBag.headertext = "CV: " + employee.FirstName + " " + employee.LastName;
+
+
+
+                //initializing CV
+                employee.SkillLevelsList = employee.SkillLevels.ToList();
+                ViewBag.SkillCategories = db.SkillCategories.OrderByDescending(x => x.Skills.Count).ToList();
+                #endregion
+
+            }
+        }
+
         public static Guid? CreateImage(HttpPostedFileBase uploadPicture)
         {
             try
