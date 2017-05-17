@@ -94,13 +94,15 @@ namespace ResourceApplicationTool.Utils
                  };
 
         public static readonly List<EventTypeInfo> EventTypesinfo = new List<EventTypeInfo>{
-                    new EventTypeInfo{ EventType="", DetailInfo = "If left empty, no email will be sent", DisplayWarning=true },
-                    new EventTypeInfo{ EventType="Audit", DetailInfo = "Audit", DisplayWarning=false  },
-                    new EventTypeInfo{ EventType="Performance Review", DetailInfo = "Performance Review for a certain Employee. You will only be able to add one Attendant", DisplayWarning=true },
-                    new EventTypeInfo { EventType="Sprint Review Meeting", DetailInfo = "Sprint Review Meeting", DisplayWarning=false },
-                    new EventTypeInfo { EventType="Daily Scrum Meeting", DetailInfo = "Daily Scrum Meeting", DisplayWarning=false },
+                    new EventTypeInfo{ EventType="", DetailInfo = "If left empty, no email will be sent", ViewName="", DisplayWarning=true },
+                    new EventTypeInfo{ EventType="Audit", DetailInfo = "Audit",  ViewName="Audit", DisplayWarning=false  },
+                    new EventTypeInfo{ EventType="Performance Review", DetailInfo = "Performance Review for a certain Employee. You will only be able to add one Attendant",
+                        ViewName="PerformanceReview", DisplayWarning =true },
+                    new EventTypeInfo { EventType="Sprint Review Meeting", DetailInfo = "Sprint Review Meeting", ViewName="SprintReviewMeeting", DisplayWarning=false },
+                    new EventTypeInfo { EventType="Daily Scrum Meeting", DetailInfo = "Daily Scrum Meeting", ViewName="DailyScrumMeeting", DisplayWarning=false },
                     new EventTypeInfo { EventType="Department Monthly Meeting",
                         DetailInfo = "Will automatically attach a report of your department, for the current month",
+                        ViewName="DepartmentMonthlyMeeting",
                         DisplayWarning =true }
                  };
     }

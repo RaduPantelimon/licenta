@@ -189,11 +189,12 @@ function removeAttendant() {
 function initializeEventTypeSelector()
 {
     $("select.permissions-selector").change(eventTypeChange);
+    eventTypeChange();
 }
 
 function eventTypeChange()
 {
-    var eventSelctor = $(this);
+    var eventSelctor = $("#EventType");
     var detailsHolder = eventSelctor.parent().children(".event-type-container");
 
     //hide all, at first

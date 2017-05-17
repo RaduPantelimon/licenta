@@ -9,6 +9,7 @@ namespace ResourceApplicationTool.Models.SecondaryModels
     {
         public string EventType;
         public string DetailInfo;
+        public string ViewName;
         public bool DisplayWarning;
     }
 }

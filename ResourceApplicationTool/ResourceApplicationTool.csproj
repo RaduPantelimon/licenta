@@ -217,6 +217,7 @@
     <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\RestApiController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
@@ -697,6 +698,12 @@
     <Content Include="Views\Events\Details.cshtml" />
     <Content Include="Views\Events\Edit.cshtml" />
     <Content Include="Views\Events\Index.cshtml" />
+    <Content Include="Views\Notifications\Audit.cshtml" />
+    <Content Include="Views\Notifications\PerformanceReview.cshtml" />
+    <Content Include="Views\Notifications\SprintReviewMeeting.cshtml" />
+    <Content Include="Views\Notifications\DailyScrumMeeting.cshtml" />
+    <Content Include="Views\Notifications\DepartmentMonthlyMeeting.cshtml" />
+    <Content Include="Views\Notifications\EditorTemplates\NotificationsStyle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Temp\" />

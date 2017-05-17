@@ -86,6 +86,7 @@
           <Property Name="Location" Type="varchar" MaxLength="500" />
           <Property Name="CreatorID" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="IcsGuid" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="Files">
           <Key>
@@ -991,6 +992,7 @@
           <NavigationProperty Name="Employee" Relationship="RATV3Model.FK_CreatorID" FromRole="Event" ToRole="Employee" />
           <NavigationProperty Name="Attendants" Relationship="RATV3Model.FK_EventID1" FromRole="Event" ToRole="Attendant" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="IcsGuid" Type="Guid" />
         </EntityType>
         <Association Name="FK_CreatorID">
           <End Type="RATV3Model.Employee" Role="Employee" Multiplicity="1" />
@@ -1204,6 +1206,7 @@
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="RATV3Model.Event">
               <MappingFragment StoreEntitySet="Events">
+                <ScalarProperty Name="IcsGuid" ColumnName="IcsGuid" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="CreatorID" ColumnName="CreatorID" />
                 <ScalarProperty Name="Location" ColumnName="Location" />

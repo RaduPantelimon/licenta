@@ -27,6 +27,7 @@ namespace ResourceApplicationTool.Models
         public string Location { get; set; }
         public int CreatorID { get; set; }
         public string Title { get; set; }
+        public Nullable<System.Guid> IcsGuid { get; set; }
     
         public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

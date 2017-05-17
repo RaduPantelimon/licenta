@@ -113,7 +113,7 @@ namespace ResourceApplicationTool.Controllers
 
             //after the save actions are completed, we'll send the notifications to the attendants
             Mailer mailer = new Mailer();
-            mailer.SendMail(db, @event, @event.Attendants.Select(x => x.Employee).ToList(), @event.Employee, ControllerContext);
+            mailer.SendMeetingRequest(db, @event, @event.Attendants.Select(x => x.Employee).ToList(), @event.Employee, ControllerContext);
             return View(@event);
         }
 
@@ -225,7 +225,7 @@ namespace ResourceApplicationTool.Controllers
                     //we only send a request if the meeting type is selected
                     Mailer mailer = new Mailer();
                     Employee creator = db.Employees.Find(currentUserID);
-                    mailer.SendMail(db, @event, attendantEmployees, creator, ControllerContext);
+                    mailer.SendMeetingRequest(db, @event, attendantEmployees, creator, ControllerContext);
                 }
 
 
@@ -286,6 +286,16 @@ namespace ResourceApplicationTool.Controllers
             string AttendantsIDs,
            string AttendantsNames)
         {
+
+            int currentUserID;
+
+            if (!User.Identity.IsAuthenticated ||
+                String.IsNullOrEmpty(Session[Const.CLAIM.USER_ID].ToString()) ||
+                !int.TryParse(Session[Const.CLAIM.USER_ID].ToString(), out currentUserID))
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+
             if (ModelState.IsValid)
             {
                 Event ev = db.Events.Where(x => x.EventID == @event.EventID).FirstOrDefault();
@@ -353,6 +363,28 @@ namespace ResourceApplicationTool.Controllers
                     db.Attendants.Add(newAtt);
                 }
                 db.SaveChanges();
+
+                //adding the necessary data to the viewbag
+                if (ev.EventType == "Performance Review" && ev.Attendants != null && ev.Attendants.Count > 0)
+                {
+                    Attendant at = ev.Attendants.FirstOrDefault();
+                    Employee employee = db.Employees.Find(at.EmployeeID);
+                    if (employee != null)
+                    {
+                        Common.GeneratePDFViewBag(ev.EventID, ViewBag);
+                    }
+                }
+                if (!String.IsNullOrEmpty(ev.EventType))
+                {
+                    //get attendants
+                    List<int> parsedattendantIDs = ev.Attendants.Select(x => x.EmployeeID).ToList();
+                    List<Employee> reportAttendantEmployees = db.Employees.Where(x => parsedattendantIDs.Any(y => y == x.EmployeeID)).ToList();
+
+                    //we only send a request if the meeting type is selected
+                    Mailer mailer = new Mailer();
+                    Employee creator = db.Employees.Find(currentUserID);
+                    mailer.SendMeetingRequest(db, ev, reportAttendantEmployees, creator, ControllerContext,1);
+                }
 
                 return RedirectToAction("Index");
             }

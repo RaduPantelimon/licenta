@@ -1,6 +1,7 @@
 ﻿@model ResourceApplicationTool.Models.Employee
 @using ResourceApplicationTool.Models;
 @using ResourceApplicationTool.Utils;
+@using System.Collections;
 
 @{
     ViewBag.Title = "Details";
@@ -394,3 +395,24 @@
 
 <script src="~/Scripts/employees/employees_common.js"></script>
 <script src="~/Scripts/employees/employees_details.js"></script>
+
+
+@*
+
+<p>@Model.FirstName</p>
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@RenderPage("~/Views/Shared/PartialPage.cshtml")
+
+
+@Html.EditorFor(model => model.Account)
+
+
+
+
+@Html.EditorFor(model => model.Account, new { htmlAttributes = new { @class = "form-control" } })
+*@

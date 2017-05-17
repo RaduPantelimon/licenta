@@ -5,11 +5,12 @@ using System.Net;
 using System.Net.Mail;
 using System.Web;
 using ResourceApplicationTool.Models;
+using ResourceApplicationTool.Models.SecondaryModels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.IO;
-
+using System.Data.Entity;
 namespace ResourceApplicationTool.Utils
 {
     public class Mailer
@@ -27,19 +28,55 @@ namespace ResourceApplicationTool.Utils
         }
 
         /// <summary>
-        ///  //we'll get the email addresses and notify the attendants the attendants
+        ///  //we'll get the email addresses and notify the attendants about the event being canceled
         /// </summary>
-        public  void SendMail(RATV3Entities db,
-            Event ev, 
-            List<Employee> attendantEmployees, 
+        public void CancelMeetingRequest(RATV3Entities db,
+            Event ev,
+            List<Employee> attendantEmployees,
             Employee creator,
             ControllerContext ControllerContext)
         {
 
+
+        }
+
+
+
+
+        /// <summary>
+        ///  //we'll get the email addresses and notify the attendants the attendants
+        /// </summary>
+        public  void SendMeetingRequest(RATV3Entities db,
+            Event ev, 
+            List<Employee> attendantEmployees, 
+            Employee creator,
+            ControllerContext ControllerContext,
+            int update = 0)
+        {
+
             try
             {
+                //getting the reviewed employee
+                Attendant at = ev.Attendants.FirstOrDefault();
+                Employee reviewed = db.Employees.Where(x => x.EmployeeID == at.EmployeeID).FirstOrDefault();
+                reviewed.SkillLevelsList = reviewed.SkillLevels.ToList();
 
+                //getting message content
+                EventTypeInfo currentEventType = Const.EventTypesinfo.Where(x => x.EventType == ev.EventType).FirstOrDefault();
                 string embededHtml = "<html><head></head><body>" + "<p>Test</p>" + "<br/><br/>" + "<p>Test Embeded</p>" + "<br/>" + "<p>Test Ending</p>" + "<br/></body></html>";
+
+                if(currentEventType != null && currentEventType.EventType == "Performance Review")
+                {
+                    string generatednotificationHTML = ViewRenderer.RenderView("~/Views/Notifications/PerformanceReview.cshtml", reviewed,
+                                                 ControllerContext);
+
+                    if(!String.IsNullOrEmpty(generatednotificationHTML))
+                    {
+                        embededHtml = generatednotificationHTML;
+                    }
+                }
+
+
 
                 //preping the email message
                 var email = new MailMessage();
@@ -61,9 +98,8 @@ namespace ResourceApplicationTool.Utils
                 htmlView.ContentType.CharSet = Encoding.UTF8.WebName;
 
 
-                Attendant at = ev.Attendants.FirstOrDefault();
-                Employee reviewed = db.Employees.Where(x => x.EmployeeID == at.EmployeeID).FirstOrDefault();
-                reviewed.SkillLevelsList = reviewed.SkillLevels.ToList();
+               
+               
                 if (ev.EventType == "Performance Review" && ev.Attendants!= null && ev.Attendants.Count > 0 && reviewed != null)
                 {
                     //we'll attach the pdf to the email
@@ -78,6 +114,8 @@ namespace ResourceApplicationTool.Utils
                 }
                 else if (ev.EventType == "Department Monthly Meeting" && reviewed.DepartmentID.HasValue)
                 {
+                    //we'll attach the excel report to the email
+
                     byte[] array = ExcelReportGenerator.GenerateExcelReportForDepartment(reviewed.DepartmentID.Value, ev.StartTime.Month, ev.StartTime.Year, db);
                     Stream excelDocument = new MemoryStream(array);
                     if (excelDocument != null)
@@ -103,9 +141,18 @@ namespace ResourceApplicationTool.Utils
                     endTime = ev.StartTime;
                 }
 
+                //this is the guid of the meeting request
+                Guid requestGUID;
 
-
-                AlternateView avCal = CreateICSView(email, ev.StartTime, endTime, ev);
+                if (ev.IcsGuid.HasValue)
+                {
+                    requestGUID = ev.IcsGuid.Value;
+                }
+                else
+                {
+                    requestGUID = Guid.NewGuid();
+                }
+                AlternateView avCal = CreateICSView(email, ev.StartTime, endTime, ev, requestGUID,update);
                 //email.Headers.Add("Content-class", "urn:content-classes:calendarmessage");
                 email.AlternateViews.Add(htmlView);
                 email.AlternateViews.Add(avCal);
@@ -113,6 +160,19 @@ namespace ResourceApplicationTool.Utils
                 //finally we send the mail
                 client.Send(email);
 
+                if (!ev.IcsGuid.HasValue)
+                {
+                    ev.IcsGuid = requestGUID;
+                    db.Entry(ev).State = EntityState.Modified;
+                }
+                if (update>0)
+                {
+                    //we want to be able to store the update number too
+
+                    //ev.UpdateNo = update;
+                    db.Entry(ev).State = EntityState.Modified;
+                }
+                db.SaveChanges();
 
             }
             catch (Exception ex)
@@ -174,10 +234,10 @@ namespace ResourceApplicationTool.Utils
         /// <summary>
         /// Creates Outlook meeting notification
         /// </summary>
-        public  AlternateView CreateICSView(MailMessage email, DateTime startDate, DateTime endDate,Event ev)
+        public  AlternateView CreateICSView(MailMessage email, DateTime startDate, DateTime endDate,Event ev,  Guid requestGUID,int update = 0)
         {
             // Now Contruct the ICS file using string builder
-            string str = CreateICSBody(email, startDate, endDate,ev);
+            string str = CreateICSBody(email, startDate, endDate,ev, requestGUID, update);
             System.Net.Mime.ContentType contype = new System.Net.Mime.ContentType("text/calendar");
             contype.Parameters.Add("method", "REQUEST");
             contype.Parameters.Add("name", "Meeting.ics");
@@ -188,10 +248,11 @@ namespace ResourceApplicationTool.Utils
         /// <summary>
         /// Creates body of Outlook meeting notification
         /// </summary>
-        public  string CreateICSBody(MailMessage email, DateTime startDate, DateTime endDate, Event ev)
+        public  string CreateICSBody(MailMessage email, DateTime startDate, DateTime endDate, Event ev,  Guid requestGUID, int update = 0)
         {
 
-            string location = String.IsNullOrEmpty(ev.Location)?"Conference Call":ev.Location;
+            string location = String.IsNullOrEmpty(ev.Location)?"Conference Call":ev.Location;            
+
 
             StringBuilder str = new StringBuilder();
             str.AppendLine("BEGIN:VCALENDAR");
@@ -201,16 +262,27 @@ namespace ResourceApplicationTool.Utils
             str.AppendLine("BEGIN:VEVENT");
             str.AppendLine(string.Format("DTSTART:{0:yyyyMMddTHHmmssZ}", startDate));
             str.AppendLine(string.Format("DTSTAMP:{0:yyyyMMddTHHmmssZ}", DateTime.UtcNow));
+
+            if (update > 0)
+            {
+                str.AppendLine(string.Format("SEQUENCE:{0}",update));
+            }
+
             str.AppendLine(string.Format("DTEND:{0:yyyyMMddTHHmmssZ}", endDate));
             str.AppendLine("LOCATION:" + location);
-            str.AppendLine(string.Format("UID:{0}", Guid.NewGuid()));
+            str.AppendLine(string.Format("UID:{0}", requestGUID));
+            
             str.AppendLine(string.Format("DESCRIPTION:{0}", email.Body));
             str.AppendLine(string.Format("X-ALT-DESC;FMTTYPE=text/html:{0}", email.Body));
             str.AppendLine(string.Format("SUMMARY:{0}", email.Subject));
             str.AppendLine(string.Format("ORGANIZER:MAILTO:{0}", email.From.Address));
 
             //attendees
-            str.AppendLine(string.Format("ATTENDEE;CN=\"{0}\";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE:MAILTO:\"{1}\"", email.To[0].DisplayName, email.To[0].Address));
+            foreach(MailAddress m in email.To)
+            {
+                str.AppendLine(string.Format("ATTENDEE;CN=\"{0}\";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE:MAILTO:\"{1}\"", m.DisplayName, m.Address));
+
+            }
             //str.AppendLine(string.Format("ATTENDEE;CN=\"{0}\";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE:MAILTO:\"{1}\"", email.To[1].DisplayName, email.To[1].Address));
             //str.AppendLine(string.Format("ATTENDEE;CN=\"{0}\";RSVP=TRUE:mailto:{1}", email.To[0].DisplayName, email.To[0].Address));
 
