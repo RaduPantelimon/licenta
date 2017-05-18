@@ -704,6 +704,7 @@
     <Content Include="Views\Notifications\DailyScrumMeeting.cshtml" />
     <Content Include="Views\Notifications\DepartmentMonthlyMeeting.cshtml" />
     <Content Include="Views\Notifications\EditorTemplates\NotificationsStyle.cshtml" />
+    <Content Include="Views\Notifications\CanceledEvent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Temp\" />

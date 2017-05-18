@@ -427,6 +427,15 @@ namespace ResourceApplicationTool.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            int currentUserID;
+
+            if (!User.Identity.IsAuthenticated ||
+                String.IsNullOrEmpty(Session[Const.CLAIM.USER_ID].ToString()) ||
+                !int.TryParse(Session[Const.CLAIM.USER_ID].ToString(), out currentUserID))
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+
             Event @event = db.Events.Find(id);
             //allow users to delete an event only if they are an admin or if they created it
             if (!(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
@@ -438,8 +447,28 @@ namespace ResourceApplicationTool.Controllers
                 return RedirectToAction("NotFound", "Home");
             }
 
-            db.Events.Remove(@event);
-            db.SaveChanges();
+            //db.Events.Remove(@event);
+            //db.SaveChanges();
+
+
+            //if we kept the ical file guid, we'll send a cancelation mail
+            if (!String.IsNullOrEmpty(@event.EventType) 
+                && @event.IcsGuid.HasValue 
+                && @event.Attendants != null 
+                && @event.Attendants.Count > 0)
+            {
+                //get attendants
+                List<int> parsedattendantIDs = @event.Attendants.Select(x => x.EmployeeID).ToList();
+                List<Employee> reportAttendantEmployees = db.Employees.Where(x => parsedattendantIDs.Any(y => y == x.EmployeeID)).ToList();
+
+                //we only send a request if the meeting type is selected
+                Mailer mailer = new Mailer();
+                Employee creator = db.Employees.Find(currentUserID);
+
+
+                mailer.CancelMeetingRequest(db, @event, reportAttendantEmployees, creator, ControllerContext);
+            }
+
             return RedirectToAction("Index");
         }
 

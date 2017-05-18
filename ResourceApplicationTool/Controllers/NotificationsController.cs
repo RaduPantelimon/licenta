@@ -38,5 +38,9 @@ namespace ResourceApplicationTool.Controllers
         {
             return View();
         }
+        public ActionResult CanceledEvent()
+        {
+            return View();
+        }
     }
 }

@@ -27,21 +27,6 @@ namespace ResourceApplicationTool.Utils
             };
         }
 
-        /// <summary>
-        ///  //we'll get the email addresses and notify the attendants about the event being canceled
-        /// </summary>
-        public void CancelMeetingRequest(RATV3Entities db,
-            Event ev,
-            List<Employee> attendantEmployees,
-            Employee creator,
-            ControllerContext ControllerContext)
-        {
-
-
-        }
-
-
-
 
         /// <summary>
         ///  //we'll get the email addresses and notify the attendants the attendants
@@ -296,5 +281,134 @@ namespace ResourceApplicationTool.Utils
 
             return str.ToString();
         }
+
+        /// <summary>
+        ///  //we'll get the email addresses and notify the attendants about the event being canceled
+        /// </summary>
+        public void CancelMeetingRequest(RATV3Entities db,
+            Event ev,
+            List<Employee> attendantEmployees,
+            Employee creator,
+            ControllerContext ControllerContext)
+        {
+
+            //getting the reviewed employee
+            Attendant at = ev.Attendants.FirstOrDefault();
+            Employee reviewed = db.Employees.Where(x => x.EmployeeID == at.EmployeeID).FirstOrDefault();
+            reviewed.SkillLevelsList = reviewed.SkillLevels.ToList();
+
+
+            string embededHtml = ViewRenderer.RenderView("~/Views/Notifications/CanceledEvent.cshtml", reviewed,
+                                            ControllerContext);
+
+            if (String.IsNullOrEmpty(embededHtml))
+            {
+                embededHtml = " This Event has been canceled";
+            }
+            //preping the email message
+            var email = new MailMessage();
+            email.From = new MailAddress(creator.Email, creator.FirstName + ' ' + creator.LastName);
+            //adding recipients
+            foreach (Employee attendant in attendantEmployees)
+            {
+                email.To.Add(new MailAddress(attendant.Email, attendant.FirstName + ' ' + attendant.LastName));
+            }
+
+            email.IsBodyHtml = true;
+            email.Subject = ev.EventType;
+
+
+            //preparing email content
+            //"text/html" - this view will have all the content
+            System.Net.Mime.ContentType htmlMimeContent = new System.Net.Mime.ContentType("text/html");
+            AlternateView htmlView = AlternateView.CreateAlternateViewFromString(embededHtml, htmlMimeContent);
+            htmlView.ContentType.CharSet = Encoding.UTF8.WebName;
+
+            //preparing calendar meeting view
+            DateTime endTime;
+            if (ev.EndTime.HasValue)
+            {
+                endTime = ev.EndTime.Value;
+            }
+            else
+            {
+                endTime = ev.StartTime;
+            }
+
+            //this is the guid of the meeting request
+            Guid requestGUID;
+
+            if (ev.IcsGuid.HasValue)
+            {
+                //if we have 
+                requestGUID = ev.IcsGuid.Value;
+                AlternateView avCal = CreateCancelationICSView(email, ev.StartTime, endTime, ev, requestGUID);
+                //email.Headers.Add("Content-class", "urn:content-classes:calendarmessage");
+                email.AlternateViews.Add(htmlView);
+                email.AlternateViews.Add(avCal);
+
+                //finally we send the mail
+                client.Send(email);
+            }
+
+        }
+
+
+        /// <summary>
+        /// Creates Outlook meeting notification
+        /// </summary>
+        public AlternateView CreateCancelationICSView(MailMessage email, DateTime startDate, DateTime endDate, Event ev, Guid requestGUID)
+        {
+            // Now Contruct the ICS file using string builder
+            string str = CreateCancelledICSBody(email, startDate, endDate, ev, requestGUID);
+            System.Net.Mime.ContentType contype = new System.Net.Mime.ContentType("text/calendar");
+            contype.Parameters.Add("method", "REQUEST");
+            contype.Parameters.Add("name", "Meeting.ics");
+            AlternateView avCal = AlternateView.CreateAlternateViewFromString(str, contype);
+
+            return avCal;
+        }
+
+
+        /// <summary>
+        /// Creates body of Outlook meeting cancelation notification
+        /// </summary>
+        public string CreateCancelledICSBody(MailMessage email, DateTime startDate, DateTime endDate, Event ev, Guid requestGUID)
+        {
+
+            
+
+            StringBuilder str = new StringBuilder();
+            str.AppendLine("BEGIN:VCALENDAR");
+            str.AppendLine("PRODID:-//Schedule a Meeting");
+            str.AppendLine("VERSION:2.0");
+            str.AppendLine("METHOD:REQUEST");
+            str.AppendLine("BEGIN:VEVENT");
+            str.AppendLine(string.Format("DTSTART:{0:yyyyMMddTHHmmssZ}", startDate));
+            str.AppendLine(string.Format("DTSTAMP:{0:yyyyMMddTHHmmssZ}", DateTime.UtcNow));
+
+            str.AppendLine(string.Format("DTEND:{0:yyyyMMddTHHmmssZ}", endDate));
+            str.AppendLine(string.Format("UID:{0}", requestGUID));
+
+            str.AppendLine(string.Format("DESCRIPTION:{0}", email.Body));
+            str.AppendLine(string.Format("X-ALT-DESC;FMTTYPE=text/html:{0}", email.Body));
+            str.AppendLine(string.Format("SUMMARY:{0}", email.Subject));
+            str.AppendLine(string.Format("ORGANIZER:MAILTO:{0}", email.From.Address));
+
+            //attendees
+            foreach (MailAddress m in email.To)
+            {
+                str.AppendLine(string.Format("ATTENDEE;CN=\"{0}\";ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE:MAILTO:\"{1}\"", m.DisplayName, m.Address));
+
+            }
+
+            str.AppendLine("STATUS:CANCELLED");
+            str.AppendLine("END:VEVENT");
+            str.AppendLine("END:VCALENDAR");
+
+            return str.ToString();
+        }
+
+
     }
 }
