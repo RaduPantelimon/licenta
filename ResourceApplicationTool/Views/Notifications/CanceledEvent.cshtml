@@ -1,2 +1,15 @@
-﻿<h3>This Event has been removed</h3>
-<p>Please refer to the event organizer for further details</p>
+﻿@{
+    Layout = null;
+}
+
+@Html.Partial("~/Views/Notifications/EditorTemplates/NotificationsStyle.cshtml", null)
+
+<div class="main_container">
+    <div class="main_expandable">
+        <h3 class="tvd-sub-header" >This Event has been removed</h3>
+        <div class="content-box">
+            <p>Please refer to the event organizer for further details.</p>
+            <p>Navigate to the following page in order to see <a href="http://localhost:9919/Events">all upcoming events </a>.</p>
+        </div>
+    </div>
+</div>

@@ -37,6 +37,21 @@ namespace ResourceApplicationTool.Controllers
             {
                 return HttpNotFound();
             }
+
+            //getting the existing attendants
+            List<Attendant> attendants = db.Attendants.Where(X => X.EventID == @event.EventID).ToList();
+            List<ExistingAttendant> existing = attendants.Select(x => new ExistingAttendant(
+                                "/Employees/Details/" + x.EmployeeID,
+                                x.Employee.FirstName + " " + x.Employee.LastName,
+                                x.EmployeeID)).ToList();
+
+            string attendantIDs = String.Join(";", attendants.Select(x => x.EmployeeID.ToString()));
+
+            ViewBag.AttendantIDs = attendantIDs + ";";
+            ViewBag.AttendantNames = JsonConvert.SerializeObject(existing);
+
+            //permission of current user
+            ViewBag.canEdit = Utils.Common.CheckEventAuthentication(Session, User, @event);
             return View(@event);
         }
 

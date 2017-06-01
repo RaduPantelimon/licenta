@@ -7,6 +7,7 @@ using System.IdentityModel.Services;
 using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Mvc;
 
@@ -38,18 +39,20 @@ namespace SingleSignOn.Controllers
             return View();
         }
 
-        private static string ProcessSignIn(Uri url, ClaimsPrincipal user)
+        private static string ProcessSignIn(Uri url, ClaimsPrincipal principal)
         {
-            var requestMessage = (SignInRequestMessage)WSFederationMessage.CreateFromUri(url);
-            var signingCredentials = new X509SigningCredentials(CustomSecurityTokenService.GetCertificate(ConfigurationManager.AppSettings["SigningCertificateName"]));
+            SignInRequestMessage requestMSG = (SignInRequestMessage)WSFederationMessage.CreateFromUri(url);
+            X509SigningCredentials credentials = new X509SigningCredentials
+                (GetX509Cert(ConfigurationManager.AppSettings["SigningCertificateName"]));
 
-            // Cache?
-            var config = new SecurityTokenServiceConfiguration(ConfigurationManager.AppSettings["IssuerName"], signingCredentials);
+            SecurityTokenServiceConfiguration config = 
+                new SecurityTokenServiceConfiguration(ConfigurationManager.AppSettings["IssuerName"], credentials);
 
-            var sts = new CustomSecurityTokenService(config);
-            var responseMessage = FederatedPassiveSecurityTokenServiceOperations.ProcessSignInRequest(requestMessage, user, sts);
+            CustomSecurityTokenService sts = new CustomSecurityTokenService(config);
+            SignInResponseMessage finalResponse = 
+                FederatedPassiveSecurityTokenServiceOperations.ProcessSignInRequest(requestMSG, principal, sts);
             
-            return responseMessage.WriteFormPost();
+            return finalResponse.WriteFormPost();
         }
 
         private static void ProcessSignOut(Uri uri, ClaimsPrincipal user, HttpResponse response)
@@ -77,5 +80,39 @@ namespace SingleSignOn.Controllers
 
             var requestMessage = (SignOutRequestMessage)WSFederationMessage.CreateFromUri(uri);
             FederatedPassiveSecurityTokenServiceOperations.ProcessSignOutRequest(requestMessage, user, requestMessage.Reply, response);        }
+        public static X509Certificate2 GetX509Cert(string subjectName)
+        {
+            var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+            X509Certificate2Collection certificates = null;
+            store.Open(OpenFlags.ReadOnly);
+
+            try
+            {
+                certificates = store.Certificates;
+                var certs = certificates.OfType<X509Certificate2>().Where(x => x.SubjectName.Name.Equals(subjectName, StringComparison.OrdinalIgnoreCase)).ToList();
+
+                if (certs.Count == 0)
+                    throw new ApplicationException(string.Format("No certificate was found for subject Name {0}", subjectName));
+                else if (certs.Count > 1)
+                    throw new ApplicationException(string.Format("There are multiple certificates for subject Name {0}", subjectName));
+
+                return new X509Certificate2(certs[0]);
+            }
+            finally
+            {
+                if (certificates != null)
+                {
+                    for (var i = 0; i < certificates.Count; i++)
+                    {
+                        var cert = certificates[i];
+                        cert.Reset();
+                    }
+                }
+                store.Close();
+            }
+        }
     }
+
+
+
 }

@@ -1,59 +1,142 @@
 ﻿@model ResourceApplicationTool.Models.Event
+@using ResourceApplicationTool.Models.SecondaryModels;
+@using ResourceApplicationTool.Utils;
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<link href="~/Content/Styles/Event/eventsCommonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/Event/eventsDisplayStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/commonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/slickStyle.css" rel="stylesheet" />
 
-<div>
-    <h4>Event</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.StartTime)
-        </dt>
+<div class="mainHeaderLogo events-logo logo-details" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"></div>
 
-        <dd>
-            @Html.DisplayFor(model => model.StartTime)
-        </dd>
+<h2 class="sec-title-huge sec-title main-form-header">@(Model.Title)</h2>
+<hr class="sec-hr" />
 
-        <dt>
-            @Html.DisplayNameFor(model => model.EndTime)
-        </dt>
+@if (ViewBag.canEdit)
+{
+    @Html.ActionLink("Edit", "Edit", new { @id = Model.EventID }, new { @class = "btn-primary edit-button edit-department-button", @id = Model.EventID })
+    @Html.ActionLink("Delete", "Delete", new { @id = Model.EventID }, new { @class = "btn-danger edit-department-button", @id = Model.EventID })
+}
 
-        <dd>
-            @Html.DisplayFor(model => model.EndTime)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.EventType)
-        </dt>
+<input id="AttendantsIDs" type="hidden" name="AttendantsIDs" value="@ViewBag.AttendantIDs" />
+<input id="AttendantsNames" type="hidden" name="AttendantsNames" value="@ViewBag.AttendantNames" />
 
-        <dd>
-            @Html.DisplayFor(model => model.EventType)
-        </dd>
+<div class="main-form-container">
+    <div class="main_expandable">
+        <div class="tvd-sub-header">
+            <table>
+                <tr>
+                    <td></td>
+                    <td>
+                        <h1 class="sec-title-large sec-title" data-scrollname="Projects" style="display: inline; bottom: 0px;">
+                            General Information
+                        </h1>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="row expandable-content">
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.Title)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @Html.DisplayFor(model => model.Title)
+                </div>
+            </div>
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.StartTime)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @String.Format("{0:MM/dd/yyyy hh:mm tt}", Model.StartTime)
+                </div>
+            </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Location)
-        </dt>
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                @Html.DisplayNameFor(model => model.EndTime)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @String.Format("{0:MM/dd/yyyy hh:mm tt}", Model.EndTime)
+                </div>
+            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Location)
-        </dd>
+            <div class="form-group  col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                @Html.DisplayNameFor(model => model.Location)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @Html.DisplayFor(model => model.Location)
+                </div>
+            </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Employee.Account)
-        </dt>
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.EventType)
+                </div>
+                <div class="col-md-9 col-sm-9">
 
-        <dd>
-            @Html.DisplayFor(model => model.Employee.Account)
-        </dd>
+                    @Html.DisplayFor(model => model.EventType)
 
-    </dl>
+                    <div class="event-type-container" style="display:none;">
+                        <img class="event-type-warning" src="~/Content/Pictures/warning-icon.png" width="20" height="20" />
+                        <div class="event-type-text">
+                            @foreach (EventTypeInfo typeInfo in Const.EventTypesinfo)
+                            {
+                                if (typeInfo.DisplayWarning)
+                                {
+                                    <span style="display:none;" data-event-type="@typeInfo.EventType">@typeInfo.DetailInfo</span>
+                                }
+
+                            }
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group subsection col-md-12 col-lg-12 col-sm-12 col-xs-12" style="clear:both">
+                <div class="field-name full-row  col-md-2 col-lg-2 col-sm-3 col-xs-12 right-align-not-xs right-align-not-sm">
+                    Current Attendants
+                </div>
+                <div class="col-md-10 col-lg-10 col-sm-9 col-xs-12 full-row">
+                    <div id="attendants-container">
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="form-group last-section">
+        <div class="col-md-10 button-holder">
+            <button type="button"
+                    class="btn btn-default btn-inverse"
+                    id="cancel"
+                    onclick="window.history.back()">
+                <i class="icon-remove icon-large"></i>
+                Cancel
+            </button>
+        </div>
+    </div>
+
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.EventID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    @Styles.Render("~/Content/jquery-uicss") ;
+}
+
+<script type="text/javascript" src="/scripts/moment.min.js"></script>
+<script type="text/javascript" src="/scripts/bootstrap-datetimepicker.js"></script>
+<script src="~/Scripts/common.js"></script>
+<script src="~/Scripts/events/events_common.js"></script>
+<script src="~/Scripts/events/events_display.js"></script>
+<link rel="stylesheet" href="/Content/bootstrap-datetimepicker.css" />

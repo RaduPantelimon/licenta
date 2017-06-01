@@ -17,6 +17,9 @@ import { SprintsService } from './sprints.service';
 })
 export class SprintAddComponent implements OnInit {
 
+    months: any[] = [];
+
+
     //page initialization
     errorMessage: string;
     sprintAlreadyExists: boolean;
@@ -25,7 +28,7 @@ export class SprintAddComponent implements OnInit {
 
     //data
     sprints: any[] = [];
-    months: any[] = [];
+    
     weeks: any[] = [];
     selectedMonth: any;
     sprintsLoaded: boolean;

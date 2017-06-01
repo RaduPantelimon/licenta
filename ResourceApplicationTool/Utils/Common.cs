@@ -205,6 +205,22 @@ namespace ResourceApplicationTool.Utils
             return isValid;
         }
 
+        public static bool CheckEventAuthentication(HttpSessionStateBase Session, IPrincipal User, Event @event) {
+            //we check if the user is either an administrator orthe event creator
+            bool isValid = false;
+
+            if (User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+              && (
+              (Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
+              || (Session[Const.CLAIM.USER_ID] != null && Session[Const.CLAIM.USER_ID].ToString() == @event.CreatorID.ToString()))
+            )
+            {
+                isValid = true;
+            }
+
+            return isValid;
+        }
+
         public static string CheckProjectAuthentication(HttpSessionStateBase Session, IPrincipal User, Project project)
         {
             //we check if the user is either an administrator or a manager for the department

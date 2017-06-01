@@ -17,9 +17,9 @@ var SprintAddComponent = (function () {
         this._sprintService = _sprintService;
         this._route = _route;
         this._router = _router;
+        this.months = [];
         //data
         this.sprints = [];
-        this.months = [];
         this.weeks = [];
     }
     SprintAddComponent.prototype.ngOnInit = function () {

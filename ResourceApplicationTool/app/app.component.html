@@ -28,8 +28,8 @@
 
         <div *ngIf="!createSprintEnabled" class="col-md-12 col-lg-12 col-sm-12 col-xs-12"
              [ngClass]="['sprint-button-ribbon']">
-            <button *ngIf="permissions=='Administrator'||permissions=='Manager'" id="delete-sprint"
-                    (click)="deleteCurrentSprint()"
+            <button (click)="deleteCurrentSprint()"  *ngIf="permissions=='Administrator'||permissions=='Manager'" id="delete-sprint"
+                    
                     [ngClass]="['btn', 'btn-default', 'btn-inverse','btn-warning','delete-sprint-button']">
                 Delete current sprint
             </button>

@@ -86,6 +86,11 @@ namespace ResourceApplicationTool.Controllers
                 return RedirectToAction("NotFound", "Home");
             }
 
+            if (User.Identity.IsAuthenticated)
+            {
+                //
+            }
+
             ViewBag.ContactID = new SelectList(db.Contacts, "ContactID", "ContactName");
 
             //a manager will only be able to add a project for his department
@@ -177,10 +182,8 @@ namespace ResourceApplicationTool.Controllers
         }
 
         // POST: Projects/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
         [ValidateAntiForgeryToken]
+        [HttpPost]
         public ActionResult Edit([Bind(Include = "ProjectID,Title,StartDate,EndDate,Duration,ContractNumber,PJDescription,Budget,DepartmentID,ContactID")] Project project)
         {
             if (ModelState.IsValid)

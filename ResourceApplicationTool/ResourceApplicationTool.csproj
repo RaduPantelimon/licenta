@@ -409,6 +409,7 @@
     <Content Include="Content\Styles\Employee\employeesDetailsStyle.css" />
     <Content Include="Content\Styles\Employee\employeesEditStyle.css" />
     <Content Include="Content\Styles\Event\eventsCommonStyle.css" />
+    <Content Include="Content\Styles\Event\eventsDisplayStyle.css" />
     <Content Include="Content\Styles\Event\eventsEditStyle.css" />
     <Content Include="Content\Styles\Event\eventsNewStyle.css" />
     <Content Include="Content\Styles\homePage.css" />
@@ -554,6 +555,8 @@
     <Content Include="Scripts\employees\employees_edit.js" />
     <Content Include="Scripts\employees\employees_new.js" />
     <Content Include="Scripts\events\events_common.js" />
+    <Content Include="Scripts\events\events_delete.js" />
+    <Content Include="Scripts\events\events_display.js" />
     <Content Include="Scripts\events\events_edit.js" />
     <Content Include="Scripts\events\events_new.js" />
     <Content Include="Scripts\homePage.js" />
