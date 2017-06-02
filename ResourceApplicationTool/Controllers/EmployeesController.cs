@@ -451,7 +451,7 @@ namespace ResourceApplicationTool.Controllers
 
                 //sending the pdf file to download
                 this.HttpContext.Response.ContentType = "application/pdf";
-                this.HttpContext.Response.AddHeader("Content-Disposition", "attachment; filename=" + "Test.pdf");
+                this.HttpContext.Response.AddHeader("Content-Disposition", "attachment; filename=" + "EmployeeCV.pdf");
                 this.HttpContext.Response.BinaryWrite(pdfBuffer);
                 this.HttpContext.Response.Flush();
                 this.HttpContext.Response.Close();

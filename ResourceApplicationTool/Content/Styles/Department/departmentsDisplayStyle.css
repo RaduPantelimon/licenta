@@ -29,3 +29,7 @@
 .modal-body .field-name {
     text-align:right;
 }
+.modal-header, .modal-footer{
+    position:relative
+
+}

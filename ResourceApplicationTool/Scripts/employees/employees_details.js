@@ -23,6 +23,18 @@ function initializePage() {
 
     //initialize educations
     InitializeEducationsDisplay($("#educations-table"), EmployeeID);
+
+
+    //initialize CV download button
+    InitializeCVDownload($(".download-report-button"), EmployeeID);
+}
+
+function InitializeCVDownload(button, employee)
+{
+    $(button).click(function () {
+        //download report
+        location.href = "/Employees/GenerateCV/" + employee;
+    });
 }
 
 

@@ -36,14 +36,17 @@
            ))
            {
                 @Html.ActionLink("Edit", "Edit", new { @id = Model.EmployeeID }, new { @class = "btn-primary edit-department-button", @id = Model.DepartmentID })
+                if (User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                        && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                        && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
+                {
+                    @Html.ActionLink("Delete", "Delete", new { @id = Model.EmployeeID }, new { @class = "btn-danger edit-department-button", @id = Model.DepartmentID })
+                }
+                <button type="button" id='generate-report' class="btn-primary btn-warning download-report-button">Download Employee C.V.</button>
            }
                 
-            @if (User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null 
-                && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
-                && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
-            {
-                @Html.ActionLink("Delete", "Delete", new { @id = Model.EmployeeID }, new { @class = "btn-danger edit-department-button", @id = Model.DepartmentID })
-            }
+          
+
            
         </div>
     </div>
