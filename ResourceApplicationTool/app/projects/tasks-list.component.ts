@@ -162,12 +162,20 @@ export class TasksListComponent implements OnInit {
                     {
                         //no task added to this element. deleteing the current one
                         console.log("Following Field is empty: (" + i + " , " + j +")");
-                        //this.employees[i].FirstName + " , " + this.employees[i].Days[j].date);
                         let data: any = {};
-                        data.templateTaskID = resizedTask.TaskID;
+                        if (resizedTask.TemplateID)
+                        {
+                            data.templateTaskID = resizedTask.TemplateID;
+                        }
+                        else {
+                            data.templateTaskID = resizedTask.TaskID;
+                        }
+                        
                         data.startDate = day.date;
                         data.employeeID = employee.EmployeeID;
                         data.sprintID = this.currentSprint.SprintID;
+                        data.duration = resizedTask.Estimation;
+                        data.directDescendant = resizedTask.TaskID;
 
                         //adding the new task
                         this._tasksService.addTask(data).subscribe(response => {

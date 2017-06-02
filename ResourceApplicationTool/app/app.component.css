@@ -123,6 +123,8 @@
 select.month-selector{
     display: inline-block;
     padding-left:10px;
+    width:180px;
+    margin-left:10px;
 }
 .main-component{
     margin-bottom:100px;
@@ -140,3 +142,15 @@ select.month-selector{
      float:right;
  }
  
+ .main-angular-header{
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 24px;
+    margin-bottom:24px;
+ }
+ .main-angular-header .sec-title-large.sec-title.carousel-header{
+    padding: 0px;
+    margin: 0px;
+    display: inline-block;
+ }

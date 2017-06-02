@@ -83,7 +83,7 @@
                                 <li class="cbp-profile-container">
                                     <div class="profile-container">
                                         <div class="small-user-profile-picture"
-                                             style="background-image: url(/Images/GetImgForEmployee/@(!String.IsNullOrEmpty(Session[Const.CLAIM.USER_ID].ToString())?Session[Const.CLAIM.USER_ID]:""))">
+                                             style="background-image: url(/Images/GetImgForEmployee/@((Session[Const.CLAIM.USER_ID]!=null)?Session[Const.CLAIM.USER_ID].ToString():""))">
                                         </div>
                                     </div>
                                     <div class="user-details-container">

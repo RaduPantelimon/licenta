@@ -28,15 +28,19 @@
     overflow: hidden;
     white-space: nowrap;
 }
-.tasksTable th {
+.tasksTable th,
+.tasksTable td:first-child {
   background: lightblue;
   border-color: white;
+  font-weight: bold;
 }
 
 #templatesContainer{
     background-color: #eeeeee;
     margin:10px;
-
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #47c9af;
 }
 
 
@@ -78,6 +82,24 @@
     position: relative;
     z-index: 4;
 }
+
+#templatesContainer .taskTemplate.taskTemplate1,
+#tasksContainer .taskTemplate.taskTemplate1{
+    background-color:#ff9932;
+}
+#templatesContainer .taskTemplate.taskTemplate2,
+#tasksContainer .taskTemplate.taskTemplate2{
+    background-color:#ff9932;
+}
+#templatesContainer .taskTemplate.taskTemplate3,
+#tasksContainer .taskTemplate.taskTemplate3{
+    background-color:lightcoral;
+}
+#templatesContainer .taskTemplate.taskTemplate4,
+#tasksContainer .taskTemplate.taskTemplate4{
+    background-color:#ccbadc;
+}
+
 
 #tasksContainer .task-Title{
      display:inline-block;
@@ -148,4 +170,16 @@
 
  .task-selectable:hover{
      cursor:pointer;
+ }
+
+ .templates-header{
+    padding-top: 10px;
+    color: white;
+    border-top-left-radius: 20px;
+    text-align: center;
+    border-top-right-radius: 20px;
+    background-color: #47c9af;
+ }
+ .task-template-container{
+    border: 2px solid #47c9af;
  }

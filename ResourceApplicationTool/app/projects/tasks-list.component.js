@@ -110,12 +110,18 @@ var TasksListComponent = (function () {
                     if (!this_2.employees[i].Days[j].task) {
                         //no task added to this element. deleteing the current one
                         console.log("Following Field is empty: (" + i + " , " + j + ")");
-                        //this.employees[i].FirstName + " , " + this.employees[i].Days[j].date);
                         var data = {};
-                        data.templateTaskID = resizedTask.TaskID;
+                        if (resizedTask.TemplateID) {
+                            data.templateTaskID = resizedTask.TemplateID;
+                        }
+                        else {
+                            data.templateTaskID = resizedTask.TaskID;
+                        }
                         data.startDate = day.date;
                         data.employeeID = employee.EmployeeID;
                         data.sprintID = this_2.currentSprint.SprintID;
+                        data.duration = resizedTask.Estimation;
+                        data.directDescendant = resizedTask.TaskID;
                         //adding the new task
                         this_2._tasksService.addTask(data).subscribe(function (response) {
                             console.log(response);

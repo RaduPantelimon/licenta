@@ -11,8 +11,7 @@ namespace ResourceApplicationTool.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Employee
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -38,7 +37,6 @@ namespace ResourceApplicationTool.Models
         public string Title { get; set; }
         public string CNP { get; set; }
         public string Email { get; set; }
-        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
         public decimal Salary { get; set; }
         public decimal PriorSalary { get; set; }

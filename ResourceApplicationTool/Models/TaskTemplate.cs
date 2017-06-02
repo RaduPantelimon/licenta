@@ -11,5 +11,7 @@ namespace ResourceApplicationTool.Models
         public int employeeID { get; set; }
         public string startDate { get; set; }
         public int sprintID { get; set;}
+        public int duration { get; set;}
+        public int directDescendant { get; set; }
     }
 }

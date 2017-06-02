@@ -1,10 +1,17 @@
 ﻿<div class='main-component col-md-12 col-lg-12 col-sm-12 col-xs-12 row'>
-    <div>
-        <label for="month-selector">View Sprints from the following month: </label>
-        
-        <select [ngClass]="['form-control','month-selector']" id="month-selector" [(ngModel)]='selectedMonth' (ngModelChange)="changeMonth($event)">
-            <option *ngFor="let month of sprintMonths">{{month.displayDate}}</option>
-        </select>
+    <div class="main-angular-header">
+        <table>
+            <tr>
+                <td>
+                    <h2 class="sec-title-large sec-title carousel-header"> Tasks for this project</h2>
+                </td>
+                <td>
+                    <select [ngClass]="['form-control','month-selector']" id="month-selector" [(ngModel)]='selectedMonth' (ngModelChange)="changeMonth($event)">
+                        <option *ngFor="let month of sprintMonths">{{month.displayDate}}</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
     </div>
     <div id="sprintsmenu" [ngClass]="{'add-SprintNav': createSprintEnabled}">
             <ul>

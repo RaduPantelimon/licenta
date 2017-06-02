@@ -154,6 +154,7 @@ namespace ResourceApplicationTool.Controllers
                     task.EmployeeID = data.employeeID;
                     task.StartDate = startDate;
                     task.EndDate = startDate;
+                    task.TemplateID = data.templateTaskID;
                     task.Difficulty = templateTask.Difficulty;
 
                     string accessLevel = Common.CheckSprintAuthentication(User);

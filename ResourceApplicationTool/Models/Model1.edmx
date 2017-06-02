@@ -57,7 +57,7 @@
           <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleID" Type="int" />
           <Property Name="Account" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
           <Property Name="ManagerID" Type="int" />
           <Property Name="DepartmentID" Type="int" />
           <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
@@ -171,6 +171,7 @@
           <Property Name="TaskDescription" Type="varchar(max)" Nullable="false" />
           <Property Name="Difficulty" Type="int" Nullable="false" />
           <Property Name="Estimation" Type="int" />
+          <Property Name="TemplateID" Type="int" />
         </EntityType>
         <Association Name="FK_Attendant">
           <End Role="Employees" Type="Self.Employees" Multiplicity="1">
@@ -559,7 +560,7 @@
           <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleID" Type="Int32" />
           <Property Name="Account" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ManagerID" Type="Int32" />
           <Property Name="DepartmentID" Type="Int32" />
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -657,6 +658,7 @@
           <NavigationProperty Name="Employee" Relationship="Self.FK_EmployeeIDTasks" FromRole="Tasks" ToRole="Employees" />
           <NavigationProperty Name="Role" Relationship="RATV3Model.FK_RoleIDTasks" FromRole="Tasks" ToRole="Roles" />
           <NavigationProperty Name="Sprint" Relationship="RATV3Model.FK_SprintID" FromRole="Tasks" ToRole="Sprints" />
+          <Property Name="TemplateID" Type="Int32" />
         </EntityType>
         <Association Name="FK_BannerID">
           <End Role="Files" Type="Self.File" Multiplicity="0..1" />
@@ -1166,6 +1168,7 @@
           <EntitySetMapping Name="Tasks">
             <EntityTypeMapping TypeName="RATV3Model.Task">
               <MappingFragment StoreEntitySet="Tasks">
+                <ScalarProperty Name="TemplateID" ColumnName="TemplateID" />
                 <ScalarProperty Name="TaskID" ColumnName="TaskID" />
                 <ScalarProperty Name="SprintID" ColumnName="SprintID" />
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />

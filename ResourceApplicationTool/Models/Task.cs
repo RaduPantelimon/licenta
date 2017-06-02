@@ -24,6 +24,7 @@ namespace ResourceApplicationTool.Models
         public string TaskDescription { get; set; }
         public int Difficulty { get; set; }
         public Nullable<int> Estimation { get; set; }
+        public Nullable<int> TemplateID { get; set; }
     
         public virtual Employee Employee { get; set; }
         public virtual Role Role { get; set; }

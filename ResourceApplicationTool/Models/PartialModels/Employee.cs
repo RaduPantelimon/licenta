@@ -29,9 +29,6 @@ namespace ResourceApplicationTool.Models
         [JsonIgnore]
         public string CNP { get; set; }
 
-
-
-
         [JsonIgnore]
         public decimal Salary { get; set; }
         [JsonIgnore]

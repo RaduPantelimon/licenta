@@ -1,12 +1,12 @@
 ﻿<div class="row">
     <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
         <div id="templatesContainer" *ngIf="permissions=='Administrator'||permissions=='Manager'">
-            <h4>Task Templates</h4>
-            <div>
+            <h4 class="templates-header">Task Templates</h4>
+            <div class="task-template-container">
                 <!--The templates need to be draggable-->
                 <div class="taskTemplate-holder" *ngFor='let task of templateTasks'>
                     <div mwlDraggable (dragEnd)="dragEnd($event, task.TaskID)" dropdata="bar"
-                            class="taskTemplate">
+                            class="taskTemplate taskTemplate{{task.TaskID}}">
                         <span class="task-Title">{{task.TaskDescription}}</span>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                     <td *ngFor='let day of employee.Days; let dayIndex = index'>
                         <div *ngIf='day.task'>
                             <div *ngIf='!day.focused'
-                                    class="taskTemplate">
+                                    class="taskTemplate taskTemplate{{day.task.TemplateID}}">
                                 <span class="task-Title task-selectable" (click)="onFocus($event,day)"> {{day.task.TaskDescription}} </span>
                             </div>
                             <div *ngIf="day.focused && (permissions=='Administrator'|| permissions=='Manager')"
@@ -66,7 +66,7 @@
                                         [resizeEdges]="{bottom: true, right: true}">
                             </div>
                             <div *ngIf="day.focused && !(permissions=='Administrator'||permissions=='Manager')"
-                                 class="taskTemplate focused-task">
+                                 class="taskTemplate focused-task ">
 
 
                                 <img id="edit-image"
@@ -97,18 +97,20 @@
 
                 <div [ngClass]="['form-group subsection','col-md-12','col-lg-12','col-sm-12','col-xs-12']">
                     <div [ngClass]="['control-label','col-md-3','col-sm-3','task-label']">
-                        <span>Task Title</span>
+                        <span>Task</span>
                     </div>
                     <div class="col-md-9 col-sm-9">
-                        <input *ngIf="!(permissions=='Administrator'||permissions=='Manager')"  
+                        <textarea *ngIf="!(permissions=='Administrator'||permissions=='Manager')"  
                                type="text" 
                                [ngClass]="['form-control']" 
-                               [(ngModel)]='currentDay.task.TaskDescription'  disabled />
-                        <input *ngIf="permissions=='Administrator'||permissions=='Manager'" 
+                               [(ngModel)]='currentDay.task.TaskDescription'  disabled >
+                        </textarea>
+                        <textarea *ngIf="permissions=='Administrator'||permissions=='Manager'" 
                                type="text" 
                                [ngClass]="['form-control']" 
                                [(ngModel)]='currentDay.task.TaskDescription' 
-                                />
+                                >
+                        </textarea>
                         <span *ngIf="taskDescriptionValidation" [ngClass]="['text-danger']"> {{taskDescriptionValidationText}} </span>
                     </div>
                 </div>

@@ -286,7 +286,7 @@ namespace ResourceApplicationTool.Controllers
         { 
             try
             {
-                Task templateTask = db.Tasks.Where(x => x.TaskID == data.templateTaskID).FirstOrDefault();
+                Task templateTask = db.Tasks.Where(x => x.TaskID == data.directDescendant).FirstOrDefault();
                 if (templateTask != null)
                 {
                     DateTime startDate = DateTime.Parse(data.startDate);
@@ -298,6 +298,22 @@ namespace ResourceApplicationTool.Controllers
                     task.StartDate = startDate;
                     task.EndDate = startDate;
                     task.Difficulty = templateTask.Difficulty;
+
+                    if(templateTask.Estimation.HasValue)
+                    {
+                        task.Estimation = templateTask.Estimation;
+                    }
+                    if (!templateTask.TemplateID.HasValue || templateTask.TemplateID.Value <=0)
+                    {
+                        task.TemplateID = data.templateTaskID;
+                    }
+                    else
+                    {
+                        task.TemplateID = templateTask.TemplateID;
+                    }
+                   
+                    
+
 
                     string accessLevel = Common.CheckSprintAuthentication(Session,User);
                     if (accessLevel != Const.PermissionLevels.Administrator && accessLevel != Const.PermissionLevels.Manager)

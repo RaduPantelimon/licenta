@@ -70,7 +70,8 @@ namespace ResourceApplicationTool.Utils
 
                 #region GenerateDocument
                 MemoryStream memoryStream = new MemoryStream();
-                using (SpreadsheetDocument document = SpreadsheetDocument.Create(memoryStream, SpreadsheetDocumentType.Workbook))
+                using (SpreadsheetDocument document = SpreadsheetDocument.Create(memoryStream, 
+                    SpreadsheetDocumentType.Workbook))
                 {
                     var workbookpart = document.AddWorkbookPart();
                     workbookpart.Workbook = new Workbook();
@@ -81,7 +82,6 @@ namespace ResourceApplicationTool.Utils
 
                     var sheets = document.WorkbookPart.Workbook.
                         AppendChild<Sheets>(new Sheets());
-
                     uint sheetID = 1;
 
                     foreach(Project projectID in department.Projects)
@@ -91,7 +91,6 @@ namespace ResourceApplicationTool.Utils
                     }
                     
                     //save data
-                   
                     document.Close();
                 }
 
@@ -300,20 +299,18 @@ namespace ResourceApplicationTool.Utils
             return headerRow;
         }
 
-        private static Row  CreateEmployeeRow(DateTime firstDayOfMonth, DateTime lastDayOfMonth, int colIndex, Employee employee, List<Task> empTasks)
+        private static Row  CreateEmployeeRow(DateTime firstDayOfMonth, DateTime lastDayOfMonth, 
+            int colIndex, Employee employee, List<Task> empTasks)
         {
             // New Row
             Row row = new Row();
             row.RowIndex = (UInt32)colIndex;
             int total = 0, rowIndex = -1;
             DateTime day = firstDayOfMonth;
-
             Cell titleCell = CreateCell(employee.FirstName + " " + employee.LastName, ref rowIndex, colIndex,2);
             row.AppendChild(titleCell);
-
             //preparing the formula
             string start = ColumnLetter(1) + colIndex;
-
             while (day.Date <= lastDayOfMonth.Date)
             {
                 Task currentTask = empTasks.Where(x =>x.StartDate.HasValue && (x.StartDate.Value.Date == day.Date)).FirstOrDefault();
@@ -334,17 +331,11 @@ namespace ResourceApplicationTool.Utils
                 }
                 
                 day = day.AddDays(1);
-                
                 total += hours;
             }
-            string finish = ColumnLetter(rowIndex) + colIndex;
-
-            string Formula = "SUM(" + start + ":" + finish + ")";
-
+            string finish = ColumnLetter(rowIndex) + colIndex, Formula = "SUM(" + start + ":" + finish + ")";
             Cell totalCell = CreateFormulaCell(Formula,total.ToString(), ref rowIndex, colIndex);
             row.AppendChild(totalCell);
-
-
             return row;
         }
 
@@ -395,15 +386,15 @@ namespace ResourceApplicationTool.Utils
 
         private static string ColumnLetter(int intCol)
         {
-            var intFirstLetter = ((intCol) / 676) + 64;
-            var intSecondLetter = ((intCol % 676) / 26) + 64;
-            var intThirdLetter = (intCol % 26) + 65;
+            var firstDigit = ((intCol) / 676) + 64;
+            var secondDigit = ((intCol % 676) / 26) + 64;
+            var thirdDigit = (intCol % 26) + 65;
 
-            var firstLetter = (intFirstLetter > 64)
-                ? (char)intFirstLetter : ' ';
-            var secondLetter = (intSecondLetter > 64)
-                ? (char)intSecondLetter : ' ';
-            var thirdLetter = (char)intThirdLetter;
+            var firstLetter = (firstDigit > 64)
+                ? (char)firstDigit : ' ';
+            var secondLetter = (secondDigit > 64)
+                ? (char)secondDigit : ' ';
+            var thirdLetter = (char)thirdDigit;
 
             return string.Concat(firstLetter, secondLetter,
                 thirdLetter).Trim();
