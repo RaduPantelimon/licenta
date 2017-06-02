@@ -433,13 +433,12 @@ namespace ResourceApplicationTool.Controllers
                 ViewBag.SkillCategories = db.SkillCategories.OrderByDescending(x => x.Skills.Count).ToList();
 
 
-                //string generatedPDFHtml = this.RenderView("PdfCVGenerator", employee, ViewData);
+                //generating the main body
                 string generatedPDFHtml = ViewRenderer.RenderView("~/Views/Employees/PdfCVGenerator.cshtml", employee,
                                                      ControllerContext);
                 //generating the header
                 string headertext = ViewRenderer.RenderView("~/Views/Employees/PdfCVHeader.cshtml", employee,
                                                      ControllerContext);
-
                 byte[] pdfBuffer = PdfGenerator.ConvertHtmlToPDF(generatedPDFHtml, headertext);
 
                 //delete the temporary generated file

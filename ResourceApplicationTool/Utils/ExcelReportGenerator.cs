@@ -79,9 +79,6 @@ namespace ResourceApplicationTool.Utils
                     stylePart.Stylesheet = GenerateStylesheet();
                     stylePart.Stylesheet.Save();
 
-                    
-
-
                     var sheets = document.WorkbookPart.Workbook.
                         AppendChild<Sheets>(new Sheets());
 
