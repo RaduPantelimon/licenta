@@ -242,3 +242,34 @@
 .validation-error{
     color:red;
 }
+
+.ts-header{
+    margin:15px;
+    padding:10px 10px 10px 20px;
+    color:white;
+    background-color:#47c9af;
+    border-radius:20px;
+    text-align:center;
+}
+.form-control.custom-control{
+    display:inline-block;
+    width:200px;
+}
+
+.label-field{
+    text-align:right;
+    width:100px;
+}
+.input-row{
+    padding:5px;
+}
+.btn-default.submit-button{
+    margin-top:15px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.spacing-elem{
+    margin-bottom:25px;
+}

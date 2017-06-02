@@ -127,3 +127,15 @@
 }
 
 }
+
+ul.typeahead.dropdown-menu{
+    border-radius:15px;
+    margin:0px;
+    padding:0px;
+
+}
+ul.typeahead.dropdown-menu li, ul.typeahead.dropdown-menu li a{
+    height:35px;
+    border-radius:14px;
+}
+

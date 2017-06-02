@@ -234,7 +234,7 @@
                             //only admins can edit this field
 
                             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                                @Html.LabelFor(model => model.Administrator, "Permissions level", htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
+                                @Html.LabelFor(model => model.Administrator, "Permission", htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
                                 <div class="col-md-9 col-sm-9">
                                     @Html.DropDownListFor(model => model.Administrator, Const.Permissions, new Dictionary<string, object> { { "class", "form-control" } })
                                     @Html.ValidationMessageFor(model => model.Administrator, "", new { @class = "text-danger" })

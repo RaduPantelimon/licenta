@@ -1,2 +1,6 @@
 ﻿body {
 }
+.modal-header, .modal-footer{
+    position:relative
+
+}

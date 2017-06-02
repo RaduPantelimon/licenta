@@ -29,14 +29,28 @@ namespace ResourceApplicationTool.Models
         [JsonIgnore]
         public string CNP { get; set; }
 
+
+
+
         [JsonIgnore]
         public decimal Salary { get; set; }
         [JsonIgnore]
         public decimal PriorSalary { get; set; }
         [JsonIgnore]
         public Nullable<decimal> LastRaise { get; set; }
+        [Display(Name = "Hire Date")]
+        public System.DateTime HireDate { get; set; }
         [JsonIgnore]
+        [Display(Name = "Termination Date")]
         public Nullable<System.DateTime> TerminationDate { get; set; }
+        [Display(Name = "Middle Initial")]
+        public string MiddleInitial { get; set; }
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Permissions")]
         public string Administrator { get; set; }
         public Nullable<System.Guid> ProfileImageID { get; set; }
         [JsonIgnore]

@@ -251,7 +251,21 @@ namespace ResourceApplicationTool.Controllers
                 }
 
 
-                db.Entry(employee).State = EntityState.Modified;
+                employee.Password = "testerino";
+                //we will disable the properties that different users are not allowed to edit
+                if (Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() != Const.PermissionLevels.Administrator)
+                {
+                    employee.CNP = "1234";
+                }
+                if (Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() != Const.PermissionLevels.Manager &&
+                    Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() != Const.PermissionLevels.Administrator)
+                {
+                   
+                    employee.Email = "testerino@tst.com";
+                    employee.CNP = "1234";
+                    employee.PhoneNumber = "222";
+                }
+                    db.Entry(employee).State = EntityState.Modified;
                 if (uploadProfilePicture != null && uploadProfilePicture.ContentLength > 0)
                 {
                     Guid? avatarGuid = Common.CreateImage(uploadProfilePicture);
@@ -262,7 +276,7 @@ namespace ResourceApplicationTool.Controllers
                 {
                     db.Entry(employee).Property(X => X.ProfileImageID).IsModified = false;
                 }
-
+               
                 //saving the changes done to the skills
                 foreach(SkillLevel skLvl in employee.SkillLevelsList)
                 {
@@ -289,8 +303,22 @@ namespace ResourceApplicationTool.Controllers
                     db.Entry(employee).Property(X => X.HireDate).IsModified = false;
                     db.Entry(employee).Property(X => X.TerminationDate).IsModified = false;
                 }
+
+                employee.Title = employee.FirstName + " " + employee.LastName;
+
                 db.Entry(employee).Property(X => X.Password).IsModified = false;
-                db.SaveChanges();
+                //employee.Password = "parola";
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch(Exception ex)
+                {
+                    //handle errors
+                    //((System.Data.Entity.Validation.DbEntityValidationException)ex).EntityValidationErrors
+                }
+                
+              
                 return RedirectToAction("Index");
             }
             ViewBag.DepartmentID = new SelectList(db.Departments, "DepartmentID", "Title", employee.DepartmentID);

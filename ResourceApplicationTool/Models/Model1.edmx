@@ -173,7 +173,9 @@
           <Property Name="Estimation" Type="int" />
         </EntityType>
         <Association Name="FK_Attendant">
-          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Attendants" Type="Self.Attendants" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employees">
@@ -299,7 +301,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_EventID">
-          <End Role="Events" Type="Self.Events" Multiplicity="1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Attendants" Type="Self.Attendants" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Events">
