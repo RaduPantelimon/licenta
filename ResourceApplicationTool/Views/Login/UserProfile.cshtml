@@ -39,27 +39,27 @@
 
                 <div class="row expandable-content">
                     <div class="form-group subsection col-md-12 col-lg-6 col-sm-12 col-xs-12">
-                        <div class="field-name col-md-4 col-sm-4 col-xs-4 control-label">
+                        <div class="field-name col-md-5 col-sm-5 col-xs-5 control-label">
                             @Html.DisplayNameFor(model => model.Email)
                         </div>
-                        <div class="col-md-8 col-sm-8 col-xs-8 ">
+                        <div class="col-md-7 col-sm-7 col-xs-7 ">
                             @Html.DisplayFor(model => model.Email)
                         </div>
                     </div>
 
                     <div class="form-group subsection col-md-12 col-lg-6 col-sm-12 col-xs-12">
-                        <div class="field-name col-md-4 col-sm-4  col-xs-4 control-label">
-                            @Html.DisplayNameFor(model => model.PhoneNumber)
+                        <div class="field-name col-md-5 col-sm-5  col-xs-5 control-label">
+                            Phone Number
                         </div>
-                        <div class="col-md-8 col-sm-8 col-xs-8 ">
+                        <div class="col-md-5 col-sm-5 col-xs-5 ">
                             @Html.DisplayFor(model => model.PhoneNumber)
                         </div>
                     </div>
                     <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                        <div class="field-name col-md-4 col-sm-4 col-xs-4 control-label">
-                            @Html.DisplayNameFor(model => model.ManagerID)
+                        <div class="field-name col-md-5 col-sm-5 col-xs-5 control-label">
+                            Manager
                         </div>
-                        <div class="col-md-8 col-sm-8 col-xs-8">
+                        <div class="col-md-7 col-sm-7 col-xs-7">
                             @if (Model.Employee1 != null)
                             {
                                 @Html.ActionLink(Model.Employee1.FirstName + " " + Model.Employee1.LastName, "Details", new { @id = Model.ManagerID })
@@ -68,10 +68,10 @@
                         </div>
                     </div>
                     <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                        <div class="field-name col-md-4 col-sm-4 col-xs-4 control-label">
-                            @Html.DisplayNameFor(model => model.DepartmentID)
+                        <div class="field-name col-md-5 col-sm-5 col-xs-5 control-label">
+                            Department
                         </div>
-                        <div class="col-md-8 col-sm-8 col-xs-8">
+                        <div class="col-md-7 col-sm-7 col-xs-7">
                             @if (Model.Department != null)
                             {
                                 @Html.ActionLink(Model.Department.Title, "Details", "Departments", new { @id = Model.DepartmentID }, null)

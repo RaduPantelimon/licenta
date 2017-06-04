@@ -72,3 +72,7 @@
     margin: 20px;
     margin-bottom:10px;
 }
+
+.field-name {
+    text-align: right;
+}

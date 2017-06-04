@@ -68,7 +68,10 @@
                         <li>@Html.ActionLink("Departments", "Index", "Departments")</li>
                         <li>@Html.ActionLink("Employees", "Index", "Employees")</li>
                         <li>@Html.ActionLink("Projects", "Index", "Projects")</li>
-                        <li>@Html.ActionLink("Events", "Index", "Events")</li>
+                        @if (!Request.IsAuthenticated)
+                        {
+                            <li>@Html.ActionLink("Events", "Index", "Events")</li>
+                        }
                     </ul>
                     @Html.Partial("_LoginPartial")
                   

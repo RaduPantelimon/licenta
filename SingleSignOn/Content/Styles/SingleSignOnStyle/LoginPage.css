@@ -44,3 +44,11 @@ div.profile_summary{
     margin-bottom:25px;
     padding-left:100px;
 }
+
+.checkbox{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: #666a68;
+
+}
