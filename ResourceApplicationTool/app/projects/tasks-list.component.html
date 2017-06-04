@@ -5,7 +5,7 @@
             <div class="task-template-container">
                 <!--The templates need to be draggable-->
                 <div class="taskTemplate-holder" *ngFor='let task of templateTasks'>
-                    <div mwlDraggable (dragEnd)="dragEnd($event, task.TaskID)" dropdata="bar"
+                    <div mwlDraggable (dragEnd)="dragEnd($event, task.TaskID)" 
                             class="taskTemplate taskTemplate{{task.TaskID}}">
                         <span class="task-Title">{{task.TaskDescription}}</span>
                     </div>
@@ -38,33 +38,24 @@
                                     class="taskTemplate taskTemplate{{day.task.TemplateID}}">
                                 <span class="task-Title task-selectable" (click)="onFocus($event,day)"> {{day.task.TaskDescription}} </span>
                             </div>
+
                             <div *ngIf="day.focused && (permissions=='Administrator'|| permissions=='Manager')"
-                                    mwlResizable (resizeEnd)="onResizeEnd($event, day.task , empIndex, dayIndex)" (resizeStart)="onResizeStart($event)" resizeData="test"
+                                    mwlResizable (resizeEnd)="onResizeEnd($event, day.task , empIndex, dayIndex)" 
+                                    (resizeStart)="onResizeStart($event)" 
                                     [validateResize]="validate"
                                     [enableGhostResize]="true"
                                     [resizeSnapGrid]="{left: 130, right: 130, top:45, bottom:45}"
                                     [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
                                     class="taskTemplate focused-task">
-
-
-                                <img id="edit-image"
-                                        src="/Content/Pictures/edit-icon.png"
-                                        class="edit-handle"
+                                <img id="edit-image" src="/Content/Pictures/edit-icon.png" class="edit-handle"
                                         (click)="onEdit($event,day,day.task.TaskID)">
-
                                 <span class="task-Title task-selectable" (click)="onLoseFocus($event,day)">{{day.task.TaskDescription}}</span>
-
-                                <img id="delete-image"
-                                        src="/Content/Pictures/delete-icon.png"
-                                        class="delete-handle"
+                                <img id="delete-image" src="/Content/Pictures/delete-icon.png" class="delete-handle"
                                         (click)="onDelete($event,day,day.task.TaskID)">
-
-                                <img id="drag-image"
-                                        src="http://i.imgur.com/eqzz2dl.gif"
-                                        class="resize-handle"
-                                        mwlResizeHandle
-                                        [resizeEdges]="{bottom: true, right: true}">
+                                <img id="drag-image" src="/Content/Pictures/eqzz2dl.gif" class="resize-handle"
+                                        mwlResizeHandle [resizeEdges]="{bottom: true, right: true}">
                             </div>
+
                             <div *ngIf="day.focused && !(permissions=='Administrator'||permissions=='Manager')"
                                  class="taskTemplate focused-task ">
 

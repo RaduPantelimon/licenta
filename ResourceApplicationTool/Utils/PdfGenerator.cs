@@ -11,26 +11,15 @@ namespace ResourceApplicationTool.Utils
 {
     public class PdfGenerator
     {
-        /*<Summary> Vom primi ca parametru markup-ul html sub formă de string</Summary>*/
         public static byte[] ConvertHtmlToPDF(string htmlCode, string header = null)
         {
             NReco.PdfGenerator.HtmlToPdfConverter nRecohtmltoPdfObj = new NReco.PdfGenerator.HtmlToPdfConverter();
             nRecohtmltoPdfObj.Orientation = PageOrientation.Portrait;
             nRecohtmltoPdfObj.PageFooterHtml = CreatePDFFooter();
-            nRecohtmltoPdfObj.PageHeaderHtml =header;
-            /*
-             * setarea optiuni de care wkhtmltopdf va tine cont atunci cand va genera documentul
-             * daca am folosi manual programul, aceste optiuni ar fi incluse in linia de comanda
-            */
-            nRecohtmltoPdfObj.CustomWkHtmlArgs = @" --load-media-error-handling ignore 
-                            --disable-smart-shrinking 
-                            --dpi 200 --margin-bottom 10 
-                            --margin-top 45 
-                            --header-spacing 10 
-                            --margin-left 20 
-                            --margin-right 20";
+            nRecohtmltoPdfObj.PageHeaderHtml = /*CreatePDFHeader(*/header;/*);*/
+            nRecohtmltoPdfObj.CustomWkHtmlArgs = " --load-media-error-handling ignore --disable-smart-shrinking --dpi 200 --margin-bottom 10 --margin-top 45 --header-spacing 10 --margin-left 20 --margin-right 20";
 
-            return nRecohtmltoPdfObj.GeneratePdf(htmlCode);
+            return nRecohtmltoPdfObj.GeneratePdf(/*CreatePDFScript() + */"<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'/></head><body>" + htmlCode + "</body></html>");
         }
 
         public static string CreatePDFFooter()

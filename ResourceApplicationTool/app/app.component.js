@@ -33,14 +33,16 @@ var AppComponent = (function () {
                 //getting the sprint id from the url
                 var urlComponents = location.href.split("/");
                 var spid_1 = parseInt(urlComponents[urlComponents.length - 1]);
-                //initializing the Sprints Page
+                //initializing the Sprints Page with the results from the server
                 this._sprintService.getSprints(id_1).subscribe(function (sprints) {
                     if (location.href.indexOf("addsprint") != -1) {
                         //redirected to the addsprints page
                         currentComponent_1.createSprintEnabled = true;
                     }
                     currentComponent_1.sprints = sprints.map(function (val, index) {
-                        if ((spid_1 && spid_1 == val.SprintID) || ((!spid_1 || isNaN(spid_1) || location.href.indexOf("task") == -1) && index == 0)) {
+                        //spid represents the url of the current sprint, retrieved from the URL
+                        if ((spid_1 && spid_1 == val.SprintID) ||
+                            ((!spid_1 || isNaN(spid_1) || location.href.indexOf("task") == -1) && index == 0)) {
                             val.selected = true;
                             currentComponent_1.selectedMonth = moment(val.StartDate).format("YYYY MMMM");
                         }

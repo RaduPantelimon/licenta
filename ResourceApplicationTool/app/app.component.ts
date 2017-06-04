@@ -47,7 +47,7 @@ export class AppComponent implements OnInit{
                 let urlComponents: string[] = location.href.split("/");
                 let spid: number = parseInt(urlComponents[urlComponents.length - 1]);
 
-                //initializing the Sprints Page
+                //initializing the Sprints Page with the results from the server
                 this._sprintService.getSprints(id).subscribe(function (sprints: any[]) {
 
                     if (location.href.indexOf("addsprint") != -1)
@@ -55,10 +55,12 @@ export class AppComponent implements OnInit{
                         //redirected to the addsprints page
                         currentComponent.createSprintEnabled = true;
                     }
+
                     currentComponent.sprints = sprints.map(function (val, index)
                     {
-
-                        if ((spid && spid == val.SprintID) || ((!spid || isNaN(spid) || location.href.indexOf("task") == -1) && index == 0))
+                        //spid represents the url of the current sprint, retrieved from the URL
+                        if ((spid && spid == val.SprintID) ||
+                            ((!spid || isNaN(spid) || location.href.indexOf("task") == -1) && index == 0))
                         {
                             val.selected = true;
                             currentComponent.selectedMonth = moment(val.StartDate).format("YYYY MMMM");
@@ -99,6 +101,7 @@ export class AppComponent implements OnInit{
                     {
                         //navigating to our sprint
                         this._router.navigate(['/tasks', newSprint.SprintID]);
+
                         this.createSprintEnabled = false;
                     }
                     

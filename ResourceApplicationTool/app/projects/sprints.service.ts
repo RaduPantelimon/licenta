@@ -1,10 +1,8 @@
 ﻿import { Injectable } from '@angular/core';
-
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs/Subject';
-
 
 @Injectable()
 export class SprintsService {
@@ -16,9 +14,14 @@ export class SprintsService {
     public _obsvInitialized: boolean = false;
     private addedSprints = new Subject<any>();
 
-    constructor(private _http: Http) {
+    constructor(private _http: Http) {}
 
+    getSprints(projectID: number): Observable<any[]> {
+
+        return this._http.get(this._sprintsUrl + projectID.toString()).map(
+            (response: Response) => <any[]>response.json());
     }
+
 
     // Service message commands
     registerNewlyCreateSprint(sprint: any) {
@@ -27,12 +30,6 @@ export class SprintsService {
 
     newSprints = this.addedSprints.asObservable();
 
-    getSprints(projectID: number): Observable<any[]> {
-
-        return this._http.get(this._sprintsUrl + projectID.toString()).map(
-            (response: Response) => <any[]>response.json());
-    }
-    
     //add new sprint
     addSprint(sprint: any): Observable<any> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -41,6 +38,12 @@ export class SprintsService {
             .map(
             (response: Response) => <any>this.extractData(response));
     }
+
+    private extractData(res: Response) {
+        let body = res.json();
+        return body || {};
+    }
+
 
     //delete existing task
     deleteSprint(sprintID: number): Observable<any> {
@@ -57,8 +60,5 @@ export class SprintsService {
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    private extractData(res: Response) {
-        let body = res.json();
-        return body || {};
-    }
+   
 }

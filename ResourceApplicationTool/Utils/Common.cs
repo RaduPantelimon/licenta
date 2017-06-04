@@ -204,6 +204,23 @@ namespace ResourceApplicationTool.Utils
 
             return isValid;
         }
+        public static int CheckAuthentication(HttpSessionStateBase Session, IPrincipal User)
+        {
+            //we check if the user is either an administrator or a manager for the department
+            int empID = 0;
+            if (User.Identity.IsAuthenticated)
+            {
+                //getting  the id of the current authenticated user
+                ClaimsIdentity claimsIdentity = (ClaimsIdentity)User.Identity;
+                IEnumerable<Claim> claims = claimsIdentity.Claims;
+
+                string tokenID = claims.Where(x => x.Type == Const.CLAIM.CLAIM_NAMESPACE
+                + "/" + Const.Fields.EMPLOYEE_ID).FirstOrDefault().Value;
+                empID = Convert.ToInt32(Session[Const.CLAIM.USER_ID]);
+            }
+
+            return empID;
+        }
 
         public static bool CheckEventAuthentication(HttpSessionStateBase Session, IPrincipal User, Event @event) {
             //we check if the user is either an administrator orthe event creator

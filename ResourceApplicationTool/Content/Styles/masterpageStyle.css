@@ -3,7 +3,7 @@
 }
 .pageLogo 
 {
-    max-width:1800px;
+    max-width:2300px;
     margin: 0 auto;
     height:500px;
     position:absolute;
@@ -139,3 +139,41 @@ ul.typeahead.dropdown-menu li, ul.typeahead.dropdown-menu li a{
     border-radius:14px;
 }
 
+.jumbotron.jumbotron-forefront{
+    border:3px solid #428bca;
+    border-radius:20px;
+    padding-right:20px;
+    padding-left:20px;
+    background-color:#fff;
+}
+
+.rat-logo{
+    height:40px;
+    width:40px;
+    margin-right: 5px;
+}
+
+.navbar-brand.logo-container{
+    padding-top: 7px;
+}
+.main-homepage-header{
+    margin-top:0px;
+    margin-bottom:5px;
+    color:#428bca;
+}
+.homepage-hr{
+    border-top: 1px solid lightgray;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.carousel-depts .slick-prev:before, .carousel-depts .slick-next:before {  
+    color: #ddd;
+}
+
+.main-header a,
+.main-header .role-name-container,
+.cbp-spmenu a,
+.cbp-spmenu .role-name-container{
+    color:#FE6A00;
+}

@@ -12,11 +12,17 @@
     <div class="main_expandable">
         <h3 class="tvd-sub-header">A new event has been scheduled</h3>
         <div class="content-box">
-            <p>Performance Review for @Model.FirstName @Model.LastName</p>
-            @*<p>The performance review can be found at the following address: 
-                <a href="http://localhost:9919/Events/Details/@Model.id">all upcoming events </a> </p>
-            *@
-            <p>Navigate to the following page in order to see <a href="http://localhost:9919/Events">all upcoming events </a>.</p>
+            <div class="starting-formula">
+                <p class="starting-regard">Hello,</p>
+            </div>
+
+            <p class="paragraph-item">Performance Review for @Model.FirstName @Model.LastName has been scheduled.</p>
+            <p class="paragraph-item">Navigate to the following page in order to see <a href="http://localhost:9919/Events">all upcoming events </a>.</p>
+
+            <div class="closing-formula">
+                <p class="closing-regard">Best Regards,</p>
+                <p class="closing-name">RAT Team</p>
+            </div>
         </div>
     </div>
 </div>

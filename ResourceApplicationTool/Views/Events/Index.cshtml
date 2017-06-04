@@ -1,58 +1,160 @@
 ﻿@model IEnumerable<ResourceApplicationTool.Models.Event>
+@using ResourceApplicationTool.Models;
+@using ResourceApplicationTool.Utils;
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<link href="~/Content/Styles/Event/eventsCommonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/Event/eventsIndexStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/commonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/slickStyle.css" rel="stylesheet" />
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.StartTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EventType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Location)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Employee.Account)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EventType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Location)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Employee.Account)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.EventID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.EventID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.EventID })
-        </td>
-    </tr>
-}
+<div class="mainHeaderLogo events-logo logo-details" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"></div>
+<div class="main-items-container">
+    <div  class="text-info">
+        <h2 class="sec-title-huge sec-title events-title">Events</h2>
+        @if (User.Identity.IsAuthenticated)
+        {
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn-primary add-new-button" })
+        }
+    </div>
+    <hr class="sec-hr title-hr" />
 
-</table>
+    <div class="slick-filter">
+        <h2 class="sec-title-medium sec-title filter-title">Show:</h2>
+        <select class="form-control filter-select">
+            <option value="0">All Events</option>
+            <option value="1">Events Created</option>
+            <option value="2">Events Attended</option>
+
+        </select>
+    </div>
+
+    <div class="slick-section row">
+        @foreach (Event ev in Model)
+        {
+
+            <!--<div class="wip-div" ></div>-->
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 department-item carousel-item carousel-item-nopicture 
+                 @(ev.isAttendant?" attendant-item ":" ") @(ev.isCreator?" creator-item ":" ")">
+                <div class="mask-background-parent">
+                    <div class="mask-background">
+
+                        <div class="mask-front">
+                            <div class="stat sec-sweep-title">
+
+                                <div class="stat-sec sweep-stat slick-main-header">
+                                    <h2 class="limited-container event-container-header">@ev.Title</h2>
+                                </div>
+                                <figure class="view third-effect">
+                                    <div>
+                                        <div class="stat-row">
+                                            <div class="secondary-pj-field container-padding">
+                                                <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/start-time-icon.png" alt="" height="28" width="28">
+                                                <p class="project-secondary-label"></p>
+                                            </div>
+                                            <div class="secondary-pj-field ">
+                                                <p class="project-secondary-label">
+                                                    <span class="field-name">Start Time:</span>
+                                                    @String.Format("{0:MM/dd/yyyy hh:mm tt}", ev.StartTime)
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="stat-row">
+                                            <div class="secondary-pj-field container-padding">
+                                                <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/end-time-icon.png" alt="" height="28" width="28">
+                                                <p class="project-secondary-label"></p>
+                                            </div>
+                                            <div class="secondary-pj-field ">
+                                                <p class="project-secondary-label">
+                                                    <span class="field-name">End Time:</span>
+                                                    @String.Format("{0:MM/dd/yyyy hh:mm tt}", ev.EndTime)
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="stat-row">
+                                            <div class="secondary-pj-field container-padding">
+                                                <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/department-icon.png" alt="" height="28" width="28">
+                                                <p class="project-secondary-label"></p>
+                                            </div>
+                                            <div class="secondary-pj-field">
+                                                <p class="project-secondary-label">
+                                                    <span class="field-name">Event Type:</span>
+                                                    @ev.EventType
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                        <div class="stat-row">
+                                            <div class="secondary-pj-field container-padding">
+                                                <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/users-icon.png" alt="" height="28" width="28">
+                                                <p class="project-secondary-label"></p>
+                                            </div>
+                                            <div class="secondary-pj-field">
+                                                <p class="project-secondary-label">
+                                                    <span class="field-name dept-information-container" employeeID="@ev.Employee.EmployeeID">Creator:</span>
+                                                   
+                                                    <a href="/Employees/Details/@(ev.Employee.EmployeeID)">
+                                                        @(ev.Employee.FirstName + " " + ev.Employee.LastName + "  ")
+                                                    </a>
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="stat-row sec-pj-detail-label">
+                                        <div>
+                                            <p class="project-secondary-label ">
+                                                <span class="field-name">Attendants</span>
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                    <div class="sec-pj-detail">
+                                        
+                                       @foreach(Attendant attendant in ev.Attendants)
+                                       {
+                                           <a href="/Employees/Details/@(attendant.Employee.EmployeeID)">
+                                            @(attendant.Employee.FirstName + " " + attendant.Employee.LastName)
+                                           </a>
+                                       }
+                                       @if (ev.Attendants == null || ev.Attendants.Count == 0) {
+                                           <span>This event has no attendants</span>
+                                       }
+                                    </div>
+                                    <div class="mask clickable-mask" onclick="redirectToUrl('/Events/Details/@ev.EventID')">
+                                        <a href="" class="info">Read More</a>
+                                    </div>
+
+                                    <div class="mask">
+                                        <a href="/Events/Details/@ev.EventID" class="info">Read More</a>
+                                    </div>
+
+                                </figure>
+                                <div class="bottom-footer">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+
+        @Styles.Render("~/Content/jquery-uicss") ;
+    }
+
+    <script type="text/javascript" src="/scripts/moment.min.js"></script>
+    <script type="text/javascript" src="/scripts/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/common.js"></script>
+    <script src="~/Scripts/events/events_common.js"></script>
+    <script src="~/Scripts/events/events_index.js"></script>
+    <link rel="stylesheet" href="/Content/bootstrap-datetimepicker.css" />

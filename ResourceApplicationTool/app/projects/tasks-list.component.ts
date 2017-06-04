@@ -103,18 +103,15 @@ export class TasksListComponent implements OnInit {
             {
                 if (employee.Days[i] && employee.Days[i].date == day.date)
                 {
-                    //employee.Days[i].task = this.templateTasks[0];
+                    //initialize the data sent to the server
                     let data: any = {};
                     data.templateTaskID = this.draggedTaskID;
                     data.startDate = day.date;
                     data.employeeID = employee.EmployeeID;
                     data.sprintID = this.currentSprint.SprintID;
                     this._tasksService.addTask(data).subscribe(response => {
-
-                        console.log(response);
-                        if (!response.Estimation) {
-                            response.Estimation = 0;
-                        }
+                        if (!response.Estimation) { response.Estimation = 0; }
+                        //we add the new task to the day object
                         employee.Days[i].task = response;
                         this.sprintTasks.push(response);
                     },
@@ -122,14 +119,8 @@ export class TasksListComponent implements OnInit {
                     );
                 }
             }
-
         }
-        catch (ex)
-        {
-            console.log("Could not save new task:" + ex);
-        }
-        
-
+        catch (ex){ console.log("Could not save new task:" + ex); }
     }
 
 

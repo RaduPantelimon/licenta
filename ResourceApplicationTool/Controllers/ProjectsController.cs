@@ -286,7 +286,15 @@ namespace ResourceApplicationTool.Controllers
         { 
             try
             {
-                Task templateTask = db.Tasks.Where(x => x.TaskID == data.directDescendant).FirstOrDefault();
+                Task templateTask;
+                if(data.directDescendant > 0)
+                {
+                    templateTask = db.Tasks.Where(x => x.TaskID == data.directDescendant).FirstOrDefault();
+                }
+               else
+                {
+                    templateTask = db.Tasks.Where(x => x.TaskID == data.templateTaskID).FirstOrDefault();
+                }
                 if (templateTask != null)
                 {
                     DateTime startDate = DateTime.Parse(data.startDate);

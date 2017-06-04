@@ -85,20 +85,18 @@
 
                     @Html.DisplayFor(model => model.EventType)
 
-                    <div class="event-type-container" style="display:none;">
-                        <img class="event-type-warning" src="~/Content/Pictures/warning-icon.png" width="20" height="20" />
-                        <div class="event-type-text">
-                            @foreach (EventTypeInfo typeInfo in Const.EventTypesinfo)
-                            {
-                                if (typeInfo.DisplayWarning)
-                                {
-                                    <span style="display:none;" data-event-type="@typeInfo.EventType">@typeInfo.DetailInfo</span>
-                                }
+                  
 
-                            }
-                        </div>
-                    </div>
-
+                </div>
+            </div>
+            <div class="form-group  col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(Model => Model.Employee)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    <a href="/Employees/Details/@Html.DisplayFor(Model => Model.Employee.EmployeeID)">
+                        @(Model.Employee.FirstName + " " + Model.Employee.LastName)
+                    </a>
                 </div>
             </div>
             <div class="form-group subsection col-md-12 col-lg-12 col-sm-12 col-xs-12" style="clear:both">

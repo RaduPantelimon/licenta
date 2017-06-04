@@ -15,7 +15,13 @@
             </select>
             
         </div>
-        <button (click)="saveSprint($event)" [disabled]="sprintAlreadyExists" class="btn btn-default submit-button">Create Sprint</button>
+
+        <button (click)="saveSprint($event)" 
+                [disabled]="sprintAlreadyExists" 
+                class="btn btn-default submit-button">
+            Create Sprint
+        </button>
+    
     </div>
     <div id="week-section" class="mini-cal col-md-7 col-lg-8 col-sm-12 col-xs-12">
         <p *ngIf="sprintAlreadyExists" class="validation-error">

@@ -268,6 +268,7 @@
     <Compile Include="Models\PartialModels\Department.cs" />
     <Compile Include="Models\PartialModels\Education.cs" />
     <Compile Include="Models\PartialModels\Employee.cs" />
+    <Compile Include="Models\PartialModels\Event.cs" />
     <Compile Include="Models\PartialModels\Project.cs" />
     <Compile Include="Models\PartialModels\Sprint.cs" />
     <Compile Include="Models\PartialModels\Task.cs" />
@@ -373,6 +374,7 @@
     <Content Include="Content\Pictures\effort-icon.png" />
     <Content Include="Content\Pictures\employees-banner-icon.png" />
     <Content Include="Content\Pictures\employees-icon.jpg" />
+    <Content Include="Content\Pictures\end-time-icon.png" />
     <Content Include="Content\Pictures\expand-sign.png" />
     <Content Include="Content\Pictures\expand-small.png" />
     <Content Include="Content\Pictures\imghover.png" />
@@ -388,6 +390,7 @@
     <Content Include="Content\Pictures\privatepyle.jpg" />
     <Content Include="Content\Pictures\projects-banner-icon.png" />
     <Content Include="Content\Pictures\projects-icon.png" />
+    <Content Include="Content\Pictures\rat-logo.png" />
     <Content Include="Content\Pictures\resizable-handler.gif" />
     <Content Include="Content\Pictures\role-icon.png" />
     <Content Include="Content\Pictures\sartre.jpg" />
@@ -396,6 +399,7 @@
     <Content Include="Content\Pictures\settings_background.png" />
     <Content Include="Content\Pictures\settings_background_img.png" />
     <Content Include="Content\Pictures\shape.png" />
+    <Content Include="Content\Pictures\start-time-icon.png" />
     <Content Include="Content\Pictures\users-icon.png" />
     <Content Include="Content\Pictures\warning-icon.png" />
     <Content Include="Content\Styles\arrows.css" />
@@ -411,6 +415,7 @@
     <Content Include="Content\Styles\Event\eventsCommonStyle.css" />
     <Content Include="Content\Styles\Event\eventsDisplayStyle.css" />
     <Content Include="Content\Styles\Event\eventsEditStyle.css" />
+    <Content Include="Content\Styles\Event\eventsIndexStyle.css" />
     <Content Include="Content\Styles\Event\eventsNewStyle.css" />
     <Content Include="Content\Styles\homePage.css" />
     <Content Include="Content\Styles\Login\login_common.css" />
@@ -558,6 +563,7 @@
     <Content Include="Scripts\events\events_delete.js" />
     <Content Include="Scripts\events\events_display.js" />
     <Content Include="Scripts\events\events_edit.js" />
+    <Content Include="Scripts\events\events_index.js" />
     <Content Include="Scripts\events\events_new.js" />
     <Content Include="Scripts\homePage.js" />
     <Content Include="Scripts\home\home.js" />

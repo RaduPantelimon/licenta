@@ -1,0 +1,26 @@
+﻿body {
+    background-color: #eeeeee;
+}
+div.mainHeaderLogo.events-logo.logo-details {
+    height:300px;
+}
+hr.title-hr {
+    border-top: 1px solid lightgray;
+}
+.main-items-container {
+    margin-top: 50px;
+}
+.events-title{
+    margin-top:0px;
+}
+.banner-icon {
+    opacity: 0.5;
+}
+h2.events-title {
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 0px;
+}
+h2.event-container-header{
+    font-size:22px;
+}

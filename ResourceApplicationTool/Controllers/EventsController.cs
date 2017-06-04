@@ -21,8 +21,29 @@ namespace ResourceApplicationTool.Controllers
         // GET: Events
         public ActionResult Index()
         {
-            var events = db.Events.Include(x => x.Employee);
-            return View(events.ToList());
+            int currentUserID = Common.CheckAuthentication(Session, User);
+            if(currentUserID >0)
+            {
+                var events = db.Events.Include(x => x.Employee).Include(x => x.Attendants).Where(
+                            x => ( x.CreatorID == currentUserID||
+                            x.Attendants.Any(y => y.EmployeeID == currentUserID)));
+
+                foreach(Event ev in events)
+                {
+                    if(ev.CreatorID == currentUserID)
+                    {
+                        ev.isCreator = true;
+                    }
+                    if(ev.Attendants.Any(y => y.EmployeeID == currentUserID))
+                    {
+                        ev.isAttendant = true;
+                    }
+                }
+
+                return View(events.ToList());
+            }
+            return RedirectToAction("NotFound", "Home");
+           
         }
 
         // GET: Events/Details/5
@@ -462,8 +483,8 @@ namespace ResourceApplicationTool.Controllers
                 return RedirectToAction("NotFound", "Home");
             }
 
-            //db.Events.Remove(@event);
-            //db.SaveChanges();
+            db.Events.Remove(@event);
+            db.SaveChanges();
 
 
             //if we kept the ical file guid, we'll send a cancelation mail

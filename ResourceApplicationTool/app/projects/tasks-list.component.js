@@ -62,17 +62,17 @@ var TasksListComponent = (function () {
             console.log("Using the following template: " + this.draggedTaskID);
             var _loop_1 = function(i) {
                 if (employee.Days[i] && employee.Days[i].date == day.date) {
-                    //employee.Days[i].task = this.templateTasks[0];
+                    //initialize the data sent to the server
                     var data = {};
                     data.templateTaskID = this_1.draggedTaskID;
                     data.startDate = day.date;
                     data.employeeID = employee.EmployeeID;
                     data.sprintID = this_1.currentSprint.SprintID;
                     this_1._tasksService.addTask(data).subscribe(function (response) {
-                        console.log(response);
                         if (!response.Estimation) {
                             response.Estimation = 0;
                         }
+                        //we add the new task to the day object
                         employee.Days[i].task = response;
                         _this.sprintTasks.push(response);
                     }, function (error) { return _this.errorMessage = error; });

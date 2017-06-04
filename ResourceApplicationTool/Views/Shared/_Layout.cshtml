@@ -12,7 +12,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - RAT</title>
 
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/slickcss")
@@ -42,14 +42,26 @@
        
         <div class="header">
             <div class="secondary-header">
-                <span class="secondary-header-text">Proiect Licenta</span>
+                <span class="secondary-header-text">Proiect Licenta - Bucur Radu 344</span>
             </div>
             <div class="main-header container master-page-header">
                 <div class="navbar-header">
                     <div class="menu-button-container">
                         <button id="cbp-spmenu-button" type="button" class="menu-button"></button>
                     </div>
-                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    @*Html.ActionLink("RAT", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                    <a class="navbar-brand logo-container" href="/Home/Index">
+                        <table>
+                            <tr>
+                                <td>
+                                    <img class="rat-logo" src="~/Content/Pictures/rat-logo.png" />
+                                </td>
+                                <td>
+                                    <span>RAT</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </a>
                 </div>
                 <div class="navbar-collapse navbar-links-container">
                     <ul class="nav navbar-nav navbar-links-list">
