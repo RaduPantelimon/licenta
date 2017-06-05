@@ -91,6 +91,8 @@ namespace ResourceApplicationTool.Utils
                     FileID = avatarGuid,
                     FileDescription = uploadPicture.ContentType
                 };
+
+                avatar.FileNumber = avatar.FileNumber.Substring(0, Math.Min(avatar.FileNumber.Length, 45));
                 using (var reader = new System.IO.BinaryReader(uploadPicture.InputStream))
                 {
                     avatar.ItemImage = reader.ReadBytes(uploadPicture.ContentLength);

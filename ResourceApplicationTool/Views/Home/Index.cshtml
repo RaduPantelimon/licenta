@@ -6,6 +6,7 @@
 <script type="text/javascript" src="~/Scripts/home/home.js"></script>
 <!--<link href="~/Content/Styles/style.css" rel="stylesheet" />-->
 <link href="~/Content/Styles/slickStyle.css" rel="stylesheet" /> 
+<link href="~/Content/Styles/commonStyle.css" rel="stylesheet" />
 
 <div class="pageLogo primary-pageLogo" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"></div>
 <div class="pageLogo secondary-pageLogo" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"></div>
@@ -13,75 +14,37 @@
     <div class="text-info">
         <h2 class="sec-title-huge sec-title main-homepage-header">Resource Allocation Tool</h2>
         <hr class="homepage-hr"/>
+        <p class="main-content-p">
+            Lorem ipsum dolor sit amet, per euismod inermis te, id pro case eirmod facilisi. 
+            Mazim dolorum usu cu, ne dignissim concludaturque has. 
+            Aliquip malorum ei vix. Ne vis minim primis constituto, impedit feugait euripidis nec et. 
+            Cu cum tantas labore expetenda, tantas efficiantur est eu.
+        </p>
     </div>
 </div>
 
 <div class="row">
     <div class="carousel-depts">
-        @foreach(Department dept in Model.Departments)
+        @foreach (Department dept in Model.Departments)
         {
-
-            <!--<div class="wip-div" ></div>-->
-            <div class="col-md-4 col-sm-12 col-xs-12">
-
-                <figure class="view third-effect">
-                    <div class="small_sweepimage" style="background-image:url('../Content/Pictures/masterpagepic.jpg');"></div>
-                    <div class="mask clickable-mask" onclick="redirectToUrl('/Departments/Details/@dept.DepartmentID')">
-                        <a href="" class="info">Read More</a>
-                    </div>
-
-                    <div class="mask">
-                        <a href="/Departments/Details/@dept.DepartmentID" class="info">Read More</a>
-                    </div>
-
-                </figure>
-                <div class="mask-background">
-                    <div class="mask-front">
-                        <div class="stat sec-sweep-title ">
-                            <div class="stat-sec sweep-stat">
-                                <h2 class="limited-container dept-title">@dept.Title</h2>
-                            </div>
-                            <div class="sweep_stat_right">
-                                <div class="stat-sec banner-stat-right">
-                                    <div class="secondary-dept-field">
-                                        <img class="banner-icon department-secondary-label department-banner-icon" src="../Content/Pictures/projects-icon.png" alt="" height="28" width="28">
-                                        <p class="banner-bold-value department-secondary-label"> @dept.projectsNumber </p>
-                                    </div>
-                                    <div class="secondary-dept-field">
-                                        <img class="banner-icon department-secondary-label department-banner-icon" src="../Content/Pictures/users-icon.png" alt="" height="28" width="28">
-                                        <p class="banner-bold-value department-secondary-label"> @dept.employeesNumber</p>
-                                        </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sec-dept-detail">
-                            @dept.DeptDescription
-                        </div>
-                    </div>
-                </div>
-            </div>
+            Html.RenderPartial("~/Views/Departments/PartialDepartment.cshtml", dept, ViewData);
         }
     </div>
-    <div>
-        <div class="col-md-4">
-            <h2>Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </div>
-    
-        <div class="col-md-4">
-            <h2>Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="second-content-container ">
+        <div class="col-md-7">
+            <div class="row">
+                <div class="carousel-emps">
+                    @foreach (Employee emp in ViewBag.employees)
+                    {
+                        Html.RenderPartial("~/Views/Employees/PartialEmployee.cshtml", emp, ViewData);
+                    }
+                </div>
+            </div>
+        </div>  
+        <div class="col-md-offset-1 col-md-4 transparent-content-holder employee-of-the-month">
+             @{
+                 Html.RenderPartial("~/Views/Employees/PartialEmployee.cshtml", (Employee)ViewBag.employeeOmonth, ViewData);
+             }
         </div>
     </div>
 </div>

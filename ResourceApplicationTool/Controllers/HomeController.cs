@@ -29,6 +29,19 @@ namespace ResourceApplicationTool.Controllers
                 dept.employeesNumber = employees.Where(x => x.DepartmentID == dept.DepartmentID).Count();
             }
 
+            DateTime currentDate = DateTime.Now;
+            Employee employeeOmonth = employees.OrderByDescending(x => x.Tasks.Where(z =>z.StartDate.HasValue && z.StartDate.Value.Month == currentDate.Month)
+            .Sum(y => (y.Estimation > 0) ? y.Estimation : 0)).FirstOrDefault();
+
+
+            employees.Remove(employeeOmonth);
+
+            //initialize baseUrl
+            string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+            Request.ApplicationPath.TrimEnd('/') + "/";
+            ViewBag.baseUrl = baseUrl;
+            ViewBag.employeeOmonth = employeeOmonth;
+            ViewBag.employees = employees;
             model.Departments = depts;
             return View(model);
         }

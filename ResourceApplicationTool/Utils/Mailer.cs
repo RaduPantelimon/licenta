@@ -64,7 +64,7 @@ namespace ResourceApplicationTool.Utils
 
 
                 //preping the email message
-                var email = new MailMessage();
+                MailMessage email = new MailMessage();
                 email.From = new MailAddress(creator.Email, creator.FirstName + ' ' + creator.LastName);
                 //adding recipients
                 foreach (Employee attendant in attendantEmployees)
@@ -81,10 +81,6 @@ namespace ResourceApplicationTool.Utils
                 System.Net.Mime.ContentType htmlMimeContent = new System.Net.Mime.ContentType("text/html");
                 AlternateView htmlView = AlternateView.CreateAlternateViewFromString(embededHtml, htmlMimeContent);
                 htmlView.ContentType.CharSet = Encoding.UTF8.WebName;
-
-
-               
-               
                 if (ev.EventType == "Performance Review" && ev.Attendants!= null && ev.Attendants.Count > 0 && reviewed != null)
                 {
                     //we'll attach the pdf to the email
@@ -101,7 +97,8 @@ namespace ResourceApplicationTool.Utils
                 {
                     //we'll attach the excel report to the email
 
-                    byte[] array = ExcelReportGenerator.GenerateExcelReportForDepartment(reviewed.DepartmentID.Value, ev.StartTime.Month, ev.StartTime.Year, db);
+                    byte[] array = ExcelReportGenerator.GenerateExcelReportForDepartment(reviewed.DepartmentID.Value, 
+                            ev.StartTime.Month, ev.StartTime.Year, db);
                     Stream excelDocument = new MemoryStream(array);
                     if (excelDocument != null)
                     {

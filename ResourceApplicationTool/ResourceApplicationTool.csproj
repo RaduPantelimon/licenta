@@ -359,6 +359,11 @@
     <Content Include="Content\Pictures\albert-camus.jpg" />
     <Content Include="Content\Pictures\arrow-28-512.png" />
     <Content Include="Content\Pictures\arrows.png" />
+    <Content Include="Content\Pictures\business-banner-1.jpg" />
+    <Content Include="Content\Pictures\business-banner-2.jpg" />
+    <Content Include="Content\Pictures\business-banner-3.jpg" />
+    <Content Include="Content\Pictures\business-banner-4.jpg" />
+    <Content Include="Content\Pictures\business-banner-5.jpg" />
     <Content Include="Content\Pictures\calendar-banner.png" />
     <Content Include="Content\Pictures\calendar-icon.png" />
     <Content Include="Content\Pictures\calendar-secondary-icon.png" />

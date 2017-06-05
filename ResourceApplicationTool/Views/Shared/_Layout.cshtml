@@ -68,7 +68,7 @@
                         <li>@Html.ActionLink("Departments", "Index", "Departments")</li>
                         <li>@Html.ActionLink("Employees", "Index", "Employees")</li>
                         <li>@Html.ActionLink("Projects", "Index", "Projects")</li>
-                        @if (!Request.IsAuthenticated)
+                        @if (Request.IsAuthenticated)
                         {
                             <li>@Html.ActionLink("Events", "Index", "Events")</li>
                         }

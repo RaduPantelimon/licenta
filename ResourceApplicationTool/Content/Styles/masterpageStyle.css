@@ -16,13 +16,19 @@
     background-position: 50% 0px;
 }
 .primary-pageLogo{
-    background: url(../Pictures/masterpagepic.jpg) no-repeat fixed;
+    background: url(../Pictures/business-banner-3.jpg) no-repeat fixed;
      top:0px;
+     background-position: center;
+     border-bottom:2px solid #428bca;
 }
 .secondary-pageLogo 
 {
-    background: url(../Pictures/privatepyle.jpg) no-repeat fixed;
-    top:900px;
+    background: url(../Pictures/business-banner-2.jpg) no-repeat fixed;
+    top:800px;
+    background-position: center bottom;
+    border-bottom:2px solid #428bca;
+    border-top:2px solid #428bca;
+    height:400px;
 }
 .header{
     position:fixed;
@@ -167,7 +173,8 @@ ul.typeahead.dropdown-menu li, ul.typeahead.dropdown-menu li a{
     margin-bottom: 5px;
 }
 
-.carousel-depts .slick-prev:before, .carousel-depts .slick-next:before {  
+.carousel-depts .slick-prev:before, .carousel-depts .slick-next:before,
+.carousel-emps .slick-prev:before, .carousel-emps .slick-next:before {  
     color: #ddd;
 }
 
@@ -176,4 +183,47 @@ ul.typeahead.dropdown-menu li, ul.typeahead.dropdown-menu li a{
 .cbp-spmenu a,
 .cbp-spmenu .role-name-container{
     color:#FE6A00;
+}
+
+
+.main-content-p{
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: #777;
+    margin-top:25px;
+    text-indent: 50px;
+}
+div.secondary-content-holder{
+    background:white;
+    border:2px solid #428bca;
+    border-radius:30px;
+    min-height:300px;
+}
+.second-content-container{
+    margin-top:380px;
+}
+.transparent-content-holder{
+    border:none;
+    background-color:transparent;
+}
+
+.employee-o-month-header{
+    display:none;
+     transition: opacity 0.5s 0s ease-in-out;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
+    transition-delay: 0s;
+    opacity: 0;
+}
+.third-effect:hover:hover .employee-o-month-header{
+    opacity:1;
+    position: absolute;
+    width: 324px;
+    color: #FE6A00;
+    margin-top: 160px;
+    text-align:center;
+   transition-delay:0.2s;
+   display:block;
 }
