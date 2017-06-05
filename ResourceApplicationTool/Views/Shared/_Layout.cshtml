@@ -36,6 +36,8 @@
 
 
     <link href="~/Content/Styles/homePage.css" rel="stylesheet"  />
+    <link href="~/Content/Styles/fonts.css" rel="stylesheet" />
+
 </head>
 <body>
     <div>
@@ -57,7 +59,7 @@
                                     <img class="rat-logo" src="~/Content/Pictures/rat-logo.png" />
                                 </td>
                                 <td>
-                                    <span>RAT</span>
+                                    <span class="logo-text">RAT</span>
                                 </td>
                             </tr>
                         </table>
@@ -154,6 +156,14 @@
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>-->
+        @if (ViewBag.ShowFooter == true)
+        {
+            <div class="row footer-row">
+                <div class="footer">
+
+                </div>
+            </div>
+        }
 
 </body>
 </html>

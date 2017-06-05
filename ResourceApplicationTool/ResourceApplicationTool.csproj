@@ -308,6 +308,7 @@
     <Compile Include="Utils\Common.cs" />
     <Compile Include="Utils\Const.cs" />
     <Compile Include="Utils\ControllerExtensions.cs" />
+    <Compile Include="Utils\CustomActions.cs" />
     <Compile Include="Utils\ExcelReportGenerator.cs" />
     <Compile Include="Utils\Mailer.cs" />
     <Compile Include="Utils\PdfGenerator.cs" />
@@ -353,6 +354,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\fonts\ffonts.net.htm" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Pictures\ajax-loader.gif" />
@@ -422,6 +424,7 @@
     <Content Include="Content\Styles\Event\eventsEditStyle.css" />
     <Content Include="Content\Styles\Event\eventsIndexStyle.css" />
     <Content Include="Content\Styles\Event\eventsNewStyle.css" />
+    <Content Include="Content\Styles\fonts.css" />
     <Content Include="Content\Styles\homePage.css" />
     <Content Include="Content\Styles\Login\login_common.css" />
     <Content Include="Content\Styles\Login\login_menu.css" />
@@ -550,6 +553,20 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\fonts\Bauhaus_.ttf" />
+    <Content Include="Content\fonts\FUNDR___.TTF" />
+    <Content Include="Content\fonts\knuckle down.ttf" />
+    <Content Include="Content\fonts\RAINYDAYS.ttf" />
+    <Content Include="Content\fonts\strasua.ttf" />
+    <Content Include="Content\fonts\sujet3__.ttf" />
+    <Content Include="Content\fonts\sujetbi_.ttf" />
+    <Content Include="Content\fonts\sujetb__.ttf" />
+    <Content Include="Content\fonts\sujeti__.ttf" />
+    <Content Include="Content\fonts\sujeto__.ttf" />
+    <Content Include="Content\fonts\sujet___.ttf" />
+    <Content Include="Content\fonts\BreeSerif-Regular.ttf" />
+    <Content Include="Content\fonts\sui generis rg.ttf" />
+    <Content Include="Content\fonts\world of water.ttf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap3-typeahead.js" />
     <Content Include="Scripts\bootstrap3-typeahead.min.js" />

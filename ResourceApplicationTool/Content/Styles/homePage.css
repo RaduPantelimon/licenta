@@ -370,3 +370,6 @@ background-color:#404b52;
 .cbp-spmenu-open .authenticated-navigation.navigation a:hover{
     background-color:#404b52;
 }
+body{
+    padding-bottom:0px;
+}

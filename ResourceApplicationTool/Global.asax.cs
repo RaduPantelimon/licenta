@@ -8,6 +8,7 @@ using System.Web.Routing;
 using System.Web.Http;
 using System.Web.Helpers;
 using System.IdentityModel.Claims;
+using ResourceApplicationTool.Utils;
 
 namespace ResourceApplicationTool
 {
@@ -16,6 +17,10 @@ namespace ResourceApplicationTool
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+
+            // Register global filter
+            GlobalFilters.Filters.Add(new CustomActions());
+
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

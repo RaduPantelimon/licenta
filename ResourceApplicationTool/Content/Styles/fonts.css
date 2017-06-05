@@ -1,0 +1,36 @@
+﻿@font-face {
+font-family: Bauhaus;
+src: url(/Content/fonts/Bauhaus_.ttf);
+}
+@font-face {
+font-family: Fundr;
+src: url(/Content/fonts/FUNDR___.TTF);
+}
+@font-face {
+font-family: Knuckle;
+src: url('/Content/fonts/knuckle down.ttf');
+}
+@font-face {
+font-family: RainyDays;
+src: url(/Content/fonts/RAINYDAYS.ttf);
+}
+@font-face {
+font-family: Strasua;
+src: url(/Content/fonts/strasua.ttf);
+}
+@font-face {
+font-family: sujet;
+src: url(/Content/fonts/sujet___.ttf);
+}
+@font-face{
+    font-family:BreeSerif;
+    src: url(/Content/fonts/BreeSerif-Regular.ttf);
+}
+@font-face{
+    font-family:suigeneris;
+    src: url('/Content/fonts/sui generis rg.ttf');
+}
+@font-face{
+    font-family:WorldOfWater;
+    src: url('/Content/fonts/world of water.ttf');
+}

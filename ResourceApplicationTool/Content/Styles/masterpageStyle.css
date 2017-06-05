@@ -16,7 +16,7 @@
     background-position: 50% 0px;
 }
 .primary-pageLogo{
-    background: url(../Pictures/business-banner-3.jpg) no-repeat fixed;
+     background: url(../Pictures/business-banner-3.jpg) no-repeat fixed;
      top:0px;
      background-position: center;
      border-bottom:2px solid #428bca;
@@ -30,6 +30,15 @@
     border-top:2px solid #428bca;
     height:400px;
 }
+.third-pageLogo{
+    background: url(../Pictures/business-banner-3.jpg) no-repeat fixed;
+    top: 1490px;
+    background-position: center;
+    border-bottom:2px solid #428bca;
+    border-top:2px solid #428bca;
+
+}
+
 .header{
     position:fixed;
     width:100%;
@@ -158,14 +167,18 @@ ul.typeahead.dropdown-menu li, ul.typeahead.dropdown-menu li a{
     width:40px;
     margin-right: 5px;
 }
+.main-rat-logo{
+    height:70px;
+}
 
 .navbar-brand.logo-container{
     padding-top: 7px;
 }
-.main-homepage-header{
+h2.main-homepage-header{
     margin-top:0px;
     margin-bottom:5px;
     color:#428bca;
+    font-weight:bold;
 }
 .homepage-hr{
     border-top: 1px solid lightgray;
@@ -183,6 +196,7 @@ ul.typeahead.dropdown-menu li, ul.typeahead.dropdown-menu li a{
 .cbp-spmenu a,
 .cbp-spmenu .role-name-container{
     color:#FE6A00;
+    font-weight:bold;
 }
 
 
@@ -200,8 +214,8 @@ div.secondary-content-holder{
     border-radius:30px;
     min-height:300px;
 }
-.second-content-container{
-    margin-top:380px;
+.second-content-container {
+    margin-top: 320px;
 }
 .transparent-content-holder{
     border:none;
@@ -226,4 +240,21 @@ div.secondary-content-holder{
     text-align:center;
    transition-delay:0.2s;
    display:block;
+}
+.footer-row{
+    margin-top:400px;
+}
+.footer{
+    margin-top:121px;
+    height:200px;
+    left:0;
+    right:0;
+    background-color:#404b52;
+    opacity:0.9;
+}
+.logo-text{
+    font-family:RainyDays;
+}
+.logo-body-header{
+    font-family:suigeneris;
 }
