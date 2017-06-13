@@ -73,7 +73,9 @@
 .main-header .navbar-links-container li, .main-header .navbar-links-container a{
     height:55px;
 }
-
+.main-header .navbar-links-container a.user-display-name-link{
+    height:initial;
+}
 
 .wip-div{
     
@@ -258,9 +260,10 @@ div.secondary-content-holder{
 .logo-body-header{
     font-family:suigeneris;
 }
+/*
 .user-details-container{
     display:inline-block;
 }
 .profile-container{
     display:inline-block;
-}
+}*/

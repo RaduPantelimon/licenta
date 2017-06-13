@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ResourceApplicationTool.Models;
+using System.Web.UI;
 
 namespace ResourceApplicationTool.Controllers
 {
@@ -16,6 +17,10 @@ namespace ResourceApplicationTool.Controllers
         // GET: Images
 
         [Route("Images/{imgName}")]
+        [OutputCache(
+    Duration = 3600,
+    VaryByParam = "productId",
+    Location = OutputCacheLocation.Client)]
         public ActionResult ViewImage(string imgName)
         {
             List<File> fields = db.Files.Where(x => x.FileID.ToString().Length > 0).ToList();
@@ -30,6 +35,10 @@ namespace ResourceApplicationTool.Controllers
 
             return new EmptyResult();
         }
+        [OutputCache(
+    Duration = 3600,
+    VaryByParam = "productId",
+    Location = OutputCacheLocation.Client)]
         public ActionResult GetImg(int id)
         {
             File fileToRetrieve = db.Files.First();
