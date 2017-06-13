@@ -8,11 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
-var sprints_service_1 = require('./projects/sprints.service');
-var employees_service_1 = require('./projects/employees.service');
-var moment = require('moment/moment');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
+var sprints_service_1 = require("./projects/sprints.service");
+var employees_service_1 = require("./projects/employees.service");
+var moment = require("moment/moment");
 var AppComponent = (function () {
     function AppComponent(_employeesService, _sprintService, _route, _router) {
         this._employeesService = _employeesService;
@@ -131,7 +132,7 @@ var AppComponent = (function () {
         if (this.sprints && this.sprints.length > 0) {
             //reinitializing the array
             this.sprintMonths.length = 0;
-            var _loop_1 = function(i) {
+            var _loop_1 = function (i) {
                 var sprintStartDate = moment(this_1.sprints[i].StartDate);
                 var sprintEndDate = moment(this_1.sprints[i].EndDate);
                 var startSprint = this_1.sprintMonths.filter(function (s) { return s.displayDate == sprintStartDate.format("YYYY MMMM"); })[0];
@@ -154,6 +155,7 @@ var AppComponent = (function () {
             for (var i = 0; i < this.sprints.length; i++) {
                 _loop_1(i);
             }
+            //this.selectedMonth = this.sprintMonths[0].displayDate;
         }
     };
     AppComponent.prototype.removeDate = function (date) {
@@ -218,17 +220,20 @@ var AppComponent = (function () {
             }, function (error) { return _this.errorMessage = error; });
         }
     };
-    AppComponent = __decorate([
-        core_1.Component({
-            selector: 'pm-app',
-            moduleId: module.id,
-            templateUrl: 'app.component.html',
-            styleUrls: ['app.component.css'],
-            encapsulation: core_1.ViewEncapsulation.None
-        }), 
-        __metadata('design:paramtypes', [employees_service_1.EmployeesService, sprints_service_1.SprintsService, router_1.ActivatedRoute, router_1.Router])
-    ], AppComponent);
     return AppComponent;
 }());
+AppComponent = __decorate([
+    core_1.Component({
+        selector: 'pm-app',
+        moduleId: module.id,
+        templateUrl: 'app.component.html',
+        styleUrls: ['app.component.css'],
+        encapsulation: core_1.ViewEncapsulation.None
+    }),
+    __metadata("design:paramtypes", [employees_service_1.EmployeesService,
+        sprints_service_1.SprintsService,
+        router_1.ActivatedRoute,
+        router_1.Router])
+], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

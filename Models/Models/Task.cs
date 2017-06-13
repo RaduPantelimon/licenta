@@ -15,15 +15,16 @@ namespace Models.Models
     public partial class Task
     {
         public int TaskID { get; set; }
-        public Nullable<int> SprintID { get; set; }
-        public Nullable<int> EmployeeID { get; set; }
-        public Nullable<int> RoleID { get; set; }
-        public Nullable<System.DateTime> StartDate { get; set; }
-        public Nullable<System.DateTime> EndDate { get; set; }
+        public int SprintID { get; set; }
+        public int EmployeeID { get; set; }
+        public int RoleID { get; set; }
+        public System.DateTime StartDate { get; set; }
+        public System.DateTime EndDate { get; set; }
         public Nullable<int> Duration { get; set; }
         public string TaskDescription { get; set; }
         public int Difficulty { get; set; }
         public Nullable<int> Estimation { get; set; }
+        public Nullable<int> TemplateID { get; set; }
     
         public virtual Employee Employee { get; set; }
         public virtual Role Role { get; set; }

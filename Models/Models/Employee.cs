@@ -17,7 +17,9 @@ namespace Models.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
         {
+            this.Attendants = new HashSet<Attendant>();
             this.Educations = new HashSet<Education>();
+            this.Events = new HashSet<Event>();
             this.SkillLevels = new HashSet<SkillLevel>();
             this.Tasks = new HashSet<Task>();
             this.Employees1 = new HashSet<Employee>();
@@ -44,9 +46,13 @@ namespace Models.Models
         public string Administrator { get; set; }
         public Nullable<System.Guid> ProfileImageID { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Attendant> Attendants { get; set; }
         public virtual Department Department { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Education> Educations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Event> Events { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SkillLevel> SkillLevels { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

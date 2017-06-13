@@ -29,7 +29,7 @@ namespace Models.Models
         public string PJDescription { get; set; }
         public decimal Budget { get; set; }
         public Nullable<int> DepartmentID { get; set; }
-        public Nullable<int> ContactID { get; set; }
+        public int ContactID { get; set; }
     
         public virtual Contact Contact { get; set; }
         public virtual Department Department { get; set; }

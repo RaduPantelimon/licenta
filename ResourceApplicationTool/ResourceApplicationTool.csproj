@@ -26,7 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>2.0</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -632,7 +632,9 @@
     <Content Include="Scripts\slick\slick\slick.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="systemjs.config.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

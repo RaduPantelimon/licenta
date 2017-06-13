@@ -8,10 +8,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
-var moment = require('moment/moment');
-var sprints_service_1 = require('./sprints.service');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
+var moment = require("moment/moment");
+var sprints_service_1 = require("./sprints.service");
 var SprintAddComponent = (function () {
     function SprintAddComponent(_sprintService, _route, _router) {
         this._sprintService = _sprintService;
@@ -154,17 +155,19 @@ var SprintAddComponent = (function () {
             console.log("Could not determine if there are any previous sprints with the same date:" + ex);
         }
     };
-    SprintAddComponent = __decorate([
-        core_1.Component({
-            selector: 'pm-app',
-            moduleId: module.id,
-            templateUrl: 'sprint-add.component.html',
-            styleUrls: ['sprint-add.component.css'],
-            encapsulation: core_1.ViewEncapsulation.None
-        }), 
-        __metadata('design:paramtypes', [sprints_service_1.SprintsService, router_1.ActivatedRoute, router_1.Router])
-    ], SprintAddComponent);
     return SprintAddComponent;
 }());
+SprintAddComponent = __decorate([
+    core_1.Component({
+        selector: 'pm-app',
+        moduleId: module.id,
+        templateUrl: 'sprint-add.component.html',
+        styleUrls: ['sprint-add.component.css'],
+        encapsulation: core_1.ViewEncapsulation.None
+    }),
+    __metadata("design:paramtypes", [sprints_service_1.SprintsService,
+        router_1.ActivatedRoute,
+        router_1.Router])
+], SprintAddComponent);
 exports.SprintAddComponent = SprintAddComponent;
 //# sourceMappingURL=sprint-add.component.js.map

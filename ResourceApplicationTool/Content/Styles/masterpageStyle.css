@@ -258,3 +258,9 @@ div.secondary-content-holder{
 .logo-body-header{
     font-family:suigeneris;
 }
+.user-details-container{
+    display:inline-block;
+}
+.profile-container{
+    display:inline-block;
+}

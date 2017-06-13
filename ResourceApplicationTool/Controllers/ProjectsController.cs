@@ -132,9 +132,15 @@ namespace ResourceApplicationTool.Controllers
                     //a manager should only create a project only for his department
                     return RedirectToAction("NotFound", "Home");
                 }
-
-                db.Projects.Add(project);
-                db.SaveChanges();
+                try
+                {
+                    db.Projects.Add(project);
+                    db.SaveChanges();
+                }
+                catch(Exception ex)
+                {
+                    //handle exception
+                }
                 return RedirectToAction("Index");
             }
 

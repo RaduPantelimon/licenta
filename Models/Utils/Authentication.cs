@@ -9,7 +9,7 @@ namespace Models.Utils
 {
     public class Authentication
     {
-        private static RATV3Entities db = new RATV3Entities();
+        private static RATV3Entities2 db = new RATV3Entities2();
 
         public static Employee GetEmployee(string account, string password)
         {

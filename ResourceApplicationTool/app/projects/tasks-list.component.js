@@ -8,12 +8,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
-var moment = require('moment/moment');
-var employees_service_1 = require('./employees.service');
-var sprints_service_1 = require('./sprints.service');
-var tasks_service_1 = require('./tasks.service');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
+var moment = require("moment/moment");
+var employees_service_1 = require("./employees.service");
+var sprints_service_1 = require("./sprints.service");
+var tasks_service_1 = require("./tasks.service");
 var TasksListComponent = (function () {
     function TasksListComponent(_employeesService, _sprintService, _tasksService, _route, _router) {
         this._employeesService = _employeesService;
@@ -60,7 +61,7 @@ var TasksListComponent = (function () {
         var _this = this;
         try {
             console.log("Using the following template: " + this.draggedTaskID);
-            var _loop_1 = function(i) {
+            var _loop_1 = function (i) {
                 if (employee.Days[i] && employee.Days[i].date == day.date) {
                     //initialize the data sent to the server
                     var data = {};
@@ -105,7 +106,7 @@ var TasksListComponent = (function () {
             var employeesEndIndex = Math.min(this.employees.length - 1, empIndex + bottomDiff);
             for (var i = employeesStartIndex; i <= employeesEndIndex; i++) {
                 var employee = this.employees[i];
-                var _loop_2 = function(j) {
+                var _loop_2 = function (j) {
                     var day = this_2.employees[i].Days[j];
                     if (!this_2.employees[i].Days[j].task) {
                         //no task added to this element. deleteing the current one
@@ -287,10 +288,9 @@ var TasksListComponent = (function () {
                 this.sprintTasks[i].Estimation = 0;
             }
         }
-        //finding the tasks assigned to each employee
-        var _loop_3 = function(employee) {
+        var _loop_3 = function (employee) {
             var employeeDays = [];
-            var _loop_4 = function(day) {
+            var _loop_4 = function (day) {
                 var pjDay = {};
                 pjDay.date = day.format("YYYY-MM-DDTHH:mm:ss");
                 pjDay.focused = false;
@@ -311,22 +311,27 @@ var TasksListComponent = (function () {
             employee.Days = employeeDays;
         };
         var this_3 = this;
-        for (var _b = 0, _c = this.employees; _b < _c.length; _b++) {
-            var employee = _c[_b];
+        //finding the tasks assigned to each employee
+        for (var _i = 0, _a = this.employees; _i < _a.length; _i++) {
+            var employee = _a[_i];
             _loop_3(employee);
         }
     };
-    TasksListComponent = __decorate([
-        core_1.Component({
-            selector: 'pm-app',
-            moduleId: module.id,
-            templateUrl: 'tasks-list.component.html',
-            styleUrls: ['tasks-list.component.css'],
-            encapsulation: core_1.ViewEncapsulation.None
-        }), 
-        __metadata('design:paramtypes', [employees_service_1.EmployeesService, sprints_service_1.SprintsService, tasks_service_1.TasksService, router_1.ActivatedRoute, router_1.Router])
-    ], TasksListComponent);
     return TasksListComponent;
 }());
+TasksListComponent = __decorate([
+    core_1.Component({
+        selector: 'pm-app',
+        moduleId: module.id,
+        templateUrl: 'tasks-list.component.html',
+        styleUrls: ['tasks-list.component.css'],
+        encapsulation: core_1.ViewEncapsulation.None
+    }),
+    __metadata("design:paramtypes", [employees_service_1.EmployeesService,
+        sprints_service_1.SprintsService,
+        tasks_service_1.TasksService,
+        router_1.ActivatedRoute,
+        router_1.Router])
+], TasksListComponent);
 exports.TasksListComponent = TasksListComponent;
 //# sourceMappingURL=tasks-list.component.js.map

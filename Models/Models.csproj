@@ -56,57 +56,66 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Models\Attendant.cs">
+      <DependentUpon>RATV3Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Contact.cs">
-      <DependentUpon>RATModel.tt</DependentUpon>
+      <DependentUpon>RATV3Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Department.cs">
-      <DependentUpon>RATModel.tt</DependentUpon>
+      <DependentUpon>RATV3Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Education.cs">
-      <DependentUpon>RATModel.tt</DependentUpon>
+      <DependentUpon>RATV3Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Employee.cs">
-      <DependentUpon>RATModel.tt</DependentUpon>
+      <DependentUpon>RATV3Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event.cs">
+      <DependentUpon>RATV3Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\File.cs">
-      <DependentUpon>RATModel.tt</DependentUpon>
+      <DependentUpon>RATV3Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Partial Classes\EmployeePartial.cs" />
     <Compile Include="Models\Project.cs">
-      <DependentUpon>RATModel.tt</DependentUpon>
+      <DependentUpon>RATV3Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\RATModel.Context.cs">
+    <Compile Include="Models\RATV3Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RATModel.Context.tt</DependentUpon>
+      <DependentUpon>RATV3Model.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\RATModel.cs">
+    <Compile Include="Models\RATV3Model.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RATModel.tt</DependentUpon>
+      <DependentUpon>RATV3Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\RATModel.Designer.cs">
+    <Compile Include="Models\RATV3Model.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RATModel.edmx</DependentUpon>
+      <DependentUpon>RATV3Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Role.cs">
-      <DependentUpon>RATModel.tt</DependentUpon>
+      <DependentUpon>RATV3Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Skill.cs">
-      <DependentUpon>RATModel.tt</DependentUpon>
+      <DependentUpon>RATV3Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SkillCategory.cs">
-      <DependentUpon>RATModel.tt</DependentUpon>
+      <DependentUpon>RATV3Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SkillLevel.cs">
-      <DependentUpon>RATModel.tt</DependentUpon>
+      <DependentUpon>RATV3Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Sprint.cs">
-      <DependentUpon>RATModel.tt</DependentUpon>
+      <DependentUpon>RATV3Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>RATV3Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Task.cs">
-      <DependentUpon>RATModel.tt</DependentUpon>
+      <DependentUpon>RATV3Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Authentication.cs" />
@@ -114,12 +123,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="Models\RATModel.edmx">
+    <EntityDeploy Include="Models\RATV3Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>RATModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>RATV3Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Models\RATModel.edmx.diagram">
-      <DependentUpon>RATModel.edmx</DependentUpon>
+    <None Include="Models\RATV3Model.edmx.diagram">
+      <DependentUpon>RATV3Model.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Web.config" />
@@ -128,15 +137,15 @@
   <ItemGroup>
     <Content Include="DBScripts\PopulateDB.sql" />
     <Content Include="DBScripts\RATDeploymentScript.sql" />
-    <Content Include="Models\RATModel.Context.tt">
+    <Content Include="Models\RATV3Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>RATModel.edmx</DependentUpon>
-      <LastGenOutput>RATModel.Context.cs</LastGenOutput>
+      <DependentUpon>RATV3Model.edmx</DependentUpon>
+      <LastGenOutput>RATV3Model.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\RATModel.tt">
+    <Content Include="Models\RATV3Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>RATModel.edmx</DependentUpon>
-      <LastGenOutput>RATModel.cs</LastGenOutput>
+      <DependentUpon>RATV3Model.edmx</DependentUpon>
+      <LastGenOutput>RATV3Model.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
