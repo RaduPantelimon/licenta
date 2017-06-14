@@ -104,11 +104,13 @@ var TasksListComponent = (function () {
             var daysEndIndex = Math.min(this.days.length - 1, dayIndex + rightDiff);
             var employeesStartIndex = Math.max(0, empIndex - topDiff);
             var employeesEndIndex = Math.min(this.employees.length - 1, empIndex + bottomDiff);
+            var daysToSave_1 = [];
+            var tasksToSave = [];
             for (var i = employeesStartIndex; i <= employeesEndIndex; i++) {
                 var employee = this.employees[i];
-                var _loop_2 = function (j) {
-                    var day = this_2.employees[i].Days[j];
-                    if (!this_2.employees[i].Days[j].task) {
+                for (var j = daysStartIndex; j <= daysEndIndex; j++) {
+                    var day = this.employees[i].Days[j];
+                    if (!this.employees[i].Days[j].task) {
                         //no task added to this element. deleteing the current one
                         console.log("Following Field is empty: (" + i + " , " + j + ")");
                         var data = {};
@@ -120,25 +122,40 @@ var TasksListComponent = (function () {
                         }
                         data.startDate = day.date;
                         data.employeeID = employee.EmployeeID;
-                        data.sprintID = this_2.currentSprint.SprintID;
+                        data.sprintID = this.currentSprint.SprintID;
                         data.duration = resizedTask.Estimation;
                         data.directDescendant = resizedTask.TaskID;
+                        daysToSave_1.push(day);
+                        tasksToSave.push(data);
                         //adding the new task
-                        this_2._tasksService.addTask(data).subscribe(function (response) {
+                        /*this._tasksService.addTask(data).subscribe(response => {
+
                             console.log(response);
                             if (!response.Estimation) {
                                 response.Estimation = 0;
                             }
                             day.task = response;
-                            _this.sprintTasks.push(response);
-                        }, function (error) { return _this.errorMessage = error; });
+                            this.sprintTasks.push(response);
+                        },
+                            error => this.errorMessage = <any>error
+                        );*/
                     }
-                };
-                var this_2 = this;
-                for (var j = daysStartIndex; j <= daysEndIndex; j++) {
-                    _loop_2(j);
                 }
             }
+            //adding the new task
+            this._tasksService.addTasks(tasksToSave).subscribe(function (response) {
+                /*console.log(response);
+                if (!response.Estimation) {
+                    response.Estimation = 0;
+                }
+                day.task = response;
+                this.sprintTasks.push(response);*/
+                console.log("the resize operation was completed successfully");
+                console.log(response);
+                for (var i = 0; i < daysToSave_1.length; i++) {
+                    daysToSave_1[i].task = response[i];
+                }
+            }, function (error) { return _this.errorMessage = error; });
             this.LoseFocus();
         }
         catch (ex) {
@@ -288,9 +305,9 @@ var TasksListComponent = (function () {
                 this.sprintTasks[i].Estimation = 0;
             }
         }
-        var _loop_3 = function (employee) {
+        var _loop_2 = function (employee) {
             var employeeDays = [];
-            var _loop_4 = function (day) {
+            var _loop_3 = function (day) {
                 var pjDay = {};
                 pjDay.date = day.format("YYYY-MM-DDTHH:mm:ss");
                 pjDay.focused = false;
@@ -304,17 +321,17 @@ var TasksListComponent = (function () {
                 }
                 employeeDays.push(pjDay);
             };
-            for (var _i = 0, _a = this_3.days; _i < _a.length; _i++) {
+            for (var _i = 0, _a = this_2.days; _i < _a.length; _i++) {
                 var day = _a[_i];
-                _loop_4(day);
+                _loop_3(day);
             }
             employee.Days = employeeDays;
         };
-        var this_3 = this;
+        var this_2 = this;
         //finding the tasks assigned to each employee
         for (var _i = 0, _a = this.employees; _i < _a.length; _i++) {
             var employee = _a[_i];
-            _loop_3(employee);
+            _loop_2(employee);
         }
     };
     return TasksListComponent;

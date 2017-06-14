@@ -12,6 +12,7 @@ export class TasksService {
     private _edittaskUrl = '/api/restapi/EditTask';
     //private _createtaskUrl = '/api/restapi/SaveTask';
     private _createtaskUrl = '/Projects/SaveTask';
+    private _createtasksUrl = '/Projects/SaveTasks';
     private _deleteUrl = '/api/restapi/DeleteTask';
     constructor(private _http: Http) {
 
@@ -42,6 +43,15 @@ export class TasksService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         return this._http.post(this._createtaskUrl, data, options)
+            .map(
+            (response: Response) => <any>this.extractData(response));
+    }
+
+    //add new tasks
+    addTasks(data: any): Observable<any> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        return this._http.post(this._createtasksUrl, data, options)
             .map(
             (response: Response) => <any>this.extractData(response));
     }

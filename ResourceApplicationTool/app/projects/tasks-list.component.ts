@@ -143,6 +143,9 @@ export class TasksListComponent implements OnInit {
             let employeesStartIndex = Math.max(0, empIndex - topDiff);
             let employeesEndIndex = Math.min(this.employees.length - 1, empIndex + bottomDiff);
 
+            let daysToSave:any[]=[];
+            let tasksToSave : any[]=[]; 
+
             for (let i = employeesStartIndex; i <= employeesEndIndex; i++)
             {
                 let employee = this.employees[i];
@@ -168,8 +171,11 @@ export class TasksListComponent implements OnInit {
                         data.duration = resizedTask.Estimation;
                         data.directDescendant = resizedTask.TaskID;
 
+
+                        daysToSave.push(day);
+                        tasksToSave.push(data);
                         //adding the new task
-                        this._tasksService.addTask(data).subscribe(response => {
+                        /*this._tasksService.addTask(data).subscribe(response => {
 
                             console.log(response);
                             if (!response.Estimation) {
@@ -179,10 +185,30 @@ export class TasksListComponent implements OnInit {
                             this.sprintTasks.push(response);
                         },
                             error => this.errorMessage = <any>error
-                        );
+                        );*/
                     }
                 }
             }
+
+            //adding the new task
+            this._tasksService.addTasks(tasksToSave).subscribe(response => {
+
+                /*console.log(response);
+                if (!response.Estimation) {
+                    response.Estimation = 0;
+                }
+                day.task = response;
+                this.sprintTasks.push(response);*/
+                console.log("the resize operation was completed successfully");
+                console.log(response);
+
+                for (let i = 0; i < daysToSave.length; i++) {
+                    daysToSave[i].task = response[i];
+                }
+
+            },
+                error => this.errorMessage = <any>error
+            );
 
             this.LoseFocus();
 

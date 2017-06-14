@@ -21,6 +21,7 @@ var TasksService = (function () {
         this._edittaskUrl = '/api/restapi/EditTask';
         //private _createtaskUrl = '/api/restapi/SaveTask';
         this._createtaskUrl = '/Projects/SaveTask';
+        this._createtasksUrl = '/Projects/SaveTasks';
         this._deleteUrl = '/api/restapi/DeleteTask';
     }
     TasksService.prototype.getTemplateTasks = function () {
@@ -43,6 +44,14 @@ var TasksService = (function () {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
         return this._http.post(this._createtaskUrl, data, options)
+            .map(function (response) { return _this.extractData(response); });
+    };
+    //add new tasks
+    TasksService.prototype.addTasks = function (data) {
+        var _this = this;
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this._http.post(this._createtasksUrl, data, options)
             .map(function (response) { return _this.extractData(response); });
     };
     //update a task

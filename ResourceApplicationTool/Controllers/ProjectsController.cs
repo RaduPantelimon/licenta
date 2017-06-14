@@ -351,6 +351,48 @@ namespace ResourceApplicationTool.Controllers
         }
 
 
+        //save the tasks added by the user
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        [System.Web.Http.HttpGet]
+        public ActionResult SaveTasks(List<TaskTemplate> templates)
+        {
+
+            List<Task> savedResults = new List<Task>();
+            try
+            {
+                foreach (TaskTemplate data in templates)
+                {
+                    Task templateTask;
+                    if (data.directDescendant > 0)
+                    {
+                        templateTask = db.Tasks.Where(x => x.TaskID == data.directDescendant).FirstOrDefault();
+                    }
+                    else
+                    {
+                        templateTask = db.Tasks.Where(x => x.TaskID == data.templateTaskID).FirstOrDefault();
+                    }
+                    if (templateTask != null)
+                    {
+                        Task newSaveTask = createTask(templateTask, data);
+                        if(newSaveTask != null)
+                        {
+                            savedResults.Add(newSaveTask);
+                        }
+                    }  
+                }
+
+                if (savedResults.Count > 0)
+                {
+                    return Json(savedResults);
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "Could not save the new tasks.");
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "Could not save the new task");
+            }
+
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -358,6 +400,44 @@ namespace ResourceApplicationTool.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private Task createTask(Task templateTask, TaskTemplate data)
+        {
+            try
+            {
+                DateTime startDate = DateTime.Parse(data.startDate);
+                Task task = new Task();
+
+                task.TaskDescription = templateTask.TaskDescription;
+                task.SprintID = data.sprintID;
+                task.EmployeeID = data.employeeID;
+                task.StartDate = startDate;
+                task.EndDate = startDate;
+                task.Difficulty = templateTask.Difficulty;
+
+                if (templateTask.Estimation.HasValue)
+                {
+                    task.Estimation = templateTask.Estimation;
+                }
+                if (!templateTask.TemplateID.HasValue || templateTask.TemplateID.Value <= 0)
+                {
+                    task.TemplateID = data.templateTaskID;
+                }
+                else
+                {
+                    task.TemplateID = templateTask.TemplateID;
+                }
+
+
+                db.Tasks.Add(task);
+                db.SaveChanges();
+                return task;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }
