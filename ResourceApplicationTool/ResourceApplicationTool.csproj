@@ -417,6 +417,7 @@
     <Content Include="Content\Styles\Department\departmentsIndexStyle.css" />
     <Content Include="Content\Styles\Department\departmentsNewStyle.css" />
     <Content Include="Content\Styles\Employee\employeesCommonStyle.css" />
+    <Content Include="Content\Styles\Employee\employeesDeleteStyle.css" />
     <Content Include="Content\Styles\Employee\employeesDetailsStyle.css" />
     <Content Include="Content\Styles\Employee\employeesEditStyle.css" />
     <Content Include="Content\Styles\Event\eventsCommonStyle.css" />

@@ -1,1 +1,29 @@
-﻿
+﻿@using ResourceApplicationTool.Models;
+@using ResourceApplicationTool.Utils;
+
+@{
+    Layout = null;
+}
+
+@Html.Partial("~/Views/Notifications/EditorTemplates/NotificationsStyle.cshtml", null)
+
+<div class="main_container">
+    <div class="main_expandable">
+        <h3 class="tvd-sub-header">A new event has been scheduled</h3>
+        <div class="content-box">
+            <div class="starting-formula">
+                <p class="starting-regard">Hello,</p>
+            </div>
+
+            <p class="paragraph-item">This is a department monthly meeting.</p>
+            <p class="paragraph-item">This email contains an attachement with the activity for this department.</p>
+            <p class="paragraph-item">Navigate to the following page in order to see <a href="http://localhost:9919/Events">all upcoming events </a>.</p>
+
+            <div class="closing-formula">
+                <p class="closing-regard">Best Regards,</p>
+                <p class="closing-name">RAT Team</p>
+            </div>
+        </div>
+    </div>
+</div>
+

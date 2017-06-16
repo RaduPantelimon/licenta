@@ -31,7 +31,7 @@ function LoadModalXLSXDepartmentDownloadView() {
             var monthValue = $("#excel-month-input").val();
             var yearValue = $("#excel-year-input").val();
 
-            location.href = "/Employees/GenerateCV?departmentID=" + departmentID + "&month=" + monthValue + "&year=" + yearValue;
+            location.href = "/Departments/GenerateMonthlyReport?departmentID=" + departmentID + "&month=" + monthValue + "&year=" + yearValue;
 
             //hide the modal window
             $('#dialog-modal').modal('hide');

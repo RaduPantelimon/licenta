@@ -60,7 +60,16 @@ namespace ResourceApplicationTool.Utils
                         embededHtml = generatednotificationHTML;
                     }
                 }
+                else if (currentEventType != null && currentEventType.EventType == "Department Monthly Meeting")
+                {
+                    string generatednotificationHTML = ViewRenderer.RenderView("~/Views/Notifications/DepartmentMonthlyMeeting.cshtml", reviewed,
+                                                 ControllerContext);
 
+                    if (!String.IsNullOrEmpty(generatednotificationHTML))
+                    {
+                        embededHtml = generatednotificationHTML;
+                    }
+                }
 
 
                 //preping the email message

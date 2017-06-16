@@ -331,6 +331,7 @@ namespace ResourceApplicationTool.Controllers
         // GET: Employees/Delete/5
         public ActionResult Delete(int? id)
         {
+           
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -340,6 +341,31 @@ namespace ResourceApplicationTool.Controllers
             if (employee == null)
             {
                 return HttpNotFound();
+            }
+
+
+            string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+            Request.ApplicationPath.TrimEnd('/') + "/";
+
+            //checking if we have the permission necessary to add a new user
+            if (!(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                  && 
+                  (Session[Const.CLAIM.USER_ACCESS_LEVEL] != null && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
+            ))
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+            //getting the picture ready
+            if (employee.File != null)
+            {
+
+                ViewBag.ImgID = Const.PicturePaths.ImgControllerRoot + employee.File.FileNumber;
+                ViewBag.ImgIDSec = baseUrl + Const.PicturePaths.ImgControllerRoot + employee.File.FileNumber;
+            }
+            else
+            {
+                ViewBag.ImgID = Const.PicturePaths.ProfilePictureUrl;
+                ViewBag.ImgIDSec = baseUrl + Const.PicturePaths.ProfilePictureUrl;
             }
 
             //checking if we have the permission necessary to add a new user

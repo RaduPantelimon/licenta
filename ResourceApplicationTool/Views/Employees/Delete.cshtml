@@ -1,169 +1,102 @@
 ﻿@model ResourceApplicationTool.Models.Employee
+@using ResourceApplicationTool.Models;
+@using ResourceApplicationTool.Utils;
+@using System.Collections;
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script>
+    var EmployeeID = "@Model.EmployeeID";
+</script>
 
-<h2>Delete</h2>
+<link href="~/Content/Styles/Employee/employeesCommonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/Employee/employeesDetailsStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/commonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/slickStyle.css" rel="stylesheet" />
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Employee</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Account)
-        </dt>
+<div class="mainHeaderLogo employees-logo logo-details" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"></div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Account)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MiddleInitial)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MiddleInitial)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CNP)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CNP)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Salary)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Salary)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PriorSalary)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PriorSalary)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastRaise)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastRaise)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HireDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HireDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TerminationDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TerminationDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Administrator)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Administrator)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Department.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Department.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Employee1.Account)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Employee1.Account)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Role.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Role.Name)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+<h2 class="sec-title-huge sec-title">Employee profile</h2>
+<hr class="sec-hr" />
+<div class="main-form-container">
+    <div class="form-group main-form-group">
+        <div id="main-profile-picture-div" class="user-profile-picture" style="background-image: url('@ViewBag.ImgIDSec');"></div>
+        <div class="profile-header">
+            <h4 class="sec-title-large sec-title"> @Model.FirstName @Model.LastName </h4>
+            <h5 class="sec-title-small sec-title sec-title-italic"> @ViewBag.RoleName </h5>
         </div>
-    }
-</div>
+    </div>
+    <div class="main_expandable">
+        <div class="tvd-sub-header">
+            <table>
+                <tr>
+                    <td>
+                        <a class="main_expand_collapse">
+                            <img class="expandimg" src="~/Content/Pictures/expand-sign.png" title="expand" height="18" width="18" align="absbottom" style="display: none;">
+                            <img class="collapseimg" src="~/Content/Pictures/collapse-sign.png" title="collapse" height="18" width="18" align="absbottom" style="display: inline;">
+                        </a>
+                    </td>
+                    <td>
+                        <h1 class="sec-title-large sec-title" data-scrollname="Projects" style="display: inline; bottom: 0px;">
+                            Are you sure you want to delete this profile?
+                        </h1>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="row expandable-content">
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.Account)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @Html.DisplayFor(model => model.Account)
+                </div>
+            </div>
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @Html.DisplayFor(model => model.FirstName)
+                </div>
+            </div>
+
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.MiddleInitial)
+                </div>
+                <div class="col-md-9 col-sm-9 control-label">
+                    @Html.DisplayFor(model => model.MiddleInitial)
+                </div>
+            </div>
+
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.LastName)
+                </div>
+                <div class="col-md-9 col-sm-9 control-label">
+                    @Html.DisplayFor(model => model.LastName)
+                </div>
+            </div>
+            @if (User.Identity.IsAuthenticated && ((Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                                                    && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                                                    && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator) ||
+                                                    (Session[Const.CLAIM.USER_ID].ToString() == Model.EmployeeID.ToString())))
+            {
+                //we can view the CNP only if we are this user or an Admin
+                <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                    <div class="field-name col-md-3 col-sm-3 control-label">
+                        @Html.DisplayNameFor(model => model.CNP)
+                    </div>
+                    <div class="col-md-9 col-sm-9 control-label">
+                        @Html.DisplayFor(model => model.CNP)
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+ </div>
