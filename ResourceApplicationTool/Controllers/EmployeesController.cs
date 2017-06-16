@@ -376,6 +376,14 @@ namespace ResourceApplicationTool.Controllers
                 return RedirectToAction("NotFound", "Home");
             }
 
+            if (employee.Role != null && employee.Role.Name != null)
+            {
+                ViewBag.RoleName = employee.Role.Name;
+            }
+            else
+            {
+                ViewBag.RoleName = "";
+            }
             return View(employee);
         }
 
