@@ -483,10 +483,6 @@ namespace ResourceApplicationTool.Controllers
                 return RedirectToAction("NotFound", "Home");
             }
 
-            db.Events.Remove(@event);
-            db.SaveChanges();
-
-
             //if we kept the ical file guid, we'll send a cancelation mail
             if (!String.IsNullOrEmpty(@event.EventType) 
                 && @event.IcsGuid.HasValue 
@@ -504,6 +500,9 @@ namespace ResourceApplicationTool.Controllers
 
                 mailer.CancelMeetingRequest(db, @event, reportAttendantEmployees, creator, ControllerContext);
             }
+
+            db.Events.Remove(@event);
+            db.SaveChanges();
 
             return RedirectToAction("Index");
         }
