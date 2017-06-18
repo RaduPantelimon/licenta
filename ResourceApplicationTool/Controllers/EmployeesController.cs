@@ -113,7 +113,7 @@ namespace ResourceApplicationTool.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EmployeeID,RoleID,Account,Password,ManagerID,DepartmentID,FirstName,MiddleInitial,LastName,Title,CNP,Email,PhoneNumber,Salary,PriorSalary,LastRaise,HireDate,TerminationDate,Administrator")] Employee employee,
+        public ActionResult Create([Bind(Include = "EmployeeID,RoleID,Account,Password,ConfirmPassword,ManagerID,DepartmentID,FirstName,MiddleInitial,LastName,Title,CNP,Email,PhoneNumber,Salary,PriorSalary,LastRaise,HireDate,TerminationDate,Administrator")] Employee employee,
              HttpPostedFileBase uploadProfilePicture)
         {
             //checking if we have the permission necessary to add a new user
@@ -236,6 +236,8 @@ namespace ResourceApplicationTool.Controllers
             //SkillLevelCollectionPostModel sklvlpostModel,
             HttpPostedFileBase uploadProfilePicture)
         {
+            ModelState.Remove("Password");
+            ModelState.Remove("ConfirmPassword");
             if (ModelState.IsValid)
             {
 
@@ -252,6 +254,7 @@ namespace ResourceApplicationTool.Controllers
 
 
                 employee.Password = "testerino";
+                employee.ConfirmPassword = "testerino";
                 //we will disable the properties that different users are not allowed to edit
                 if (Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() != Const.PermissionLevels.Administrator)
                 {
@@ -307,7 +310,6 @@ namespace ResourceApplicationTool.Controllers
                 employee.Title = employee.FirstName + " " + employee.LastName;
 
                 db.Entry(employee).Property(X => X.Password).IsModified = false;
-                //employee.Password = "parola";
                 try
                 {
                     db.SaveChanges();
