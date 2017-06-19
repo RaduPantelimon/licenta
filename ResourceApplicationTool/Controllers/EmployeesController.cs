@@ -254,7 +254,7 @@ namespace ResourceApplicationTool.Controllers
 
 
                 employee.Password = "testerino";
-                employee.ConfirmPassword = "testerino";
+                employee.ConfirmPassword = employee.Password;
                 //we will disable the properties that different users are not allowed to edit
                 if (Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() != Const.PermissionLevels.Administrator)
                 {

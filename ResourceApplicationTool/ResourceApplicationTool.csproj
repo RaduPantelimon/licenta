@@ -411,6 +411,7 @@
     <Content Include="Content\Pictures\warning-icon.png" />
     <Content Include="Content\Styles\arrows.css" />
     <Content Include="Content\Styles\commonStyle.css" />
+    <Content Include="Content\Styles\Department\departmentDeleteStyle.css" />
     <Content Include="Content\Styles\Department\departmentsCommonStyle.css" />
     <Content Include="Content\Styles\Department\departmentsDisplayStyle.css" />
     <Content Include="Content\Styles\Department\departmentsEditStyle.css" />

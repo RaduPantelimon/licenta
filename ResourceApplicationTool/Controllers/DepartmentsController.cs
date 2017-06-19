@@ -219,6 +219,20 @@ namespace ResourceApplicationTool.Controllers
             {
                 return HttpNotFound();
             }
+
+            //adding months to viewbag
+            ViewBag.months = Months();
+
+            //department.File = db.Files.ToList().First();
+
+            string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+            Request.ApplicationPath.TrimEnd('/') + "/";
+            ViewBag.baseUrl = baseUrl;
+
+
+            //permission of current user
+            ViewBag.canEdit = Utils.Common.CheckDepartmentAuthentication(Session, User, department);
+
             return View(department);
         }
 

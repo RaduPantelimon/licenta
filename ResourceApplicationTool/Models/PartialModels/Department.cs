@@ -22,13 +22,24 @@ namespace ResourceApplicationTool.Models
     }
     public class DepartmentMD
     {
+        [Required]
+        public string Title { get; set; }
+
         [Display(Name = "Max Size")]
+        [Required]
         public int MaxSize { get; set; }
+
         [Display(Name = "Department Description")]
         public string DeptDescription { get; set; }
+
         [Display(Name = "Start Date")]
+        [Required]
+        [DataType(DataType.Date)]
         public System.DateTime StartDate { get; set; }
+
         [Display(Name = "Monthly Expenses")]
+        [Required]
+        [DataType(DataType.Currency)]
         public decimal MonthlyExpenses { get; set; }
     }
 }

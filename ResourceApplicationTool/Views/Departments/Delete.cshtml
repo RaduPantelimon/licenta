@@ -1,81 +1,138 @@
 ﻿@model ResourceApplicationTool.Models.Department
+@using ResourceApplicationTool.Models;
+@using ResourceApplicationTool.Utils;
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/Content/Styles/Department/departmentsCommonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/commonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/slickStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/Department/departmentsDisplayStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/Department/departmentDeleteStyle.css" rel="stylesheet" />
+<script>
+    var departmentID = "@Model.DepartmentID";
+</script>
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+@if (Model.BannerImageID.HasValue)
+{
+    <div class="mainHeaderLogo departments-logo departments-custom-logo" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"
+         style="background-image: url('@(ViewBag.baseUrl + Const.PicturePaths.ImgControllerRoot + Model.File.FileID.ToString())');"></div>
+}
+else
+{
+    <div class="mainHeaderLogo departments-logo" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"></div>
+}
 <div>
-    <h4>Department</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+    <div class="form-group profile-header-container">
+        @if (Model.MainImageID.HasValue)
+        {
+            <div id="main-profile-picture-div" class="department-main-picture " style="background-image: url('@(ViewBag.baseUrl + Const.PicturePaths.ImgControllerRoot + Model.File1.FileID.ToString())');"></div>
+        }
+        else
+        {
+            <div id="main-profile-picture-div" class="department-main-picture" style="background-image: url('/Content/Pictures/masterpagepic.jpg');"></div>
+        }
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MaxSize)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MaxSize)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DeptDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DeptDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MonthlyExpenses)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MonthlyExpenses)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.File.FileNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.File.FileNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.File1.FileNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.File1.FileNumber)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+        <div class="profile-header">
+            <h4 class="sec-title-large sec-title"> @Model.Title</h4>
         </div>
-    }
+    </div>
 </div>
+<div class="main-form-container">
+    <div class="main_expandable">
+        <div class="tvd-sub-header">
+            <table>
+                <tr>
+                    <td>
+                        <a class="main_expand_collapse">
+                            <img class="expandimg" src="~/Content/Pictures/expand-sign.png" title="expand" height="18" width="18" align="absbottom" style="display: none;">
+                            <img class="collapseimg" src="~/Content/Pictures/collapse-sign.png" title="collapse" height="18" width="18" align="absbottom" style="display: inline;">
+                        </a>
+                    </td>
+                    <td>
+                        <h1 class="sec-title-large sec-title" data-scrollname="Projects" style="display: inline; bottom: 0px;">
+                            Organizational Information
+                        </h1>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="row expandable-content">
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-4 col-sm-4 control-label">
+                    @Html.DisplayNameFor(model => model.Title)
+                </div>
+                <div class="col-md-8 col-sm-8">
+                    @Html.DisplayFor(model => model.Title)
+                </div>
+            </div>
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-4 col-sm-4 control-label">
+                    @Html.DisplayNameFor(model => model.MaxSize)
+                </div>
+                <div class="col-md-8 col-sm-8">
+                    @Html.DisplayFor(model => model.MaxSize)
+                </div>
+            </div>
+
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-4 col-sm-4 control-label">
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </div>
+                <div class="col-md-8 col-sm-8">
+                    @String.Format("{0:MM/dd/yyyy}", Model.StartDate)
+                </div>
+            </div>
+
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-4 col-sm-4 control-label">
+                    @Html.DisplayNameFor(model => model.MonthlyExpenses)
+                </div>
+                <div class="col-md-8 col-sm-8">
+                    @Html.DisplayFor(model => model.MonthlyExpenses)
+                </div>
+            </div>
+
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name full-row col-md-12 col-sm-12">
+                    Department Description
+                </div>
+                <div class="col-md-12 col-sm-12 full-row department-description ">
+                    @Html.DisplayFor(model => model.DeptDescription)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-danger edit-department-button" />
+        <button type="button"
+                class="btn btn-default btn-inverse"
+                id="cancel"
+                onclick="window.history.back()">
+            <i class="icon-remove icon-large"></i>
+            Cancel
+        </button>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap-datepicker");
+    @Scripts.Render("~/Content/bootstrap-sliderjs");
+
+    @Styles.Render("~/Content/bootstrap-datepickercss");
+    @Styles.Render("~/Content/bootstrap-slidercss");
+    @Styles.Render("~/Content/jquery-uicss");
+}
+
+<script src="~/Scripts/common.js"></script>
+<script src="~/Scripts/departments/departments-common.js"></script>
+<script src="~/Scripts/departments/departments-display.js"></script>
