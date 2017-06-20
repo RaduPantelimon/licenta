@@ -422,6 +422,7 @@
     <Content Include="Content\Styles\Employee\employeesDetailsStyle.css" />
     <Content Include="Content\Styles\Employee\employeesEditStyle.css" />
     <Content Include="Content\Styles\Event\eventsCommonStyle.css" />
+    <Content Include="Content\Styles\Event\eventsDeleteStyle.css" />
     <Content Include="Content\Styles\Event\eventsDisplayStyle.css" />
     <Content Include="Content\Styles\Event\eventsEditStyle.css" />
     <Content Include="Content\Styles\Event\eventsIndexStyle.css" />

@@ -14,4 +14,14 @@
 
  a.edit-department-button.edit-button{
     margin-left:15px;
+    margin-top:100px;
+}
+ a.btn-danger.edit-department-button{
+     margin-top:100px;
+ }
+
+  h2.main-form-header{
+    display: inline-block;
+    vertical-align: middle;
+
 }

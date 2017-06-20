@@ -15,13 +15,14 @@
 <div class="mainHeaderLogo events-logo logo-details" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"></div>
 
 <h2 class="sec-title-huge sec-title main-form-header">@(Model.Title)</h2>
-<hr class="sec-hr" />
-
 @if (ViewBag.canEdit)
 {
     @Html.ActionLink("Edit", "Edit", new { @id = Model.EventID }, new { @class = "btn-primary edit-button edit-department-button", @id = Model.EventID })
     @Html.ActionLink("Delete", "Delete", new { @id = Model.EventID }, new { @class = "btn-danger edit-department-button", @id = Model.EventID })
 }
+<hr class="sec-hr" />
+
+
 
 
 <input id="AttendantsIDs" type="hidden" name="AttendantsIDs" value="@ViewBag.AttendantIDs" />
@@ -105,6 +106,7 @@
                 </div>
                 <div class="col-md-10 col-lg-10 col-sm-9 col-xs-12 full-row">
                     <div id="attendants-container">
+                        <span class="no-attendants">Currently, this event has no attendants.</span>
                     </div>
                 </div>
             </div>

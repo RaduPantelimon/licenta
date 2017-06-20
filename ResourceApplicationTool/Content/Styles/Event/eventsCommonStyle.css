@@ -88,3 +88,8 @@ div.mainHeaderLogo.events-logo {
 .event-type-text{
     display: inline;
 }
+
+.no-attendants {
+    margin-top: 8px;
+    display: inline-block;
+}

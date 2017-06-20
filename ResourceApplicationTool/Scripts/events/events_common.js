@@ -256,6 +256,10 @@ function initializeExistingAttendants()
                   "<button type='button' class='remove-attendant' >x</button>" + "</div>");
             }
     }
+    else {
+        //if there are no attendants we'll try to display a warning
+        $("#attendants-container span.no-attendants").show();
+    }
 
     $(".remove-attendant").click(removeAttendant);
     
