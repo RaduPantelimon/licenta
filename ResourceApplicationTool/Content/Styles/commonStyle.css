@@ -96,10 +96,16 @@ div.mainHeaderLogo.employees-logo.logo-details{
     color: white;
 }
 .tvd-sub-header:hover .sec-title{
-    background-color: #ff7f7f;
-    color:white;
+    color: #ff7f7f;
     border-radius: 5px;
 
+}
+.field-name{
+    text-align:right;
+}
+div.button-holder.form-group{
+    margin-bottom:50px;
+    min-height:40px;
 }
 .section_header {
     color: red;
@@ -250,10 +256,12 @@ hr.title-hr{
     border-top: 1px solid lightgray;
 }
 
-@media (max-width: 992px) {
+@media (max-width:768px ) {
     .right-align-not-xs {
-        text-align:left;
+        text-align: left;
     }
+}
+@media (max-width:992px) {
     .right-align-not-sm {
         text-align:left;
     }
@@ -290,3 +298,54 @@ hr.title-hr{
     margin-left:5px;
     color: lightgray;
 }
+
+.small-text{
+    display:none;
+}
+.regular-text{
+    display:inline-block;
+}
+
+/*RESPONSIVE CSS*/
+body{
+   min-width:380px;
+}
+
+@media (max-width: 600px) {
+    .user-profile-picture, .department-main-picture {
+        height:150px;
+         width:150px;
+    }
+    .profile-header {
+        padding: 60px 0px 0px 10px;
+        
+    }
+    a.edit-department-button, .download-report-button, button.download-report-button {
+        padding:6px 9px;
+        margin: 2.5px;
+    }
+    .small-text{
+        display:inline-block;
+    }
+    .regular-text{
+        display:none;
+    }
+    .regular-element{
+        display:none;
+    }
+    div.main-form-group{
+        height:160px;
+    }
+    .expandable-content {
+        margin: 15px 5px;
+    }
+    .form-group.subsection {
+        margin: 0px;
+        padding: 5px 5px;
+    }
+    .control-label{
+        font-size:14px;
+    }
+
+}
+

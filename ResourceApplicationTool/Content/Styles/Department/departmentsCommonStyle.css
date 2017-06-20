@@ -86,3 +86,19 @@ h2.departments-title{
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
 }
+
+.field-name.department-field-name{
+    text-align:left;
+}
+@media (max-width: 600px) {
+    .picture-button {
+        float:left;
+        min-width:120px;
+        margin:4px 0px;
+        clear:both;
+    }
+    div.profile-header {
+        padding: 80px 0px 0px 10px;
+        
+    }
+}

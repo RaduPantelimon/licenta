@@ -47,7 +47,10 @@ else
                         @Html.ActionLink("Delete", "Delete", new { @id = Model.DepartmentID }, new { @class = "btn-danger edit-department-button", @id = Model.DepartmentID })
 
                     }
-                    <button type="button" id='generate-report' class="btn-primary btn-warning download-report-button">Download Monthly Report</button>
+                    <button type="button" id='generate-report' class="btn-primary btn-warning download-report-button">
+                        <span class="regular-text">Download Monthly Report</span>
+                        <span class="small-text">Report</span>
+                    </button>
                 }
                 
                
@@ -75,42 +78,42 @@ else
         </div>
         <div class="row expandable-content">
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3 col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.Title)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9 col-xs-6">
                     @Html.DisplayFor(model => model.Title)
                 </div>
             </div>
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3 col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.MaxSize)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9 col-xs-6">
                     @Html.DisplayFor(model => model.MaxSize)
                 </div>
             </div>
 
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3 col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.StartDate)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9 col-xs-6">
                     @String.Format("{0:MM/dd/yyyy}", Model.StartDate)
                 </div>
             </div>
 
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3 col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.MonthlyExpenses)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9 col-xs-6">
                     @Html.DisplayFor(model => model.MonthlyExpenses)
                 </div>
             </div>
 
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name full-row col-md-12 col-sm-12">
+                <div class="field-name department-field-name full-row col-md-12 col-sm-12">
                     Department Description
                 </div>
                 <div class="col-md-12 col-sm-12 full-row department-description ">
@@ -121,15 +124,17 @@ else
     </div>
 </div>
 
-<p>
-    <button type="button"
-            class="btn btn-default btn-inverse"
-            id="cancel"
-            onclick="window.history.back()">
-        <i class="icon-remove icon-large"></i>
-        Cancel
-    </button>
-</p>
+<div class="button-holder form-group">
+    <div class="col-md-10">
+        <button type="button"
+                class="btn btn-default btn-inverse"
+                id="cancel"
+                onclick="window.history.back()">
+            <i class="icon-remove icon-large"></i>
+            Cancel
+        </button>
+    </div>
+</div>
 
 <h2 class="sec-title-large sec-title carousel-header"> Employees in this department </h2>
 @if (Model.Employees == null || Model.Employees.Count == 0)

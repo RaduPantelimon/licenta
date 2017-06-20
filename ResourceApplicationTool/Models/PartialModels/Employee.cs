@@ -34,6 +34,7 @@ namespace ResourceApplicationTool.Models
         [Required]
         [DataType(DataType.PhoneNumber)]
         [StringLength(20, ErrorMessage = "Please enter only 20 characters")]
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
         [JsonIgnore]
@@ -78,7 +79,7 @@ namespace ResourceApplicationTool.Models
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> TerminationDate { get; set; }
 
-        [Display(Name = "Middle Initial")]
+        [Display(Name = "Name Initial")]
         [StringLength(1, ErrorMessage = "Please enter only one letter")]
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Please enter only one letter")]
         public string MiddleInitial { get; set; }

@@ -42,7 +42,10 @@
                 {
                     @Html.ActionLink("Delete", "Delete", new { @id = Model.EmployeeID }, new { @class = "btn-danger edit-department-button", @id = Model.DepartmentID })
                 }
-                <button type="button" id='generate-report' class="btn-primary btn-warning download-report-button">Download Employee C.V.</button>
+                <button type="button" id='generate-report' class="btn-primary btn-warning download-report-button">
+                    <span class="regular-text">Download Employee C.V.</span>
+                    <span class="small-text">C.V.</span>
+                </button>
            }
                 
           
@@ -70,36 +73,36 @@
         </div>
         <div class="row expandable-content">
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3  col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.Account)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9  col-xs-6">
                     @Html.DisplayFor(model => model.Account)
                 </div>
             </div>
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3  col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.FirstName)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9  col-xs-6">
                     @Html.DisplayFor(model => model.FirstName)
                 </div>
             </div>
 
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3  col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.MiddleInitial)
                 </div>
-                <div class="col-md-9 col-sm-9 control-label">
+                <div class="col-md-9 col-sm-9  col-xs-6 control-label">
                     @Html.DisplayFor(model => model.MiddleInitial)
                 </div>
             </div>
 
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3  col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.LastName)
                 </div>
-                <div class="col-md-9 col-sm-9 control-label">
+                <div class="col-md-9 col-sm-9  col-xs-6 control-label">
                     @Html.DisplayFor(model => model.LastName)
                 </div>
             </div>
@@ -110,10 +113,10 @@
             {
                 //we can view the CNP only if we are this user or an Admin
                 <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                    <div class="field-name col-md-3 col-sm-3 control-label">
+                    <div class="field-name col-md-3 col-sm-3  col-xs-6 control-label">
                         @Html.DisplayNameFor(model => model.CNP)
                     </div>
-                    <div class="col-md-9 col-sm-9 control-label">
+                    <div class="col-md-9 col-sm-9  col-xs-6 control-label">
                         @Html.DisplayFor(model => model.CNP)
                     </div>
                 </div>
@@ -140,26 +143,26 @@
         </div>
         <div class="row expandable-content">
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3  col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.Role)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9  col-xs-6">
                     @((Model.Role != null && !String.IsNullOrEmpty(Model.Role.Name)) ? Model.Role.Name : "")
                 </div>
             </div>
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3  col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.Salary)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9  col-xs-6">
                     @Html.DisplayFor(model => model.Salary)
                 </div>
             </div>
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3  col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.ManagerID)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9  col-xs-6">
                     @if (Model.Employee1 != null)
                     {
                         @Html.ActionLink(Model.Employee1.FirstName + " " + Model.Employee1.LastName, "Details", new { @id = Model.ManagerID })
@@ -168,10 +171,10 @@
                 </div>
             </div>
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3  col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.DepartmentID)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9  col-xs-6">
                     @if (Model.Department != null)
                     {
                         @Html.ActionLink(Model.Department.Title, "Details","Departments", new { @id = Model.DepartmentID },null)
@@ -201,46 +204,46 @@
         </div>
         <div class="row expandable-content">
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3  col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.Email)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9  col-xs-6">
                     @Html.DisplayFor(model => model.Email)
                 </div>
             </div>
 
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3  col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.PhoneNumber)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9  col-xs-6">
                     @Html.DisplayFor(model => model.PhoneNumber)
                 </div>
             </div>
 
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3  col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.HireDate)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9  col-xs-6">
                     @String.Format("{0:MM/dd/yyyy}", Model.HireDate)
                 </div>
             </div>
 
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3  col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.TerminationDate)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9  col-xs-6">
                     @String.Format("{0:MM/dd/yyyy}", Model.TerminationDate)
                 </div>
             </div>
 
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3  col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.Administrator)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9  col-xs-6">
                     @Html.DisplayFor(model => model.Administrator)
                 </div>
             </div>
@@ -290,11 +293,11 @@
                             if (Model.SkillLevelsList[i].Skill.CategoryID == skillCat.CategoryID)
                             {
                                 <div class="employee-skill col-ld-6 col-md-6 col-sm-6 col-xs-12">
-                                    <div class="control-label skill-label col-ld-6 col-md-6 col-sm-6 col-xs-6">
+                                    <div class="control-label skill-label col-ld-6 col-md-6 col-sm-6 col-xs-4">
                                         <span class="skill-title">@Model.SkillLevelsList[i].Skill.Title</span>
 
                                     </div>
-                                    <div class="col-ld-6 col-md-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-ld-6 col-md-6 col-md-6 col-sm-6 col-xs-8">
                                         @Html.TextBoxFor(m => Model.SkillLevelsList[i].Level,
                                                                 new Dictionary<string, object> { { "class", "form-control skill-slider-input" },
                                                                                                     { "data-slider-min", "0" },
@@ -353,7 +356,7 @@
                 <thead>
                     <tr>
                         <th>Title</th>
-                        <th>Start Date</th>
+                        <th class="regular-element">Start Date</th>
                         <th>End Date</th>
                         <th>Degree</th>
                         

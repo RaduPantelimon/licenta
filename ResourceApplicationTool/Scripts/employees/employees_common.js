@@ -38,7 +38,7 @@ function getEducationsForCurrentEmployee(educationsTable, empId,disableEdit)
                         var startDate = new Date(data[i]["StartDate"]);
                         var endDate = new Date(data[i]["EndDate"]);
                         row += "<td>" + (data[i]["Title"] ? data[i]["Title"] : "") + "</td>";
-                        row += "<td>" + (startDate ? (startDate.getMonth() + 1) + "/" + startDate.getUTCDate() + "/" + startDate.getFullYear() : "") + "</td>";
+                        row += "<td class='regular-element' >" + (startDate ? (startDate.getMonth() + 1) + "/" + startDate.getUTCDate() + "/" + startDate.getFullYear() : "") + "</td>";
                         row += "<td>" + (endDate ? (endDate.getMonth() + 1) + "/" + endDate.getUTCDate() + "/" + endDate.getFullYear() : "") + "</td>";
                         row += "<td>" + (data[i]["Degree"] ? data[i]["Degree"] : "") + "</td>";
                         if (!disableEdit || disableEdit != true)
