@@ -24,14 +24,31 @@ namespace ResourceApplicationTool.Models
 
     public class ProjectMD
     {
+        [Required]
+        public string Title { get; set; }
+
+        [Required]
         [Display(Name = "Start Date")]
+        [DataType(DataType.Date)]
         public System.DateTime StartDate { get; set; }
+
+        [Required]
         [Display(Name = "End Date")]
+        [DataType(DataType.Date)]
         public System.DateTime EndDate { get; set; }
+
+        [Required]
         [Display(Name = "Contract Number")]
         public string ContractNumber { get; set; }
+
+        [Required]
         [Display(Name = "Project Description")]
         public string PJDescription { get; set; }
+
+        [Required]
+        [DataType(DataType.Currency)]
+        public decimal Budget { get; set; }
+
         [Display(Name = "Department")]
         public Nullable<int> DepartmentID { get; set; }
     }

@@ -1,97 +1,113 @@
 ﻿@model ResourceApplicationTool.Models.Project
-
+@using ResourceApplicationTool.Models;
+@using ResourceApplicationTool.Utils;
 @{
     ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Project</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+<link href="~/Content/Styles/Projects/projectsCommonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/commonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/Projects/projectsDetailsStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/Projects/projectsDeleteStyle.css" rel="stylesheet" />
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+<script>
+    var projectID = "@Model.ProjectID";
+    var accessLevel = "@ViewBag.userAccess";
+</script>
+<div class="mainHeaderLogo projects-logo logo-details" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"></div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Duration)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Duration)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ContractNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ContractNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PJDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PJDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Budget)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Budget)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Contact1.ContactName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Contact1.ContactName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Department.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Department.Title)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+<div class="main-form-container no-avatar projects-container">
+    <div class="form-group main-form-group profile-header-container">
+        <div class="text-info">
+            <h2 class="sec-title-large sec-title page-buttons-title"> @Model.Title</h2>
         </div>
-    }
+        <hr class="title-hr" />
+    </div>
 </div>
+<div>
+    <div class="main_expandable">
+        <div class="tvd-sub-header">
+            <table>
+                <tr>
+                    <td>
+                        <h1 class="sec-title-large sec-title" data-scrollname="Projects" style="display: inline; bottom: 0px;">
+                            General Information
+                        </h1>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="row expandable-content">
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.Title)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @Html.DisplayFor(model => model.Title)
+                </div>
+            </div>
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3">
+                    @Html.DisplayNameFor(model => model.ContractNumber)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @Html.DisplayFor(model => model.ContractNumber)
+                </div>
+            </div>
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    Department
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @if (Model.Department != null)
+                    {
+                        @Html.ActionLink(Model.Department.Title, "Details", "Departments", new { @id = Model.DepartmentID }, null)
+                    }
+                </div>
+            </div>
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="field-name col-md-3 col-sm-3 control-label">
+                    @Html.DisplayNameFor(model => model.Budget)
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    @Html.DisplayFor(model => model.Budget)
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap-datepicker");
+    @Scripts.Render("~/Content/bootstrap-sliderjs");
+
+    @Styles.Render("~/Content/bootstrap-datepickercss");
+    @Styles.Render("~/Content/bootstrap-slidercss");
+    @Styles.Render("~/Content/jquery-uicss");
+}
+
+<script src="~/Scripts/common.js"></script>
+<script src="~/Scripts/projects/projects_common.js"></script>
+<script src="~/Scripts/projects/projects_details.js"></script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-danger edit-department-button" />
+        <button type="button"
+                class="btn btn-default btn-inverse"
+                id="cancel"
+                onclick="window.history.back()">
+            <i class="icon-remove icon-large"></i>
+            DepartmentID
+        </button>
+    </div>
+}

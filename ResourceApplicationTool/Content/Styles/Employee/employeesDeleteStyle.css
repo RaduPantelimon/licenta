@@ -24,3 +24,7 @@ div.main-container {
     max-width: 1300px;
     margin: 0 auto;
 }
+.form-actions{
+    margin-bottom:100px;
+    margin-left:10px;
+}
