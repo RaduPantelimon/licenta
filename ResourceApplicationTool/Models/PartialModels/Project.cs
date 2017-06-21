@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using ResourceApplicationTool.Models.SecondaryModels;
 
 namespace ResourceApplicationTool.Models
 {
@@ -20,6 +21,8 @@ namespace ResourceApplicationTool.Models
                 return ManHoursEffort / 8;
             }
         }
+
+        public List<EmployeeEffort> participants;
     }
 
     public class ProjectMD
@@ -51,5 +54,12 @@ namespace ResourceApplicationTool.Models
 
         [Display(Name = "Department")]
         public Nullable<int> DepartmentID { get; set; }
+
+        [JsonIgnore]
+        public virtual Department Department { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Sprint> Sprints { get; set; }
+        [JsonIgnore]
+        public virtual Contact Contact1 { get; set; }
     }
 }

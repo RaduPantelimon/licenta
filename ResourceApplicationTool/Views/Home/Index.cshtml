@@ -1,11 +1,19 @@
 ﻿@using ResourceApplicationTool.Models;
+@using ResourceApplicationTool.Models.SecondaryModels;
 
 @{
     ViewBag.Title = "Home Page";
     ViewBag.ShowFooter = true;
 }
+
+<script type="text/javascript">
+    var projectStatistics = '@Html.Raw(ViewBag.projectStatistics)';
+</script>
+
+
+
 <script type="text/javascript" src="~/Scripts/home/home.js"></script>
-<!--<link href="~/Content/Styles/style.css" rel="stylesheet" />-->
+
 <link href="~/Content/Styles/slickStyle.css" rel="stylesheet" /> 
 <link href="~/Content/Styles/commonStyle.css" rel="stylesheet" />
 
@@ -37,7 +45,7 @@
             Html.RenderPartial("~/Views/Departments/PartialDepartment.cshtml", dept, ViewData);
         }
     </div>
-    <div class="second-content-container ">
+    <div class="second-content-container">
         <div class="col-md-7">
             <div class="row">
                 <div class="carousel-emps">
@@ -53,5 +61,11 @@
                  Html.RenderPartial("~/Views/Employees/PartialEmployee.cshtml", (Employee)ViewBag.employeeOmonth, ViewData);
              }
         </div>
+    </div>
+    <div class="third-content-container">
+        @foreach (Project pj in ViewBag.biggestProjects)
+        {
+            Html.RenderPartial("~/Views/Projects/PartialProjectStatistics.cshtml", pj, ViewData);
+        }
     </div>
 </div>

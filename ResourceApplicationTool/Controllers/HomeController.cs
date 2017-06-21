@@ -5,9 +5,12 @@ using System.Web;
 using System.Web.Mvc;
 using ResourceApplicationTool.Models;
 using ResourceApplicationTool.Models.ControllerModels;
+using ResourceApplicationTool.Models.SecondaryModels;
 
 using System.IdentityModel.Services;
 using System.IdentityModel.Services.Configuration;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace ResourceApplicationTool.Controllers
 {
@@ -36,12 +39,65 @@ namespace ResourceApplicationTool.Controllers
 
             employees.Remove(employeeOmonth);
 
+            //latest employees
+            List<Employee> latestEmployees = employees.OrderByDescending(x => x.HireDate).Take(12).ToList();
+
+            //biggest projects
+            foreach (Project p in projects)
+            {
+                //selecting the correct tasks for each project
+                List<Task> projectTasks = db.Tasks.Where(x => x.Sprint != null && x.Sprint.ProjectID == p.ProjectID).ToList();
+                List<EmployeeEffort> participants = new List<EmployeeEffort>();
+
+                foreach (Task t in projectTasks)
+                {
+                    if (t.Estimation.HasValue)
+                    {
+                        EmployeeEffort participant = participants.Where(x => t.EmployeeID == x.EmployeeID).FirstOrDefault();
+                        if (participant == null)
+                        {
+                            participant = new EmployeeEffort();
+                            try
+                            {
+                                if (t.EmployeeID.HasValue)  participant.EmployeeID = t.EmployeeID.Value;
+                                participant.EffortInHours = t.Estimation.Value;
+                                participant.EmployeeName = t.Employee.FirstName + " " + t.Employee.LastName;
+                                participants.Add(participant);
+                            }
+                            catch (Exception ex)
+                            {
+                                //handle error
+                            }
+                        }
+                        else
+                        {
+                            participant.EffortInHours += t.Estimation.Value;
+                        }
+
+                        p.ManHoursEffort += t.Estimation.Value;
+                    }
+                }
+                p.participants = participants;
+            }
+
+            List<Project> biggestProjects = projects.OrderByDescending(x => x.ManHoursEffort).Take(3).ToList();
+            string projectsStatistics = JsonConvert.SerializeObject(biggestProjects,
+            Formatting.None,
+            new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            });
+
+
+
             //initialize baseUrl
             string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
             Request.ApplicationPath.TrimEnd('/') + "/";
             ViewBag.baseUrl = baseUrl;
             ViewBag.employeeOmonth = employeeOmonth;
-            ViewBag.employees = employees;
+            ViewBag.employees = latestEmployees;
+            ViewBag.biggestProjects = biggestProjects;
+            ViewBag.projectStatistics = projectsStatistics;
             model.Departments = depts;
             return View(model);
         }

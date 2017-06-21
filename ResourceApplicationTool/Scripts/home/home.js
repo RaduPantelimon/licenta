@@ -41,10 +41,75 @@ $(document).ready(function () {
     //set employee of the month
     InitializeEmployeeOfMonth();
 
+    //Initialize Project piecharts
+    InitializeProjectPiecharts();
+
 });
 
 //
 function InitializeEmployeeOfMonth() {
     //mask
     $(".employee-of-the-month .mask").prepend("<h4 class='employee-o-month-header'>Employee of the Month</h4>");
+}
+
+function InitializeProjectPiecharts() {
+
+    //unserializing the projects
+    var projects = JSON.parse(projectStatistics);
+
+    if (projects && projects.length)
+    {
+        for(var i=0;i <projects.length;i++)
+        {
+            var pjID = projects[i].ProjectID;
+            var manHours = projects[i].ManHoursEffort;
+            var participants = [];
+            for (var j = 0; j < projects[i].participants.length; j++)
+            {
+                var participant = {};
+                participant.label = projects[i].participants[j].EmployeeName;
+                participant.legendText = projects[i].participants[j].EmployeeName;
+                participant.y = projects[i].participants[j].EffortInHours / manHours * 100;
+
+                participants.push(participant);
+            }
+
+            var chart = new $("#piechart-"+pjID).CanvasJSChart({
+                title: {
+                    text: projects[i].Title,
+                    fontSize: 20
+                },
+                height: 360,
+                width:370,
+                axisY: {
+                    title: "Products in %",
+                    valueFormatString: "#,##0.##"
+                },
+                axisX: {
+                    valueFormatString: "#,##0.##",
+                },
+                legend: {
+                    verticalAlign: "center",
+                    horizontalAlign: "right"
+                },
+                data: [
+                {
+                    type: "pie",
+                    showInLegend: true,
+                    toolTipContent: "{label} <br/> #percent %",
+                    
+                    indexLabel: "#percent%",
+                    indexLabelPlacement: "inside",
+                    indexLabelFontSize: 14,
+                    indexLabelLineThickness: 2,
+                    indexLabelFontWeight: "bold",
+                    indexLabelFontColor: "#fff",
+                    percentFormatString: "#0.##",
+                    
+                    dataPoints: participants
+                }
+                ]
+            });
+        }
+    }
 }

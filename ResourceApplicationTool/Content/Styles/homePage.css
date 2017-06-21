@@ -373,3 +373,14 @@ background-color:#404b52;
 body{
     padding-bottom:0px;
 }
+
+.canvasjs-chart-credit{
+    display:none;
+}
+.piechart-holder {
+    padding: 10px 20px;
+    /* min-height: 400px; */
+    /* max-height: 350px; */
+    overflow: hidden;
+    height: 350px;
+}

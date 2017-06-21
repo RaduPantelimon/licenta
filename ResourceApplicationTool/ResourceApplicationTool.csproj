@@ -278,6 +278,7 @@
     <Compile Include="Models\Role.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SecondaryModels\EmployeeEffort.cs" />
     <Compile Include="Models\SecondaryModels\EventTypeInfo.cs" />
     <Compile Include="Models\SecondaryModels\ExistingAttendant.cs" />
     <Compile Include="Models\SecondaryModels\MainSearchResult.cs" />
@@ -607,6 +608,7 @@
     <Content Include="Scripts\jquery-ui\css\jquery-ui.structure.css" />
     <Content Include="Scripts\jquery-ui\css\jquery-ui.theme.css" />
     <Content Include="Scripts\jquery-ui\jquery-ui.js" />
+    <Content Include="Scripts\jquery.canvasjs.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -742,6 +744,7 @@
     <Content Include="Views\Notifications\DepartmentMonthlyMeeting.cshtml" />
     <Content Include="Views\Notifications\EditorTemplates\NotificationsStyle.cshtml" />
     <Content Include="Views\Notifications\CanceledEvent.cshtml" />
+    <Content Include="Views\Projects\PartialProjectStatistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Temp\" />
