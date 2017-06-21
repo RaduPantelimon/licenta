@@ -44,6 +44,12 @@ $(document).ready(function () {
     //Initialize Project piecharts
     InitializeProjectPiecharts();
 
+    //Initialize Expand Collapse Sections
+    $(".main_expand_collapse").click(function () {
+
+        MainExpandCollapse(this, 'auto');
+
+    });
 });
 
 //
@@ -76,10 +82,10 @@ function InitializeProjectPiecharts() {
 
             var chart = new $("#piechart-"+pjID).CanvasJSChart({
                 title: {
-                    text: projects[i].Title,
+                    text: "Total effort: " + projects[i].ManHoursEffort + " hours",
                     fontSize: 20
                 },
-                height: 360,
+                height: 300,
                 width:370,
                 axisY: {
                     title: "Products in %",

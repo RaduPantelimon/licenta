@@ -349,3 +349,6 @@ body{
 
 }
 
+.field-name.full-field-name{
+    text-align:left;
+}

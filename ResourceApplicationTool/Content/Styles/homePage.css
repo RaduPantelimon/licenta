@@ -382,5 +382,11 @@ body{
     /* min-height: 400px; */
     /* max-height: 350px; */
     overflow: hidden;
-    height: 350px;
+    height: 300px;
 }
+
+div.statistics-project-section{
+    padding:0px;
+    background-color:#fff;
+}
+
