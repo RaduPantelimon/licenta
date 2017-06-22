@@ -241,6 +241,7 @@
 
 .validation-error{
     color:red;
+    text-align: center;
 }
 
 .ts-header{
@@ -272,4 +273,37 @@
 
 .spacing-elem{
     margin-bottom:25px;
+}
+div.main-component{
+    margin-left:0px;
+}
+div.mini-cal{
+    margin-bottom: 20px;
+}
+.small-button,
+button.small-button.btn-default.submit-button{
+    display:none;
+}
+
+@media (max-width: 992px) {
+    #month-section {
+        border-right: none;
+    }
+    .small-button{
+        display:initial;
+    }
+    .normal-button, button.normal-button.btn-default.submit-button{
+        display:none;
+    }
+    .small-button, button.small-button.btn-default.submit-button{
+        display:block;
+        margin-top:25px;
+    }
+    #month-section {
+        min-height: 115px;
+    }
+    .spacing-elem{
+        margin-bottom:5px;
+    }
+
 }

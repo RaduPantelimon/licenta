@@ -48,6 +48,10 @@
         main: './main.js',
         defaultExtension: 'js'
       },
+      'appevents': {
+          main: './mainevents.js',
+          defaultExtension: 'js'
+      },
       'rxjs': {
         defaultExtension: 'js'
       },

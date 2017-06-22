@@ -69,3 +69,14 @@
 #dialog-modal{
     z-index:0;
 }
+
+@media (max-width: 600px){
+    div.main-form-group {
+       height: 70px;
+       margin-top: 240px;
+       margin-bottom: 0px;
+    }
+    div.main-form-container.no-avatar.projects-container {
+        margin-bottom:0px;
+    }
+}

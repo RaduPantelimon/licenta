@@ -2,23 +2,31 @@
 <div class='sprint-main-component col-md-12 col-lg-12 col-sm-12 col-xs-12 row'>
    
     <div id="month-section" class="col-md-5 col-lg-4 col-sm-12 col-xs-12 row">
-        <div class="input-row col-md-12 col-lg-12 col-sm-6 col-xs-12">
-            <label for="year-selector" class="label-field">Year</label>
+        <div class="input-row col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            <div class="col-md-3 col-lg-3 col-sm-6 col-xs-6 field-name">
+                <label for="year-selector" class="label-field">Year</label>
+            </div>
+            <div class="col-md-9 col-lg-9 col-sm-6 col-xs-6">
             <input id="year-selector" type="number" min="1900" max="2099" step="1"
-                   [(ngModel)]='selectedYear' (ngModelChange)="changeMonth($event)" class="form-control custom-control" />
+                   [(ngModel)]='selectedYear' (ngModelChange)="changeMonth($event)" 
+                   class="form-control custom-control" />
 
+            </div>
         </div>
-        <div class="input-row col-md-12 col-lg-12 col-sm-6 col-xs-12 spacing-elem">
-            <label for="month-selector" class="label-field">Month</label>
-            <select id="month-selector" class="form-control custom-control" [(ngModel)]='selectedMonth' (ngModelChange)="changeMonth($event)">
-                <option *ngFor="let month of months">{{month}}</option>
-            </select>
-            
+        <div class="input-row col-md-12 col-lg-12 col-sm-12 col-xs-12 spacing-elem">
+            <div class="col-md-3 col-lg-3 col-sm-6 col-xs-6 field-name">
+                <label for="month-selector" class="label-field">Month</label>
+            </div>
+            <div class="col-md-9 col-lg-9 col-sm-6 col-xs-6">
+                <select id="month-selector" class="form-control custom-control" [(ngModel)]='selectedMonth' (ngModelChange)="changeMonth($event)">
+                    <option *ngFor="let month of months">{{month}}</option>
+                </select>
+            </div>
         </div>
 
         <button (click)="saveSprint($event)" 
                 [disabled]="sprintAlreadyExists" 
-                class="btn btn-default submit-button">
+                class="btn btn-default submit-button normal-button">
             Create Sprint
         </button>
     
@@ -74,7 +82,11 @@
             </div>
         </div>
     </div>
-
+    <button (click)="saveSprint($event)"
+            [disabled]="sprintAlreadyExists"
+            class="btn btn-default submit-button small-button">
+        Create Sprint
+    </button>
 
 
 </div>

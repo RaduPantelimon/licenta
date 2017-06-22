@@ -308,7 +308,7 @@ hr.title-hr{
 
 /*RESPONSIVE CSS*/
 body{
-   min-width:380px;
+   min-width:420px;
 }
 
 @media (max-width: 600px) {

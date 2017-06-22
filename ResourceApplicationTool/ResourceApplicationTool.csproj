@@ -399,6 +399,9 @@
     <Content Include="Content\Pictures\projects-banner-icon.png" />
     <Content Include="Content\Pictures\projects-icon.png" />
     <Content Include="Content\Pictures\rat-logo.png" />
+    <Content Include="Content\Pictures\resizable-handler-left-bottom.gif" />
+    <Content Include="Content\Pictures\resizable-handler-left-top.gif" />
+    <Content Include="Content\Pictures\resizable-handler-right-top.gif" />
     <Content Include="Content\Pictures\resizable-handler.gif" />
     <Content Include="Content\Pictures\role-icon.png" />
     <Content Include="Content\Pictures\sartre.jpg" />
@@ -438,6 +441,7 @@
     <Content Include="Content\Styles\Projects\projectsCommonStyle.css" />
     <Content Include="Content\Styles\Projects\projectsDeleteStyle.css" />
     <Content Include="Content\Styles\Projects\projectsDetailsStyle.css" />
+    <Content Include="Content\Styles\Projects\projectsEditStyle.css" />
     <Content Include="Content\Styles\Projects\projectsIndexStyle.css" />
     <Content Include="Content\Styles\search.css" />
     <Content Include="Content\Styles\slickStyle.css" />
@@ -747,6 +751,7 @@
     <Content Include="Views\Projects\PartialProjectStatistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="app\events\" />
     <Folder Include="Content\Temp\" />
     <Folder Include="Views\Images\" />
   </ItemGroup>
@@ -764,6 +769,7 @@
     <TypeScriptCompile Include="app\app.module.ts" />
     <TypeScriptCompile Include="app\home\welcome.component.ts" />
     <TypeScriptCompile Include="app\main.ts" />
+    <TypeScriptCompile Include="app\mainevents.ts" />
     <TypeScriptCompile Include="app\projects\employees.service.ts" />
     <TypeScriptCompile Include="app\projects\sprint-add.component.ts" />
     <TypeScriptCompile Include="app\projects\sprint-filter.pipe.ts" />

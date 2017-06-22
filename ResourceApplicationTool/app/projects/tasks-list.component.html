@@ -1,5 +1,5 @@
 ﻿<div class="row">
-    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
+    <div class="col-md-12 col-lg-2 col-sm-12 col-xs-12">
         <div id="templatesContainer" *ngIf="permissions=='Administrator'||permissions=='Manager'">
             <h4 class="templates-header">Task Templates</h4>
             <div class="task-template-container">
@@ -13,14 +13,14 @@
             </div>
         </div>
     </div>
-    <div id="tasksContainer" class="col-md-10 col-lg-10 col-sm-10 col-xs-10">
+    <div id="tasksContainer" class="col-md-12 col-lg-10 col-sm-12 col-xs-12">
         <table *ngIf="!showTaskDetails" class="tasksTable">
             <thead>
                 <tr>
-                    <th width="250">
+                    <th class="employee-name-header">
                         Project Members
                     </th>
-                    <th *ngFor='let day of days'>
+                    <th class="employee-name-header" *ngFor='let day of days'>
                         {{day.format("dddd")}}
                         <br />
                         {{day.format("YYYY.MM.DD")}}
@@ -47,13 +47,22 @@
                                     [resizeSnapGrid]="{left: 130, right: 130, top:45, bottom:45}"
                                     [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
                                     class="taskTemplate focused-task">
+                                <img id="drag-image" src="/Content/Pictures/resizable-handler-left-top.gif"
+                                     class="resize-handle resize-handle-left-top" mwlResizeHandle [resizeEdges]="{top: true, left: true}">
+                                <img id="drag-image" src="/Content/Pictures/resizable-handler-left-bottom.gif"
+                                     class="resize-handle resize-handle-left-bottom" mwlResizeHandle [resizeEdges]="{bottom: true, left: true}">
+
                                 <img id="edit-image" src="/Content/Pictures/edit-icon.png" class="edit-handle"
                                         (click)="onEdit($event,day,day.task.TaskID)">
                                 <span class="task-Title task-selectable" (click)="onLoseFocus($event,day)">{{day.task.TaskDescription}}</span>
                                 <img id="delete-image" src="/Content/Pictures/delete-icon.png" class="delete-handle"
                                         (click)="onDelete($event,day,day.task.TaskID)">
-                                <img id="drag-image" src="/Content/Pictures/resizable-handler.gif" class="resize-handle"
-                                        mwlResizeHandle [resizeEdges]="{bottom: true, right: true}">
+
+                                <img id="drag-image" src="/Content/Pictures/resizable-handler-right-top.gif" 
+                                     class="resize-handle resize-handle-right-top" mwlResizeHandle [resizeEdges]="{top: true, right: true}">
+                                <img id="drag-image" src="/Content/Pictures/resizable-handler.gif" 
+                                     class="resize-handle resize-handle-right-bottom" mwlResizeHandle [resizeEdges]="{bottom: true, right: true}">
+
                             </div>
 
                             <div *ngIf="day.focused && !(permissions=='Administrator'||permissions=='Manager')"

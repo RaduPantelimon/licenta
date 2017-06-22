@@ -41,26 +41,26 @@
         </div>
         <div class="row expandable-content">
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3 col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.Title)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9 col-xs-6">
                     @Html.DisplayFor(model => model.Title)
                 </div>
             </div>
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3">
+                <div class="field-name col-md-3 col-sm-3 col-xs-6">
                     @Html.DisplayNameFor(model => model.ContractNumber)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9 col-xs-6">
                     @Html.DisplayFor(model => model.ContractNumber)
                 </div>
             </div>
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3 col-xs-6 control-label">
                     Department
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9 col-xs-6">
                     @if (Model.Department != null)
                     {
                         @Html.ActionLink(Model.Department.Title, "Details", "Departments", new { @id = Model.DepartmentID }, null)
@@ -68,10 +68,10 @@
                 </div>
             </div>
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3  col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.Budget)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9 col-xs-6">
                     @Html.DisplayFor(model => model.Budget)
                 </div>
             </div>
@@ -107,7 +107,7 @@
                 id="cancel"
                 onclick="window.history.back()">
             <i class="icon-remove icon-large"></i>
-            DepartmentID
+            Cancel
         </button>
     </div>
 }

@@ -6,6 +6,7 @@
 }
 
 <link href="~/Content/Styles/Projects/projectsCommonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/Projects/projectsEditStyle.css" rel="stylesheet" />
 <link href="~/Content/Styles/commonStyle.css" rel="stylesheet" />
 <link href="~/Content/Styles/slickStyle.css" rel="stylesheet" />
 
@@ -14,9 +15,10 @@
 <h2 class="sec-title-huge sec-title main-form-header">Edit @Model.Title</h2>
 <hr class="sec-hr" />
 
-<div class="main-form-container">
-    @using (Html.BeginForm())
-    {
+@using (Html.BeginForm())
+{
+    <div class="main-form-container">
+
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
@@ -44,50 +46,50 @@
             </div>
             <div class="row expandable-content">
                 <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                    <div class="col-md-9 col-sm-9">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-3 field-name" })
+                    <div class="col-md-9 col-sm-9 col-xs-9">
                         @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                    @Html.LabelFor(model => model.ContractNumber, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                    <div class="col-md-9 col-sm-9">
+                    @Html.LabelFor(model => model.ContractNumber, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-3 field-name" })
+                    <div class="col-md-9 col-sm-9 col-xs-9">
                         @Html.EditorFor(model => model.ContractNumber, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.ContractNumber, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                    @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                    <div class="col-md-9 col-sm-9">
+                    @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-3 field-name" })
+                    <div class="col-md-9 col-sm-9 col-xs-9">
                         @Html.TextBoxFor(model => model.StartDate, new
-                {
-                    @Value = Model.StartDate.ToString("MM/dd/yyyy"),
-                    @class = "form-control",
-                    @id = "startDate-input",
-                    @placeholder = "MM/DD/YYY"
-                })
+                   {
+                       @Value = Model.StartDate.ToString("MM/dd/yyyy"),
+                       @class = "form-control",
+                       @id = "startDate-input",
+                       @placeholder = "MM/DD/YYY"
+                   })
                         @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                    @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                    <div class="col-md-9 col-sm-9">
+                    @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-3 field-name" })
+                    <div class="col-md-9 col-sm-9 col-xs-9">
                         @Html.TextBoxFor(model => model.EndDate, new
-                {
-                    @Value = Model.EndDate.ToString("MM/dd/yyyy"),
-                    @class = "form-control",
-                    @id = "endDate-input",
-                    @placeholder = "MM/DD/YYY"
-                })
+                   {
+                       @Value = Model.EndDate.ToString("MM/dd/yyyy"),
+                       @class = "form-control",
+                       @id = "endDate-input",
+                       @placeholder = "MM/DD/YYY"
+                   })
                         @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                    @Html.LabelFor(model => model.DepartmentID, "DepartmentID", htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                    <div class="col-md-9 col-sm-9">
+                    @Html.LabelFor(model => model.DepartmentID, "Department", htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-3 field-name" })
+                    <div class="col-md-9 col-sm-9 col-xs-9">
                         @Html.DropDownList("DepartmentID", null, htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.DepartmentID, "", new { @class = "text-danger" })
                     </div>
@@ -103,8 +105,8 @@
                         </div>
                     </div>*@
                 <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                    @Html.LabelFor(model => model.Budget, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                    <div class="col-md-9 col-sm-9">
+                    @Html.LabelFor(model => model.Budget, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-3 field-name" })
+                    <div class="col-md-9 col-sm-9 col-xs-9">
                         @Html.EditorFor(model => model.Budget, new { htmlAttributes = new { @class = "form-control", type = "number" } })
                         @Html.ValidationMessageFor(model => model.Budget, "", new { @class = "text-danger" })
                     </div>
@@ -119,24 +121,24 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-md-10 button-holder">
-                    <input type="submit" value="Update" class="btn btn-default" />
-                    <button type="button"
-                            class="btn btn-default btn-inverse"
-                            id="cancel"
-                            onclick="window.history.back()">
-                        <i class="icon-remove icon-large"></i>
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        </div>
 
-
-        }
+</div>
+<div class="form-group">
+    <div class="col-md-10 button-holder">
+        <input type="submit" value="Update" class="btn btn-default" />
+        <button type="button"
+                class="btn btn-default btn-inverse"
+                id="cancel"
+                onclick="window.history.back()">
+            <i class="icon-remove icon-large"></i>
+            Cancel
+        </button>
     </div>
+</div>
+</div>
 
+
+}
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap-datepicker") ;

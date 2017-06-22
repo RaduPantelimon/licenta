@@ -48,7 +48,10 @@
                 @Html.ActionLink("Edit", "Edit", new { @id = Model.ProjectID }, new { @class = "btn-primary add-new-button", @id = Model.ProjectID })
                 @Html.ActionLink("Delete", "Delete", new { @id = Model.ProjectID }, new { @class = "btn-danger add-new-button", @id = Model.ProjectID })
             }
-            <button type="button" id='generate-report' class="btn-primary btn-warning download-report-button">Download Monthly Report</button>
+            <button type="button" id='generate-report' class="btn-primary btn-warning download-report-button">
+                <span class="regular-text">Download Monthly Report</span>
+                <span class="small-text">Report</span>
+            </button>
         </div>
         <hr class="title-hr" />
     </div>
@@ -74,26 +77,26 @@
         </div>
         <div class="row expandable-content">
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3 col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.Title)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9 col-xs-6">
                     @Html.DisplayFor(model => model.Title)
                 </div>
             </div>
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3">
+                <div class="field-name col-md-3 col-sm-3 col-xs-6">
                     @Html.DisplayNameFor(model => model.ContractNumber)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9 col-xs-6">
                     @Html.DisplayFor(model => model.ContractNumber)
                 </div>
             </div>
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3 col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.DepartmentID)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9 col-xs-6">
                     @if (Model.Department != null)
                     {
                         @Html.ActionLink(Model.Department.Title, "Details", "Departments", new { @id = Model.DepartmentID }, null)
@@ -101,10 +104,10 @@
                 </div>
             </div>
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3 col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.Budget)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9 col-xs-6">
                     @Html.DisplayFor(model => model.Budget)
                 </div>
             </div>
@@ -131,19 +134,19 @@
         </div>
         <div class="row expandable-content">
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3 col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.StartDate)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9 col-xs-6">
                     @String.Format("{0:MM/dd/yyyy}", Model.StartDate)
                 </div>
             </div>
 
             <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3 col-xs-6 control-label">
                     @Html.DisplayNameFor(model => model.EndDate)
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9 col-xs-6">
                     @String.Format("{0:MM/dd/yyyy}", Model.EndDate)
                 </div>
             </div>

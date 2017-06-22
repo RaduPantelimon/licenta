@@ -2,6 +2,9 @@
 .tasksTable {
     table-layout:fixed;
     margin-top:40px;
+    margin-left: auto;
+    margin-right: auto;
+
 }
 .tasksTable td{
     border:solid 1px black;
@@ -24,7 +27,6 @@
 }
 .tasksTable td:first-child, 
 .tasksTable th:first-child {
-    min-width:160px;
     overflow: hidden;
     white-space: nowrap;
 }
@@ -45,7 +47,7 @@
 
 
 #templatesContainer .taskTemplate-holder{
-    padding:20px;
+    padding:20px 10px;
 }
 #templatesContainer .taskTemplate-holder:nth-child(odd) {
     background: #ffffff;
@@ -127,8 +129,6 @@
 
  .resize-handle {
     position: absolute;
-    bottom: 3px;
-    right: 3px;
     height:10px;
     width:10px;
 
@@ -139,6 +139,22 @@
     user-drag: none;
 }
 
+.resize-handle-left-bottom {
+    bottom:3px;
+    left:3px;
+}
+.resize-handle-left-top {
+    top:3px;
+    left:3px;
+}
+.resize-handle-right-bottom {
+    bottom: 3px;
+    right: 3px;
+}
+.resize-handle-right-top {
+    top: 3px;
+    right: 3px;
+}
  .delete-handle{
     height:12px;
     width:12px;
@@ -183,3 +199,31 @@
  .task-template-container{
     border: 2px solid #47c9af;
  }
+
+ .employee-name-header{
+     width:250px;
+ }
+
+ .task-template-container .taskTemplate {
+     margin-left:auto;
+     margin-right:auto;
+ }
+
+@media (max-width: 1200px) {
+    #templatesContainer .taskTemplate-holder {
+        display: inline-block;
+        padding:10px 5px;
+    }
+    #templatesContainer{
+        width: 425px;
+        margin-left:auto;
+        margin-right:auto;
+        max-width: 425px;
+        overflow-x: auto;
+    }
+    .tasksTable th.employee-name-header,
+    .tasksTable td, .tasksTable th{
+         width:125px;
+         min-width:125px;
+     }
+}
