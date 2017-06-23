@@ -1,0 +1,11 @@
+li {
+    font-size: large;
+}
+
+div.panel-heading {
+   font-size: x-large; 
+}
+
+h2,h1{
+    color:orange;
+}

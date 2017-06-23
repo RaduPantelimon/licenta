@@ -278,6 +278,7 @@
     <Compile Include="Models\Role.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SecondaryModels\CalendarEvent.cs" />
     <Compile Include="Models\SecondaryModels\EmployeeEffort.cs" />
     <Compile Include="Models\SecondaryModels\EventTypeInfo.cs" />
     <Compile Include="Models\SecondaryModels\ExistingAttendant.cs" />
@@ -317,6 +318,8 @@
     <Compile Include="Utils\ViewRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="appevents\app.component.css" />
+    <Content Include="appevents\app.component.html" />
     <Content Include="app\app.component.css" />
     <Content Include="app\app.component.html" />
     <Content Include="app\assets\images\logo.jpg" />
@@ -460,6 +463,80 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="node_modules\fullcalendar\dist\fullcalendar.css" />
+    <Content Include="node_modules\fullcalendar\dist\fullcalendar.js" />
+    <Content Include="node_modules\fullcalendar\dist\fullcalendar.min.css" />
+    <Content Include="node_modules\fullcalendar\dist\fullcalendar.min.js" />
+    <Content Include="node_modules\fullcalendar\dist\fullcalendar.print.css" />
+    <Content Include="node_modules\fullcalendar\dist\fullcalendar.print.min.css" />
+    <Content Include="node_modules\fullcalendar\dist\gcal.js" />
+    <Content Include="node_modules\fullcalendar\dist\gcal.min.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale-all.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\af.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\ar-dz.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\ar-ly.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\ar-ma.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\ar-sa.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\ar-tn.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\ar.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\bg.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\ca.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\cs.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\da.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\de-at.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\de.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\el.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\en-au.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\en-ca.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\en-gb.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\en-ie.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\en-nz.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\es-do.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\es.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\eu.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\fa.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\fi.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\fr-ca.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\fr-ch.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\fr.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\gl.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\he.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\hi.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\hr.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\hu.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\id.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\is.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\it.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\ja.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\kk.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\ko.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\lb.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\lt.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\lv.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\mk.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\ms-my.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\ms.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\nb.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\nl-be.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\nl.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\nn.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\pl.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\pt-br.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\pt.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\ro.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\ru.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\sk.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\sl.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\sr-cyrl.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\sr.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\sv.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\th.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\tr.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\uk.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\vi.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\zh-cn.js" />
+    <Content Include="node_modules\fullcalendar\dist\locale\zh-tw.js" />
+    <Content Include="node_modules\fullcalendar\LICENSE.txt" />
     <Content Include="Scripts\biggora-bootstrap-ajax-typeahead\js\bootstrap-typeahead.js" />
     <Content Include="Scripts\biggora-bootstrap-ajax-typeahead\js\bootstrap-typeahead.min.js" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
@@ -576,6 +653,10 @@
     <Content Include="Content\fonts\BreeSerif-Regular.ttf" />
     <Content Include="Content\fonts\sui generis rg.ttf" />
     <Content Include="Content\fonts\world of water.ttf" />
+    <Content Include="node_modules\fullcalendar\CHANGELOG.md" />
+    <Content Include="node_modules\fullcalendar\CONTRIBUTING.md" />
+    <Content Include="node_modules\fullcalendar\package.json" />
+    <Content Include="node_modules\fullcalendar\README.md" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap3-typeahead.js" />
     <Content Include="Scripts\bootstrap3-typeahead.min.js" />
@@ -765,6 +846,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="appevents\app.component.ts" />
+    <TypeScriptCompile Include="appevents\app.module.ts" />
+    <TypeScriptCompile Include="appevents\main.ts" />
     <TypeScriptCompile Include="app\app.component.ts" />
     <TypeScriptCompile Include="app\app.module.ts" />
     <TypeScriptCompile Include="app\home\welcome.component.ts" />

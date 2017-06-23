@@ -258,7 +258,7 @@ function initializeExistingAttendants()
     }
     else {
         //if there are no attendants we'll try to display a warning
-        $("#attendants-container span.no-attendants").show();
+        $("#attendants-container span.no-attendants").css({'display':'inline-block'});
     }
 
     $(".remove-attendant").click(removeAttendant);

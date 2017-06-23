@@ -20,9 +20,11 @@ namespace ResourceApplicationTool.Models
 
         [Required]
         [DataType(DataType.Date)]
+        [Display(Name = "Start Time")]
         public System.DateTime StartTime { get; set; }
 
         [DataType(DataType.Date)]
+        [Display(Name = "End Time")]
         public Nullable<System.DateTime> EndTime { get; set; }
 
         [Display(Name = "Event Type")]

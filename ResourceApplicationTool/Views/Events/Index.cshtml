@@ -7,11 +7,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+<!--Angular Initialization-->
+<link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<!-- Polyfill(s) for older browsers -->
+<script src="/node_modules/core-js/client/shim.min.js"></script>
+
+<script src="/node_modules/zone.js/dist/zone.js"></script>
+<script src="/node_modules/reflect-metadata/Reflect.js"></script>
+<script src="/node_modules/systemjs/dist/system.src.js"></script>
+<!-- Configure SystemJS -->
+<script src="/systemjs.config.js"></script>
+
+<script src="~/app/context-menu/angular2-contextmenu.js"></script>
+
+
 <link href="~/Content/Styles/Event/eventsCommonStyle.css" rel="stylesheet" />
 <link href="~/Content/Styles/Event/eventsIndexStyle.css" rel="stylesheet" />
 <link href="~/Content/Styles/commonStyle.css" rel="stylesheet" />
 <link href="~/Content/Styles/slickStyle.css" rel="stylesheet" />
 
+<link href="/node_modules/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
+<script src='~/Scripts/moment.js'></script>
+<script src='~/node_modules/fullcalendar/dist/fullcalendar.js'></script>
 
 <div class="mainHeaderLogo events-logo logo-details" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"></div>
 <div class="main-items-container">
@@ -24,137 +42,146 @@
     </div>
     <hr class="sec-hr title-hr" />
 
-    <div class="slick-filter">
-        <h2 class="sec-title-medium sec-title filter-title">Show:</h2>
-        <select class="form-control filter-select">
-            <option value="0">All Events</option>
-            <option value="1">Events Created</option>
-            <option value="2">Events Attended</option>
 
-        </select>
+
+    <div id="loader-holder">
+        <img id="loaderImg" src="~/Content/Pictures/ajax-loader.gif" height="45" width="45">
     </div>
+    <div id="calendar"></div>
+</div>
 
-    <div class="slick-section row">
-        @foreach (Event ev in Model)
-        {
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 
-            <!--<div class="wip-div" ></div>-->
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 department-item carousel-item carousel-item-nopicture 
-                 @(ev.isAttendant?" attendant-item ":" ") @(ev.isCreator?" creator-item ":" ")">
-                <div class="mask-background-parent">
-                    <div class="mask-background">
+    @Styles.Render("~/Content/jquery-uicss") ;
+}
 
-                        <div class="mask-front">
-                            <div class="stat sec-sweep-title">
+<script type="text/javascript" src="/scripts/moment.min.js"></script>
+<script type="text/javascript" src="/scripts/bootstrap-datetimepicker.js"></script>
+<script src="~/Scripts/common.js"></script>
+<script src="~/Scripts/events/events_common.js"></script>
+<script src="~/Scripts/events/events_index.js"></script>
+<link rel="stylesheet" href="/Content/bootstrap-datetimepicker.css" />
 
-                                <div class="stat-sec sweep-stat slick-main-header">
-                                    <h2 class="limited-container event-container-header">@ev.Title</h2>
-                                </div>
-                                <figure class="view third-effect">
-                                    <div>
-                                        <div class="stat-row">
-                                            <div class="secondary-pj-field container-padding">
-                                                <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/start-time-icon.png" alt="" height="28" width="28">
-                                                <p class="project-secondary-label"></p>
-                                            </div>
-                                            <div class="secondary-pj-field ">
-                                                <p class="project-secondary-label">
-                                                    <span class="field-name">Start Time:</span>
-                                                    @String.Format("{0:MM/dd/yyyy hh:mm tt}", ev.StartTime)
-                                                </p>
-                                            </div>
+
+
+@*<div class="slick-filter">
+    <h2 class="sec-title-medium sec-title filter-title">Show:</h2>
+    <select class="form-control filter-select">
+        <option value="0">All Events</option>
+        <option value="1">Events Created</option>
+        <option value="2">Events Attended</option>
+
+    </select>
+</div>
+
+<div class="slick-section row">
+    @foreach (Event ev in Model)
+    {
+
+
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 department-item carousel-item carousel-item-nopicture
+             @(ev.isAttendant?" attendant-item ":" ") @(ev.isCreator?" creator-item ":" ")">
+            <div class="mask-background-parent">
+                <div class="mask-background">
+
+                    <div class="mask-front">
+                        <div class="stat sec-sweep-title">
+
+                            <div class="stat-sec sweep-stat slick-main-header">
+                                <h2 class="limited-container event-container-header">@ev.Title</h2>
+                            </div>
+                            <figure class="view third-effect">
+                                <div>
+                                    <div class="stat-row">
+                                        <div class="secondary-pj-field container-padding">
+                                            <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/start-time-icon.png" alt="" height="28" width="28">
+                                            <p class="project-secondary-label"></p>
                                         </div>
-                                        <div class="stat-row">
-                                            <div class="secondary-pj-field container-padding">
-                                                <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/end-time-icon.png" alt="" height="28" width="28">
-                                                <p class="project-secondary-label"></p>
-                                            </div>
-                                            <div class="secondary-pj-field ">
-                                                <p class="project-secondary-label">
-                                                    <span class="field-name">End Time:</span>
-                                                    @String.Format("{0:MM/dd/yyyy hh:mm tt}", ev.EndTime)
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="stat-row">
-                                            <div class="secondary-pj-field container-padding">
-                                                <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/department-icon.png" alt="" height="28" width="28">
-                                                <p class="project-secondary-label"></p>
-                                            </div>
-                                            <div class="secondary-pj-field">
-                                                <p class="project-secondary-label">
-                                                    <span class="field-name">Event Type:</span>
-                                                    @ev.EventType
-                                                </p>
-                                            </div>
-
-                                        </div>
-                                        <div class="stat-row">
-                                            <div class="secondary-pj-field container-padding">
-                                                <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/users-icon.png" alt="" height="28" width="28">
-                                                <p class="project-secondary-label"></p>
-                                            </div>
-                                            <div class="secondary-pj-field">
-                                                <p class="project-secondary-label">
-                                                    <span class="field-name dept-information-container" employeeID="@ev.Employee.EmployeeID">Creator:</span>
-                                                   
-                                                    <a href="/Employees/Details/@(ev.Employee.EmployeeID)">
-                                                        @(ev.Employee.FirstName + " " + ev.Employee.LastName + "  ")
-                                                    </a>
-                                                </p>
-                                            </div>
-
+                                        <div class="secondary-pj-field ">
+                                            <p class="project-secondary-label">
+                                                <span class="field-name">Start Time:</span>
+                                                @String.Format("{0:MM/dd/yyyy hh:mm tt}", ev.StartTime)
+                                            </p>
                                         </div>
                                     </div>
-                                    <div class="stat-row sec-pj-detail-label">
-                                        <div>
-                                            <p class="project-secondary-label ">
-                                                <span class="field-name">Attendants</span>
+                                    <div class="stat-row">
+                                        <div class="secondary-pj-field container-padding">
+                                            <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/end-time-icon.png" alt="" height="28" width="28">
+                                            <p class="project-secondary-label"></p>
+                                        </div>
+                                        <div class="secondary-pj-field ">
+                                            <p class="project-secondary-label">
+                                                <span class="field-name">End Time:</span>
+                                                @String.Format("{0:MM/dd/yyyy hh:mm tt}", ev.EndTime)
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="stat-row">
+                                        <div class="secondary-pj-field container-padding">
+                                            <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/department-icon.png" alt="" height="28" width="28">
+                                            <p class="project-secondary-label"></p>
+                                        </div>
+                                        <div class="secondary-pj-field">
+                                            <p class="project-secondary-label">
+                                                <span class="field-name">Event Type:</span>
+                                                @ev.EventType
                                             </p>
                                         </div>
 
                                     </div>
-                                    <div class="sec-pj-detail">
-                                        
-                                       @foreach(Attendant attendant in ev.Attendants)
-                                       {
-                                           <a href="/Employees/Details/@(attendant.Employee.EmployeeID)">
-                                            @(attendant.Employee.FirstName + " " + attendant.Employee.LastName)
-                                           </a>
-                                       }
-                                       @if (ev.Attendants == null || ev.Attendants.Count == 0) {
-                                           <span>This event has no attendants</span>
-                                       }
-                                    </div>
-                                    <div class="mask clickable-mask" onclick="redirectToUrl('/Events/Details/@ev.EventID')">
-                                        <a href="" class="info">Read More</a>
-                                    </div>
+                                    <div class="stat-row">
+                                        <div class="secondary-pj-field container-padding">
+                                            <img class="banner-icon department-secondary-label department-banner-icon" src="~/Content/Pictures/users-icon.png" alt="" height="28" width="28">
+                                            <p class="project-secondary-label"></p>
+                                        </div>
+                                        <div class="secondary-pj-field">
+                                            <p class="project-secondary-label">
+                                                <span class="field-name dept-information-container" employeeID="@ev.Employee.EmployeeID">Creator:</span>
 
-                                    <div class="mask">
-                                        <a href="/Events/Details/@ev.EventID" class="info">Read More</a>
-                                    </div>
+                                                <a href="/Employees/Details/@(ev.Employee.EmployeeID)">
+                                                    @(ev.Employee.FirstName + " " + ev.Employee.LastName + "  ")
+                                                </a>
+                                            </p>
+                                        </div>
 
-                                </figure>
-                                <div class="bottom-footer">
+                                    </div>
                                 </div>
+                                <div class="stat-row sec-pj-detail-label">
+                                    <div>
+                                        <p class="project-secondary-label ">
+                                            <span class="field-name">Attendants</span>
+                                        </p>
+                                    </div>
+
+                                </div>
+                                <div class="sec-pj-detail">
+
+                                   @foreach(Attendant attendant in ev.Attendants)
+                                   {
+                                       <a href="/Employees/Details/@(attendant.Employee.EmployeeID)">
+                                        @(attendant.Employee.FirstName + " " + attendant.Employee.LastName)
+                                       </a>
+                                   }
+                                   @if (ev.Attendants == null || ev.Attendants.Count == 0) {
+                                       <span>This event has no attendants</span>
+                                   }
+                                </div>
+                                <div class="mask clickable-mask" onclick="redirectToUrl('/Events/Details/@ev.EventID')">
+                                    <a href="" class="info">Read More</a>
+                                </div>
+
+                                <div class="mask">
+                                    <a href="/Events/Details/@ev.EventID" class="info">Read More</a>
+                                </div>
+
+                            </figure>
+                            <div class="bottom-footer">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        }
-    </div>
-</div>
-
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-
-        @Styles.Render("~/Content/jquery-uicss") ;
+        </div>
     }
-
-    <script type="text/javascript" src="/scripts/moment.min.js"></script>
-    <script type="text/javascript" src="/scripts/bootstrap-datetimepicker.js"></script>
-    <script src="~/Scripts/common.js"></script>
-    <script src="~/Scripts/events/events_common.js"></script>
-    <script src="~/Scripts/events/events_index.js"></script>
-    <link rel="stylesheet" href="/Content/bootstrap-datetimepicker.css" />
+</div>*@

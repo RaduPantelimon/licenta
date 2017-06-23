@@ -24,3 +24,61 @@ h2.events-title {
 h2.event-container-header{
     font-size:22px;
 }
+
+
+#calendar{
+    display:none;
+}
+
+#calendar{
+    display: block;
+    margin-top: 100px;
+    margin-bottom:100px;
+    margin-left:10px;
+    margin-right:10px;
+}
+#loader-holder{
+    margin-top: 100px;
+}
+h2.events-title{
+    margin-left:10px;
+}
+.fc th{
+    background-color:#337ab7;
+    color:white;
+}
+.fc td{
+    background-color:white;
+}
+.fc button .fc-icon{
+    color:white;
+}
+.fc button{
+    background-color:#337ab7;
+    background-image:none;
+    color:white;
+    text-shadow:none;
+}
+.fc-state-default{
+     text-shadow:none;
+}
+.fc-center{
+    font-size: 12px;
+    background-color: #337ab7;
+    padding: 15px;
+    border-radius: 20px;
+    color: white;
+}
+.fc-center h2{
+    font-size:16px;
+}
+
+@media (max-width: 600px) {
+    #calendar{
+        display: block;
+        margin-top: 50px;
+    }
+    div.main-items-container {
+        margin-top: 200px;
+    }
+}

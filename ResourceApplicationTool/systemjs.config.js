@@ -12,6 +12,7 @@
     map: {
       // our app is within the app folder
       app: '/app',
+      appevents: '/appevents',
 
       // angular bundles
       '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
@@ -31,6 +32,12 @@
       //resizable bundle
       'angular2-resizable': 'npm:angular2-resizable/dist/umd/angular2-resizable.js',
 
+        //calendar
+      'ap-angular2-fullcalendar': '/node_modules/ap-angular2-fullcalendar',
+      'fullcalendar': '/node_modules/fullcalendar/dist/fullcalendar.js',
+      'jquery': '/node_modules/jquery/dist/jquery.min.js',
+      'momenterino': '/node_modules/moment/moment.js',
+
        //ng2-slider-componen
       'ng2-slider-component': '/node_modules/ng2-slider-component',
       'ng2-slideable-directive': '/node_modules/ng2-slideable-directive',
@@ -49,7 +56,7 @@
         defaultExtension: 'js'
       },
       'appevents': {
-          main: './mainevents.js',
+          main: './main.js',
           defaultExtension: 'js'
       },
       'rxjs': {
@@ -60,6 +67,19 @@
           tyoe: 'cjs',
           defaultExtension: 'js'
       },
+      'momenterino': {
+          defaultExtension: 'js'
+      },
+
+      'ap-angular2-fullcalendar': {
+          main: 'index.js',
+          defaultExtension: 'js'
+      },
+
+      'fullcalendar': {
+          defaultExtension: 'js'
+      },
+
     'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
     'angular2-modal': { defaultExtension: 'js', main: 'bundles/angular2-modal.umd' },
     'ng2-slider-component': { main: 'ng2-slider.component.system.js', defaultExtension: 'system.js'  },

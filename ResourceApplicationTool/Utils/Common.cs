@@ -187,6 +187,31 @@ namespace ResourceApplicationTool.Utils
             }
         }
 
+        public static int CheckIfIsLoggedIn(IPrincipal User)
+        {
+            //we check if the user is logged in
+            string accessLevel = Const.PermissionLevels.Employee;
+            int empID = 0;
+            try
+            {
+                ClaimsIdentity claimsIdentity = (ClaimsIdentity)User.Identity;
+                IEnumerable<Claim> claims = claimsIdentity.Claims;
+
+                string userID = claims.Where(x => x.Type == Const.CLAIM.CLAIM_NAMESPACE
+                 + "/" + Const.Fields.EMPLOYEE_ID).FirstOrDefault().Value;
+
+                if (User.Identity.IsAuthenticated && userID != null)
+                {
+                    empID = Convert.ToInt32(userID);
+                }
+            }
+            catch (Exception ex)
+            {
+                //handle exception
+            }
+            return empID;
+        }
+
         public static bool CheckDepartmentAuthentication(HttpSessionStateBase Session, IPrincipal User, Department department)
         {
             //we check if the user is either an administrator or a manager for the department

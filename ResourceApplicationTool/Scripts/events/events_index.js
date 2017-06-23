@@ -5,6 +5,9 @@ function initializePage() {
 
     //initializing the department filter
     $("select.filter-select").click(InitializeEventsFilter);
+
+    //preparing the calendar
+    getExistingAnswers();
 }
 
 function InitializeEventsFilter(item) {
@@ -27,4 +30,49 @@ function InitializeEventsFilter(item) {
     else {
         $(".carousel-item").fadeIn(400);
     }
+}
+
+
+
+
+function getExistingAnswers() {
+    $.ajax({
+        url: "/api/restapi/GetUserEvents",
+        contentType: "application/json; charset=utf-8",
+        type: "GET",
+        dataType: "json",
+        success: SetEvents,
+        error: OnFail
+    });
+}
+
+function SetEvents(data) {
+    console.log(data);
+    //initializing the calendar
+    setUpCalendar(data);
+}
+
+
+function OnFail(jqXHR, exception) {
+    console.log("Error while performing Ajax Call" + jqXHR + " " + exception);
+}
+
+function setUpCalendar(data) {
+    $("#calendar").show();
+    $("#loaderImg").hide();
+    $('#calendar').fullCalendar({
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaDay,listWeek'
+        },
+        firstDay: 1,
+        navLinks: true, // can click day/week names to navigate views
+        editable: true,
+        eventLimit: true, // allow "more" link when too many events
+        events: data
+    });
+
+    //after the loading is finished we will show the calendar
+
 }

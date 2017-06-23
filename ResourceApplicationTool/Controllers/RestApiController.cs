@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Web.Http;
 using System.Net.Http;
 using ResourceApplicationTool.Models;
+using ResourceApplicationTool.Models.SecondaryModels;
 using Newtonsoft.Json;
 using System.Text;
 using ResourceApplicationTool.Utils;
@@ -326,7 +327,46 @@ namespace ResourceApplicationTool.Controllers
         #endregion
 
         #region FileDonwload
-          
+
+        #endregion
+
+
+        #region Events
+        //save the tasks added by the user
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage GetUserEvents()
+        {
+            string jsonResponseText = "";
+            try
+            {
+                int userID = Common.CheckIfIsLoggedIn(User);
+                Employee currentEmployee = db.Employees.Where(x => x.EmployeeID == userID).FirstOrDefault();
+                List<CalendarEvent> eventsforCurrentUser = new List<CalendarEvent>();
+
+                if (currentEmployee != null)
+                {
+                    List<Event>events = db.Events.Where(x => x.Attendants.Any(y => y.EmployeeID == currentEmployee.EmployeeID)
+                                                                    || x.CreatorID == currentEmployee.EmployeeID).ToList();
+                    foreach(Event e in events)
+                    {
+                        eventsforCurrentUser.Add(new CalendarEvent(e, userID));
+                    }
+                }
+
+                jsonResponseText = JsonConvert.SerializeObject(eventsforCurrentUser);
+                var response = Request.CreateResponse(HttpStatusCode.OK);
+                response.Content = new StringContent(jsonResponseText, Encoding.UTF8, "application/json");
+                return response;
+            }
+            catch (Exception ex)
+            {
+                jsonResponseText = "{\"status\":0,\"error\":\"Error trying to get events\",\"message\":\"" + ex.Message + "\"}";
+                var response = Request.CreateResponse(HttpStatusCode.InternalServerError);
+                response.Content = new StringContent(jsonResponseText, Encoding.UTF8, "application/json");
+                return response;
+            }
+        }
         #endregion
 
     }
