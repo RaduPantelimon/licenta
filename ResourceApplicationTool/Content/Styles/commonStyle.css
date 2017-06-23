@@ -352,3 +352,7 @@ body{
 .field-name.full-field-name{
     text-align:left;
 }
+
+.full-height-line{
+    padding-top:10px;
+}

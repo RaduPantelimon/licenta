@@ -14,7 +14,7 @@
 
 <div class="mainHeaderLogo events-logo logo-details" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"></div>
 
-<h2 class="sec-title-huge sec-title main-form-header">Edit @(Model.Title)</h2>
+<h2 class="sec-title-large sec-title main-form-header">Edit @(Model.Title)</h2>
 <hr class="sec-hr" />
 
 
@@ -49,15 +49,15 @@
             <div class="row expandable-content">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                    <div class="col-md-9 col-sm-9">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-3 field-name" })
+                    <div class="col-md-9 col-sm-9 col-xs-9">
                         @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                    @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                    <div class="col-md-9 col-sm-9">
+                    @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-3 field-name" })
+                    <div class="col-md-9 col-sm-9 col-xs-9">
                         @Html.TextBoxFor(model => model.StartTime, new
                    {
                        @Value = Model.StartTime.ToString("MM/dd/yyyy hh:mm tt"),
@@ -70,8 +70,8 @@
                 </div>
 
                 <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                    @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                    <div class="col-md-9 col-sm-9">
+                    @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-3 field-name" })
+                    <div class="col-md-9 col-sm-9 col-xs-9">
                         @Html.TextBoxFor(model => model.EndTime, new
                    {
                        @Value = (Model.EndTime.HasValue)?Model.EndTime.Value.ToString("MM/dd/yyyy hh:mm tt") :"",
@@ -83,17 +83,17 @@
                     </div>
                 </div>
 
-                <div class="form-group  col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                    @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                    <div class="col-md-9 col-sm-9">
+                <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                    @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-3 field-name" })
+                    <div class="col-md-9 col-sm-9 col-xs-9">
                         @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                    @Html.LabelFor(model => model.EventType, "Type", htmlAttributes: new { @class = "control-label col-md-3 col-sm-3" })
-                    <div class="col-md-9 col-sm-9">
+                    @Html.LabelFor(model => model.EventType, "Type", htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-3 field-name" })
+                    <div class="col-md-9 col-sm-9 col-xs-9">
 
                         @Html.DropDownListFor(model => model.EventType, Const.EventTypes, new Dictionary<string, object> { { "class", "form-control permissions-selector" } })
                         @Html.ValidationMessageFor(model => model.EventType, "", new { @class = "text-danger" })
@@ -115,10 +115,10 @@
                     </div>
                 </div>
                 <div class="form-group subsection col-md-12 col-lg-12 col-sm-12 col-xs-12" style="clear:both">
-                    <div class="field-name full-row  col-md-2 col-lg-2 col-sm-3 col-xs-12 right-align-not-xs right-align-not-sm">
+                    <div class="field-name col-md-2 col-lg-2 col-sm-3 col-xs-3 full-height-line">
                         New Attendant
                     </div>
-                    <div class="col-md-10 col-lg-10 col-sm-9 col-xs-12 full-row">
+                    <div class="col-md-10 col-lg-10 col-sm-9 col-xs-9">
                         <div id="add-attendants-section">
                             <input id="employees-search-box" class="form-control employees-search-input" value="" autocomplete="off" />
                             <button id="add-employee" class="form-control" type="button"> Add</button>
@@ -126,10 +126,10 @@
                     </div>
                 </div>
                 <div class="form-group subsection col-md-12 col-lg-12 col-sm-12 col-xs-12" style="clear:both">
-                    <div class="field-name full-row  col-md-2 col-lg-2 col-sm-3 col-xs-12 right-align-not-xs right-align-not-sm">
+                    <div class="field-name col-md-2 col-lg-2 col-sm-3 col-xs-3 full-height-line">
                         Current Attendants
                     </div>
-                    <div class="col-md-10 col-lg-10 col-sm-9 col-xs-12 full-row">
+                    <div class="col-md-10 col-lg-10 col-sm-9 col-xs-9">
                         <div id="attendants-container">
                         </div>
                         <div class="attendants-warning-container" style="display:none;">

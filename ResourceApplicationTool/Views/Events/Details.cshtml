@@ -14,7 +14,7 @@
 
 <div class="mainHeaderLogo events-logo logo-details" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"></div>
 
-<h2 class="sec-title-huge sec-title main-form-header">@(Model.Title)</h2>
+<h2 class="sec-title-large sec-title main-form-header">@(Model.Title)</h2>
 @if (ViewBag.canEdit)
 {
     @Html.ActionLink("Edit", "Edit", new { @id = Model.EventID }, new { @class = "btn-primary edit-button edit-department-button responsive-event-btn", @id = Model.EventID })
@@ -69,7 +69,7 @@
                 </div>
             </div>
 
-            <div class="form-group  col-md-6 col-lg-6 col-sm-12 col-xs-12">
+            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
                 <div class="field-name col-md-3 col-sm-3 col-xs-6 control-label">
                 @Html.DisplayNameFor(model => model.Location)
                 </div>
