@@ -81,9 +81,6 @@ namespace ResourceApplicationTool.Controllers
         {
 
 
-          
-
-
             Event @event = db.Events.Find(id);
             if (@event.EventType == "Performance Review" && @event.Attendants != null && @event.Attendants.Count > 0)
             {
@@ -145,8 +142,6 @@ namespace ResourceApplicationTool.Controllers
 
             }
 
-
-
             //after the save actions are completed, we'll send the notifications to the attendants
             Mailer mailer = new Mailer();
             mailer.SendMeetingRequest(db, @event, @event.Attendants.Select(x => x.Employee).ToList(), @event.Employee, ControllerContext);
@@ -182,7 +177,7 @@ namespace ResourceApplicationTool.Controllers
             Request.ApplicationPath.TrimEnd('/') + "/";
 
             ViewBag.baseUrl = baseUrl;
-
+            ViewBag.meeting = @event;
             //checking if we have the permission necessary to add a new event
 
             int currentUserID;
@@ -335,6 +330,8 @@ namespace ResourceApplicationTool.Controllers
             if (ModelState.IsValid)
             {
                 Event ev = db.Events.Where(x => x.EventID == @event.EventID).FirstOrDefault();
+
+                ViewBag.meeting = ev;
                 int creatorID = ev.CreatorID;
 
                 ev.StartTime = @event.StartTime;
@@ -379,7 +376,21 @@ namespace ResourceApplicationTool.Controllers
                 
                 //delete removed attendants
                 List<Attendant> removedAttendants = existingAttendants.Where(x => !parsedIDs.Contains(x.EmployeeID)).ToList();
-                foreach(Attendant att in removedAttendants)
+
+                Employee creator = db.Employees.Find(currentUserID);
+
+                //we only send a request if the meeting type is selected
+                if (!String.IsNullOrEmpty(@event.EventType) && removedAttendants!= null && removedAttendants.Count>0)
+                {
+                    Mailer removedEmployeesMailer = new Mailer();
+                    List<int> parsedattendantIDs = removedAttendants.Select(x => x.EmployeeID).ToList();
+                    List<Employee> removedAttendantEmployees = db.Employees.Where(x => 
+                                        parsedattendantIDs.Any(y => y == x.EmployeeID)).ToList();
+                    removedEmployeesMailer.CancelMeetingRequest(db, ev, removedAttendantEmployees, creator, ControllerContext);
+                }
+
+
+                foreach (Attendant att in removedAttendants)
                 {
                     db.Attendants.Remove(att);
                 }
@@ -418,7 +429,6 @@ namespace ResourceApplicationTool.Controllers
 
                     //we only send a request if the meeting type is selected
                     Mailer mailer = new Mailer();
-                    Employee creator = db.Employees.Find(currentUserID);
                     mailer.SendMeetingRequest(db, ev, reportAttendantEmployees, creator, ControllerContext,1);
                 }
 
@@ -473,6 +483,9 @@ namespace ResourceApplicationTool.Controllers
             }
 
             Event @event = db.Events.Find(id);
+
+            ViewBag.meeting = @event;
+
             //allow users to delete an event only if they are an admin or if they created it
             if (!(User.Identity.IsAuthenticated && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
                 && (

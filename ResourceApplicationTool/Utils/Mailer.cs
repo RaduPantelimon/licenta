@@ -41,36 +41,20 @@ namespace ResourceApplicationTool.Utils
 
             try
             {
+                //adding the event to the controller context
+                //ControllerContext.Controller.ViewBag.meeting = ev;
+
                 //getting the reviewed employee
+                ev.Attendants = db.Attendants.Where(x => x.EventID == ev.EventID).ToList();
                 Attendant at = ev.Attendants.FirstOrDefault();
                 Employee reviewed = db.Employees.Where(x => x.EmployeeID == at.EmployeeID).FirstOrDefault();
                 reviewed.SkillLevelsList = reviewed.SkillLevels.ToList();
 
                 //getting message content
                 EventTypeInfo currentEventType = Const.EventTypesinfo.Where(x => x.EventType == ev.EventType).FirstOrDefault();
-                string embededHtml = "<html><head></head><body>" + "<p>Test</p>" + "<br/><br/>" + "<p>Test Embeded</p>" + "<br/>" + "<p>Test Ending</p>" + "<br/></body></html>";
 
-                if(currentEventType != null && currentEventType.EventType == "Performance Review")
-                {
-                    string generatednotificationHTML = ViewRenderer.RenderView("~/Views/Notifications/PerformanceReview.cshtml", reviewed,
-                                                 ControllerContext);
-
-                    if(!String.IsNullOrEmpty(generatednotificationHTML))
-                    {
-                        embededHtml = generatednotificationHTML;
-                    }
-                }
-                else if (currentEventType != null && currentEventType.EventType == "Department Monthly Meeting")
-                {
-                    string generatednotificationHTML = ViewRenderer.RenderView("~/Views/Notifications/DepartmentMonthlyMeeting.cshtml", reviewed,
-                                                 ControllerContext);
-
-                    if (!String.IsNullOrEmpty(generatednotificationHTML))
-                    {
-                        embededHtml = generatednotificationHTML;
-                    }
-                }
-
+                //embeded Html for 
+                string embededHtml = GetEmbededHtml(currentEventType, ControllerContext, reviewed);
 
                 //preping the email message
                 MailMessage email = new MailMessage();
@@ -82,7 +66,7 @@ namespace ResourceApplicationTool.Utils
                 }
 
                 email.IsBodyHtml = true;
-                email.Subject = ev.EventType;
+                email.Subject = ev.Title;
 
 
                 //preparing email content
@@ -299,6 +283,7 @@ namespace ResourceApplicationTool.Utils
         {
 
             //getting the reviewed employee
+            ev.Attendants = db.Attendants.Where(x => x.EventID == ev.EventID).ToList();
             Attendant at = ev.Attendants.FirstOrDefault();
             Employee reviewed = db.Employees.Where(x => x.EmployeeID == at.EmployeeID).FirstOrDefault();
             reviewed.SkillLevelsList = reviewed.SkillLevels.ToList();
@@ -321,7 +306,7 @@ namespace ResourceApplicationTool.Utils
             }
 
             email.IsBodyHtml = true;
-            email.Subject = ev.EventType;
+            email.Subject = ev.Title;
 
 
             //preparing email content
@@ -413,6 +398,62 @@ namespace ResourceApplicationTool.Utils
             str.AppendLine("END:VCALENDAR");
 
             return str.ToString();
+        }
+
+        public string GetEmbededHtml(EventTypeInfo currentEventType, ControllerContext ControllerContext, Employee reviewed)
+        {
+            string embededHtml = "<html><head></head><body>" + "<p>New Event</p>" + "<br/></body></html>";
+            if (currentEventType != null && currentEventType.EventType == "Performance Review")
+            {
+                string generatednotificationHTML = ViewRenderer.RenderView("~/Views/Notifications/PerformanceReview.cshtml", reviewed,
+                                             ControllerContext);
+
+                if (!String.IsNullOrEmpty(generatednotificationHTML))
+                {
+                    embededHtml = generatednotificationHTML;
+                }
+            }
+            else if (currentEventType != null && currentEventType.EventType == "Department Monthly Meeting")
+            {
+                string generatednotificationHTML = ViewRenderer.RenderView("~/Views/Notifications/DepartmentMonthlyMeeting.cshtml", reviewed,
+                                             ControllerContext);
+
+                if (!String.IsNullOrEmpty(generatednotificationHTML))
+                {
+                    embededHtml = generatednotificationHTML;
+                }
+            }
+            else if (currentEventType != null && currentEventType.EventType == "Audit")
+            {
+                string generatednotificationHTML = ViewRenderer.RenderView("~/Views/Notifications/Audit.cshtml", reviewed,
+                                             ControllerContext);
+
+                if (!String.IsNullOrEmpty(generatednotificationHTML))
+                {
+                    embededHtml = generatednotificationHTML;
+                }
+            }
+            else if (currentEventType != null && currentEventType.EventType == "Sprint Review Meeting")
+            {
+                string generatednotificationHTML = ViewRenderer.RenderView("~/Views/Notifications/SprintReviewMeeting.cshtml", reviewed,
+                                             ControllerContext);
+
+                if (!String.IsNullOrEmpty(generatednotificationHTML))
+                {
+                    embededHtml = generatednotificationHTML;
+                }
+            }
+            else if (currentEventType != null && currentEventType.EventType == "Daily Scrum Meeting")
+            {
+                string generatednotificationHTML = ViewRenderer.RenderView("~/Views/Notifications/DailyScrumMeeting.cshtml", reviewed,
+                                             ControllerContext);
+
+                if (!String.IsNullOrEmpty(generatednotificationHTML))
+                {
+                    embededHtml = generatednotificationHTML;
+                }
+            }
+            return embededHtml;
         }
 
 
