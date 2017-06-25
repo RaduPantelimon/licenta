@@ -1,5 +1,6 @@
 ﻿body {
     padding-top:0px;
+    font-family:OpenSans-Regular;
 }
 .pageLogo 
 {
@@ -36,6 +37,7 @@
     background-position: center;
     border-bottom:2px solid #428bca;
     border-top:2px solid #428bca;
+    height:350px;
 
 }
 
@@ -122,20 +124,17 @@
     display:inline-block;
 }
 
-
 .main-header.container.master-page-header
 {
     padding-left:4px;
     padding-right:4px;
 }
 
-
 .nav > li > a:hover, .nav > li > a:focus {
     text-decoration: none;
     background-color: #eee;
     border-bottom:2px #47c9af solid;
 }
-
 
 ul.typeahead.dropdown-menu{
     border-radius:15px;
@@ -234,8 +233,9 @@ div.secondary-content-holder{
     background-color:transparent;
 }
 .third-content-container {
-    padding-top: 960px;
+    padding-top: 860px;
     padding-left: 20px;
+    padding-right: 20px;
 }
 .employee-o-month-header{
     display:none;
@@ -247,7 +247,7 @@ div.secondary-content-holder{
     opacity: 0;
 }
 .employee-of-the-month{
-    margin-top: 86px;
+    margin-top: 0px;
 }
 .third-effect:hover:hover .employee-o-month-header{
     opacity:1;
@@ -261,14 +261,17 @@ div.secondary-content-holder{
 }
 .footer-row{
     /*margin-top:400px;*/
+    margin-left:0px;
+    margin-right:0px;
 }
 .footer{
     margin-top:121px;
-    height:200px;
+    height:50px;
     left:0;
     right:0;
     background-color:#404b52;
     opacity:0.9;
+    border-top: 2px solid #428bca;
 }
 .logo-text{
     font-family:RainyDays;
@@ -276,14 +279,12 @@ div.secondary-content-holder{
 .logo-body-header{
     font-family:suigeneris;
 }
-/*
-.user-details-container{
-    display:inline-block;
+.department-item.slick-slide{
+    overflow:hidden;
 }
-.profile-container{
-    display:inline-block;
-}*/
-
+.employees-carousel{
+        padding: 0px;
+}
 h2.master-sub-header {
     transition: 0.2s;
     border-radius: 20px;
@@ -293,6 +294,7 @@ h2.master-sub-header {
     padding: 10px 20px;
     text-align: center;
     margin:10px auto;
+    border: 2px solid #330f53;
 }
 .regular-size-header{
     width:323px;
@@ -306,8 +308,26 @@ h2.large-size-header{
     background-color: white;
     width: 324px;
 }
+div.main-row{
+    margin:0px;
+}
 .employees-container{
+    margin-left:0px;
+    margin-right:0px;
+    overflow:hidden;
+}
+h2.employee-sub-header{
+    margin-left:15px;
+    margin-bottom:15px;
+}
 
+h2.projects-title{
+    text-transform: uppercase;
+    font-size: 28px;
+    font-family: OpenSans-SemiBold;
+    color: #7e858c;
+    text-align: center;
+    margin-bottom: 20px;
 }
 @media (max-width: 1500px) {
     /* Solving dpacing issues for departments*/
@@ -342,7 +362,6 @@ h2.large-size-header{
     }
     h2.large-size-header{
         width:323px;
-       
         margin-left: auto;
         margin-right: auto;
     }

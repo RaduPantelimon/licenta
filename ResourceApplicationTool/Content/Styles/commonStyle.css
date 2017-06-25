@@ -1,4 +1,7 @@
-﻿.mainHeaderLogo 
+﻿body {
+    font-family:OpenSans-Regular;
+}
+.mainHeaderLogo 
 {
     max-width:1800px;
     margin: 0 auto;
@@ -355,4 +358,9 @@ body{
 
 .full-height-line{
     padding-top:10px;
+}
+
+.carousel-row{
+    margin-left:0px;
+    margin-right:0px;
 }

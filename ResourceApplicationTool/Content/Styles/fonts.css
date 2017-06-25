@@ -34,3 +34,27 @@ src: url(/Content/fonts/sujet___.ttf);
     font-family:WorldOfWater;
     src: url('/Content/fonts/world of water.ttf');
 }
+
+
+
+
+@font-face {
+    font-family: 'OpenSans-Light';
+    src: url('/Content/fonts/OpenSans-Light.ttf');
+}
+@font-face {
+    font-family: 'OpenSans-Bold';
+    src: url('/Content/fonts/OpenSans-Bold.ttf');
+}
+@font-face {
+    font-family: 'OpenSans-SemiBold';
+    src: url('/Content/fonts/OpenSans-Semibold.ttf');
+}
+@font-face {
+    font-family: 'OpenSans-Regular';
+    src: url('/Content/fonts/OpenSans-Regular.ttf');
+}
+@font-face {
+    font-family: 'OpenSans-ExtraBold';
+    src: url('/Content/fonts/OpenSans-ExtraBold.ttf');
+}

@@ -38,36 +38,38 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row main-row">
     <h2 class="sec-title-large sec-title master-sub-header regular-size-header"> Departments </h2>
-    <div class="carousel-depts">
-        @foreach (Department dept in Model.Departments)
-        {
-            Html.RenderPartial("~/Views/Departments/PartialDepartment.cshtml", dept, ViewData);
-        }
-    </div>
+  <div class="carousel-depts">
+          @foreach (Department dept in Model.Departments)
+          {
+              Html.RenderPartial("~/Views/Departments/PartialDepartment.cshtml", dept, ViewData);
+          }
+      </div>
     <div class="second-content-container">
-        <div class="col-md-7 col-xs-12">
-            <h2 class="sec-title-large sec-title master-sub-header large-size-header">Recent Employees</h2>
-            <div class="row employees-container">
-                <div class="carousel-emps">
-                    @foreach (Employee emp in ViewBag.employees)
-                    {
-                        Html.RenderPartial("~/Views/Employees/PartialEmployee.cshtml", emp, ViewData);
-                    }
-                </div>
-            </div>
-        </div>  
-        <div class="col-md-offset-1 col-md-4 hidden-xs transparent-content-holder employee-of-the-month">
-             @{
-                 Html.RenderPartial("~/Views/Employees/PartialEmployee.cshtml", (Employee)ViewBag.employeeOmonth, ViewData);
-             }
-        </div>
-    </div>
+          <div class="employees-carousel col-md-7 col-xs-12">
+              <h2 class="sec-title-large sec-title master-sub-header large-size-header">Recent Employees</h2>
+              <div class="row employees-container">
+                  <div class="carousel-emps">
+                      @foreach (Employee emp in ViewBag.employees)
+                      {
+                          Html.RenderPartial("~/Views/Employees/PartialEmployee.cshtml", emp, ViewData);
+                      }
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-offset-1 col-md-4 hidden-xs transparent-content-holder employee-of-the-month">
+              <h2 class="sec-title-large sec-title employee-sub-header master-sub-header regular-size-header">Top Employee</h2>
+               @{
+                   Html.RenderPartial("~/Views/Employees/PartialEmployee.cshtml", (Employee)ViewBag.employeeOmonth, ViewData);
+               }
+          </div>
+      </div>
     <div class="third-content-container">
-        @foreach (Project pj in ViewBag.biggestProjects)
-        {
-            Html.RenderPartial("~/Views/Projects/PartialProjectStatistics.cshtml", pj, ViewData);
-        }
-    </div>
+          <h2 class="sec-title-large sec-title projects-title">Largest Projects</h2>
+         @foreach (Project pj in ViewBag.biggestProjects)
+         {
+             Html.RenderPartial("~/Views/Projects/PartialProjectStatistics.cshtml", pj, ViewData);
+         }
+     </div>
 </div>

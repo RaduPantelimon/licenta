@@ -210,3 +210,20 @@ function InitializeCarousel(carouselContainer) {
 
     });
 }
+
+function InitializeSmallCarousel(carouselContainer) {
+    $(carouselContainer).slick({
+        dots: true,
+        infinite: true,
+        arrows:true,
+        speed: 300,
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        responsive: [
+          { breakpoint: 1225, settings: { slidesToShow: 3, slidesToScroll: 3, infinite: true, dots: true, arrows:false } },
+          { breakpoint: 1000, settings: { slidesToShow: 2, slidesToScroll: 2, arrows: false, dots: true } },
+          { breakpoint: 650, settings: { slidesToShow: 1, slidesToScroll: 1, arrows: false, dots: true } }
+        ],
+
+    });
+}

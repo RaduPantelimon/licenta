@@ -11,7 +11,7 @@ function initializePage() {
     });
 
     //initialize the Carousel
-    InitializeCarousel('.carousel-depts');
+    InitializeSmallCarousel('.carousel-depts');
 
     //department pop-up
     LoadModalXLSXDepartmentDownloadView()

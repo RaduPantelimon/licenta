@@ -657,6 +657,16 @@
     <Content Include="node_modules\fullcalendar\CONTRIBUTING.md" />
     <Content Include="node_modules\fullcalendar\package.json" />
     <Content Include="node_modules\fullcalendar\README.md" />
+    <Content Include="Content\fonts\OpenSans-Bold.ttf" />
+    <Content Include="Content\fonts\OpenSans-BoldItalic.ttf" />
+    <Content Include="Content\fonts\OpenSans-ExtraBold.ttf" />
+    <Content Include="Content\fonts\OpenSans-ExtraBoldItalic.ttf" />
+    <Content Include="Content\fonts\OpenSans-Italic.ttf" />
+    <Content Include="Content\fonts\OpenSans-Light.ttf" />
+    <Content Include="Content\fonts\OpenSans-LightItalic.ttf" />
+    <Content Include="Content\fonts\OpenSans-Regular.ttf" />
+    <Content Include="Content\fonts\OpenSans-Semibold.ttf" />
+    <Content Include="Content\fonts\OpenSans-SemiboldItalic.ttf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap3-typeahead.js" />
     <Content Include="Scripts\bootstrap3-typeahead.min.js" />

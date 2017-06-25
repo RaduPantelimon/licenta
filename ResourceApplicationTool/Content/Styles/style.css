@@ -1,25 +1,4 @@
 ﻿
-
-@font-face {
-    font-family: 'OpenSans-lighter';
-    src: url('../fonts/opensans/OpenSans-Light-webfont.woff');
-}
-@font-face {
-    font-family: 'OpenSans-Bold';
-    src: url('../fonts/opensans/OpenSans-Bold-webfont.woff');
-}
-@font-face {
-    font-family: 'OpenSans-SemiBold';
-    src: url('../fonts/opensans/OpenSans-Semibold-webfont.woff');
-}
-@font-face {
-    font-family: 'OpenSans-Regular';
-    src: url('../fonts/opensans/OpenSans-Regular-webfont.woff');
-}
-@font-face {
-    font-family: 'OpenSans-ExtraBold';
-    src: url('../fonts/opensans/OpenSans-ExtraBold-webfont.woff');
-}
 .ratio1_2:before{
 	padding-top: 50%;
 }
