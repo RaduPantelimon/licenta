@@ -86,13 +86,13 @@ namespace ResourceApplicationTool.Models
 
         [Display(Name = "First Name")]
         [Required]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Please enter only letters")]
+        [RegularExpression(@"^[a-zA-Z\\s -]+$", ErrorMessage = "Please enter only letters")]
         [StringLength(50, ErrorMessage = "Please enter only 50 characters")]
         public string FirstName { get; set; }
 
         [Display(Name = "Last Name")]
         [Required]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Please enter only letters")]
+        [RegularExpression(@"^[a-zA-Z\\s -]+$", ErrorMessage = "Please enter only letters")]
         [StringLength(50, ErrorMessage = "Please enter only 50 characters")]
         public string LastName { get; set; }
 

@@ -31,16 +31,22 @@
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-        <input type="text" 
-               name="query" 
-               value="@(!String.IsNullOrEmpty(ViewBag.query) ? ViewBag.query:"")" 
-               class="main-search-input query-input form-control" 
-               autocomplete="off" />
-
-        <input type="submit" 
-               value="Search!" 
-               class="btn btn-warning" />
-        
+        <table class="main-search-table">
+            <tr>
+                <td class="search-input-td">
+                    <input type="text" 
+                           name="query" 
+                           value="@(!String.IsNullOrEmpty(ViewBag.query) ? ViewBag.query:"")" 
+                           class="main-search-input query-input form-control" 
+                           autocomplete="off" />
+                </td>
+                <td class="search-button-td">
+                    <input type="submit" 
+                           value="Search" 
+                           class="btn btn-warning main-search-button" />
+                </td>
+            </tr>
+        </table>
         <div class="filter-container main_expandable">
             <div class="tvd-sub-header">
                 <table>

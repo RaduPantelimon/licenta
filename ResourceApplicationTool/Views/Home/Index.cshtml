@@ -39,7 +39,7 @@
 </div>
 
 <div class="row">
-    <h2 class="sec-title-large sec-title carousel-header"> Projects developed by this department </h2>
+    <h2 class="sec-title-large sec-title master-sub-header regular-size-header"> Departments </h2>
     <div class="carousel-depts">
         @foreach (Department dept in Model.Departments)
         {
@@ -47,8 +47,9 @@
         }
     </div>
     <div class="second-content-container">
-        <div class="col-md-7">
-            <div class="row">
+        <div class="col-md-7 col-xs-12">
+            <h2 class="sec-title-large sec-title master-sub-header large-size-header">Recent Employees</h2>
+            <div class="row employees-container">
                 <div class="carousel-emps">
                     @foreach (Employee emp in ViewBag.employees)
                     {
@@ -57,7 +58,7 @@
                 </div>
             </div>
         </div>  
-        <div class="col-md-offset-1 col-md-4 transparent-content-holder employee-of-the-month">
+        <div class="col-md-offset-1 col-md-4 hidden-xs transparent-content-holder employee-of-the-month">
              @{
                  Html.RenderPartial("~/Views/Employees/PartialEmployee.cshtml", (Employee)ViewBag.employeeOmonth, ViewData);
              }

@@ -13,6 +13,8 @@
     width:324px;
 }
 
+
+
 @media (max-width: 992px) {
     /* Solving dpacing issues for departments*/
     .department-item > figure,

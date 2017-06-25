@@ -24,7 +24,8 @@ div.mainHeaderLogo.search-logo.logo-details{
 }
 
 input.query-input{
-   width: calc(100% - 200px);
+   /*width: calc(100% - 200px);*/
+   width:100%;
    max-width: none;
    margin-right:20px;
    display: inline-block;
@@ -141,4 +142,37 @@ td.picture-container td.secondary-cell{
 
 .title-anchor{
     font-weight:bold;
+}
+.main-items-container {
+    margin-left:10px;
+}
+
+.main-search-input{
+    margin-left:10px;
+}
+.main-search-button{
+    margin-left:20px;
+    height:45px;
+    font-size:24px;
+}
+.search-input-td{
+
+}
+.search-button-td{
+    width:180px;
+}
+.main-search-table{
+    table-layout:fixed;
+    width:100%;
+}
+@media (max-width: 600px) {
+    .search-button-td{
+        width:130px;
+    }
+    .query-container{
+        margin-top:20px;
+    }
+    div.main-items-container {
+        margin-top:260px;
+    }
 }

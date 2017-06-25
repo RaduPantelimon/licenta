@@ -5,7 +5,7 @@
 {
     max-width:2300px;
     margin: 0 auto;
-    height:500px;
+    height:550px;
     position:absolute;
     left: 0;
     right:0;
@@ -24,7 +24,7 @@
 .secondary-pageLogo 
 {
     background: url(../Pictures/business-banner-2.jpg) no-repeat fixed;
-    top:800px;
+    top:850px;
     background-position: center bottom;
     border-bottom:2px solid #428bca;
     border-top:2px solid #428bca;
@@ -32,7 +32,7 @@
 }
 .third-pageLogo{
     background: url(../Pictures/business-banner-3.jpg) no-repeat fixed;
-    top: 1490px;
+    top: 1600px;
     background-position: center;
     border-bottom:2px solid #428bca;
     border-top:2px solid #428bca;
@@ -135,15 +135,7 @@
     background-color: #eee;
     border-bottom:2px #47c9af solid;
 }
-/*@media only screen and (max-width: 600px) and (min-width: 400px)*/
-@media (min-width:800px) and (max-width: 1210px) {
 
-.nav.navbar-nav.navbar-links-list > li > a {
-    padding-left:8px;
-    padding-right:8px;
-}
-
-}
 
 ul.typeahead.dropdown-menu{
     border-radius:15px;
@@ -164,6 +156,9 @@ ul.typeahead.dropdown-menu li, ul.typeahead.dropdown-menu li a{
     background-color:#fff;
     padding-top: 10px;
     padding-bottom: 10px;
+    margin-bottom:0px;
+    max-height: 275px;
+    overflow:auto;
 }
 
 .rat-logo{
@@ -231,11 +226,17 @@ div.secondary-content-holder{
 .second-content-container {
     margin-top: 320px;
 }
+.second-content-container .slick-prev.slick-arrow{
+    left:-80px;
+}
 .transparent-content-holder{
     border:none;
     background-color:transparent;
 }
-
+.third-content-container {
+    padding-top: 960px;
+    padding-left: 20px;
+}
 .employee-o-month-header{
     display:none;
      transition: opacity 0.5s 0s ease-in-out;
@@ -244,6 +245,9 @@ div.secondary-content-holder{
     transition-timing-function: ease-in-out;
     transition-delay: 0s;
     opacity: 0;
+}
+.employee-of-the-month{
+    margin-top: 86px;
 }
 .third-effect:hover:hover .employee-o-month-header{
     opacity:1;
@@ -256,7 +260,7 @@ div.secondary-content-holder{
    display:block;
 }
 .footer-row{
-    margin-top:400px;
+    /*margin-top:400px;*/
 }
 .footer{
     margin-top:121px;
@@ -279,3 +283,85 @@ div.secondary-content-holder{
 .profile-container{
     display:inline-block;
 }*/
+
+h2.master-sub-header {
+    transition: 0.2s;
+    border-radius: 20px;
+    background-color: #428bca;
+    display: block;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    margin:10px auto;
+}
+.regular-size-header{
+    width:323px;
+}
+h2.large-size-header{
+    width:calc(100% - 60px);
+    margin-left:0;
+    margin-bottom:20px;
+}
+.mask-background-parent {
+    background-color: white;
+    width: 324px;
+}
+.employees-container{
+
+}
+@media (max-width: 1500px) {
+    /* Solving dpacing issues for departments*/
+    .second-content-container .slick-arrow::after,
+     .second-content-container .slick-arrow::before,
+     .second-content-container .slick-arrow{
+        display:none;
+    }
+}
+/*@media only screen and (max-width: 600px) and (min-width: 400px)*/
+@media (min-width:800px) and (max-width: 1210px) {
+
+    .nav.navbar-nav.navbar-links-list > li > a {
+        padding-left:8px;
+        padding-right:8px;
+    }
+
+}
+
+@media (max-width: 768px) {
+    /* Solving dpacing issues for departments*/
+    .department-item > figure,
+    .department-item > div.mask-background-parent{
+        margin-left:auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 992px){
+    .employee-of-the-month{
+        display:none;
+    }
+    h2.large-size-header{
+        width:323px;
+       
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 992px) {
+    /* Solving dpacing issues for departments*/
+    .department-item > figure,
+    .department-item > div.mask-background-parent{
+        margin-left:auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Solving dpacing issues for departments*/
+    .department-item > figure,
+    .department-item > div.mask-background-parent{
+        margin-left:auto;
+        margin-right: auto;
+    }
+}
