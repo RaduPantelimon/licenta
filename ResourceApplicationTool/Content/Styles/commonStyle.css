@@ -309,9 +309,39 @@ hr.title-hr{
     display:inline-block;
 }
 
+#angular-loader{
+    width:100%;
+}
+
+.angular-loader-picture{
+    margin-left:auto;
+    margin-right:auto;
+    display: block;
+}
+
 /*RESPONSIVE CSS*/
 body{
    min-width:420px;
+}
+
+div#dialog-modal{
+    margin-left:-15%;
+    width:30%;
+}
+
+
+@media (max-width:1250px){
+    div#dialog-modal{
+        margin-left:-25%;
+        width:50%;
+    }
+}
+
+@media (max-width:850px){
+    div#dialog-modal{
+        margin-left:-35%;
+        width:75%;
+    }
 }
 
 @media (max-width: 600px) {
@@ -348,6 +378,10 @@ body{
     }
     .control-label{
         font-size:14px;
+    }
+    div#dialog-modal{
+        margin-left:-35%;
+        width:75%;
     }
 
 }

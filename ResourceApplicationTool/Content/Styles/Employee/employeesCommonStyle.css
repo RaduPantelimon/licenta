@@ -161,3 +161,23 @@ button.delete-button{
     vertical-align: middle;
 }
 
+#modal-loader{
+    display:none;
+}
+
+.modal-loader-picture{
+    position:fixed;
+    top:350px;
+    left: 50%;
+    z-index: 15;
+}
+    
+.modal-loader-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    opacity: .5;
+}

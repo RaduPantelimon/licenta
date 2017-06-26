@@ -167,6 +167,10 @@
     <pm-app></pm-app>
 </div>
 
+<div id="angular-loader">
+    <img src="~/Content/Pictures/ajax-loader.gif" height="50" width="50" class="angular-loader-picture" />
+</div>
+
 <div id='dialog-modal' class='modal' data-project='@Model.ProjectID'>
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -176,18 +180,18 @@
         <div id='modal-body-content'>
             
             <div class="form-group subsection col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                <div class="field-name col-md-3 col-sm-3 control-label">
+                <div class="field-name col-md-3 col-sm-3 col-xs-3 control-label">
                    <span class="month-label">Month</span>
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9 col-xs-9">
                    @Html.DropDownList("Month-Selector", ViewBag.Months as IEnumerable<SelectListItem>, new { @class = "form-control", @id="excel-month-input" })
                 </div>
             </div>
             <div class="form-group subsection col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                <div class="field-name full-row col-md-3 col-sm-3">
+                <div class="field-name full-row col-md-3 col-sm-3 col-xs-3 control-label">
                     <span>Year</span>
                 </div>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-9 col-sm-9 col-xs-9">
                     <input id="excel-year-input" type="number" value="@DateTime.Now.ToString("yyyy")" class="form-control" />
                 </div>
             </div>

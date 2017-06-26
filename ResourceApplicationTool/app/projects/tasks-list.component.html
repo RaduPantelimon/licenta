@@ -29,13 +29,13 @@
             </thead>
             <tbody>
                 <tr *ngFor='let employee of employees; let empIndex = index'>
-                    <td width="250">
+                    <td width="250" class="employee-name-td">
                         {{employee.FirstName}} {{employee.LastName}}
                     </td>
                     <td *ngFor='let day of employee.Days; let dayIndex = index'>
                         <div *ngIf='day.task'>
                             <div *ngIf='!day.focused'
-                                    class="taskTemplate taskTemplate{{day.task.TemplateID}}">
+                                    class="taskTemplate taskTemplate{{day.task.TemplateID}} taskTemplate-stationary">
                                 <span class="task-Title task-selectable" (click)="onFocus($event,day)"> {{day.task.TaskDescription}} </span>
                             </div>
 
@@ -46,7 +46,7 @@
                                     [enableGhostResize]="true"
                                     [resizeSnapGrid]="{left: 130, right: 130, top:45, bottom:45}"
                                     [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
-                                    class="taskTemplate focused-task">
+                                    class="taskTemplate focused-task taskTemplate-stationary">
                                 <img id="drag-image" src="/Content/Pictures/resizable-handler-left-top.gif"
                                      class="resize-handle resize-handle-left-top" mwlResizeHandle [resizeEdges]="{top: true, left: true}">
                                 <img id="drag-image" src="/Content/Pictures/resizable-handler-left-bottom.gif"
@@ -66,7 +66,7 @@
                             </div>
 
                             <div *ngIf="day.focused && !(permissions=='Administrator'||permissions=='Manager')"
-                                 class="taskTemplate focused-task ">
+                                 class="taskTemplate focused-task taskTemplate-stationary">
 
 
                                 <img id="edit-image"

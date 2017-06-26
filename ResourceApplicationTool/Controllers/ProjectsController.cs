@@ -356,6 +356,12 @@ namespace ResourceApplicationTool.Controllers
         [System.Web.Http.HttpGet]
         public ActionResult SaveTasks(List<TaskTemplate> templates)
         {
+            string accessLevel = Common.CheckSprintAuthentication(Session, User);
+            if (accessLevel != Const.PermissionLevels.Administrator && accessLevel != Const.PermissionLevels.Manager)
+            {
+
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "Could not save the new task. Insufficient permissions");
+            }
 
             List<Task> savedResults = new List<Task>();
             try
@@ -419,6 +425,10 @@ namespace ResourceApplicationTool.Controllers
                 if (templateTask.Estimation.HasValue)
                 {
                     task.Estimation = templateTask.Estimation;
+                }
+                else
+                {
+                    task.Estimation = 0;
                 }
                 if (!templateTask.TemplateID.HasValue || templateTask.TemplateID.Value <= 0)
                 {

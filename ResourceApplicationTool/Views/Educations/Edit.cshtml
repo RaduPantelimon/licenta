@@ -21,16 +21,16 @@
         @Html.HiddenFor(model => model.EducationID)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2 col-xs-3 field-name" })
+            <div class="col-md-10 col-xs-9">
                 @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2 col-xs-3 field-name" })
+            <div class="col-md-10 col-xs-9">
                 @Html.TextBoxFor(model => model.StartDate, new
            {
                @Value = Model.StartDate.ToString("MM/dd/yyyy"),
@@ -43,8 +43,8 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2 col-xs-3 field-name" })
+            <div class="col-md-10 col-xs-9">
                 @Html.TextBoxFor(model => model.EndDate, new
            {
                @Value = Model.EndDate.ToString("MM/dd/yyyy"),
@@ -57,8 +57,8 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Degree, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.Degree, htmlAttributes: new { @class = "control-label col-md-2 col-xs-3 field-name" })
+            <div class="col-md-10 col-xs-9">
                 @Html.EditorFor(model => model.Degree, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Degree, "", new { @class = "text-danger" })
             </div>

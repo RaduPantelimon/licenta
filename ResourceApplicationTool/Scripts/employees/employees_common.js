@@ -84,11 +84,17 @@ function getEducationsForCurrentEmployee(educationsTable, empId,disableEdit)
 function IntializeEditEvents()
 {
     $('.options-button.edit-button').click(function () {
+        //enable page loader
+        $("#modal-loader").show();
         var url = $(this).data('url');
 
         $.get(url, function (data) {
-            $('#modal-body-content').html(data);
+            
+            //hide page loader
+            $("#modal-loader").hide();
 
+            //load and show modal
+            $('#modal-body-content').html(data);
             $('#dialog-modal').modal('show');
             $('#dialog-modal').find(".modal-title").html("Edit Education");
             $('#dialog-modal').find("#save-education-changes").text("Save Changes");

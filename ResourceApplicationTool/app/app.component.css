@@ -154,3 +154,7 @@ select.month-selector{
     margin: 0px;
     display: inline-block;
  }
+
+#angular-loader {
+    display:none;
+}

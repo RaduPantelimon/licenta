@@ -68,6 +68,15 @@
     padding: 15px 0px 0px 10px;
     font-size: 14px;
 }
+.secondary-footer-text{
+    color: white;
+    padding: 12px 20px;
+    font-size: 14px;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    width: 345px;
+}
 .main-header{
     height:55px;
 }

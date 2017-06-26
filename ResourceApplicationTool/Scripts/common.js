@@ -60,8 +60,14 @@ function LoadModalView(button, container, body)
 {
     $('#add-education').click(function () {
         var url = $('#dialog-modal').data('url');
-
+        //enable page loader
+        $("#modal-loader").show();
         $.get(url, function (data) {
+
+            //hide page loader
+            $("#modal-loader").hide();
+
+            //load and show modal
             $('#modal-body-content').html(data);
 
             $('#dialog-modal').modal('show');

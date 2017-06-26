@@ -72,6 +72,7 @@
     border: 1px solid black;
     background-color: lightcoral;
     display: flex;
+    font-family: OpenSans-Light;
 }
 #tasksContainer .task-droppable{
 
@@ -202,8 +203,12 @@
 
  .employee-name-header{
      width:250px;
+     font-family:OpenSans-Bold;
  }
-
+ .employee-name-td{
+     font-family:OpenSans-Bold;
+     max-width:200px;
+ }
  .task-template-container .taskTemplate {
      margin-left:auto;
      margin-right:auto;
@@ -227,3 +232,4 @@
          min-width:125px;
      }
 }
+
