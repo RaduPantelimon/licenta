@@ -7,4 +7,9 @@ div.mainHeaderLogo.departments-logo{
 
 }
 
-
+@media (max-width: 600px) {
+    .main-items-container 
+    {
+        margin-top: 350px;
+    }
+}

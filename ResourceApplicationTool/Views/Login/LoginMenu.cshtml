@@ -24,6 +24,9 @@
                 </a>
             </li>
             <li class="link-li">
+                @Html.ActionLink("Roles", "Index", "Roles", routeValues: null, htmlAttributes: new { id = "loginLink" })
+            </li>
+            <li class="link-li">
                 @Html.ActionLink("Log out", "Logout", "Login", routeValues: null, htmlAttributes: new { id = "loginLink" })
             </li>
         </ul>

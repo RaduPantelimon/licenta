@@ -220,6 +220,7 @@
     <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\RestApiController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -270,6 +271,7 @@
     <Compile Include="Models\PartialModels\Employee.cs" />
     <Compile Include="Models\PartialModels\Event.cs" />
     <Compile Include="Models\PartialModels\Project.cs" />
+    <Compile Include="Models\PartialModels\Role.cs" />
     <Compile Include="Models\PartialModels\Sprint.cs" />
     <Compile Include="Models\PartialModels\Task.cs" />
     <Compile Include="Models\Project.cs">
@@ -446,6 +448,8 @@
     <Content Include="Content\Styles\Projects\projectsDetailsStyle.css" />
     <Content Include="Content\Styles\Projects\projectsEditStyle.css" />
     <Content Include="Content\Styles\Projects\projectsIndexStyle.css" />
+    <Content Include="Content\Styles\Roles\RolesCommonStyle.css" />
+    <Content Include="Content\Styles\Roles\RolesIndexStyle.css" />
     <Content Include="Content\Styles\search.css" />
     <Content Include="Content\Styles\slickStyle.css" />
     <Content Include="Content\Styles\style.css" />
@@ -840,10 +844,16 @@
     <Content Include="Views\Notifications\EditorTemplates\NotificationsStyle.cshtml" />
     <Content Include="Views\Notifications\CanceledEvent.cshtml" />
     <Content Include="Views\Projects\PartialProjectStatistics.cshtml" />
+    <Content Include="Views\Roles\Create.cshtml" />
+    <Content Include="Views\Roles\Delete.cshtml" />
+    <Content Include="Views\Roles\Details.cshtml" />
+    <Content Include="Views\Roles\Edit.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\events\" />
     <Folder Include="Content\Temp\" />
+    <Folder Include="Scripts\roles\" />
     <Folder Include="Views\Images\" />
   </ItemGroup>
   <ItemGroup>

@@ -9,9 +9,20 @@ div.mainHeaderLogo.departments-logo{
 .banner-icon{
     opacity: 0.5;
 }
+.slick-section.roles-table{
+    margin-top:225px;
+    margin-left:5px;
+    margin-right:5px;
+}
+
+
 @media (max-width: 600px) {
     .main-items-container 
     {
         margin-top: 280px;
+    }
+
+    .slick-section.roles-table{
+        margin-top:40px;
     }
 }
