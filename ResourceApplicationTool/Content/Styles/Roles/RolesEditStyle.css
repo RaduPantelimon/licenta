@@ -1,0 +1,19 @@
+﻿div.main-items-container {
+    margin-top: 150px;
+}
+h2.main-form-header{
+    margin-left: 10px;
+}
+@media (max-width: 600px) {
+
+    h2.main-form-header{
+        margin-top: 230px;
+    }
+    div.main-items-container {
+        margin-top: 30px;
+    }
+
+    .slick-section.roles-table{
+        margin-top:40px;
+    }
+}

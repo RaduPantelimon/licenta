@@ -449,6 +449,7 @@
     <Content Include="Content\Styles\Projects\projectsEditStyle.css" />
     <Content Include="Content\Styles\Projects\projectsIndexStyle.css" />
     <Content Include="Content\Styles\Roles\RolesCommonStyle.css" />
+    <Content Include="Content\Styles\Roles\RolesEditStyle.css" />
     <Content Include="Content\Styles\Roles\RolesIndexStyle.css" />
     <Content Include="Content\Styles\search.css" />
     <Content Include="Content\Styles\slickStyle.css" />

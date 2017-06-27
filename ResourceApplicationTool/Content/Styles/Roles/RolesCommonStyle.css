@@ -48,6 +48,11 @@ h2.project-title{
     margin-top: 100px;
 }
 
+.form-actions {
+    margin-bottom: 100px;
+    margin-left: 10px;
+}
+
 @media (max-width: 600px) {
     div.main-items-container 
     {
