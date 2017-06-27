@@ -96,6 +96,25 @@ export class TasksListComponent implements OnInit {
         this.draggedTaskID = taskID;
         console.log('Element was dragged', event);
     }
+    onDragEnter(event: any, day: any, employee: any): void {
+        console.log("Entered Square: " + event);
+        for (let i = 0; i < employee.Days.length; i++) {
+            if (employee.Days[i] && employee.Days[i].date == day.date)
+            {
+                employee.Days[i].hovering = true;
+            }
+        }
+    }
+
+    onDragLeave(event: any, day: any, employee: any): void {
+        console.log("Left Square: " + event);
+        for (let i = 0; i < employee.Days.length; i++) {
+            if (employee.Days[i] && employee.Days[i].date == day.date) {
+                employee.Days[i].hovering = false;
+            }
+        }
+    }
+     
     onDrop(event: DragEvent, day: any, employee: any): void {
         try {
             console.log("Using the following template: " + this.draggedTaskID);

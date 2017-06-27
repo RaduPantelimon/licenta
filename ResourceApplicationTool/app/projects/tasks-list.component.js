@@ -57,6 +57,22 @@ var TasksListComponent = (function () {
         this.draggedTaskID = taskID;
         console.log('Element was dragged', event);
     };
+    TasksListComponent.prototype.onDragEnter = function (event, day, employee) {
+        console.log("Entered Square: " + event);
+        for (var i = 0; i < employee.Days.length; i++) {
+            if (employee.Days[i] && employee.Days[i].date == day.date) {
+                employee.Days[i].hovering = true;
+            }
+        }
+    };
+    TasksListComponent.prototype.onDragLeave = function (event, day, employee) {
+        console.log("Left Square: " + event);
+        for (var i = 0; i < employee.Days.length; i++) {
+            if (employee.Days[i] && employee.Days[i].date == day.date) {
+                employee.Days[i].hovering = false;
+            }
+        }
+    };
     TasksListComponent.prototype.onDrop = function (event, day, employee) {
         var _this = this;
         try {

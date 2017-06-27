@@ -133,7 +133,8 @@ a.main_expand_collapse
     margin: 15px 5px;
 }
 .settings-logo{
-    background:url(../Pictures/settings_background_img.png) no-repeat right fixed;
+    background:url(../Pictures/settings_background.png) no-repeat right fixed;
+    background-position-y: top;
     top:0px;
 }
 input[type="file"].picture-input{

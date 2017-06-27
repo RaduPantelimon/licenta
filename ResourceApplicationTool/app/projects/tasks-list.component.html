@@ -32,7 +32,8 @@
                     <td width="250" class="employee-name-td">
                         {{employee.FirstName}} {{employee.LastName}}
                     </td>
-                    <td *ngFor='let day of employee.Days; let dayIndex = index'>
+                    <td *ngFor='let day of employee.Days; let dayIndex = index'
+                        [ngClass]="{'task-hover-current': day.hovering}">
                         <div *ngIf='day.task'>
                             <div *ngIf='!day.focused'
                                     class="taskTemplate taskTemplate{{day.task.TemplateID}} taskTemplate-stationary">
@@ -81,7 +82,9 @@
                         <div *ngIf='!day.task'
                                 class="task-droppable"
                                 mwlDroppable
-                                (drop)="onDrop($event,day,employee)">
+                                (drop)="onDrop($event,day,employee)"
+                             (dragEnter)="onDragEnter($event,day,employee)"
+                             (dragLeave)="onDragLeave($event,day,employee)">
                         </div>
                     </td>
 

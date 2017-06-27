@@ -214,6 +214,10 @@
      margin-right:auto;
  }
 
+ .task-hover-current{
+     background-color:#eee;
+     /*transition:0.01s;*/
+ }
 @media (max-width: 1200px) {
     #templatesContainer .taskTemplate-holder {
         display: inline-block;
