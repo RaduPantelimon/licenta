@@ -428,7 +428,7 @@ namespace ResourceApplicationTool.Controllers
                 }
                 else
                 {
-                    ViewBag.profilePicUrl = System.Web.HttpContext.Current.Server.MapPath("~/Content/Pictures/");
+                    ViewBag.profilePicUrl = System.Web.HttpContext.Current.Server.MapPath("~/Content/Pictures/default-profile-picture.png");
                 }
 
                 //getting the projects for this employee

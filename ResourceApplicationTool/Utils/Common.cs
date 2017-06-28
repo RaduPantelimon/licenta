@@ -212,6 +212,20 @@ namespace ResourceApplicationTool.Utils
             return empID;
         }
 
+        public static bool CheckIfAdministrator(HttpSessionStateBase Session, IPrincipal User)
+        {
+            //we check if the user is either an administrator or a manager for the department
+            bool isValid = false;
+            if (User.Identity.IsAuthenticated &&
+                Session[Const.CLAIM.USER_ACCESS_LEVEL] != null &&
+                Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
+            {
+                isValid = true;
+            }
+
+            return isValid;
+        }
+
         public static bool CheckDepartmentAuthentication(HttpSessionStateBase Session, IPrincipal User, Department department)
         {
             //we check if the user is either an administrator or a manager for the department

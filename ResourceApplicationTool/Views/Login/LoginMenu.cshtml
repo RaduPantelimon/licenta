@@ -1,4 +1,5 @@
-﻿
+﻿@using ResourceApplicationTool.Models;
+@using ResourceApplicationTool.Utils;
 <link href="~/Content/Styles/Login/login_menu.css" rel="stylesheet" />
 <div  class="side-nav-box">
     <div id="cssheader" class="profile_summary">
@@ -23,9 +24,15 @@
                     View Department
                 </a>
             </li>
-            <li class="link-li">
-                @Html.ActionLink("Roles", "Index", "Roles", routeValues: null, htmlAttributes: new { id = "loginLink" })
-            </li>
+            @if (ViewBag.userAccess == Const.PermissionLevels.Administrator)
+            {
+                <li class="link-li">
+                    @Html.ActionLink("Roles", "Index", "Roles", routeValues: null, htmlAttributes: new { id = "loginLink" })
+                </li>
+                <li class="link-li">
+                    @Html.ActionLink("Skills", "Index", "Skills", routeValues: null, htmlAttributes: new { id = "loginLink" })
+                </li>
+            }
             <li class="link-li">
                 @Html.ActionLink("Log out", "Logout", "Login", routeValues: null, htmlAttributes: new { id = "loginLink" })
             </li>

@@ -43,7 +43,6 @@ namespace ResourceApplicationTool.Models
         public string Password { get; set; }
 
         [JsonIgnore]
-        [Required]
         [Display(Name = "Manager")]
         public Nullable<int> ManagerID { get; set; }
 

@@ -1,6 +1,7 @@
-﻿@model IEnumerable<ResourceApplicationTool.Models.Role>
+﻿@model IEnumerable<ResourceApplicationTool.Models.Skill>
 @using ResourceApplicationTool.Models;
 @using ResourceApplicationTool.Utils;
+
 
 @{
     ViewBag.Title = "Index";
@@ -18,7 +19,7 @@
 <div class="main-items-container">
 
     <div class="text-info">
-        <h2 class="sec-title-huge sec-title project-title">Roles</h2>
+        <h2 class="sec-title-huge sec-title project-title">Skills</h2>
         @if (ViewBag.userAccess == Const.PermissionLevels.Administrator)
         {
             @Html.ActionLink("Create New", "Create", null, new { @class = "btn-primary add-new-button" })
@@ -34,37 +35,37 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Name)
+                        @Html.DisplayNameFor(model => model.Title)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.AverageSalary)
+                        @Html.DisplayNameFor(model => model.SkillCategory)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.JobDescription)
+                        @Html.DisplayNameFor(model => model.Description)
                     </th>
                     <th width="110"> Options</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (Role role in Model)
+                @foreach (Skill skill in Model)
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => role.Name)
+                            @Html.DisplayFor(modelItem => skill.Title)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => role.AverageSalary)
+                            @Html.DisplayFor(modelItem => skill.SkillCategory.Title)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => role.JobDescription)
-                        </td>                       
+                            @Html.DisplayFor(modelItem => skill.Description)
+                        </td>
                         <td>
-                            <a class="options-button-sec edit-button-sec" href="/Roles/Edit/@(role.RoleID)" ></a>
-                            <a class="options-button-sec delete-button-sec" href="/Roles/Delete/@(role.RoleID)"></a>
+                            <a class="options-button-sec edit-button-sec" href="/Skills/Edit/@(skill.SkillID)"></a>
+                            <a class="options-button-sec delete-button-sec" href="/Skills/Delete/@(skill.SkillID)"></a>
                         </td>
                     </tr>
                 }
-           </tbody>
+            </tbody>
         </table>
     </div>
 

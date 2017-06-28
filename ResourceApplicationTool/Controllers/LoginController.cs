@@ -97,6 +97,9 @@ namespace ResourceApplicationTool.Controllers
             {
                 try
                 {
+                    //getting the access level
+                    ViewBag.userAccess = Session[Const.CLAIM.USER_ACCESS_LEVEL];
+
                     int empID = Convert.ToInt32(Session[Const.CLAIM.USER_ID]);
                     Employee emp = db.Employees.Where(x => x.EmployeeID == empID).FirstOrDefault();
 
@@ -128,6 +131,8 @@ namespace ResourceApplicationTool.Controllers
                     {
                         return View(emp);
                     }
+
+                   
                 }
                 catch (Exception)
                 {
