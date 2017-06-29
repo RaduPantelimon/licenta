@@ -236,8 +236,17 @@ namespace ResourceApplicationTool.Controllers
             //SkillLevelCollectionPostModel sklvlpostModel,
             HttpPostedFileBase uploadProfilePicture)
         {
-            ModelState.Remove("Password");
-            ModelState.Remove("ConfirmPassword");
+
+            if (Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() != Const.PermissionLevels.Administrator)
+            {
+                employee.preSaveItem(ModelState);
+            }
+            else
+            {
+                employee.preSaveItemAdmin(ModelState);
+
+            }
+
             if (ModelState.IsValid)
             {
 
@@ -253,22 +262,9 @@ namespace ResourceApplicationTool.Controllers
                 }
 
 
-                employee.Password = "testerino";
-                employee.ConfirmPassword = employee.Password;
-                //we will disable the properties that different users are not allowed to edit
-                if (Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() != Const.PermissionLevels.Administrator)
-                {
-                    employee.CNP = "1234";
-                }
-                if (Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() != Const.PermissionLevels.Manager &&
-                    Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() != Const.PermissionLevels.Administrator)
-                {
-                   
-                    employee.Email = "testerino@tst.com";
-                    employee.CNP = "1234";
-                    employee.PhoneNumber = "222";
-                }
-                    db.Entry(employee).State = EntityState.Modified;
+                employee.preSaveValidationChecks(Session, User);
+
+                db.Entry(employee).State = EntityState.Modified;
                 if (uploadProfilePicture != null && uploadProfilePicture.ContentLength > 0)
                 {
                     Guid? avatarGuid = Common.CreateImage(uploadProfilePicture);
@@ -291,13 +287,15 @@ namespace ResourceApplicationTool.Controllers
                 {
                     db.Entry(employee).Property(X => X.CNP).IsModified = false;
                     db.Entry(employee).Property(X => X.Administrator).IsModified = false;
+                    db.Entry(employee).Property(X => X.ManagerID).IsModified = false;
                 }
-                if (Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() != Const.PermissionLevels.Manager && 
-                    Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() != Const.PermissionLevels.Administrator)
+
+                if ((Session[Const.CLAIM.USER_ID].ToString() != employee.ManagerID.ToString()
+                &&
+                Session[Const.CLAIM.USER_ID].ToString() == employee.EmployeeID.ToString()))
                 {
                     //various info
                     db.Entry(employee).Property(X => X.RoleID).IsModified = false;
-                    db.Entry(employee).Property(X => X.ManagerID).IsModified = false;
                     db.Entry(employee).Property(X => X.DepartmentID).IsModified = false;
                     db.Entry(employee).Property(X => X.Salary).IsModified = false;
                     //contact
@@ -327,7 +325,7 @@ namespace ResourceApplicationTool.Controllers
             ViewBag.ManagerID = new SelectList(db.Employees, "EmployeeID", "Account", employee.ManagerID);
             ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "Name", employee.RoleID);
 
-            return View(employee);
+            return RedirectToAction("Index");
         }
 
         // GET: Employees/Delete/5

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ResourceApplicationTool.Models;
+using ResourceApplicationTool.Utils;
 
 namespace ResourceApplicationTool.Controllers
 {
@@ -17,28 +18,28 @@ namespace ResourceApplicationTool.Controllers
         // GET: Skills
         public ActionResult Index()
         {
+            if (!Common.CheckIfAdministrator(Session, User))
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+            ViewBag.userAccess = Session[Const.CLAIM.USER_ACCESS_LEVEL];
             var skills = db.Skills.Include(s => s.SkillCategory);
-            return View(skills.ToList());
-        }
 
-        // GET: Skills/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Skill skill = db.Skills.Find(id);
-            if (skill == null)
-            {
-                return HttpNotFound();
-            }
-            return View(skill);
+            //skill categories 
+            List<SkillCategory> skillCategories = db.SkillCategories.ToList();
+            ViewBag.skillCategories = skillCategories;
+
+            return View(skills.ToList());
         }
 
         // GET: Skills/Create
         public ActionResult Create()
         {
+            if (!Common.CheckIfAdministrator(Session, User))
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+            ViewBag.userAccess = Session[Const.CLAIM.USER_ACCESS_LEVEL];
             ViewBag.CategoryID = new SelectList(db.SkillCategories, "CategoryID", "Description");
             return View();
         }
@@ -50,6 +51,11 @@ namespace ResourceApplicationTool.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "SkillID,Title,Description,CategoryID")] Skill skill)
         {
+            if (!Common.CheckIfAdministrator(Session, User))
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+            ViewBag.userAccess = Session[Const.CLAIM.USER_ACCESS_LEVEL];
             if (ModelState.IsValid)
             {
                 db.Skills.Add(skill);
@@ -64,6 +70,11 @@ namespace ResourceApplicationTool.Controllers
         // GET: Skills/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (!Common.CheckIfAdministrator(Session, User))
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+            ViewBag.userAccess = Session[Const.CLAIM.USER_ACCESS_LEVEL];
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -84,6 +95,11 @@ namespace ResourceApplicationTool.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "SkillID,Title,Description,CategoryID")] Skill skill)
         {
+            if (!Common.CheckIfAdministrator(Session, User))
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+            ViewBag.userAccess = Session[Const.CLAIM.USER_ACCESS_LEVEL];
             if (ModelState.IsValid)
             {
                 db.Entry(skill).State = EntityState.Modified;
@@ -97,6 +113,11 @@ namespace ResourceApplicationTool.Controllers
         // GET: Skills/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (!Common.CheckIfAdministrator(Session, User))
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+            ViewBag.userAccess = Session[Const.CLAIM.USER_ACCESS_LEVEL];
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -114,6 +135,20 @@ namespace ResourceApplicationTool.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (!Common.CheckIfAdministrator(Session, User))
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+
+            //removing the existing levels
+            List<SkillLevel> skillLevels = db.SkillLevels.Where(x =>x.SkillID == id).ToList();
+            foreach(SkillLevel sklvl in skillLevels)
+            {
+                db.SkillLevels.Remove(sklvl);
+            }
+            db.SaveChanges();
+
+            ViewBag.userAccess = Session[Const.CLAIM.USER_ACCESS_LEVEL];
             Skill skill = db.Skills.Find(id);
             db.Skills.Remove(skill);
             db.SaveChanges();

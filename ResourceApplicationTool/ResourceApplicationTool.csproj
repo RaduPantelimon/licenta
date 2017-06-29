@@ -273,6 +273,7 @@
     <Compile Include="Models\PartialModels\Event.cs" />
     <Compile Include="Models\PartialModels\Project.cs" />
     <Compile Include="Models\PartialModels\Role.cs" />
+    <Compile Include="Models\PartialModels\Skill.cs" />
     <Compile Include="Models\PartialModels\Sprint.cs" />
     <Compile Include="Models\PartialModels\Task.cs" />
     <Compile Include="Models\Project.cs">
@@ -453,6 +454,8 @@
     <Content Include="Content\Styles\Roles\RolesEditStyle.css" />
     <Content Include="Content\Styles\Roles\RolesIndexStyle.css" />
     <Content Include="Content\Styles\search.css" />
+    <Content Include="Content\Styles\Skill\SkillsCommonStyle.css" />
+    <Content Include="Content\Styles\Skill\SkillsIndexStyle.css" />
     <Content Include="Content\Styles\slickStyle.css" />
     <Content Include="Content\Styles\style.css" />
     <Content Include="favicon.ico" />
@@ -729,6 +732,8 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\search_header.js" />
     <Content Include="Scripts\search_main.js" />
+    <Content Include="Scripts\skills\skills_common.js" />
+    <Content Include="Scripts\skills\skills_index.js" />
     <Content Include="Scripts\slick\cbp-search-header.js" />
     <Content Include="Scripts\slick\index.html" />
     <Content Include="Scripts\slick\slick\ajax-loader.gif" />

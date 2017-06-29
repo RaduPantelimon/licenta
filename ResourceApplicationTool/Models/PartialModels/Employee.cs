@@ -10,10 +10,67 @@ namespace ResourceApplicationTool.Models
     using System;
     using System.Collections.Generic;
     using Newtonsoft.Json;
+    using System.Web.Mvc;
+    using System.Security.Principal;
+    using Utils;
 
     [MetadataType(typeof(EmployeeMD))]
     public partial class Employee
     {
+
+        //modelstate for employee edit
+        public void preSaveItem(ModelStateDictionary dictionary 
+            /*HttpSessionStateBase Session, 
+            IPrincipal User,
+            RATV3Entities db*/)
+        {
+            dictionary.Remove("Password");
+            dictionary.Remove("ConfirmPassword");
+            dictionary.Remove("PhoneNumber");
+            dictionary.Remove("Email");
+            dictionary.Remove("Password");
+            dictionary.Remove("CNP");
+            dictionary.Remove("Salary");
+            dictionary.Remove("HireDate");
+            dictionary.Remove("Administrator");
+            dictionary.Remove("ManagerID");
+            dictionary.Remove("DepartmentID");
+        }
+
+        public void preSaveItemAdmin(ModelStateDictionary dictionary
+            /*HttpSessionStateBase Session, 
+            IPrincipal User,
+            RATV3Entities db*/)
+        {
+            dictionary.Remove("Password");
+            dictionary.Remove("ConfirmPassword");
+        }
+
+        public void preSaveValidationChecks(HttpSessionStateBase Session, IPrincipal User) {
+            this.Password = "testerino";
+            this.ConfirmPassword = this.Password;
+            //we will disable the properties that different users are not allowed to edit
+            if (Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() != Const.PermissionLevels.Administrator)
+            {
+
+                this.CNP = "1231231231234";
+                this.Administrator = "Employee";
+                
+            }
+            if ((Session[Const.CLAIM.USER_ID].ToString() != this.ManagerID.ToString()
+                &&
+                Session[Const.CLAIM.USER_ID].ToString() == this.EmployeeID.ToString()))
+            {
+
+                this.Email = "testerino@tst.com";
+                this.CNP = "1231231231234";
+                this.PhoneNumber = "222";
+                this.DepartmentID = 1;
+                this.Administrator = "Employee";
+                this.ManagerID = 1;
+            }
+        }
+
         //used to send values to and from the model during binding and page rendering
         public IList<SkillLevel> SkillLevelsList { get; set; }
 

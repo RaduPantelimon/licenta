@@ -141,13 +141,22 @@
                                 @Html.ValidationMessageFor(model => model.RoleID, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                            @Html.LabelFor(model => model.ManagerID, "Manager", htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-3" })
-                            <div class="col-md-9 col-sm-9 col-xs-9">
-                                @Html.DropDownList("ManagerID", null, htmlAttributes: new { @class = "form-control", @id = "managers-input" })
-                                @Html.ValidationMessageFor(model => model.ManagerID, "", new { @class = "text-danger" })
+                        @if (User.Identity.IsAuthenticated
+                            && Session[Const.CLAIM.USER_ACCESS_LEVEL] != null
+                            && Session[Const.CLAIM.USER_ACCESS_LEVEL].ToString() == Const.PermissionLevels.Administrator)
+                        {
+                            <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                @Html.LabelFor(model => model.ManagerID, "Manager", htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-3" })
+                                <div class="col-md-9 col-sm-9 col-xs-9">
+                                    @Html.DropDownList("ManagerID", null, htmlAttributes: new { @class = "form-control", @id = "managers-input" })
+                                    @Html.ValidationMessageFor(model => model.ManagerID, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
+                        }
+                        else
+                        {
+                            @Html.HiddenFor(model => model.ManagerID)
+                        }
                         <div class="form-group subsection col-md-6 col-lg-6 col-sm-12 col-xs-12">
                             @Html.LabelFor(model => model.DepartmentID, "Department", htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-3" })
                             <div class="col-md-9 col-sm-9 col-xs-9">

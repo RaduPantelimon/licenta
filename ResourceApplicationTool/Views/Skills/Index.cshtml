@@ -9,14 +9,16 @@
 }
 
 <link href="~/Content/Styles/Roles/RolesCommonStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/Skill/SkillsCommonStyle.css" rel="stylesheet" />
 <link href="~/Content/Styles/commonStyle.css" rel="stylesheet" />
 <link href="~/Content/Styles/slickStyle.css" rel="stylesheet" />
 <link href="~/Content/Styles/Roles/RolesIndexStyle.css" rel="stylesheet" />
+<link href="~/Content/Styles/Skill/SkillsIndexStyle.css" rel="stylesheet" />
 
 <div class="mainHeaderLogo settings-logo logo-details" id="welcomeimg" data-type="sprite" data-offsetY="100" data-Xposition="50%" data-speed="-2"></div>
 
 
-<div class="main-items-container">
+<div class="main-items-container" >
 
     <div class="text-info">
         <h2 class="sec-title-huge sec-title project-title">Skills</h2>
@@ -29,44 +31,73 @@
     <hr class="sec-hr title-hr" />
 
 
-    <div class="slick-section row roles-table">
+    <div class="slick-section row roles-table skills-container" style="display:none;">
 
-        <table id="secondary-table" class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Title)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.SkillCategory)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Description)
-                    </th>
-                    <th width="110"> Options</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (Skill skill in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => skill.Title)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => skill.SkillCategory.Title)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => skill.Description)
-                        </td>
-                        <td>
-                            <a class="options-button-sec edit-button-sec" href="/Skills/Edit/@(skill.SkillID)"></a>
-                            <a class="options-button-sec delete-button-sec" href="/Skills/Delete/@(skill.SkillID)"></a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        @if (ViewBag.skillCategories != null)
+        {
+
+            foreach (SkillCategory skCat in ViewBag.skillCategories)
+            {
+                <div class="skill-category secondary_expandable">
+
+                    <table class="skill-category-table">
+                        <tr>
+                            <td>
+                                <a class="secondary_expand_collapse">
+                                    <img class="expandimg" src="~/Content/Pictures/expand-small.png" title="expand" height="12" width="12" align="absbottom" style="display: none;">
+                                    <img class="collapseimg" src="~/Content/Pictures/collapse-small.png" title="collapse" height="12" width="12" align="absbottom" style="display: inline;">
+                                </a>
+                            </td>
+                            <td>
+                                <h5 class="skill-category-title">@skCat.Title</h5>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="skill-category-container row">
+                        <table id="secondary-table" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="200">
+                                        @Html.DisplayNameFor(model => model.Title)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Description)
+                                    </th>
+                                    <th width="110"> Options</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (Skill skill in Model)
+                                {
+                                    if (skill.CategoryID == skCat.CategoryID)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => skill.Title)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => skill.Description)
+                                            </td>
+                                            <td>
+                                                <a class="options-button-sec edit-button-sec" href="/Skills/Edit/@(skill.SkillID)"></a>
+                                                <a class="options-button-sec delete-button-sec" href="/Skills/Delete/@(skill.SkillID)"></a>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        }
     </div>
-
 </div>
+
+            <script>
+                var skillLevels = @Html.Raw(Json.Encode(ViewBag.skillLevels));
+            </script>
+
+            <script src="~/Scripts/skills/skills_common.js"></script>
+            <script src="~/Scripts/skills/skills_index.js"></script>

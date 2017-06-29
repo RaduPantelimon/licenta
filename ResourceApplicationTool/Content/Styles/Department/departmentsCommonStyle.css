@@ -62,6 +62,7 @@ h2.departments-title{
 
 .mainHeaderLogo.departments-logo.departments-custom-logo{
     background-position: top center;
+    background-size: contain;
 }
 
 /* MODAL STYLE*/

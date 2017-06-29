@@ -423,7 +423,7 @@ namespace ResourceApplicationTool.Utils
 
                 ),
                  new Font(
-                    new FontSize() { Val = 16 },
+                    new FontSize() { Val = 14 },
                     new Bold(),
                     new Color() { Rgb = "FFFFFF" }
 

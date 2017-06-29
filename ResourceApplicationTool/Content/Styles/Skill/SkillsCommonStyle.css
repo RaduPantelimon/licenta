@@ -1,0 +1,15 @@
+﻿h5.skill-category-title{
+    font-weight:600;
+    font-size: 16px;
+    color: #777777;
+    transition:0.2s;
+    margin-left: 5px;
+}
+
+.skill-category-container.row{
+    margin-left:30px;
+    margin-left:15px;
+}
+div.slick-section.roles-table{
+    margin-left:15px;
+}

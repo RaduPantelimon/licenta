@@ -23,6 +23,7 @@ namespace ResourceApplicationTool.Controllers
             {
                 return RedirectToAction("NotFound", "Home");
             }
+           
             ViewBag.userAccess = Session[Const.CLAIM.USER_ACCESS_LEVEL];
             return View(db.Roles.ToList());
         }
