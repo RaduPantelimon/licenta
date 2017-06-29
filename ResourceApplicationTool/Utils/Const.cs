@@ -34,7 +34,7 @@ namespace ResourceApplicationTool.Utils
 
         public partial class SearchParams
         {
-            public static readonly int pageSize = 3;
+            public static readonly int pageSize = 6;
             public static readonly string EmployeeFilterName = "Employee";
             public static readonly string DepartmentFilterName = "Department";
             public static readonly string ProjectFilterName = "Project";

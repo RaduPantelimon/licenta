@@ -40,7 +40,7 @@ namespace ResourceApplicationTool.Controllers
             employees.Remove(employeeOmonth);
 
             //latest employees
-            List<Employee> latestEmployees = employees.OrderByDescending(x => x.HireDate).Take(12).ToList();
+            List<Employee> latestEmployees = employees.OrderByDescending(x => x.HireDate).Take(4).ToList();
 
             //biggest projects
             foreach (Project p in projects)

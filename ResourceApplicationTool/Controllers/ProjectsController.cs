@@ -136,6 +136,23 @@ namespace ResourceApplicationTool.Controllers
                 {
                     db.Projects.Add(project);
                     db.SaveChanges();
+
+
+                    DateTime sprintStart = project.StartDate;
+                    DateTime sprintEnd = project.StartDate;
+
+                    while (sprintStart.DayOfWeek != DayOfWeek.Monday) sprintStart = sprintStart.AddDays(-1);
+                    while (sprintEnd.DayOfWeek != DayOfWeek.Sunday) sprintEnd = sprintEnd.AddDays(1);
+
+                    //adding the first sprint for this project
+                    Sprint sprint = new Sprint();
+                    sprint.StartDate = sprintStart;
+                    sprint.EndDate = sprintEnd;
+                    sprint.ProjectID = project.ProjectID;
+
+                    db.Sprints.Add(sprint);
+                    db.SaveChanges();
+
                 }
                 catch(Exception ex)
                 {
